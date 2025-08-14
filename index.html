@@ -19,7 +19,6 @@
             color: #f1f1f1;
             text-align: center;
         }
-
         /* Top menu button */
         .menu-btn {
             position: absolute;
@@ -33,10 +32,7 @@
             border-radius: 8px;
             transition: 0.3s;
         }
-        .menu-btn:hover {
-            background: rgba(0,0,0,0.8);
-        }
-
+        .menu-btn:hover { background: rgba(0,0,0,0.8); }
         /* Overlay menu */
         .menu-overlay {
             position: fixed;
@@ -53,7 +49,6 @@
             z-index: 1000;
             transition: 0.3s;
         }
-
         .menu-overlay a {
             color: #f1f1f1;
             font-size: 22px;
@@ -64,12 +59,10 @@
             border-bottom: 1px solid rgba(255,255,255,0.2);
             transition: 0.3s;
         }
-
         .menu-overlay a:hover {
             color: #1da1f2;
             border-bottom-color: #1da1f2;
         }
-
         /* Announcement modal */
         #announcementModal {
             display: none;
@@ -106,19 +99,14 @@
             cursor: pointer;
             transition: 0.3s;
         }
-        .announcement-controls span:hover {
-            color: #1da1f2;
-        }
+        .announcement-controls span:hover { color: #1da1f2; }
 
         header {
             position: absolute;
             top: 20px;
             right: 20px;
         }
-        header img {
-            height: 60px;
-            border-radius: 10px;
-        }
+        header img { height: 60px; border-radius: 10px; }
 
         form {
             background: rgba(0, 0, 0, 0.65);
@@ -131,10 +119,7 @@
             flex-direction: column;
             align-items: center;
         }
-        form h2 {
-            margin-bottom: 15px;
-            font-size: 24px;
-        }
+        form h2 { margin-bottom: 15px; font-size: 24px; }
         select, textarea, input, button {
             width: 100%;
             padding: 12px;
@@ -144,13 +129,8 @@
             font-size: 16px;
             box-sizing: border-box;
         }
-        select, textarea, input {
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-        }
-        select option {
-            color: #000;
-        }
+        select, textarea, input { background: rgba(255,255,255,0.1); color: #fff; }
+        select option { color: #000; }
         button {
             background-color: #1da1f2;
             color: white;
@@ -158,11 +138,8 @@
             font-weight: 600;
             transition: 0.3s;
         }
-        button:hover {
-            background-color: #0d95e8;
-        }
-
-        /* Announcement & Agent buttons below form */
+        button:hover { background-color: #0d95e8; }
+        /* Announcement & Agent buttons */
         .announcement-btn {
             margin-top: 15px;
             padding: 10px 20px;
@@ -174,50 +151,57 @@
             font-weight: 600;
             transition: 0.3s;
         }
-        .announcement-btn:hover {
-            background: #0d95e8;
-        }
+        .announcement-btn:hover { background: #0d95e8; }
 
-        /* Community Agent Modal */
+        /* Agent Chat Modal */
         #agentModal {
             display: none;
             position: fixed;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            background: rgba(0,0,0,0.85);
+            top:0; left:0;
+            width:100%; height:100%;
             backdrop-filter: blur(6px);
+            background: rgba(0,0,0,0.75);
+            z-index: 10000;
             justify-content:center;
             align-items:center;
-            flex-direction:column;
-            z-index:10000;
         }
         #agentContent {
+            background:#fff;
             width:90%;
             max-width:520px;
-            padding:20px;
-            box-sizing:border-box;
             border-radius:12px;
-            background:#fff;
-            max-height:85vh;
-            overflow-y:auto;
+            padding:20px;
             display:flex;
             flex-direction:column;
+            max-height:85vh;
+            overflow-y:auto;
         }
-        #agentChat div {
+        #chatMessages {
+            flex-grow:1;
+            overflow-y:auto;
             margin-bottom:10px;
-        }
-        #agentChat .question {
-            font-weight:600;
-            color:#1da1f2;
-        }
-        #agentChat .answer {
-            background:#f1f1f1;
+            border:1px solid #ccc;
             padding:10px;
             border-radius:8px;
-            color:#000;
         }
+        .chat-msg { margin:5px 0; padding:8px 12px; border-radius:8px; max-width:80%; }
+        .chat-agent { background:#1da1f2; color:#fff; align-self:flex-start; }
+        .chat-user { background:#eee; color:#000; align-self:flex-end; }
+
+        .question-btn {
+            margin:3px;
+            padding:6px 10px;
+            border:none;
+            border-radius:6px;
+            background:#0d95e8;
+            color:white;
+            cursor:pointer;
+        }
+        .question-btn:hover { background:#1da1f2; }
+
+        #userInput { padding:8px; width: calc(100% - 16px); margin-bottom:10px; border-radius:6px; border:1px solid #ccc; }
+        #sendBtn { padding:8px; background:#1da1f2; color:white; border:none; border-radius:6px; cursor:pointer; }
+        #sendBtn:hover { background:#0d95e8; }
 
         footer {
             position: fixed;
@@ -293,18 +277,24 @@
         <button type="button" class="announcement-btn" id="agentBtn">🤖 KiteAI Community Agent</button>
     </form>
 
-    <!-- Community Agent Modal -->
+    <!-- Agent Chat Modal -->
     <div id="agentModal">
         <div id="agentContent">
-            <h2 style="text-align:center; margin-bottom:15px;">KiteAI Community Agent</h2>
-            <div id="agentChat"></div>
-            <div style="text-align:center; margin-top:15px;">
-                <button id="closeAgentBtn" style="padding:8px 16px;">Close</button>
+            <div id="chatMessages"></div>
+            <div>
+                <div id="preQuestions" style="margin-bottom:10px;">
+                    <button class="question-btn">How can I use KiteAI?</button>
+                    <button class="question-btn">What are KiteAI NFTs?</button>
+                    <button class="question-btn">How to join KiteAI community?</button>
+                    <button class="question-btn">How to report an issue?</button>
+                    <button class="question-btn">Upcoming events in KiteAI?</button>
+                </div>
+                <input type="text" id="userInput" placeholder="Type your question here...">
+                <button id="sendBtn">Send</button>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         Made for the KiteAI community · Follow on 
         <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank">@Crypto_King877</a> 
@@ -356,40 +346,55 @@
             loadTweet(currentTweet);
         });
 
-        // KiteAI Community Agent logic
-        const agentQA = [
-            { q: "How can I join the KiteAI Testnet?", a: "You can join the Testnet using the link in the menu and follow instructions to create your account." },
-            { q: "How do I submit feedback?", a: "Use the feedback form above and select the category that fits your feedback." },
-            { q: "Where can I see KiteAI community updates?", a: "Community updates are posted on our Twitter handle and in the Announcement section above." },
-            { q: "How can I participate in events?", a: "Check the Event / Campaign announcements in the menu links and join via the instructions provided." },
-            { q: "Who do I contact for help?", a: "You can ask here in the Community Agent, or reach out to our team via official contact links in the menu." }
-        ];
+        // KiteAI Community Agent Logic
+        const agentModal = document.getElementById('agentModal');
+        const agentBtn = document.getElementById('agentBtn');
+        const chatMessages = document.getElementById('chatMessages');
+        const preQuestions = document.getElementById('preQuestions');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
 
-        function loadAgentChat() {
-            const chatDiv = document.getElementById("agentChat");
-            chatDiv.innerHTML = "";
-            agentQA.forEach(item => {
-                const questionEl = document.createElement("div");
-                questionEl.className = "question";
-                questionEl.innerText = "Q: " + item.q;
+        const answers = {
+            "How can I use KiteAI?": "You can use KiteAI by joining our community and trying out the Testnet features.",
+            "What are KiteAI NFTs?": "KiteAI NFTs are unique digital collectibles that represent community membership and rewards.",
+            "How to join KiteAI community?": "Join our community through our social channels and participate in discussions and events.",
+            "How to report an issue?": "Report issues via our Feedback form or reach out through official channels for quick support.",
+            "Upcoming events in KiteAI?": "Check our official social media channels for the latest events and campaigns."
+        };
 
-                const answerEl = document.createElement("div");
-                answerEl.className = "answer";
-                answerEl.innerText = "A: " + item.a;
-
-                chatDiv.appendChild(questionEl);
-                chatDiv.appendChild(answerEl);
-            });
+        function addMessage(text, sender) {
+            const div = document.createElement('div');
+            div.classList.add('chat-msg');
+            div.classList.add(sender === 'agent' ? 'chat-agent' : 'chat-user');
+            div.textContent = text;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        document.getElementById("agentBtn").addEventListener("click", () => {
-            document.getElementById("agentModal").style.display = "flex";
-            loadAgentChat();
+        agentBtn.addEventListener('click', () => {
+            agentModal.style.display = 'flex';
         });
 
-        document.getElementById("closeAgentBtn").addEventListener("click", () => {
-            document.getElementById("agentModal").style.display = "none";
+        // Predefined question click
+        document.querySelectorAll('.question-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const q = btn.textContent;
+                addMessage(q, 'user');
+                addMessage(answers[q], 'agent');
+            });
         });
+
+        // Send user typed question
+        sendBtn.addEventListener('click', () => {
+            const q = userInput.value.trim();
+            if(q){
+                addMessage(q,'user');
+                const reply = answers[q] || "Thank you for your question! Our team will get back to you soon.";
+                addMessage(reply,'agent');
+                userInput.value = '';
+            }
+        });
+
     </script>
 
 </body>
