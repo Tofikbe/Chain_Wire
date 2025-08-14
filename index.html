@@ -19,6 +19,47 @@
             color: white;
             text-align: center;
         }
+
+        /* Top menu button */
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Overlay menu */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(6px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .menu-overlay a {
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+            padding: 15px 0;
+            width: 80%;
+            text-align: center;
+            border-bottom: 1px solid black;
+        }
+
+        .menu-overlay a:hover {
+            color: #00acee;
+        }
+
         header {
             position: absolute;
             top: 20px;
@@ -27,40 +68,7 @@
         header img {
             height: 60px;
         }
-        /* Hamburger Menu */
-        .menu {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-        }
-        .menu-icon {
-            font-size: 28px;
-            cursor: pointer;
-            background: rgba(0,0,0,0.6);
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-        .menu-links {
-            display: none;
-            position: absolute;
-            top: 40px;
-            left: 0;
-            background: rgba(0,0,0,0.85);
-            padding: 10px;
-            border-radius: 8px;
-            text-align: left;
-        }
-        .menu-links a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 6px 0;
-            font-size: 14px;
-        }
-        .menu-links a:hover {
-            color: #00acee;
-        }
+
         form {
             background: rgba(0, 0, 0, 0.6);
             padding: 20px;
@@ -68,7 +76,7 @@
             width: 90%;
             max-width: 400px;
         }
-        select, textarea, button {
+        select, textarea, input, button {
             width: 100%;
             padding: 10px;
             margin: 8px 0;
@@ -84,6 +92,7 @@
         button:hover {
             background-color: #0084b4;
         }
+
         footer {
             position: fixed;
             bottom: 10px;
@@ -101,22 +110,22 @@
 </head>
 <body>
 
-    <!-- Hamburger Menu -->
-    <div class="menu">
-        <div class="menu-icon" onclick="toggleMenu()">☰</div>
-        <div class="menu-links" id="menuLinks">
-            <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
-            <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">Fly The Kite NFT🪁</a>
-            <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder🪁</a>
-            <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Kite: Community & Ecosystem🪁</a>
-            <a href="https://x.com/KiteAIChinese?t=bR1Bi5KbAeZLdozFOKqtGg&s=09" target="_blank">KiteAIChinese🪁</a>
-            <a href="https://x.com/buidloor?t=6nD_KJzIePhdytOA3Ss-2w&s=09" target="_blank">Vikthebuilder🪁</a>
-            <a href="https://x.com/lei_lei0904?t=yL6KX5W6lCKf0Fnk6VAIBA&s=09" target="_blank">Lei-Lei🪁</a>
-            <a href="https://x.com/scottshics?t=UMpx5b2XMH1kLa2JgMyXDw&s=09" target="_blank">Scott Shi🪁</a>
-            <a href="https://x.com/Henryleemr?t=ZZVY_CCK88fGLRM56VkXnQ&s=09" target="_blank">Henry Lee🪁</a>
-            <a href="https://x.com/superamscom?t=jr23SY_GKnnNEUr5EP-6eA&s=09" target="_blank">Spring🪁</a>
-            <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing🪁</a>
-        </div>
+    <!-- Menu Button -->
+    <div class="menu-btn" onclick="toggleMenu()">&#9776;</div>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
+        <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">Fly The Kite NFT🪁</a>
+        <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder🪁</a>
+        <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Kite: Community & Ecosystem🪁</a>
+        <a href="https://x.com/KiteAIChinese?t=bR1Bi5KbAeZLdozFOKqtGg&s=09" target="_blank">KiteAIChinese🪁</a>
+        <a href="https://x.com/buidloor?t=6nD_KJzIePhdytOA3Ss-2w&s=09" target="_blank">Vikthebuilder🪁</a>
+        <a href="https://x.com/lei_lei0904?t=yL6KX5W6lCKf0Fnk6VAIBA&s=09" target="_blank">Lei-Lei🪁</a>
+        <a href="https://x.com/scottshics?t=UMpx5b2XMH1kLa2JgMyXDw&s=09" target="_blank">Scott Shi🪁</a>
+        <a href="https://x.com/Henryleemr?t=ZZVY_CCK88fGLRM56VkXnQ&s=09" target="_blank">Henry Lee🪁</a>
+        <a href="https://x.com/superamscom?t=jr23SY_GKnnNEUr5EP-6eA&s=09" target="_blank">Spring🪁</a>
+        <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing🪁</a>
     </div>
 
     <!-- Logo -->
@@ -149,8 +158,8 @@
 
     <script>
         function toggleMenu() {
-            const menu = document.getElementById("menuLinks");
-            menu.style.display = menu.style.display === "block" ? "none" : "block";
+            const menu = document.getElementById('menuOverlay');
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
         }
     </script>
 
