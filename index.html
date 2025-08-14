@@ -1,105 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Community Feedback</title>
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        background: url('https://i.postimg.cc/qzpBwFQk/background.jpg') no-repeat center center fixed;
-        background-size: cover;
-        font-family: Arial, sans-serif;
-        height: 100vh;
-    }
-
-    /* Mobile: vertical fit */
-    @media (max-width: 768px) {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Feedback</title>
+    <style>
         body {
-            background-size: auto 100%;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: url('https://i.postimg.cc/qzpBwFQk/background.jpg') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
         }
-    }
-
-    /* Desktop: horizontal fit */
-    @media (min-width: 769px) {
-        body {
-            background-size: 100% auto;
+        header {
+            position: absolute;
+            top: 20px;
+            right: 20px;
         }
-    }
-
-    /* Logo top-right */
-    .logo {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        width: 80px;
-        height: auto;
-    }
-
-    /* Centered form container */
-    .form-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-
-    form {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-        max-width: 300px;
-        width: 100%;
-    }
-
-    h2 {
-        margin-bottom: 15px;
-    }
-
-    select, textarea, button {
-        width: 100%;
-        padding: 10px;
-        margin-top: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        font-size: 14px;
-    }
-
-    button {
-        background-color: #4CAF50;
-        color: white;
-        cursor: pointer;
-        border: none;
-    }
-
-    button:hover {
-        background-color: #45a049;
-    }
-</style>
+        header img {
+            height: 60px;
+        }
+        form {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+        }
+        select, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+        button {
+            background-color: #00acee;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0084b4;
+        }
+        footer {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            color: white;
+            text-shadow: 1px 1px 2px black;
+        }
+        footer a {
+            color: #00acee;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 
-<!-- Logo -->
-<img src="https://i.postimg.cc/mzMZpf0r/logo.png" alt="Logo" class="logo">
+    <!-- Logo -->
+    <header>
+        <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="Logo">
+    </header>
 
-<!-- Feedback form -->
-<div class="form-container">
+    <!-- Feedback Form -->
     <form action="https://formspree.io/f/xzzvwrap" method="POST">
-        <h2>Give Your Feedback</h2>
-        <select name="feedback_type" required>
-            <option value="">Select Feedback Type</option>
-            <option value="community_feedback">Community Feedback</option>
-            <option value="error_bug">Error / Bug Report</option>
-            <option value="event_campaign">Event / Campaign Related</option>
-            <option value="coming_soon">Coming Soon</option>
+        <h2>Community Feedback</h2>
+        <select name="category" required>
+            <option value="">Select Category</option>
+            <option value="Community Feedback">Community Feedback</option>
+            <option value="Error Report">Error / Issue</option>
+            <option value="Event or Campaign">Event / Campaign</option>
+            <option value="Coming Soon" disabled>Coming Soon</option>
         </select>
-        <textarea name="message" placeholder="Write your feedback here..." rows="5" required></textarea>
-        <input type="email" name="email" placeholder="Your email (optional)">
+        <textarea name="message" rows="5" placeholder="Write your feedback here..." required></textarea>
+        <input type="email" name="email" placeholder="Your Email" required>
         <button type="submit">Send Feedback</button>
     </form>
-</div>
+
+    <!-- Footer -->
+    <footer>
+        Made for the KaitoAI community · Follow on 
+        <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank">@Crypto_King877</a> 
+        & 
+        <a href="https://x.com/GoKiteAI?t=fzEmGeci_aCKBgJRAYEwsA&s=09" target="_blank">@GoKiteAI</a>
+    </footer>
 
 </body>
 </html>
