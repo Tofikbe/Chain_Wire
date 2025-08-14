@@ -1,96 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Community Feedback</title>
-  <style>
-    /* Reset default margin/padding */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community Feedback</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: url('https://i.postimg.cc/qzpBwFQk/background.jpg') no-repeat center center fixed;
+        background-size: cover;
+        font-family: Arial, sans-serif;
+        height: 100vh;
     }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: url('https://www-towrco-in.filesusr.com/02ed4d52-8362-4ad8-913f-4df7ed0a5767') no-repeat center center fixed;
-      background-size: cover;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    /* Mobile: vertical fit */
+    @media (max-width: 768px) {
+        body {
+            background-size: auto 100%;
+        }
+    }
+
+    /* Desktop: horizontal fit */
+    @media (min-width: 769px) {
+        body {
+            background-size: 100% auto;
+        }
     }
 
     /* Logo top-right */
     .logo {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      width: 100px;
-      height: auto;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 80px;
+        height: auto;
     }
 
-    /* Form container */
+    /* Centered form container */
     .form-container {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 25px;
-      border-radius: 12px;
-      max-width: 350px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
     }
 
-    .form-container h2 {
-      margin-bottom: 15px;
-      font-size: 20px;
+    form {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 300px;
+        width: 100%;
+    }
+
+    h2 {
+        margin-bottom: 15px;
     }
 
     select, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 14px;
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 14px;
     }
 
     button {
-      background: #4CAF50;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+        border: none;
     }
 
     button:hover {
-      background: #45a049;
+        background-color: #45a049;
     }
-  </style>
+</style>
 </head>
 <body>
 
-  <!-- Logo -->
-  <img src="https://www-towrco-in.filesusr.com/b1853932-69ea-4955-bd2d-bb8c71408d7b" alt="Logo" class="logo">
+<!-- Logo -->
+<img src="https://i.postimg.cc/mzMZpf0r/logo.png" alt="Logo" class="logo">
 
-  <!-- Form -->
-  <div class="form-container">
-    <h2>Share Your Feedback</h2>
+<!-- Feedback form -->
+<div class="form-container">
     <form action="https://formspree.io/f/xzzvwrap" method="POST">
-      <select name="feedback_type" required>
-        <option value="">Select Type</option>
-        <option value="Community Feedback">Community Feedback</option>
-        <option value="Error/Issue">Error / Issue</option>
-        <option value="Event or Campaign">Event / Campaign</option>
-        <option value="Coming Soon" disabled>Coming Soon</option>
-      </select>
-
-      <textarea name="message" rows="5" placeholder="Write your feedback here..." required></textarea>
-
-      <button type="submit">Send Feedback</button>
+        <h2>Give Your Feedback</h2>
+        <select name="feedback_type" required>
+            <option value="">Select Feedback Type</option>
+            <option value="community_feedback">Community Feedback</option>
+            <option value="error_bug">Error / Bug Report</option>
+            <option value="event_campaign">Event / Campaign Related</option>
+            <option value="coming_soon">Coming Soon</option>
+        </select>
+        <textarea name="message" placeholder="Write your feedback here..." rows="5" required></textarea>
+        <input type="email" name="email" placeholder="Your email (optional)">
+        <button type="submit">Send Feedback</button>
     </form>
-  </div>
+</div>
 
 </body>
 </html>
