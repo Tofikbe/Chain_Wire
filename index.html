@@ -1,59 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Community Feedback</title>
   <style>
+    /* Reset default margin/padding */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background: #f2f2f2;
+      background: url('https://www-towrco-in.filesusr.com/02ed4d52-8362-4ad8-913f-4df7ed0a5767') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Logo top-right */
+    .logo {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      width: 100px;
+      height: auto;
+    }
+
+    /* Form container */
+    .form-container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 25px;
+      border-radius: 12px;
+      max-width: 350px;
+      width: 100%;
       text-align: center;
-      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
-    .container {
-      max-width: 400px;
-      background: white;
-      margin: auto;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+    .form-container h2 {
+      margin-bottom: 15px;
+      font-size: 20px;
     }
-    select, textarea, button, input {
+
+    select, textarea, button {
       width: 100%;
       padding: 10px;
       margin-top: 10px;
-      border-radius: 5px;
+      border-radius: 8px;
       border: 1px solid #ccc;
+      font-size: 14px;
     }
+
     button {
-      background: #0070f3;
+      background: #4CAF50;
       color: white;
       border: none;
       cursor: pointer;
+      font-weight: bold;
     }
+
     button:hover {
-      background: #0059c1;
-    }
-    option[disabled] {
-      color: gray;
+      background: #45a049;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Community Feedback Form</h2>
+
+  <!-- Logo -->
+  <img src="https://www-towrco-in.filesusr.com/b1853932-69ea-4955-bd2d-bb8c71408d7b" alt="Logo" class="logo">
+
+  <!-- Form -->
+  <div class="form-container">
+    <h2>Share Your Feedback</h2>
     <form action="https://formspree.io/f/xzzvwrap" method="POST">
-      <select name="category" required>
-        <option value="">Select Category</option>
-        <option>Community Feedback</option>
-        <option>Error Report</option>
-        <option>Event/Campaign</option>
-        <option disabled>Coming Soon</option>
+      <select name="feedback_type" required>
+        <option value="">Select Type</option>
+        <option value="Community Feedback">Community Feedback</option>
+        <option value="Error/Issue">Error / Issue</option>
+        <option value="Event or Campaign">Event / Campaign</option>
+        <option value="Coming Soon" disabled>Coming Soon</option>
       </select>
-      <textarea name="message" placeholder="Type your feedback here..." required></textarea>
-      <input type="email" name="_replyto" placeholder="Your Email (optional)">
+
+      <textarea name="message" rows="5" placeholder="Write your feedback here..." required></textarea>
+
       <button type="submit">Send Feedback</button>
     </form>
   </div>
+
 </body>
 </html>
