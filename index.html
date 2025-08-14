@@ -9,14 +9,14 @@
             margin: 0;
             padding: 0;
             height: 100vh;
-            background: url('https://i.postimg.cc/qzpBwFQk/background.jpg') no-repeat center center;
+            background: url('https://i.postimg.cc/qzpBwFQk/background.jpg') no-repeat center center fixed;
             background-size: cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-family: Arial, sans-serif;
-            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #f1f1f1;
             text-align: center;
         }
 
@@ -25,26 +25,35 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            font-size: 30px;
+            font-size: 28px;
             cursor: pointer;
             z-index: 1001;
+            background: rgba(0,0,0,0.5);
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .menu-btn:hover {
+            background: rgba(0,0,0,0.8);
         }
 
         /* Announcement button */
         .announcement-btn {
             position: absolute;
             top: 20px;
-            left: 70px;
-            padding: 8px 12px;
-            background: #00acee;
+            left: 80px;
+            padding: 8px 16px;
+            background: #1da1f2;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             z-index: 1001;
+            transition: 0.3s;
+            font-weight: 600;
         }
         .announcement-btn:hover {
-            background: #0084b4;
+            background: #0d95e8;
         }
 
         /* Overlay menu */
@@ -54,27 +63,30 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(6px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
             display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            transition: 0.3s;
         }
 
         .menu-overlay a {
-            color: white;
-            font-size: 20px;
+            color: #f1f1f1;
+            font-size: 22px;
             text-decoration: none;
             padding: 15px 0;
             width: 80%;
             text-align: center;
-            border-bottom: 1px solid black;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            transition: 0.3s;
         }
 
         .menu-overlay a:hover {
-            color: #00acee;
+            color: #1da1f2;
+            border-bottom-color: #1da1f2;
         }
 
         /* Announcement modal */
@@ -83,7 +95,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             z-index: 9999;
             justify-content: center;
             align-items: center;
@@ -92,24 +104,29 @@
             box-sizing: border-box;
         }
         #announcementContent {
-            max-width: 500px;
+            max-width: 520px;
             width: 100%;
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
             overflow-y: auto;
-            max-height: 80vh;
-            color: black;
+            max-height: 85vh;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            color: #000;
         }
         .announcement-controls {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-top: 10px;
-            font-size: 20px;
+            gap: 25px;
+            margin-top: 15px;
+            font-size: 22px;
         }
         .announcement-controls span {
             cursor: pointer;
+            transition: 0.3s;
+        }
+        .announcement-controls span:hover {
+            color: #1da1f2;
         }
 
         header {
@@ -119,44 +136,61 @@
         }
         header img {
             height: 60px;
+            border-radius: 10px;
         }
 
         form {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 20px;
-            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.65);
+            padding: 25px;
+            border-radius: 15px;
             width: 90%;
-            max-width: 400px;
+            max-width: 420px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+        form h2 {
+            margin-bottom: 15px;
+            font-size: 24px;
         }
         select, textarea, input, button {
             width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 5px;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
             border: none;
             font-size: 16px;
+            box-sizing: border-box;
+        }
+        select, textarea, input {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        select option {
+            color: #000;
         }
         button {
-            background-color: #00acee;
+            background-color: #1da1f2;
             color: white;
             cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
         }
         button:hover {
-            background-color: #0084b4;
+            background-color: #0d95e8;
         }
 
         footer {
             position: fixed;
-            bottom: 10px;
+            bottom: 12px;
             width: 100%;
             text-align: center;
-            font-size: 12px;
-            color: white;
-            text-shadow: 1px 1px 2px black;
+            font-size: 13px;
+            color: #f1f1f1;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
         }
         footer a {
-            color: #00acee;
+            color: #1da1f2;
             text-decoration: none;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -188,9 +222,9 @@
         <div id="announcementContent">
             <div id="tweetContainer" style="text-align:center;"></div>
             <div class="announcement-controls">
-                <span id="prevBtn">←</span>
+                <span id="prevBtn">⇚</span>
                 <span id="closeBtn">❌</span>
-                <span id="nextBtn">→</span>
+                <span id="nextBtn">⇛</span>
             </div>
         </div>
     </div>
