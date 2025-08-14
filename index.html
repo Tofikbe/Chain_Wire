@@ -162,7 +162,7 @@
             background-color: #0d95e8;
         }
 
-        /* Announcement button below form */
+        /* Announcement & Agent buttons below form */
         .announcement-btn {
             margin-top: 15px;
             padding: 10px 20px;
@@ -176,6 +176,47 @@
         }
         .announcement-btn:hover {
             background: #0d95e8;
+        }
+
+        /* Community Agent Modal */
+        #agentModal {
+            display: none;
+            position: fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(6px);
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+            z-index:10000;
+        }
+        #agentContent {
+            width:90%;
+            max-width:520px;
+            padding:20px;
+            box-sizing:border-box;
+            border-radius:12px;
+            background:#fff;
+            max-height:85vh;
+            overflow-y:auto;
+            display:flex;
+            flex-direction:column;
+        }
+        #agentChat div {
+            margin-bottom:10px;
+        }
+        #agentChat .question {
+            font-weight:600;
+            color:#1da1f2;
+        }
+        #agentChat .answer {
+            background:#f1f1f1;
+            padding:10px;
+            border-radius:8px;
+            color:#000;
         }
 
         footer {
@@ -247,7 +288,21 @@
 
         <!-- Announcement Button -->
         <button type="button" class="announcement-btn" id="announcementBtn">📢 Announcements</button>
+
+        <!-- KiteAI Community Agent Button -->
+        <button type="button" class="announcement-btn" id="agentBtn">🤖 KiteAI Community Agent</button>
     </form>
+
+    <!-- Community Agent Modal -->
+    <div id="agentModal">
+        <div id="agentContent">
+            <h2 style="text-align:center; margin-bottom:15px;">KiteAI Community Agent</h2>
+            <div id="agentChat"></div>
+            <div style="text-align:center; margin-top:15px;">
+                <button id="closeAgentBtn" style="padding:8px 16px;">Close</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -299,6 +354,41 @@
         document.getElementById("nextBtn").addEventListener("click", () => {
             currentTweet = (currentTweet + 1) % tweets.length;
             loadTweet(currentTweet);
+        });
+
+        // KiteAI Community Agent logic
+        const agentQA = [
+            { q: "How can I join the KiteAI Testnet?", a: "You can join the Testnet using the link in the menu and follow instructions to create your account." },
+            { q: "How do I submit feedback?", a: "Use the feedback form above and select the category that fits your feedback." },
+            { q: "Where can I see KiteAI community updates?", a: "Community updates are posted on our Twitter handle and in the Announcement section above." },
+            { q: "How can I participate in events?", a: "Check the Event / Campaign announcements in the menu links and join via the instructions provided." },
+            { q: "Who do I contact for help?", a: "You can ask here in the Community Agent, or reach out to our team via official contact links in the menu." }
+        ];
+
+        function loadAgentChat() {
+            const chatDiv = document.getElementById("agentChat");
+            chatDiv.innerHTML = "";
+            agentQA.forEach(item => {
+                const questionEl = document.createElement("div");
+                questionEl.className = "question";
+                questionEl.innerText = "Q: " + item.q;
+
+                const answerEl = document.createElement("div");
+                answerEl.className = "answer";
+                answerEl.innerText = "A: " + item.a;
+
+                chatDiv.appendChild(questionEl);
+                chatDiv.appendChild(answerEl);
+            });
+        }
+
+        document.getElementById("agentBtn").addEventListener("click", () => {
+            document.getElementById("agentModal").style.display = "flex";
+            loadAgentChat();
+        });
+
+        document.getElementById("closeAgentBtn").addEventListener("click", () => {
+            document.getElementById("agentModal").style.display = "none";
         });
     </script>
 
