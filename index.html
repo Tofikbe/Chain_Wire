@@ -153,7 +153,7 @@
         }
         .announcement-btn:hover { background: #0d95e8; }
 
-        /* Agent Chat Modal */
+        /* KiteAI Community Agent Modal */
         #agentModal {
             display: none;
             position: fixed;
@@ -166,7 +166,8 @@
             align-items:center;
         }
         #agentContent {
-            background:#fff;
+            background:#000; /* Black background */
+            color:#fff;       /* White text */
             width:90%;
             max-width:520px;
             border-radius:12px;
@@ -176,17 +177,24 @@
             max-height:85vh;
             overflow-y:auto;
         }
+        #closeAgent {
+            align-self: flex-end;
+            cursor: pointer;
+            font-size: 22px;
+            margin-bottom:10px;
+        }
         #chatMessages {
             flex-grow:1;
             overflow-y:auto;
             margin-bottom:10px;
-            border:1px solid #ccc;
+            border:1px solid #444;
             padding:10px;
             border-radius:8px;
+            background:#111;
         }
         .chat-msg { margin:5px 0; padding:8px 12px; border-radius:8px; max-width:80%; }
         .chat-agent { background:#1da1f2; color:#fff; align-self:flex-start; }
-        .chat-user { background:#eee; color:#000; align-self:flex-end; } /* USER TEXT BLACK */
+        .chat-user { background:#333; color:#fff; align-self:flex-end; }
 
         .question-btn {
             margin:3px;
@@ -199,7 +207,7 @@
         }
         .question-btn:hover { background:#1da1f2; }
 
-        #userInput { padding:8px; width: calc(100% - 16px); margin-bottom:10px; border-radius:6px; border:1px solid #ccc; }
+        #userInput { padding:8px; width: calc(100% - 16px); margin-bottom:10px; border-radius:6px; border:1px solid #444; background:#222; color:#fff; }
         #sendBtn { padding:8px; background:#1da1f2; color:white; border:none; border-radius:6px; cursor:pointer; }
         #sendBtn:hover { background:#0d95e8; }
 
@@ -280,6 +288,7 @@
     <!-- Agent Chat Modal -->
     <div id="agentModal">
         <div id="agentContent">
+            <span id="closeAgent">❌ Close</span>
             <div id="chatMessages"></div>
             <div>
                 <div id="preQuestions" style="margin-bottom:10px;">
@@ -353,6 +362,7 @@
         const preQuestions = document.getElementById('preQuestions');
         const userInput = document.getElementById('userInput');
         const sendBtn = document.getElementById('sendBtn');
+        const closeAgent = document.getElementById('closeAgent');
 
         const answers = {
             "How can I use KiteAI?": "You can use KiteAI by joining our community and trying out the Testnet features.",
@@ -375,6 +385,10 @@
             agentModal.style.display = 'flex';
         });
 
+        closeAgent.addEventListener('click', () => {
+            agentModal.style.display = 'none';
+        });
+
         // Predefined question click
         document.querySelectorAll('.question-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -394,7 +408,6 @@
                 userInput.value = '';
             }
         });
-
     </script>
 
 </body>
