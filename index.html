@@ -178,11 +178,6 @@
             background: #0d95e8;
         }
 
-        /* Chart bars inside modal */
-        .chart-bar {
-            margin: 10px 0;
-        }
-
         footer {
             position: fixed;
             bottom: 12px;
@@ -231,32 +226,6 @@
         </div>
     </div>
 
-    <!-- Chart Modal -->
-    <div id="chartModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; flex-direction:column; z-index:10000;">
-        <div id="chartContent" style="width:90%; max-width:520px; padding:20px; box-sizing:border-box; border-radius:12px;">
-            <h2 style="color:white;text-align:center;">Feedback Charts</h2>
-            <div class="chart-bar">
-                <span style="color:white;">Community Feedback</span>
-                <div class="bar green" style="width:70%; height:30px; border-radius:6px; text-align:right; padding-right:5px; color:#fff; font-weight:600;">70%</div>
-            </div>
-            <div class="chart-bar">
-                <span style="color:white;">Error / Issue</span>
-                <div class="bar red" style="width:50%; height:30px; border-radius:6px; text-align:right; padding-right:5px; color:#fff; font-weight:600;">50%</div>
-            </div>
-            <div class="chart-bar">
-                <span style="color:white;">Event / Campaign</span>
-                <div class="bar orange" style="width:30%; height:30px; border-radius:6px; text-align:right; padding-right:5px; color:#fff; font-weight:600;">30%</div>
-            </div>
-            <div class="chart-bar">
-                <span style="color:white;">Coming Soon</span>
-                <div class="bar yellow" style="width:10%; height:30px; border-radius:6px; text-align:right; padding-right:5px; color:#000; font-weight:600;">10%</div>
-            </div>
-            <div style="text-align:center; margin-top:15px;">
-                <button id="closeChartBtn" style="padding:8px 16px;">Close</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Logo -->
     <header>
         <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="Logo">
@@ -278,10 +247,13 @@
 
         <!-- Announcement Button -->
         <button type="button" class="announcement-btn" id="announcementBtn">📢 Announcements</button>
-
-        <!-- Chart Button -->
-        <button type="button" class="announcement-btn" id="chartBtn">📊 Feedback Chart</button>
     </form>
+
+    <!-- Feedback Chart -->
+    <div id="feedbackChartContainer" style="margin-top: 30px; width: 90%; max-width: 600px; background: rgba(0,0,0,0.8); padding: 20px; border-radius: 12px; color: #fff;">
+        <h3 style="text-align:center; margin-bottom: 15px;">Feedback Chart (Daily)</h3>
+        <canvas id="feedbackChart"></canvas>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -292,6 +264,7 @@
     </footer>
 
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         function toggleMenu() {
             const menu = document.getElementById('menuOverlay');
@@ -335,12 +308,57 @@
             loadTweet(currentTweet);
         });
 
-        // Chart button functionality
-        document.getElementById("chartBtn").addEventListener("click", () => {
-            document.getElementById("chartModal").style.display = "flex";
-        });
-        document.getElementById("closeChartBtn").addEventListener("click", () => {
-            document.getElementById("chartModal").style.display = "none";
+        // Feedback Chart
+        const ctx = document.getElementById('feedbackChart').getContext('2d');
+        const feedbackChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    new Date(new Date().setDate(new Date().getDate()-4)).toLocaleDateString(),
+                    new Date(new Date().setDate(new Date().getDate()-3)).toLocaleDateString(),
+                    new Date(new Date().setDate(new Date().getDate()-2)).toLocaleDateString(),
+                    new Date(new Date().setDate(new Date().getDate()-1)).toLocaleDateString(),
+                    new Date().toLocaleDateString()
+                ],
+                datasets: [
+                    {
+                        label: 'Community Feedback',
+                        data: [5, 3, 6, 2, 4],
+                        backgroundColor: 'red'
+                    },
+                    {
+                        label: 'Error / Issue',
+                        data: [2, 4, 1, 5, 3],
+                        backgroundColor: 'orange'
+                    },
+                    {
+                        label: 'Event / Campaign',
+                        data: [1, 2, 3, 2, 1],
+                        backgroundColor: 'yellow'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#fff' },
+                        grid: { color: 'rgba(255,255,255,0.2)' }
+                    },
+                    y: {
+                        ticks: { color: '#fff', stepSize: 1 },
+                        grid: { color: 'rgba(255,255,255,0.2)' },
+                        beginAtZero: true
+                    }
+                }
+            }
         });
     </script>
 
