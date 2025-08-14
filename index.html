@@ -11,10 +11,55 @@
             height: 100vh;
             background: url('https://i.postimg.cc/qzpBwFQk/background.jpg') no-repeat center center;
             background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             font-family: Arial, sans-serif;
             color: white;
             text-align: center;
         }
+
+        /* Top menu button */
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Overlay menu */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(6px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .menu-overlay a {
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+            padding: 15px 0;
+            width: 80%;
+            text-align: center;
+            border-bottom: 1px solid black;
+        }
+
+        .menu-overlay a:hover {
+            color: #00acee;
+        }
+
         header {
             position: absolute;
             top: 20px;
@@ -23,16 +68,15 @@
         header img {
             height: 60px;
         }
+
         form {
             background: rgba(0, 0, 0, 0.6);
             padding: 20px;
             border-radius: 10px;
             width: 90%;
             max-width: 400px;
-            margin: auto;
-            margin-top: 100px;
         }
-        select, textarea, button, input[type="email"] {
+        select, textarea, input, button {
             width: 100%;
             padding: 10px;
             margin: 8px 0;
@@ -48,6 +92,7 @@
         button:hover {
             background-color: #0084b4;
         }
+
         footer {
             position: fixed;
             bottom: 10px;
@@ -62,53 +107,74 @@
             text-decoration: none;
         }
 
-        /* Slider Styles */
-        .announcement-slider {
-            display: none;
+        /* Announcement Slider */
+        .announcement-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 999;
-            display: flex;
+            background: rgba(0,0,0,0.8);
+            display: none;
             justify-content: center;
             align-items: center;
+            z-index: 2000;
             flex-direction: column;
+            color: white;
         }
-        .tweet-container {
+        .announcement-box {
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
             width: 90%;
-            max-width: 550px;
+            text-align: center;
         }
-        .slider-controls {
-            margin-top: 20px;
-        }
-        .slider-btn {
-            background: #00acee;
+        .announcement-box iframe {
+            width: 100%;
+            height: 400px;
             border: none;
-            color: white;
-            padding: 10px 15px;
-            margin: 0 5px;
-            cursor: pointer;
-            font-size: 18px;
-            border-radius: 5px;
         }
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: red;
-            border: none;
-            color: white;
-            padding: 8px 12px;
-            font-size: 18px;
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            gap: 20px;
+            font-size: 24px;
             cursor: pointer;
+            user-select: none;
+        }
+        .controls span {
+            padding: 5px 10px;
             border-radius: 5px;
+            background: #222;
+            color: white;
+        }
+        .controls span:hover {
+            background: #444;
         }
     </style>
 </head>
 <body>
+
+    <!-- Menu Button -->
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
+        <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">Fly The Kite NFT🪁</a>
+        <a href="https://x.com/ChiZhangData" target="_blank">Co-founder🪁</a>
+        <a href="https://x.com/Kite_Frens_Eco" target="_blank">Kite: Community & Ecosystem🪁</a>
+        <a href="https://x.com/KiteAIChinese" target="_blank">KiteAIChinese🪁</a>
+        <a href="https://x.com/buidloor" target="_blank">Vikthebuilder🪁</a>
+        <a href="https://x.com/lei_lei0904" target="_blank">Lei-Lei🪁</a>
+        <a href="https://x.com/scottshics" target="_blank">Scott Shi🪁</a>
+        <a href="https://x.com/Henryleemr" target="_blank">Henry Lee🪁</a>
+        <a href="https://x.com/superamscom" target="_blank">Spring🪁</a>
+        <a href="https://x.com/0xLaughing" target="_blank">Laughing🪁</a>
+    </div>
 
     <!-- Logo -->
     <header>
@@ -130,19 +196,6 @@
         <button type="submit">Send Feedback</button>
     </form>
 
-    <!-- Button to open announcements -->
-    <button onclick="openSlider()" style="margin-top:20px;background:#00acee;color:white;padding:10px 15px;border:none;border-radius:5px;">View KiteAI Announcements</button>
-
-    <!-- Announcements Slider -->
-    <div class="announcement-slider" id="announcementSlider">
-        <button class="close-btn" onclick="closeSlider()">X</button>
-        <div class="tweet-container" id="tweetContainer"></div>
-        <div class="slider-controls">
-            <button class="slider-btn" onclick="prevTweet()">⬅</button>
-            <button class="slider-btn" onclick="nextTweet()">➡</button>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer>
         Made for the KiteAI community · Follow on 
@@ -151,50 +204,66 @@
         <a href="https://x.com/GoKiteAI" target="_blank">@GoKiteAI</a>
     </footer>
 
-    <!-- Twitter Embed Script -->
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <!-- Announcement Slider -->
+    <div class="announcement-container" id="announcementContainer">
+        <div class="announcement-box">
+            <iframe id="announcementFrame" src=""></iframe>
+            <div class="controls">
+                <span id="prevBtn">←</span>
+                <span id="closeBtn">❌</span>
+                <span id="nextBtn">→</span>
+            </div>
+        </div>
+    </div>
 
     <script>
-        const tweets = [
-            "https://twitter.com/GoKiteAI/status/1951245795216200146",
-            "https://twitter.com/GoKiteAI/status/1955919782785503588",
-            "https://twitter.com/GoKiteAI/status/1955792638948597868",
-            "https://twitter.com/GoKiteAI/status/1955104976801349904",
-            "https://twitter.com/wallet/status/1954052040939753923"
+        function toggleMenu() {
+            const menu = document.getElementById('menuOverlay');
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        // Announcement Logic
+        const posts = [
+            "https://x.com/GoKiteAI/status/1951245795216200146",
+            "https://x.com/GoKiteAI/status/1955919782785503588",
+            "https://x.com/GoKiteAI/status/1955792638948597868",
+            "https://x.com/GoKiteAI/status/1955104976801349904",
+            "https://x.com/wallet/status/1954052040939753923"
         ];
-
         let currentIndex = 0;
+        const frame = document.getElementById("announcementFrame");
+        const container = document.getElementById("announcementContainer");
 
-        function openSlider() {
-            document.getElementById('announcementSlider').style.display = 'flex';
-            loadTweet();
+        function loadPost(index) {
+            frame.src = posts[index].replace("x.com","twitframe.com/show?url=https://x.com");
         }
-        function closeSlider() {
-            document.getElementById('announcementSlider').style.display = 'none';
-        }
-        function loadTweet() {
-            const container = document.getElementById('tweetContainer');
-            container.innerHTML = `<blockquote class="twitter-tweet"><a href="${tweets[currentIndex]}"></a></blockquote>`;
-            twttr.widgets.load(container);
-        }
-        function nextTweet() {
-            currentIndex = (currentIndex + 1) % tweets.length;
-            loadTweet();
-        }
-        function prevTweet() {
-            currentIndex = (currentIndex - 1 + tweets.length) % tweets.length;
-            loadTweet();
-        }
+        loadPost(currentIndex);
+        container.style.display = "flex"; // default open, aap close bhi kar sakte ho
 
-        // Swipe gesture support
-        let startX = 0;
-        document.getElementById('announcementSlider').addEventListener('touchstart', e => {
-            startX = e.touches[0].clientX;
+        document.getElementById("prevBtn").addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + posts.length) % posts.length;
+            loadPost(currentIndex);
         });
-        document.getElementById('announcementSlider').addEventListener('touchend', e => {
+        document.getElementById("nextBtn").addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % posts.length;
+            loadPost(currentIndex);
+        });
+        document.getElementById("closeBtn").addEventListener("click", () => {
+            container.style.display = "none";
+        });
+
+        // Swipe Support
+        let startX = 0;
+        frame.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+        frame.addEventListener("touchend", e => {
             let endX = e.changedTouches[0].clientX;
-            if (startX - endX > 50) nextTweet();
-            else if (endX - startX > 50) prevTweet();
+            if (startX - endX > 50) {
+                currentIndex = (currentIndex + 1) % posts.length;
+                loadPost(currentIndex);
+            } else if (endX - startX > 50) {
+                currentIndex = (currentIndex - 1 + posts.length) % posts.length;
+                loadPost(currentIndex);
+            }
         });
     </script>
 
