@@ -247,6 +247,9 @@
 
         <!-- Announcement Button below form -->
         <button type="button" class="announcement-btn" id="announcementBtn">📢 Announcements</button>
+
+        <!-- Feedback Chart below Announcement Button -->
+        <canvas id="feedbackChart" width="400" height="300" style="margin-top:20px;"></canvas>
     </form>
 
     <!-- Footer -->
@@ -258,6 +261,7 @@
     </footer>
 
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         function toggleMenu() {
             const menu = document.getElementById('menuOverlay');
@@ -299,6 +303,57 @@
         document.getElementById("nextBtn").addEventListener("click", () => {
             currentTweet = (currentTweet + 1) % tweets.length;
             loadTweet(currentTweet);
+        });
+
+        // --- Feedback Chart Code ---
+        const getCounts = () => {
+            return {
+                community: parseInt(localStorage.getItem('feedback_community')) || 0,
+                error: parseInt(localStorage.getItem('feedback_error')) || 0,
+                event: parseInt(localStorage.getItem('feedback_event')) || 0
+            };
+        }
+
+        const updateLocalStorage = (category) => {
+            let counts = getCounts();
+            if(category === "Community Feedback") counts.community++;
+            if(category === "Error Report") counts.error++;
+            if(category === "Event or Campaign") counts.event++;
+            localStorage.setItem('feedback_community', counts.community);
+            localStorage.setItem('feedback_error', counts.error);
+            localStorage.setItem('feedback_event', counts.event);
+            return counts;
+        }
+
+        const ctx = document.getElementById('feedbackChart').getContext('2d');
+        let counts = getCounts();
+        let feedbackChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Community Feedback','Error / Issue','Event / Campaign'],
+                datasets: [{
+                    data: [counts.community, counts.error, counts.event],
+                    backgroundColor: ['#1da1f2','#f44336','#ff9800'],
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    title: {
+                        display: true,
+                        text: 'Feedback Category Distribution'
+                    }
+                }
+            }
+        });
+
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (e) => {
+            const category = form.category.value;
+            const newCounts = updateLocalStorage(category);
+            feedbackChart.data.datasets[0].data = [newCounts.community,newCounts.error,newCounts.event];
+            feedbackChart.update();
         });
     </script>
 
