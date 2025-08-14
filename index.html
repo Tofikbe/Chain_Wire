@@ -1,1 +1,59 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Community Feedback</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 400px;
+      background: white;
+      margin: auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    select, textarea, button, input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #0070f3;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0059c1;
+    }
+    option[disabled] {
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Community Feedback Form</h2>
+    <form action="https://formspree.io/f/xzzvwrap" method="POST">
+      <select name="category" required>
+        <option value="">Select Category</option>
+        <option>Community Feedback</option>
+        <option>Error Report</option>
+        <option>Event/Campaign</option>
+        <option disabled>Coming Soon</option>
+      </select>
+      <textarea name="message" placeholder="Type your feedback here..." required></textarea>
+      <input type="email" name="_replyto" placeholder="Your Email (optional)">
+      <button type="submit">Send Feedback</button>
+    </form>
+  </div>
+</body>
+</html>
