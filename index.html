@@ -162,7 +162,7 @@
             background-color: #0d95e8;
         }
 
-        /* Announcement & Chart button below form */
+        /* Announcement button below form */
         .announcement-btn {
             margin-top: 15px;
             padding: 10px 20px;
@@ -176,11 +176,6 @@
         }
         .announcement-btn:hover {
             background: #0d95e8;
-        }
-
-        /* Chart bars inside modal */
-        .chart-bar {
-            margin: 10px 0;
         }
 
         footer {
@@ -231,32 +226,6 @@
         </div>
     </div>
 
-    <!-- Chart Modal -->
-    <div id="chartModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; flex-direction:column; z-index:10000;">
-        <div id="chartContent" style="width:90%; max-width:520px; padding:20px; box-sizing:border-box; border-radius:12px;">
-            <h2 style="color:white;text-align:center;">Feedback Charts</h2>
-            <div class="chart-bar">
-                <span style="color:white;">Community Feedback</span>
-                <div class="bar green" style="width:70%; height:30px; border-radius:6px; text-align:right; padding-right:5px; color:#fff; font-weight:600;">70%</div>
-            </div>
-            <div class="chart-bar">
-                <span style="color:white;">Error / Issue</span>
-                <div class="bar red" style="width:50%; height:30px; border-radius:6px; text-align:right; padding-right:5px; color:#fff; font-weight:600;">50%</div>
-            </div>
-            <div class="chart-bar">
-                <span style="color:white;">Event / Campaign</span>
-                <div class="bar orange" style="width:30%; height:30px; border-radius:6px; text-align:right; padding-right:5px; color:#fff; font-weight:600;">30%</div>
-            </div>
-            <div class="chart-bar">
-                <span style="color:white;">Coming Soon</span>
-                <div class="bar yellow" style="width:10%; height:30px; border-radius:6px; text-align:right; padding-right:5px; color:#000; font-weight:600;">10%</div>
-            </div>
-            <div style="text-align:center; margin-top:15px;">
-                <button id="closeChartBtn" style="padding:8px 16px;">Close</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Logo -->
     <header>
         <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="Logo">
@@ -278,9 +247,6 @@
 
         <!-- Announcement Button -->
         <button type="button" class="announcement-btn" id="announcementBtn">📢 Announcements</button>
-
-        <!-- Chart Button -->
-        <button type="button" class="announcement-btn" id="chartBtn">📊 Feedback Chart</button>
     </form>
 
     <!-- Footer -->
@@ -333,14 +299,6 @@
         document.getElementById("nextBtn").addEventListener("click", () => {
             currentTweet = (currentTweet + 1) % tweets.length;
             loadTweet(currentTweet);
-        });
-
-        // Chart button functionality
-        document.getElementById("chartBtn").addEventListener("click", () => {
-            document.getElementById("chartModal").style.display = "flex";
-        });
-        document.getElementById("closeChartBtn").addEventListener("click", () => {
-            document.getElementById("chartModal").style.display = "none";
         });
     </script>
 
