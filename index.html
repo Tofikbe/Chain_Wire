@@ -19,6 +19,7 @@
             color: #f1f1f1;
             text-align: center;
         }
+
         /* Top menu button */
         .menu-btn {
             position: absolute;
@@ -33,19 +34,6 @@
             transition: 0.3s;
         }
         .menu-btn:hover { background: rgba(0,0,0,0.8); }
-
-        /* Top scrolling ad */
-        #topAd {
-            position: absolute;
-            top: 90px; /* below menu & logo */
-            left: 100%;
-            z-index: 1001;
-            display: flex;
-            align-items: center;
-        }
-        #topAd img {
-            height: 60px; /* adjust size */
-        }
 
         /* Overlay menu */
         .menu-overlay {
@@ -77,6 +65,16 @@
             color: #1da1f2;
             border-bottom-color: #1da1f2;
         }
+
+        /* Top scrolling ad */
+        #topAd {
+            position: absolute;
+            top: 100px; /* below logo & menu */
+            left: 100%; /* start offscreen right */
+            height: 60px;
+            z-index: 1002;
+        }
+
         /* Announcement modal */
         #announcementModal {
             display: none;
@@ -153,6 +151,7 @@
             transition: 0.3s;
         }
         button:hover { background-color: #0d95e8; }
+
         /* Announcement & Agent buttons */
         .announcement-btn {
             margin-top: 15px;
@@ -241,10 +240,8 @@
     <!-- Menu Button -->
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
 
-    <!-- Top Scrolling Ad -->
-    <div id="topAd">
-        <img src="https://i.postimg.cc/Mn4Drkjt/your-ad-image.png" alt="Top Ad">
-    </div>
+    <!-- Top scrolling ad (only on front page) -->
+    <img id="topAd" src="https://postimg.cc/Mn4Drkjt" alt="Top Ad">
 
     <!-- Menu Overlay -->
     <div class="menu-overlay" id="menuOverlay">
@@ -302,12 +299,10 @@
     <!-- Agent Chat Modal -->
     <div id="agentModal">
         <div id="agentContent">
-            <!-- Close Button -->
             <div style="display:flex; justify-content:flex-end;">
                 <img id="closeAgentBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" 
                      alt="Close" style="width:28px; height:28px; cursor:pointer;">
             </div>
-
             <div id="chatMessages"></div>
             <div>
                 <div id="preQuestions" style="margin-bottom:10px;">
@@ -328,23 +323,25 @@
         <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank">@Crypto_King877</a> 
         & 
         <a href="https://x.com/GoKiteAI?t=fzEmGeci_aCKBgJRAYEwsA&s=09" target="_blank">@GoKiteAI</a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </footer>
+
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <script>
         function toggleMenu() {
             const menu = document.getElementById('menuOverlay');
             menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
         }
 
-        // Top scrolling ad animation
+        // Scrolling top ad only
         const topAd = document.getElementById('topAd');
-        let adPos = window.innerWidth; // start offscreen right
+        let adPos = window.innerWidth;
         function moveAd() {
             adPos -= 2; // speed
             if(adPos < -topAd.offsetWidth) adPos = window.innerWidth;
             topAd.style.left = adPos + 'px';
             requestAnimationFrame(moveAd);
         }
-        moveAd(); // start animation
+        moveAd();
 
         const tweets = [
             "https://x.com/GoKiteAI/status/1951245795216200146",
@@ -387,7 +384,6 @@
         const agentModal = document.getElementById('agentModal');
         const agentBtn = document.getElementById('agentBtn');
         const chatMessages = document.getElementById('chatMessages');
-        const preQuestions = document.getElementById('preQuestions');
         const userInput = document.getElementById('userInput');
         const sendBtn = document.getElementById('sendBtn');
         const closeAgentBtn = document.getElementById('closeAgentBtn');
@@ -417,9 +413,9 @@
             agentModal.style.display = 'none';
         });
 
-        // Predefined question click
         document.querySelectorAll('.question-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', ()
+                btn.addEventListener('click', () => {
                 const q = btn.textContent;
                 addMessage(q, 'user');
                 addMessage(answers[q], 'agent');
@@ -436,12 +432,7 @@
                 userInput.value = '';
             }
         });
-
-        // Make sure ad resizes on window resize
-        window.addEventListener('resize', () => {
-            if(adPos > window.innerWidth) adPos = window.innerWidth;
-        });
-
     </script>
+
 </body>
 </html>
