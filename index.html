@@ -166,7 +166,8 @@
             align-items:center;
         }
         #agentContent {
-            background:#fff;
+            background:#111; /* dark theme */
+            color: #f1f1f1;
             width:90%;
             max-width:520px;
             border-radius:12px;
@@ -180,13 +181,15 @@
             flex-grow:1;
             overflow-y:auto;
             margin-bottom:10px;
-            border:1px solid #ccc;
+            border:1px solid #444;
             padding:10px;
             border-radius:8px;
+            background:#222;
+            color:#f1f1f1;
         }
         .chat-msg { margin:5px 0; padding:8px 12px; border-radius:8px; max-width:80%; }
-        .chat-agent { background:#1da1f2; color:#fff; align-self:flex-start; }
-        .chat-user { background:#eee; color:#000; align-self:flex-end; }
+        .chat-agent { background:#0d95e8; color:#fff; align-self:flex-start; }
+        .chat-user { background:#333; color:#fff; align-self:flex-end; }
 
         .question-btn {
             margin:3px;
@@ -199,9 +202,9 @@
         }
         .question-btn:hover { background:#1da1f2; }
 
-        #userInput { padding:8px; width: calc(100% - 16px); margin-bottom:10px; border-radius:6px; border:1px solid #ccc; }
-        #sendBtn { padding:8px; background:#1da1f2; color:white; border:none; border-radius:6px; cursor:pointer; }
-        #sendBtn:hover { background:#0d95e8; }
+        #userInput { padding:8px; width: calc(100% - 16px); margin-bottom:10px; border-radius:6px; border:1px solid #444; background:#222; color:#f1f1f1; }
+        #sendBtn { padding:8px; background:#0d95e8; color:white; border:none; border-radius:6px; cursor:pointer; }
+        #sendBtn:hover { background:#1da1f2; }
 
         footer {
             position: fixed;
@@ -280,6 +283,12 @@
     <!-- Agent Chat Modal -->
     <div id="agentModal">
         <div id="agentContent">
+            <!-- Close Button -->
+            <div style="display:flex; justify-content:flex-end;">
+                <img id="closeAgentBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" 
+                     alt="Close" style="width:28px; height:28px; cursor:pointer;">
+            </div>
+
             <div id="chatMessages"></div>
             <div>
                 <div id="preQuestions" style="margin-bottom:10px;">
@@ -353,6 +362,7 @@
         const preQuestions = document.getElementById('preQuestions');
         const userInput = document.getElementById('userInput');
         const sendBtn = document.getElementById('sendBtn');
+        const closeAgentBtn = document.getElementById('closeAgentBtn');
 
         const answers = {
             "How can I use KiteAI?": "You can use KiteAI by joining our community and trying out the Testnet features.",
@@ -373,6 +383,10 @@
 
         agentBtn.addEventListener('click', () => {
             agentModal.style.display = 'flex';
+        });
+
+        closeAgentBtn.addEventListener('click', () => {
+            agentModal.style.display = 'none';
         });
 
         // Predefined question click
