@@ -8,7 +8,7 @@
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            min-height: 100vh;
             background: url('https://i.postimg.cc/qzpBwFQk/background.jpg') no-repeat center center fixed;
             background-size: cover;
             display: flex;
@@ -33,6 +33,7 @@
             transition: 0.3s;
         }
         .menu-btn:hover { background: rgba(0,0,0,0.8); }
+
         /* Overlay menu */
         .menu-overlay {
             position: fixed;
@@ -47,7 +48,12 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            transition: 0.3s;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .menu-overlay.show {
+            display: flex;
+            opacity: 1;
         }
         .menu-overlay a {
             color: #f1f1f1;
@@ -63,6 +69,7 @@
             color: #1da1f2;
             border-bottom-color: #1da1f2;
         }
+
         /* Announcement modal */
         #announcementModal {
             display: none;
@@ -109,7 +116,7 @@
         header img { height: 60px; border-radius: 10px; }
 
         form {
-            background: rgba(0, 0, 0, 0.65);
+            background: rgba(0, 0, 0, 0.75);
             padding: 25px;
             border-radius: 15px;
             width: 90%;
@@ -139,6 +146,7 @@
             transition: 0.3s;
         }
         button:hover { background-color: #0d95e8; }
+
         /* Announcement & Agent buttons */
         .announcement-btn {
             margin-top: 15px;
@@ -166,7 +174,7 @@
             align-items:center;
         }
         #agentContent {
-            background:#111; /* dark theme */
+            background:#111;
             color: #f1f1f1;
             width:90%;
             max-width:520px;
@@ -199,6 +207,7 @@
             background:#0d95e8;
             color:white;
             cursor:pointer;
+            transition:0.3s;
         }
         .question-btn:hover { background:#1da1f2; }
 
@@ -219,6 +228,13 @@
             color: #1da1f2;
             text-decoration: none;
             font-weight: 500;
+        }
+
+        /* Mobile tweaks */
+        @media(max-width:400px){
+            form { padding:20px; }
+            .menu-overlay a { font-size:18px; }
+            .announcement-controls { font-size:18px; gap:15px; }
         }
     </style>
 </head>
@@ -260,7 +276,7 @@
     </header>
 
     <!-- Feedback Form -->
-    <form action="https://formspree.io/f/xzzvwrap" method="POST">
+    <form id="feedbackForm" action="https://formspree.io/f/xzzvwrap" method="POST">
         <h2>Community Feedback</h2>
         <select name="category" required>
             <option value="">Select Category</option>
@@ -283,7 +299,6 @@
     <!-- Agent Chat Modal -->
     <div id="agentModal">
         <div id="agentContent">
-            <!-- Close Button -->
             <div style="display:flex; justify-content:flex-end;">
                 <img id="closeAgentBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" 
                      alt="Close" style="width:28px; height:28px; cursor:pointer;">
@@ -313,11 +328,13 @@
 
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <script>
+        // Menu toggle
         function toggleMenu() {
             const menu = document.getElementById('menuOverlay');
-            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+            menu.classList.toggle('show');
         }
 
+        // Tweets
         const tweets = [
             "https://x.com/GoKiteAI/status/1951245795216200146",
             "https://x.com/GoKiteAI/status/1955919782785503588",
@@ -326,7 +343,6 @@
             "https://x.com/wallet/status/1954052040939753923"
         ];
         let currentTweet = 0;
-
         function loadTweet(index) {
             document.getElementById("tweetContainer").innerHTML = "";
             twttr.widgets.createTweet(
@@ -340,22 +356,19 @@
             document.getElementById("announcementModal").style.display = "flex";
             loadTweet(currentTweet);
         });
-
         document.getElementById("closeBtn").addEventListener("click", () => {
             document.getElementById("announcementModal").style.display = "none";
         });
-
         document.getElementById("prevBtn").addEventListener("click", () => {
             currentTweet = (currentTweet - 1 + tweets.length) % tweets.length;
             loadTweet(currentTweet);
         });
-
         document.getElementById("nextBtn").addEventListener("click", () => {
             currentTweet = (currentTweet + 1) % tweets.length;
             loadTweet(currentTweet);
         });
 
-        // KiteAI Community Agent Logic
+        // KiteAI Community Agent
         const agentModal = document.getElementById('agentModal');
         const agentBtn = document.getElementById('agentBtn');
         const chatMessages = document.getElementById('chatMessages');
@@ -365,11 +378,11 @@
         const closeAgentBtn = document.getElementById('closeAgentBtn');
 
         const answers = {
-            "How can I use KiteAI?": "You can use KiteAI by joining our community and trying out the Testnet features.",
-            "What are KiteAI NFTs?": "KiteAI NFTs are unique digital collectibles that represent community membership and rewards.",
-            "How to join KiteAI community?": "Join our community through our social channels and participate in discussions and events.",
-            "How to report an issue?": "Report issues via our Feedback form or reach out through official channels for quick support.",
-            "Upcoming events in KiteAI?": "Check our official social media channels for the latest events and campaigns."
+            "how can i use kiteai?": "You can use KiteAI by joining our community and trying out the Testnet features.",
+            "what are kiteai nfts?": "KiteAI NFTs are unique digital collectibles that represent community membership and rewards.",
+            "how to join kiteai community?": "Join our community through our social channels and participate in discussions and events.",
+            "how to report an issue?": "Report issues via our Feedback form or reach out through official channels for quick support.",
+            "upcoming events in kiteai?": "Check our official social media channels for the latest events and campaigns."
         };
 
         function addMessage(text, sender) {
@@ -381,32 +394,32 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        agentBtn.addEventListener('click', () => {
-            agentModal.style.display = 'flex';
-        });
+        agentBtn.addEventListener('click', () => agentModal.style.display = 'flex');
+        closeAgentBtn.addEventListener('click', () => agentModal.style.display = 'none');
 
-        closeAgentBtn.addEventListener('click', () => {
-            agentModal.style.display = 'none';
-        });
-
-        // Predefined question click
         document.querySelectorAll('.question-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const q = btn.textContent;
                 addMessage(q, 'user');
-                addMessage(answers[q], 'agent');
+                addMessage(answers[q.toLowerCase()] || "Thanks! We'll get back to you soon.", 'agent');
             });
         });
 
-        // Send user typed question
         sendBtn.addEventListener('click', () => {
             const q = userInput.value.trim();
             if(q){
                 addMessage(q,'user');
-                const reply = answers[q] || "Thank you for your question! Our team will get back to you soon.";
+                const reply = answers[q.toLowerCase()] || "Thanks! We'll get back to you soon.";
                 addMessage(reply,'agent');
                 userInput.value = '';
             }
+        });
+
+        // Form submit confirmation
+        document.getElementById('feedbackForm').addEventListener('submit', function(e){
+            setTimeout(() => {
+                alert("Thank you for your feedback! 🙏");
+            }, 100); // short delay to allow Formspree submit
         });
 
     </script>
