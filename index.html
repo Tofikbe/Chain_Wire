@@ -10,6 +10,8 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
+            background: url('https://i.postimg.cc/qzpBwFQk/background.jpg') no-repeat center center fixed;
+            background-size: cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -17,18 +19,6 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #f1f1f1;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        video.background-video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
         }
 
         /* Menu Button (Mobile Only) */
@@ -43,82 +33,9 @@
             padding: 0.5rem 0.75rem;
             border-radius: 0.5rem;
             transition: background 0.3s;
-            display: none;
+            display: block;
         }
         .menu-btn:hover { background: rgba(0,0,0,0.8); }
-
-        /* Desktop Navbar (Professional) */
-        .desktop-nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .desktop-nav .logo img {
-            height: 2.5rem;
-            border-radius: 0.5rem;
-        }
-        .desktop-nav .nav-links {
-            display: flex;
-            align-items: center;
-        }
-        .desktop-nav .nav-links a {
-            color: #f1f1f1;
-            text-decoration: none;
-            margin-left: 1.5rem;
-            font-size: 1.1rem;
-            transition: color 0.3s;
-            position: relative;
-        }
-        .desktop-nav .nav-links a:hover {
-            color: #1da1f2;
-        }
-        .desktop-nav .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: #1da1f2;
-            transition: width 0.3s ease;
-        }
-        .desktop-nav .nav-links a:hover::after {
-            width: 100%;
-        }
-        .dropdown {
-            position: relative;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background: rgba(0, 0, 0, 0.9);
-            min-width: 160px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-            border-radius: 0.5rem;
-            z-index: 1;
-            padding: 0.5rem 0;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-        .dropdown-content a {
-            color: #f1f1f1;
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            display: block;
-            font-size: 1rem;
-        }
-        .dropdown-content a:hover {
-            background-color: #1da1f2;
-        }
 
         /* Overlay Menu (Mobile) */
         .menu-overlay {
@@ -351,7 +268,7 @@
             padding: 1.5rem;
             border-radius: 1rem;
             width: 90%;
-            box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.4);
+            box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -392,6 +309,43 @@
         }
         .announcement-btn:hover { background: #0d95e8; }
 
+        /* Agent Chat Modal */
+        #agentModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            backdrop-filter: blur(6px);
+            background: rgba(0,0,0,0.75);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        #agentContent {
+            background: #111;
+            color: #f1f1f1;
+            width: 90%;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        #chatMessages {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 0.75rem;
+            border: 1px solid #444;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background: #222;
+            color: #f1f1f1;
+        }
+        .chat-msg { margin: 0.3rem 0; padding: 0.5rem 0.75rem; border-radius: 0.5rem; max-width: 80%; }
+        .chat-agent { background: #0d95e8; color: #fff; align-self: flex-start; }
+        .chat-user { background: #333; color: #fff; align-self: flex-end; }
+
         .question-btn {
             margin: 0.2rem;
             padding: 0.4rem 0.75rem;
@@ -423,33 +377,8 @@
             font-weight: 500;
         }
 
-        /* Desktop Styles */
-        @media (min-width: 768px) {
-            .menu-btn { display: none; }
-            .menu-overlay { display: none; }
-            .desktop-nav { display: flex; }
-            form {
-                max-width: 600px;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 1rem;
-                padding: 2rem;
-            }
-            form h2 { grid-column: span 2; }
-            select, textarea, input { grid-column: span 2; }
-            .announcement-btn { grid-column: span 1; max-width: none; }
-            #announcementContent, #agentContent, #leaderboardContent, #liveChatContent {
-                max-width: 800px;
-            }
-            .leaderboard-rank { flex: 0 0 5rem; font-size: 1.2rem; }
-            .leaderboard-profile img { width: 3.5rem; height: 3.5rem; }
-            .leaderboard-name a { font-size: 1.2rem; }
-            header img { height: 5rem; }
-        }
-
         /* Mobile Styles */
         @media (max-width: 767px) {
-            .desktop-nav { display: none; }
             .menu-btn { display: block; }
             form { max-width: 400px; padding: 1rem; }
             .menu-overlay a { font-size: 1.2rem; }
@@ -462,42 +391,6 @@
     </style>
 </head>
 <body>
-    <!-- Background Video -->
-    <video class="background-video" autoplay loop muted playsinline>
-        <source src="/videos/background.mp4" type="video/mp4">
-    </video>
-
-    <!-- Desktop Navbar (Professional) -->
-    <nav class="desktop-nav">
-        <div class="logo">
-            <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo">
-        </div>
-        <div class="nav-links">
-            <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">Testnet</a>
-            <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">NFTs</a>
-            <a href="#" onclick="openLiveChat()">Live Chat</a>
-            <div class="dropdown">
-                <a href="#" class="dropbtn">Community</a>
-                <div class="dropdown-content">
-                    <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder</a>
-                    <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Community & Ecosystem</a>
-                    <a href="https://x.com/KiteAIChinese?t=bR1Bi5KbAeZLdozFOKqtGg&s=09" target="_blank">KiteAI Chinese</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <a href="#" class="dropbtn">Team</a>
-                <div class="dropdown-content">
-                    <a href="https://x.com/buidloor?t=6nD_KJzIePhdytOA3Ss-2w&s=09" target="_blank">Vikthebuilder</a>
-                    <a href="https://x.com/lei_lei0904?t=yL6KX5W6lCKf0Fnk6VAIBA&s=09" target="_blank">Lei-Lei</a>
-                    <a href="https://x.com/scottshics?t=UMpx5b2XMH1kLa2JgMyXDw&s=09" target="_blank">Scott Shi</a>
-                    <a href="https://x.com/Henryleemr?t=ZZVY_CCK88fGLRM56VkXnQ&s=09" target="_blank">Henry Lee</a>
-                    <a href="https://x.com/superamscom?t=jr23SY_GKnnNEUr5EP-6eA&s=09" target="_blank">Spring</a>
-                    <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing</a>
-                </div>
-            </div>
-        </div>
-    </nav>
-
     <!-- Menu Button (Mobile) -->
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
 
