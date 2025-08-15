@@ -20,7 +20,6 @@
             text-align: center;
             transition: filter 0.3s ease;
         }
-        body.blurred { filter: blur(6px); }
 
         /* Top menu button */
         .menu-btn {
@@ -36,6 +35,7 @@
             transition: 0.3s;
         }
         .menu-btn:hover { background: rgba(0,0,0,0.8); }
+
         /* Overlay menu */
         .menu-overlay {
             position: fixed;
@@ -143,6 +143,7 @@
             transition: 0.3s;
         }
         button:hover { background-color: #0d95e8; }
+
         /* Announcement & Agent buttons */
         .announcement-btn {
             margin-top: 15px;
@@ -163,13 +164,15 @@
             position: fixed;
             top:0; left:0;
             width:100%; height:100%;
+            background: rgba(0,0,0,0.6); /* semi-transparent dark */
+            backdrop-filter: blur(6px);  /* background blur */
             z-index: 10001;
             justify-content:center;
             align-items:center;
         }
         #leaderboardContent {
-            background:#000;  /* Black background */
-            color:#fff;       /* White text */
+            background:#000; /* black background */
+            color:#fff;      /* white text */
             width:90%;
             max-width:520px;
             border-radius:12px;
@@ -177,7 +180,7 @@
             max-height:85vh;
             overflow-y:auto;
             text-align:center;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            backdrop-filter: none; /* content clear */
         }
         #leaderboardContent table {
             width:100%;
@@ -208,8 +211,8 @@
             align-items:center;
         }
         #agentContent {
-            background:#000; /* Black background */
-            color:#fff;       /* White text */
+            background:#000;
+            color:#fff;
             width:90%;
             max-width:520px;
             border-radius:12px;
@@ -433,64 +436,61 @@
         const sendBtn = document.getElementById('sendBtn');
         const closeAgent = document.getElementById('closeAgent');
 
-        const answers = {
-            "How can I use KiteAI?": "You can use KiteAI by joining our community and trying out the Testnet features.",
-            "What are KiteAI NFTs?": "KiteAI NFTs are unique digital collectibles that represent community membership and rewards.",
-            "How to join KiteAI community?": "Join our community through our social channels and participate in discussions and events.",
-            "How to report an issue?": "Report issues via our Feedback form or reach out through official channels for quick support.",
-            "Upcoming events in KiteAI?": "Check our official social media channels for the latest events and campaigns."
-        };
+const answers = {
+    "How can I use KiteAI?": "You can use KiteAI by joining our community and trying out the Testnet features.",
+    "What are KiteAI NFTs?": "KiteAI NFTs are unique digital collectibles that represent community membership and rewards.",
+    "How to join KiteAI community?": "Join our community through our social channels and participate in discussions and events.",
+    "How to report an issue?": "Report issues via our Feedback form or reach out through official channels for quick support.",
+    "Upcoming events in KiteAI?": "Check our official social media channels for the latest events and campaigns."
+};
 
-        function addMessage(text, sender) {
-            const div = document.createElement('div');
-            div.classList.add('chat-msg');
-            div.classList.add(sender === 'agent' ? 'chat-agent' : 'chat-user');
-            div.textContent = text;
-            chatMessages.appendChild(div);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
+function addMessage(text, sender) {
+    const div = document.createElement('div');
+    div.classList.add('chat-msg');
+    div.classList.add(sender === 'agent' ? 'chat-agent' : 'chat-user');
+    div.textContent = text;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
 
-        agentBtn.addEventListener('click', () => {
-            agentModal.style.display = 'flex';
-        });
+agentBtn.addEventListener('click', () => {
+    agentModal.style.display = 'flex';
+});
 
-        closeAgent.addEventListener('click', () => {
-            agentModal.style.display = 'none';
-        });
+closeAgent.addEventListener('click', () => {
+    agentModal.style.display = 'none';
+});
 
-        document.querySelectorAll('.question-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const q = btn.textContent;
-                addMessage(q, 'user');
-                addMessage(answers[q], 'agent');
-            });
-        });
+document.querySelectorAll('.question-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const q = btn.textContent;
+        addMessage(q, 'user');
+        addMessage(answers[q], 'agent');
+    });
+});
 
-        sendBtn.addEventListener('click', () => {
-            const q = userInput.value.trim();
-            if(q){
-                addMessage(q,'user');
-                const reply = answers[q] || "Thank you for your question! Our team will get back to you soon.";
-                addMessage(reply,'agent');
-                userInput.value = '';
-            }
-        });
+sendBtn.addEventListener('click', () => {
+    const q = userInput.value.trim();
+    if(q){
+        addMessage(q,'user');
+        const reply = answers[q] || "Thank you for your question! Our team will get back to you soon.";
+        addMessage(reply,'agent');
+        userInput.value = '';
+    }
+});
 
-        // Leaderboard Logic
-        const leaderboardBtn = document.getElementById('leaderboardBtn');
-        const leaderboardModal = document.getElementById('leaderboardModal');
-        const closeLeaderboard = document.getElementById('closeLeaderboard');
+// Leaderboard Logic
+const leaderboardBtn = document.getElementById('leaderboardBtn');
+const leaderboardModal = document.getElementById('leaderboardModal');
+const closeLeaderboard = document.getElementById('closeLeaderboard');
 
-        leaderboardBtn.addEventListener('click', () => {
-            leaderboardModal.style.display = 'flex';
-            document.body.style.filter = 'blur(6px)'; // sirf background blur
-            document.getElementById('leaderboardContent').style.filter = 'none'; // leaderboard clear
-        });
+leaderboardBtn.addEventListener('click', () => {
+    leaderboardModal.style.display = 'flex';
+});
 
-        closeLeaderboard.addEventListener('click', () => {
-            leaderboardModal.style.display = 'none';
-            document.body.style.filter = 'none';
-        });
-    </script>
+closeLeaderboard.addEventListener('click', () => {
+    leaderboardModal.style.display = 'none';
+});
+</script>
 </body>
 </html>
