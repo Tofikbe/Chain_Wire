@@ -37,6 +37,22 @@
         }
         .menu-btn:hover { background: rgba(0,0,0,0.8); }
 
+        /* Live Chat Button (Mobile Only) */
+        .live-chat-btn {
+            position: absolute;
+            top: 4rem; /* Positioned below the menu button */
+            left: 1rem;
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 1001;
+            background: rgba(0,0,0,0.5);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            transition: background 0.3s;
+            display: block;
+        }
+        .live-chat-btn:hover { background: rgba(0,0,0,0.8); }
+
         /* Overlay Menu (Mobile) */
         .menu-overlay {
             position: fixed;
@@ -268,7 +284,7 @@
             padding: 1.5rem;
             border-radius: 1rem;
             width: 90%;
-            box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.3);
+            box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.4);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -377,9 +393,31 @@
             font-weight: 500;
         }
 
+        /* Desktop Styles */
+        @media (min-width: 768px) {
+            .menu-btn { display: none; }
+            form {
+                max-width: 600px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+                padding: 2rem;
+            }
+            form h2 { grid-column: span 2; }
+            select, textarea, input { grid-column: span 2; }
+            .announcement-btn { grid-column: span 1; max-width: none; }
+            #announcementContent, #agentContent, #leaderboardContent, #liveChatContent {
+                max-width: 800px;
+            }
+            .leaderboard-rank { flex: 0 0 5rem; font-size: 1.2rem; }
+            .leaderboard-profile img { width: 3.5rem; height: 3.5rem; }
+            .leaderboard-name a { font-size: 1.2rem; }
+            header img { height: 5rem; }
+        }
+
         /* Mobile Styles */
         @media (max-width: 767px) {
-            .menu-btn { display: block; }
+            .menu-btn, .live-chat-btn { display: block; }
             form { max-width: 400px; padding: 1rem; }
             .menu-overlay a { font-size: 1.2rem; }
             .announcement-controls { font-size: 1.2rem; gap: 1rem; }
@@ -394,11 +432,13 @@
     <!-- Menu Button (Mobile) -->
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
 
+    <!-- Live Chat Button (Mobile) -->
+    <div class="live-chat-btn" onclick="openLiveChat()">☎️</div>
+
     <!-- Menu Overlay (Mobile) -->
     <div class="menu-overlay" id="menuOverlay">
         <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
         <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">Fly The Kite NFT🪁</a>
-        <a href="#" onclick="openLiveChat()">Live Chat</a>
         <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder🪁</a>
         <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Kite: Community & Ecosystem🪁</a>
         <a href="https://x.com/KiteAIChinese?t=bR1Bi5KbAeZLdozFOKqtGg&s=09" target="_blank">KiteAIChinese🪁</a>
@@ -508,6 +548,11 @@
             menu.classList.toggle('show');
         }
 
+        // Live Chat toggle
+        function openLiveChat() {
+            document.getElementById('liveChatModal').style.display = 'flex';
+        }
+
         // Tweets
         const tweets = [
             "https://x.com/GoKiteAI/status/1951245795216200146",
@@ -598,10 +643,6 @@
         const chatMessagesLive = document.getElementById('chatMessagesLive');
         let anonymousId = '';
 
-        function openLiveChat() {
-            liveChatModal.style.display = 'flex';
-        }
-
         function addLiveChatMessage(text, sender, isSelf = false) {
             const div = document.createElement('div');
             div.classList.add('chat-msg-live');
@@ -616,6 +657,7 @@
         socket.on('connect', () => {
             anonymousId = `Anonymous${Math.floor(Math.random() * 10000)}`;
             socket.emit('setAnonymousId', anonymousId);
+            addLiveChatMessage('Connected to chat as ' + anonymousId, 'System', false);
         });
 
         socket.on('message', (msg) => {
@@ -629,6 +671,17 @@
                 socket.emit('message', msg);
                 addLiveChatMessage(msg, anonymousId, true);
                 liveChatInput.value = '';
+            }
+        });
+
+        liveChatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const msg = liveChatInput.value.trim();
+                if (msg) {
+                    socket.emit('message', msg);
+                    addLiveChatMessage(msg, anonymousId, true);
+                    liveChatInput.value = '';
+                }
             }
         });
 
@@ -709,7 +762,7 @@
             { rank: 69, name: "GabrielN2H", url: "https://x.com/GabrielN2H?t=AXB1aQqma3wh6EvmtR49Kw&s=09" },
             { rank: 70, name: "Abdullahi", url: "https://x.com/suremethod007?t=dEBI5Ssg1_CuZQAETxa0Bw&s=09" },
             { rank: 71, name: "Eslam", url: "https://x.com/Eslam57795041?t=qsMOnGLUFg-le4BCjI8ojw&s=09" },
-            { rank: 72, name: "HIB_BTC", url: "https://x.com/HIB_BTC?t=jZvpH-yZGkugZGVy0L0uTEew&s=09" },
+            { rank: 72, name: "HIB_BTC", url: "https://x.com/HIB_BTC?t=jZvpH-ykugZGVy0L0uTEew&s=09" },
             { rank: 73, name: "Darcy", url: "https://x.com/BitBull2003?t=JDpEudCB_UWJVTBiQamaYA&s=09" },
             { rank: 74, name: "HVBlumNews", url: "https://x.com/HVBlumnews?t=C7tyoBrMk01O5dqTc30MbQ&s=09" },
             { rank: 75, name: "Ufaz", url: "https://x.com/Zee_edge?t=QSwoXCHg4UwnE1l8WoFz0g&s=09" },
