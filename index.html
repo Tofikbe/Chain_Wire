@@ -19,7 +19,6 @@
             color: #f1f1f1;
             text-align: center;
         }
-        /* Top menu button */
         .menu-btn {
             position: absolute;
             top: 20px;
@@ -33,8 +32,6 @@
             transition: 0.3s;
         }
         .menu-btn:hover { background: rgba(0,0,0,0.8); }
-
-        /* Overlay menu */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -51,10 +48,7 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        .menu-overlay.show {
-            display: flex;
-            opacity: 1;
-        }
+        .menu-overlay.show { display: flex; opacity: 1; }
         .menu-overlay a {
             color: #f1f1f1;
             font-size: 22px;
@@ -69,8 +63,6 @@
             color: #1da1f2;
             border-bottom-color: #1da1f2;
         }
-
-        /* Announcement modal */
         #announcementModal {
             display: none;
             position: fixed;
@@ -102,19 +94,10 @@
             margin-top: 15px;
             font-size: 22px;
         }
-        .announcement-controls span {
-            cursor: pointer;
-            transition: 0.3s;
-        }
+        .announcement-controls span { cursor: pointer; transition: 0.3s; }
         .announcement-controls span:hover { color: #1da1f2; }
-
-        header {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
+        header { position: absolute; top: 20px; right: 20px; }
         header img { height: 60px; border-radius: 10px; }
-
         form {
             background: rgba(0, 0, 0, 0.75);
             padding: 25px;
@@ -146,8 +129,6 @@
             transition: 0.3s;
         }
         button:hover { background-color: #0d95e8; }
-
-        /* Announcement & Agent buttons */
         .announcement-btn {
             margin-top: 15px;
             padding: 10px 20px;
@@ -160,8 +141,6 @@
             transition: 0.3s;
         }
         .announcement-btn:hover { background: #0d95e8; }
-
-        /* Agent Chat Modal */
         #agentModal {
             display: none;
             position: fixed;
@@ -198,7 +177,6 @@
         .chat-msg { margin:5px 0; padding:8px 12px; border-radius:8px; max-width:80%; }
         .chat-agent { background:#0d95e8; color:#fff; align-self:flex-start; }
         .chat-user { background:#333; color:#fff; align-self:flex-end; }
-
         .question-btn {
             margin:3px;
             padding:6px 10px;
@@ -210,11 +188,9 @@
             transition:0.3s;
         }
         .question-btn:hover { background:#1da1f2; }
-
         #userInput { padding:8px; width: calc(100% - 16px); margin-bottom:10px; border-radius:6px; border:1px solid #444; background:#222; color:#f1f1f1; }
         #sendBtn { padding:8px; background:#0d95e8; color:white; border:none; border-radius:6px; cursor:pointer; }
         #sendBtn:hover { background:#1da1f2; }
-
         footer {
             position: fixed;
             bottom: 12px;
@@ -224,13 +200,7 @@
             color: #f1f1f1;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
         }
-        footer a {
-            color: #1da1f2;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        /* Mobile tweaks */
+        footer a { color: #1da1f2; text-decoration: none; font-weight: 500; }
         @media(max-width:400px){
             form { padding:20px; }
             .menu-overlay a { font-size:18px; }
@@ -303,7 +273,6 @@
                 <img id="closeAgentBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" 
                      alt="Close" style="width:28px; height:28px; cursor:pointer;">
             </div>
-
             <div id="chatMessages"></div>
             <div>
                 <div id="preQuestions" style="margin-bottom:10px;">
@@ -319,6 +288,29 @@
         </div>
     </div>
 
+    <!-- Feedback Feed Modal -->
+    <div id="feedModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+        background:rgba(0,0,0,0.8); z-index:10001; justify-content:center; align-items:center; overflow-y:auto; padding:20px; box-sizing:border-box;">
+        <div style="background:#111; color:#f1f1f1; width:90%; max-width:520px; border-radius:12px; padding:20px; display:flex; flex-direction:column; max-height:90vh; overflow-y:auto;">
+            <div style="display:flex; justify-content:flex-end;">
+                <img id="closeFeedBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" 
+                     alt="Close" style="width:28px; height:28px; cursor:pointer;">
+            </div>
+            <h2 style="text-align:center; margin-bottom:15px;">Feedback Feed</h2>
+
+            <!-- Post Form -->
+            <form id="feedForm" style="display:flex; flex-direction:column; margin-bottom:15px;">
+                <input type="text" id="feedName" placeholder="Your Name (optional)" style="padding:8px; margin-bottom:8px; border-radius:6px; border:none;">
+                <textarea id="feedMessage" placeholder="Write your feedback..." rows="4" style="padding:8px; margin-bottom:8px; border-radius:6px; border:none; resize:none;"></textarea>
+                <input type="file" id="feedImage" style="margin-bottom:8px;">
+                <button type="submit" style="padding:8px; border:none; border-radius:6px; background:#1da1f2; color:white; cursor:pointer;">Post Feedback</button>
+            </form>
+
+            <!-- Feed Display -->
+            <div id="feedContainer" style="display:flex; flex-direction:column; gap:12px;"></div>
+        </div>
+    </div>
+
     <footer>
         Made for the KiteAI community · Follow on 
         <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank">@Crypto_King877</a> 
@@ -328,13 +320,11 @@
 
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <script>
-        // Menu toggle
         function toggleMenu() {
             const menu = document.getElementById('menuOverlay');
             menu.classList.toggle('show');
         }
 
-        // Tweets
         const tweets = [
             "https://x.com/GoKiteAI/status/1951245795216200146",
             "https://x.com/GoKiteAI/status/1955919782785503588",
@@ -378,7 +368,8 @@
         const closeAgentBtn = document.getElementById('closeAgentBtn');
 
         const answers = {
-            "how can i use kiteai?": "You can use KiteAI by joining our community and trying out the Testnet features.",
+            "how can i use kiteai?": "You can use KiteAI by joining our community and trying out the Testnet
+                features.",
             "what are kiteai nfts?": "KiteAI NFTs are unique digital collectibles that represent community membership and rewards.",
             "how to join kiteai community?": "Join our community through our social channels and participate in discussions and events.",
             "how to report an issue?": "Report issues via our Feedback form or reach out through official channels for quick support.",
@@ -419,10 +410,64 @@
         document.getElementById('feedbackForm').addEventListener('submit', function(e){
             setTimeout(() => {
                 alert("Thank you for your feedback! 🙏");
-            }, 100); // short delay to allow Formspree submit
+            }, 100);
         });
 
-    </script>
+        // Feedback Feed functionality
+        const feedModal = document.getElementById('feedModal');
+        const feedForm = document.getElementById('feedForm');
+        const feedContainer = document.getElementById('feedContainer');
+        const closeFeedBtn = document.getElementById('closeFeedBtn');
 
+        // Add Feed button under KiteAI agent
+        const feedBtn = document.createElement('button');
+        feedBtn.type = "button";
+        feedBtn.className = "announcement-btn";
+        feedBtn.textContent = "💬 Feedback Feed";
+        feedBtn.style.marginTop = "8px";
+        document.getElementById('feedbackForm').appendChild(feedBtn);
+
+        feedBtn.addEventListener('click', () => feedModal.style.display = 'flex');
+        closeFeedBtn.addEventListener('click', () => feedModal.style.display = 'none');
+
+        feedForm.addEventListener('submit', function(e){
+            e.preventDefault();
+            const name = document.getElementById('feedName').value || "Anonymous";
+            const message = document.getElementById('feedMessage').value;
+            const imageFile = document.getElementById('feedImage').files[0];
+
+            if(!message) return alert("Please write feedback!");
+
+            const postDiv = document.createElement('div');
+            postDiv.style.background = "#222";
+            postDiv.style.padding = "10px";
+            postDiv.style.borderRadius = "8px";
+
+            const nameElem = document.createElement('b');
+            nameElem.textContent = name;
+            postDiv.appendChild(nameElem);
+
+            const msgElem = document.createElement('p');
+            msgElem.textContent = message;
+            postDiv.appendChild(msgElem);
+
+            if(imageFile){
+                const imgElem = document.createElement('img');
+                imgElem.style.maxWidth = "100%";
+                imgElem.style.borderRadius = "6px";
+                imgElem.style.marginTop = "6px";
+                const reader = new FileReader();
+                reader.onload = function(e){
+                    imgElem.src = e.target.result;
+                    postDiv.appendChild(imgElem);
+                }
+                reader.readAsDataURL(imageFile);
+            }
+
+            feedContainer.prepend(postDiv);
+
+            feedForm.reset();
+        });
+    </script>
 </body>
 </html>
