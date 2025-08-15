@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community Feedback</title>
     <style>
-        /* [Previous CSS remains unchanged, copied as is for completeness] */
         body {
             margin: 0;
             padding: 0;
@@ -33,7 +32,7 @@
             padding: 0.5rem 0.75rem;
             border-radius: 0.5rem;
             transition: background 0.3s;
-            display: none;
+            display: none; /* Hidden by default, shown on mobile */
         }
         .menu-btn:hover { background: rgba(0,0,0,0.8); }
 
@@ -555,7 +554,7 @@
         function loadTweet(index) {
             document.getElementById("tweetContainer").innerHTML = "";
             twttr.widgets.createTweet(
-                tweets[index].split("/status/")[1].split("?")[0],
+                tweets[index].split("/status/")[1].split("?")[0], // Remove query params if any
                 document.getElementById("tweetContainer"),
                 { align: "center" }
             );
@@ -624,96 +623,126 @@
             }
         });
 
-        // Leaderboard with Twitter API Integration
-        const BEARER_TOKEN = 'AAAAAAAAAAAAAAAAAAAALI43QEAAAAA8ZcfgkpNfgSbJ0u6EO1sGZrVJpo%3DHpQwGo6EbTZTDedxaJqqA0mLJxkcTZk2hPH1aO00gMHs5efRt2';
-        const API_KEY = 'T5oZAu3QosEzITNhH3ULT7Sby';
-        const ACCESS_TOKEN = '1834226434614702080-tl1lwtMPsWhbaJNyZIs59AzqLGRjcH';
-
-        async function fetchLeaderboardData() {
-            const url = 'https://api.twitter.com/2/tweets/search/recent';
-            const now = new Date();
-            const oneDayAgo = new Date(now - 24 * 60 * 60 * 1000).toISOString();
-
-            const params = new URLSearchParams({
-                query: '#KiteAI @GoKiteAI',
-                max_results: 100,
-                start_time: oneDayAgo,
-                tweet_fields: 'created_at',
-                user_fields: 'username,profile_image_url'
-            });
-
-            try {
-                const response = await fetch(`${url}?${params}`, {
-                    headers: {
-                        'Authorization': `Bearer ${BEARER_TOKEN}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
-                const data = await response.json();
-                const userTweets = {};
-
-                data.data.forEach(tweet => {
-                    const username = tweet.author_id; // Note: API v2 returns author_id, not username directly
-                    userTweets[username] = (userTweets[username] || 0) + 1;
-                });
-
-                // Fetch user details to get usernames and profile images
-                const userIds = Object.keys(userTweets).join(',');
-                const userResponse = await fetch(`https://api.twitter.com/2/users?ids=${userIds}&user.fields=username,profile_image_url`, {
-                    headers: {
-                        'Authorization': `Bearer ${BEARER_TOKEN}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (!userResponse.ok) throw new Error(`User fetch error! Status: ${userResponse.status}`);
-
-                const userData = await userResponse.json();
-                const users = userData.data.reduce((acc, user) => {
-                    acc[user.id] = { username: user.username, profile_image_url: user.profile_image_url };
-                    return acc;
-                }, {});
-
-                // Create ranked list
-                const leaderboard = Object.entries(userTweets)
-                    .map(([userId, count]) => ({
-                        rank: 0,
-                        name: users[userId].username,
-                        url: `https://x.com/${users[userId].username}`,
-                        count,
-                        profile_image_url: users[userId].profile_image_url
-                    }))
-                    .sort((a, b) => b.count - a.count)
-                    .map((user, index) => ({ ...user, rank: index + 1 }));
-
-                return leaderboard.slice(0, 100); // Limit to top 100
-            } catch (error) {
-                console.error('Error fetching leaderboard data:', error);
-                return []; // Return empty array on error
-            }
-        }
+        // Leaderboard
+        const leaderboardData = [
+            { rank: 1, name: "Crypto_King877", url: "https://x.com/Crypto_King877?t=M_jfPjKPbHKPhMwaEfRGrg&s=09" },
+            { rank: 2, name: "Daniel Wabuisi0", url: "https://x.com/danielnwabuisi0?t=OoTOQXk8VUY6Av2zYOaCmA&s=09" },
+            { rank: 3, name: "Sarcastic_AU", url: "https://x.com/Sarcastic_AU?t=Z-riE0FULUeXEzxzGIPN4w&s=09" },
+            { rank: 4, name: "Kartik Boy45", url: "https://x.com/Kartikboy45?t=QVk_3mX_O9gJC7jGu_daKA&s=09" },
+            { rank: 5, name: "Alfian_Paddaus", url: "https://x.com/alfian_paddaus?t=kq_-SyZEIlLBGLY7tCMtIQ&s=09" },
+            { rank: 6, name: "Givnix", url: "https://x.com/Givnix?t=n2lqQAvGKN8viHtMXkmh6A&s=09" },
+            { rank: 7, name: "ChingZhangData", url: "https://x.com/ChiZhangData?t=VeO099Z1cQctspfpkb-iOw&s=09" },
+            { rank: 8, name: "0xLaughing", url: "https://x.com/0xLaughing?t=FQQDbwwjqhPe43G6vGH6Ag&s=09" },
+            { rank: 9, name: "KingTowdah", url: "https://x.com/KingTowdah?t=H3ipXL6J99FGaI7GvEm2Dw&s=09" },
+            { rank: 10, name: "Spring", url: "https://x.com/superamscom?t=LPSNv40LwZ9Bi5g9fe2baA&s=09" },
+            { rank: 11, name: "Scott Shi", url: "https://x.com/scottshics?t=EUoxo7laWPElaLyriuPL3w&s=09" },
+            { rank: 12, name: "Henry Lee", url: "https://x.com/Henryleemr?t=tA675qNGEAbbnYLouHYJBQ&s=09" },
+            { rank: 13, name: "JiuHuang", url: "https://x.com/JiuHuangKOL?t=lkG1AHNfO43zw4OXW5aS-Q&s=09" },
+            { rank: 14, name: "LiCrazy", url: "https://x.com/0xFeng?t=K-xdgrI6vSObZevIphHuOw&s=09" },
+            { rank: 15, name: "Linsajio", url: "https://x.com/linsajiao?t=MiIEcjUOQBluMWP_Ndx9pQ&s=09" },
+            { rank: 16, name: "Taniya Aggarwal", url: "https://x.com/iamtanya338?t=y2p2tNMePACgnXeBPypI5A&s=09" },
+            { rank: 17, name: "Jmhuolongguo", url: "https://x.com/jmhuolongguo?t=3gGiUyuzflaXKtilN23MDA&s=09" },
+            { rank: 18, name: "Stephen", url: "https://x.com/imastephen_?t=L5X7sAjecvfVy3EOn1W7fA&s=09" },
+            { rank: 19, name: "Baby Yui", url: "https://x.com/Oldoggie88?t=Th7WvT6QILC4LCSEbf8AjA&s=09" },
+            { rank: 20, name: "EarronYu", url: "https://x.com/EarronYu?t=p77FavuKZAkEULP7oZAD6g&s=09" },
+            { rank: 21, name: "CreaMyHaOsCar", url: "https://x.com/CreaMyHaOsCar?t=e9SM3sxOQqfy5jK8U2mqOg&s=09" },
+            { rank: 22, name: "Ssovoovo", url: "https://x.com/ssovoovo?t=8Q363FPjpwM7FGMTnyDP6A&s=09" },
+            { rank: 23, name: "Bingo_Eth", url: "https://x.com/bingo_eth?t=C4CbDkueecokyPEgbTUYtg&s=09" },
+            { rank: 24, name: "0xTykoo", url: "https://x.com/0xTykoo?t=-86anzkrAKTibzF_db1EYQ&s=09" },
+            { rank: 25, name: "0xBolin123", url: "https://x.com/0xBolin123?t=9D-uZtEUJij0AA_flhdzVA&s=09" },
+            { rank: 26, name: "Ariel Choii", url: "https://x.com/ArielChoii?t=n7xyDbiTCJe8YMTicN4RNQ&s=09" },
+            { rank: 27, name: "Crypto Makabaka", url: "https://x.com/CryptoMakabaka?t=c5muLiT3PvVI6ReUNJQeBA&s=09" },
+            { rank: 28, name: "0xYae", url: "https://x.com/0x0xyae?t=24cUn3JuH4gimcuqCnN9Tw&s=09" },
+            { rank: 29, name: "Guomin184935", url: "https://x.com/Guomin184935?t=I-qrURmE2oNW3wjYVDEGbw&s=09" },
+            { rank: 30, name: "Sweet91268", url: "https://x.com/sweet919268?t=_l93-XBFYOu-Tiwh5qEKgg&s=09" },
+            { rank: 31, name: "Vikthebuilder", url: "https://x.com/buidloor?t=8flJ3JS8f9rGsv3LCJ40nQ&s=09" },
+            { rank: 32, name: "0xArk21", url: "https://x.com/0xark21?t=_kMjjfvuT88PLP3hvBNwkg&s=09" },
+            { rank: 33, name: "CindyShi0907", url: "https://x.com/Cindyshi0907?t=nCUXeX1g7OP2PY4PbMHm6A&s=09" },
+            { rank: 34, name: "0xCryptoHowe", url: "https://x.com/0xcryptoHowe?t=LIHUgzvn1Wv65gHDj-sVqw&s=09" },
+            { rank: 35, name: "Jyamidfx", url: "https://x.com/iyamidfx?t=r4RD4G45Vewftrsu9Hpm3Q&s=09" },
+            { rank: 36, name: "Sergej", url: "https://x.com/Sergej549190?t=dRqLJlmK-vZItnq8Z12rFQ&s=09" },
+            { rank: 37, name: "Oleh", url: "https://x.com/OLEH_SYROVATKA?t=q4Zbotl9jegMUVeygtyHzA&s=09" },
+            { rank: 38, name: "Ranaone", url: "https://x.com/ranaone185?t=1EF214uR-8GFiaERuiO1cQ&s=09" },
+            { rank: 39, name: "ErlanggaH", url: "https://x.com/ErlanggaH31985?t=aTxsMdEw3CjuXSDtgGRO6Q&s=09" },
+            { rank: 40, name: "Theefehalo", url: "https://x.com/THEEFEHALO?t=JQnPv_6E246rLUCqbilPPQ&s=09" },
+            { rank: 41, name: "Senna", url: "https://x.com/sennxenna?t=uVqmd1UahL4p1iEyFVQWgw&s=09" },
+            { rank: 42, name: "Apeng", url: "https://x.com/Apeng2006?t=k9fuTSR3YMDlVocF5T5ioQ&s=09" },
+            { rank: 43, name: "StlightLeon", url: "https://x.com/StlightLeon?t=rtX05b7rCsIDsquJ6l5BLA&s=09" },
+            { rank: 44, name: "Kabsne", url: "https://x.com/kabsne4?t=utIZ8I_BswWRd0ZX2f716w&s=09" },
+            { rank: 45, name: "Marurlemo", url: "https://x.com/marurlemo?t=dw2QG3ndU1V91WSQSI71iA&s=09" },
+            { rank: 46, name: "Aminullah", url: "https://x.com/aminullah4life?t=lNAYcXjc8_AgUU2-4sfn7g&s=09" },
+            { rank: 47, name: "KryptoNickDC", url: "https://x.com/KrYpToNiCkDC?t=BBpw8s6uXkgcu92mM-9X0Q&s=09" },
+            { rank: 48, name: "Jyamidfx", url: "https://x.com/iyamidfx?t=xOToxHE1VAjMI5w2ESBNZg&s=09" },
+            { rank: 49, name: "Moki", url: "https://x.com/moki62166?t=zREI0esE_RI5e9HH8YnYQg&s=09" },
+            { rank: 50, name: "Sergey", url: "https://x.com/sergey_sgs?t=WWGv4cGtwQQ9Bmrg1jTeIQ&s=09" },
+            { rank: 51, name: "0xVanss", url: "https://x.com/0xVanssStrong?t=uImXUBA939XG10Y3IPfVIw&s=09" },
+            { rank: 52, name: "Thanhaa", url: "https://x.com/thanhha3071997?t=QM3qzk2A7gY4iDooFtSm1A&s=09" },
+            { rank: 53, name: "LifeanyiDavidAI", url: "https://x.com/IfeanyiDavidAI?t=UseGrADY5iAWqsXcK9zMMQ&s=09" },
+            { rank: 54, name: "LekhCando", url: "https://x.com/lekhcando?t=c2OajrHK-1GohZEa9a-ZRg&s=09" },
+            { rank: 55, name: "FiifibiNeyTS", url: "https://x.com/fiifibiNeyTs?t=lYMxtSXFvy5pAr5BpDQrIw&s=09" },
+            { rank: 56, name: "DinoDied", url: "https://x.com/GameversusW3?t=FzT0md8o3V42-lOkDh1exQ&s=09" },
+            { rank: 57, name: "Web3 Guru", url: "https://x.com/web3gurru?t=GOvFCqOy4XIVB01O9ZlQtQ&s=09" },
+            { rank: 58, name: "Tanmu Dgreat", url: "https://x.com/tanmuDgreat?t=gBgn57BW8W-L-oFbUh5ALw&s=09" },
+            { rank: 59, name: "Junzna", url: "https://x.com/Junzna3L?t=D6Dp6VdcRdIKmubaMqpaXA&s=09" },
+            { rank: 60, name: "Sandy Crypto", url: "https://x.com/SandyMikaila?t=atStiBTaVhGCVDwDbi66KQ&s=09" },
+            { rank: 61, name: "Kaizah Flow", url: "https://x.com/KaizahFlow?t=pa9I8NEuKjR3Pbjo8FySeQ&s=09" },
+            { rank: 62, name: "Gaby", url: "https://x.com/0xgabyy?t=d9ScCda0-097PFpgk4q7cg&s=09" },
+            { rank: 63, name: "Just Do It", url: "https://x.com/mysucesstory?t=uSt6Sf21bGzSk780bM4Hkg&s=09" },
+            { rank: 64, name: "Dorotheaxx", url: "https://x.com/dorotheaxx_?t=evKA41y52JH7y_RB3ZlivA&s=09" },
+            { rank: 65, name: "Fark", url: "https://x.com/AwolusiAyobola?t=OGD08Otv0oLuT-nclSmIkw&s=09" },
+            { rank: 66, name: "Mic", url: "https://x.com/summerftw1119?t=vKal6jjK0xqSr8ER94k7UQ&s=09" },
+            { rank: 67, name: "Boy Trader", url: "https://x.com/boytrader__?t=gp8tu3aajD6v44JOR6KNCg&s=09" },
+            { rank: 68, name: "UgwuezeChijioke", url: "https://x.com/UgwuezeChijioke?t=bhbJBesu75JGSr5dCK4BRA&s=09" },
+            { rank: 69, name: "GabrielN2H", url: "https://x.com/GabrielN2H?t=AXB1aQqma3wh6EvmtR49Kw&s=09" },
+            { rank: 70, name: "Abdullahi", url: "https://x.com/suremethod007?t=dEBI5Ssg1_CuZQAETxa0Bw&s=09" },
+            { rank: 71, name: "Eslam", url: "https://x.com/Eslam57795041?t=qsMOnGLUFg-le4BCjI8ojw&s=09" },
+            { rank: 72, name: "HIB_BTC", url: "https://x.com/HIB_BTC?t=jZvpH-ykugZGVy0L0uTEew&s=09" },
+            { rank: 73, name: "Darcy", url: "https://x.com/BitBull2003?t=JDpEudCB_UWJVTBiQamaYA&s=09" },
+            { rank: 74, name: "HVBlumNews", url: "https://x.com/HVBlumnews?t=C7tyoBrMk01O5dqTc30MbQ&s=09" },
+            { rank: 75, name: "Ufaz", url: "https://x.com/Zee_edge?t=QSwoXCHg4UwnE1l8WoFz0g&s=09" },
+            { rank: 76, name: "GiaKhiêm", url: "https://x.com/Giakhiem_bnb?t=kWvUCTUBI9TGiE9KRFr_ng&s=09" },
+            { rank: 77, name: "Sohan", url: "https://x.com/sohan269?t=HPHSxOhvzD-qC5izgjqOiw&s=09" },
+            { rank: 78, name: "Johnny", url: "https://x.com/Johnnygoldvc?t=qgk1mB8iGNIfRMapr4QYOg&s=09" },
+            { rank: 79, name: "Baris", url: "https://x.com/barcengiz?t=uPICxOStNUi9VutqyzJ8UA&s=09" },
+            { rank: 80, name: "Darth", url: "https://x.com/DrthXyler?t=x0hxEmKOA7Y9o4o4aPB0yA&s=09" },
+            { rank: 81, name: "Meek Of Web3", url: "https://x.com/Meekofweb3?t=euH9YpospYh-ajzBC2ULjA&s=09" },
+            { rank: 82, name: "Bozzx Japan", url: "https://x.com/aidropIdn?t=F4ADcJlnNBp5gnOgy7x_1w&s=09" },
+            { rank: 83, name: "Unaiyang", url: "https://x.com/unaiyang?t=RNcpB8FHZrZ5wCi8Kb6a8A&s=09" },
+            { rank: 84, name: "Kiarh205", url: "https://x.com/kiarh205?t=LKWaV54W6NFlK74nAOoODg&s=09" },
+            { rank: 85, name: "Oli Web3", url: "https://x.com/OliWeb3_?t=rTWzMLR5c-uTc67EMtRAhQ&s=09" },
+            { rank: 86, name: "ElF", url: "https://x.com/elf_dpfvm?t=3RUUj7JySGBBLycePlDHFw&s=09" },
+            { rank: 87, name: "JAEY", url: "https://x.com/Dudeisjaey?t=fsgsx6cb4RrsLbOCQpOzgg&s=09" },
+            { rank: 88, name: "MR ICE", url: "https://x.com/MR_ICE355?t=mDsLTZ8joR-JiilkPaVPfg&s=09" },
+            { rank: 89, name: "Geyzee Of Web3", url: "https://x.com/Geyzee_Francis?t=inFmY2cYd5hlcZucabPHXg&s=09" },
+            { rank: 90, name: "IPadee", url: "https://x.com/ipadeeWeb3?t=RFVHcalYIUQFWWfjXdoRJg&s=09" },
+            { rank: 91, name: "Fre", url: "https://x.com/Nixit333?t=iv8KD7TKHcBaIjirrmP0sQ&s=09" },
+            { rank: 92, name: "Memo ETH", url: "https://x.com/mehmetavc199727?t=Z7v_DpxWDegbr8dPrxg72w&s=09" },
+            { rank: 93, name: "King Sley41", url: "https://x.com/kingsley41w?t=03m35D86oOLJ4eaSSEUi_w&s=09" },
+            { rank: 94, name: "Simi", url: "https://x.com/dara_see_me?t=tS0bAE3eUBLc_5TFmqFnPg&s=09" },
+            { rank: 95, name: "0xCway", url: "https://x.com/0xcway?t=3wbJzAzS55NnrFvoZw8hGA&s=09" },
+            { rank: 96, name: "Erictus", url: "https://x.com/erictus_ai?t=rfS6jPDhTS-ue7SJz9cDUg&s=09" },
+            { rank: 97, name: "Mehmeet", url: "https://x.com/mehmeet43?t=FZYTrPRRB7rGeAJ8ual4jA&s=09" },
+            { rank: 98, name: "GoGori", url: "https://x.com/ABUGOGORI?t=O4SA8KUW8XGLKv7jrlK_-Q&s=09" },
+            { rank: 99, name: "Yos.Eth", url: "https://x.com/0xyos_ril?t=pUN8pf2xDIwlAU8L5s0siA&s=09" },
+            { rank: 100, name: "SadiCool", url: "https://x.com/sadicoool7?t=1g4XwNmxuRlB6DgIKGKO9A&s=09" }
+        ];
 
         function loadLeaderboard() {
-            fetchLeaderboardData().then(leaderboard => {
-                const table = document.getElementById('leaderboardTable');
-                table.innerHTML = '';
-                leaderboard.forEach(user => {
-                    const row = document.createElement('div');
-                    row.classList.add('leaderboard-row');
-                    row.innerHTML = `
-                        <div class="leaderboard-rank">${user.rank}</div>
-                        <div class="leaderboard-profile">
-                            <img src="${user.profile_image_url || 'https://i.postimg.cc/6TkVmjdM/close-icon.png'}" alt="Profile">
-                        </div>
-                        <div class="leaderboard-name">
-                            <a href="${user.url}" target="_blank">${user.name}</a> (${user.count} tweets)
-                        </div>
-                    `;
-                    table.appendChild(row);
-                });
+            const table = document.getElementById('leaderboardTable');
+            table.innerHTML = '';
+            leaderboardData.forEach(user => {
+                const row = document.createElement('div');
+                row.classList.add('leaderboard-row');
+                row.innerHTML = `
+                    <div class="leaderboard-rank">${user.rank}</div>
+                    <div class="leaderboard-profile">
+                        <img src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Profile">
+                    </div>
+                    <div class="leaderboard-name">
+                        <a href="${user.url}" target="_blank">${user.name}</a>
+                    </div>
+                `;
+                table.appendChild(row);
             });
         }
 
@@ -726,16 +755,13 @@
             document.getElementById('leaderboardModal').style.display = 'none';
         });
 
-        // Auto-update every 24 hours
-        setInterval(loadLeaderboard, 24 * 60 * 60 * 1000); // 24 hours in milliseconds
-        loadLeaderboard(); // Initial load
-
         // Form submit confirmation
         document.getElementById('feedbackForm').addEventListener('submit', function(e){
             setTimeout(() => {
                 alert("Thank you for your feedback! 🙏");
-            }, 100);
+            }, 100); // short delay to allow Formspree submit
         });
     </script>
+
 </body>
 </html>
