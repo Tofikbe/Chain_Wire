@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community Feedback</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
     <style>
         body {
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            background: url('https://i.postimg.cc/qzpBwFQk/background.jpg') no-repeat center center fixed;
-            background-size: cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -18,6 +17,18 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #f1f1f1;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        video.background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
         }
 
         /* Menu Button (Mobile Only) */
@@ -32,7 +43,7 @@
             padding: 0.5rem 0.75rem;
             border-radius: 0.5rem;
             transition: background 0.3s;
-            display: none; /* Hidden by default, shown on mobile */
+            display: none;
         }
         .menu-btn:hover { background: rgba(0,0,0,0.8); }
 
@@ -249,6 +260,85 @@
             text-decoration: underline;
         }
 
+        /* Live Chat Modal */
+        #liveChatModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(6px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+        #liveChatContent {
+            width: 90%;
+            max-width: 600px;
+            background: #111;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            overflow-y: auto;
+            max-height: 85vh;
+            box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.3);
+            color: #f1f1f1;
+            display: flex;
+            flex-direction: column;
+        }
+        #chatMessagesLive {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 0.75rem;
+            border: 1px solid #444;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background: #222;
+            color: #f1f1f1;
+        }
+        .chat-msg-live {
+            margin: 0.3rem 0;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            max-width: 80%;
+        }
+        .chat-anonymous {
+            background: #0d95e8;
+            color: #fff;
+            align-self: flex-start;
+        }
+        .chat-self {
+            background: #333;
+            color: #fff;
+            align-self: flex-end;
+        }
+        #liveChatInput {
+            padding: 0.5rem;
+            width: calc(100% - 1rem);
+            margin-bottom: 0.75rem;
+            border-radius: 0.4rem;
+            border: 1px solid #444;
+            background: #222;
+            color: #f1f1f1;
+        }
+        #sendLiveChatBtn {
+            padding: 0.5rem;
+            background: #0d95e8;
+            color: white;
+            border: none;
+            border-radius: 0.4rem;
+            cursor: pointer;
+        }
+        #sendLiveChatBtn:hover {
+            background: #1da1f2;
+        }
+        #closeLiveChatBtn {
+            width: 1.75rem;
+            height: 1.75rem;
+            cursor: pointer;
+        }
+
         header {
             position: absolute;
             top: 1rem;
@@ -302,43 +392,6 @@
         }
         .announcement-btn:hover { background: #0d95e8; }
 
-        /* Agent Chat Modal */
-        #agentModal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            backdrop-filter: blur(6px);
-            background: rgba(0,0,0,0.75);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-        }
-        #agentContent {
-            background: #111;
-            color: #f1f1f1;
-            width: 90%;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-        #chatMessages {
-            flex-grow: 1;
-            overflow-y: auto;
-            margin-bottom: 0.75rem;
-            border: 1px solid #444;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            background: #222;
-            color: #f1f1f1;
-        }
-        .chat-msg { margin: 0.3rem 0; padding: 0.5rem 0.75rem; border-radius: 0.5rem; max-width: 80%; }
-        .chat-agent { background: #0d95e8; color: #fff; align-self: flex-start; }
-        .chat-user { background: #333; color: #fff; align-self: flex-end; }
-
         .question-btn {
             margin: 0.2rem;
             padding: 0.4rem 0.75rem;
@@ -385,7 +438,7 @@
             form h2 { grid-column: span 2; }
             select, textarea, input { grid-column: span 2; }
             .announcement-btn { grid-column: span 1; max-width: none; }
-            #announcementContent, #agentContent, #leaderboardContent {
+            #announcementContent, #agentContent, #leaderboardContent, #liveChatContent {
                 max-width: 800px;
             }
             .leaderboard-rank { flex: 0 0 5rem; font-size: 1.2rem; }
@@ -409,6 +462,10 @@
     </style>
 </head>
 <body>
+    <!-- Background Video -->
+    <video class="background-video" autoplay loop muted playsinline>
+        <source src="/videos/background.mp4" type="video/mp4">
+    </video>
 
     <!-- Desktop Navbar (Professional) -->
     <nav class="desktop-nav">
@@ -418,6 +475,7 @@
         <div class="nav-links">
             <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">Testnet</a>
             <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">NFTs</a>
+            <a href="#" onclick="openLiveChat()">Live Chat</a>
             <div class="dropdown">
                 <a href="#" class="dropbtn">Community</a>
                 <div class="dropdown-content">
@@ -447,6 +505,7 @@
     <div class="menu-overlay" id="menuOverlay">
         <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
         <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">Fly The Kite NFT🪁</a>
+        <a href="#" onclick="openLiveChat()">Live Chat</a>
         <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder🪁</a>
         <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Kite: Community & Ecosystem🪁</a>
         <a href="https://x.com/KiteAIChinese?t=bR1Bi5KbAeZLdozFOKqtGg&s=09" target="_blank">KiteAIChinese🪁</a>
@@ -478,6 +537,21 @@
                 <img id="closeLeaderboardBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close" style="width: 1.75rem; height: 1.75rem; cursor: pointer;">
             </div>
             <div id="leaderboardTable"></div>
+        </div>
+    </div>
+
+    <!-- Live Chat Modal -->
+    <div id="liveChatModal">
+        <div id="liveChatContent">
+            <div style="display:flex; justify-content:flex-end;">
+                <img id="closeLiveChatBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" 
+                     alt="Close" style="width:1.75rem; height:1.75rem; cursor:pointer;">
+            </div>
+            <div id="chatMessagesLive"></div>
+            <div>
+                <input type="text" id="liveChatInput" placeholder="Type your message here...">
+                <button id="sendLiveChatBtn">Send</button>
+            </div>
         </div>
     </div>
 
@@ -554,7 +628,7 @@
         function loadTweet(index) {
             document.getElementById("tweetContainer").innerHTML = "";
             twttr.widgets.createTweet(
-                tweets[index].split("/status/")[1].split("?")[0], // Remove query params if any
+                tweets[index].split("/status/")[1].split("?")[0],
                 document.getElementById("tweetContainer"),
                 { align: "center" }
             );
@@ -621,6 +695,52 @@
                 addMessage(reply,'agent');
                 userInput.value = '';
             }
+        });
+
+        // Live Chat Functionality
+        const liveChatModal = document.getElementById('liveChatModal');
+        const liveChatInput = document.getElementById('liveChatInput');
+        const sendLiveChatBtn = document.getElementById('sendLiveChatBtn');
+        const closeLiveChatBtn = document.getElementById('closeLiveChatBtn');
+        const chatMessagesLive = document.getElementById('chatMessagesLive');
+        let anonymousId = '';
+
+        function openLiveChat() {
+            liveChatModal.style.display = 'flex';
+        }
+
+        function addLiveChatMessage(text, sender, isSelf = false) {
+            const div = document.createElement('div');
+            div.classList.add('chat-msg-live');
+            div.classList.add(isSelf ? 'chat-self' : 'chat-anonymous');
+            div.textContent = `${sender}: ${text}`;
+            chatMessagesLive.appendChild(div);
+            chatMessagesLive.scrollTop = chatMessagesLive.scrollHeight;
+        }
+
+        // Socket.IO setup
+        const socket = io('https://your-socket-server-url'); // Replace with your Socket.IO server URL
+        socket.on('connect', () => {
+            anonymousId = `Anonymous${Math.floor(Math.random() * 10000)}`;
+            socket.emit('setAnonymousId', anonymousId);
+        });
+
+        socket.on('message', (msg) => {
+            const isSelf = msg.user === anonymousId;
+            addLiveChatMessage(msg.text, msg.user, isSelf);
+        });
+
+        sendLiveChatBtn.addEventListener('click', () => {
+            const msg = liveChatInput.value.trim();
+            if (msg) {
+                socket.emit('message', msg);
+                addLiveChatMessage(msg, anonymousId, true);
+                liveChatInput.value = '';
+            }
+        });
+
+        closeLiveChatBtn.addEventListener('click', () => {
+            liveChatModal.style.display = 'none';
         });
 
         // Leaderboard
@@ -696,7 +816,7 @@
             { rank: 69, name: "GabrielN2H", url: "https://x.com/GabrielN2H?t=AXB1aQqma3wh6EvmtR49Kw&s=09" },
             { rank: 70, name: "Abdullahi", url: "https://x.com/suremethod007?t=dEBI5Ssg1_CuZQAETxa0Bw&s=09" },
             { rank: 71, name: "Eslam", url: "https://x.com/Eslam57795041?t=qsMOnGLUFg-le4BCjI8ojw&s=09" },
-            { rank: 72, name: "HIB_BTC", url: "https://x.com/HIB_BTC?t=jZvpH-ykugZGVy0L0uTEew&s=09" },
+            { rank: 72, name: "HIB_BTC", url: "https://x.com/HIB_BTC?t=jZvpH-yZGkugZGVy0L0uTEew&s=09" },
             { rank: 73, name: "Darcy", url: "https://x.com/BitBull2003?t=JDpEudCB_UWJVTBiQamaYA&s=09" },
             { rank: 74, name: "HVBlumNews", url: "https://x.com/HVBlumnews?t=C7tyoBrMk01O5dqTc30MbQ&s=09" },
             { rank: 75, name: "Ufaz", url: "https://x.com/Zee_edge?t=QSwoXCHg4UwnE1l8WoFz0g&s=09" },
@@ -759,9 +879,8 @@
         document.getElementById('feedbackForm').addEventListener('submit', function(e){
             setTimeout(() => {
                 alert("Thank you for your feedback! 🙏");
-            }, 100); // short delay to allow Formspree submit
+            }, 100);
         });
     </script>
-
 </body>
 </html>
