@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KiteAI Twitter-Style</title>
+    <title>Community Feedback</title>
     <style>
         body {
             margin: 0;
@@ -11,152 +11,249 @@
             min-height: 100vh;
             background: url('https://i.postimg.cc/qzpBwFQk/background.jpg') no-repeat center center fixed;
             background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #f1f1f1;
+            text-align: center;
         }
-        /* Top Navigation */
-        .top-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0,0,0,0.8);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            z-index: 1002;
-        }
-        .menu-btn { font-size: 28px; cursor: pointer; }
-        .post-btn {
-            background: #1da1f2;
-            padding: 8px 16px;
-            border-radius: 8px;
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 28px;
             cursor: pointer;
+            z-index: 1001;
+            background: rgba(0,0,0,0.5);
+            padding: 8px 12px;
+            border-radius: 8px;
             transition: 0.3s;
         }
-        .post-btn:hover { background: #0d95e8; }
-
-        /* Menu Overlay */
+        .menu-btn:hover { background: rgba(0,0,0,0.8); }
         .menu-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            width: 300px;
+            width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.85);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            z-index: 1001;
-        }
-        .menu-overlay.show { transform: translateX(0); }
-        .menu-overlay a {
-            display: block;
-            color: #f1f1f1;
-            padding: 15px;
-            text-decoration: none;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-        .menu-overlay a:hover { color: #1da1f2; }
-
-        /* Feedback Form in Menu */
-        #feedbackForm {
-            padding: 20px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
             display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        #feedbackForm.show { display: block; }
+        .menu-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+        .menu-overlay a {
+            color: #f1f1f1;
+            font-size: 22px;
+            text-decoration: none;
+            padding: 15px 0;
+            width: 80%;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            transition: 0.3s;
+        }
+        .menu-overlay a:hover {
+            color: #1da1f2;
+            border-bottom-color: #1da1f2;
+        }
+        #feedbackForm {
+            display: none;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 20px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 420px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+        #feedbackForm.show { display: flex; }
+        #feedbackForm h2 { margin-bottom: 15px; font-size: 24px; }
         #feedbackForm select, #feedbackForm textarea, #feedbackForm input, #feedbackForm button {
             width: 100%;
+            padding: 12px;
             margin: 10px 0;
-            padding: 10px;
             border-radius: 8px;
             border: none;
+            font-size: 16px;
+            box-sizing: border-box;
         }
-        #feedbackForm button { background: #1da1f2; color: white; cursor: pointer; }
-
-        /* Post Modal */
+        #feedbackForm select, #feedbackForm textarea, #feedbackForm input { background: rgba(255,255,255,0.1); color: #fff; }
+        #feedbackForm button { background-color: #1da1f2; color: white; cursor: pointer; transition: 0.3s; }
+        #feedbackForm button:hover { background-color: #0d95e8; }
+        #announcementModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #announcementContent {
+            max-width: 520px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 85vh;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            color: #000;
+        }
+        .announcement-controls {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 15px;
+            font-size: 22px;
+        }
+        .announcement-controls span {
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .announcement-controls span:hover { color: #1da1f2; }
+        header {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        header img { height: 60px; border-radius: 10px; }
         #postModal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 1000;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75);
+            z-index: 10000;
             justify-content: center;
             align-items: center;
         }
         #postContent {
             background: #111;
-            padding: 20px;
+            color: #f1f1f1;
+            width: 90%;
+            max-width: 520px;
             border-radius: 12px;
+            padding: 20px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        #postInput { width: 100%; height: 100px; margin-bottom: 10px; background: #222; color: #f1f1f1; border: 1px solid #444; border-radius: 8px; }
+        .media-options { margin: 10px 0; display: flex; gap: 10px; }
+        .media-options input, .media-options button { padding: 8px; border-radius: 6px; }
+        .post-btn { background: #1da1f2; color: white; border: none; cursor: pointer; }
+        .post-btn:hover { background: #0d95e8; }
+        .feed {
+            margin-top: 80px;
             width: 90%;
             max-width: 600px;
-        }
-        #postInput { width: 100%; height: 100px; margin-bottom: 10px; }
-        .media-options { margin: 10px 0; }
-        .media-options input[type="file"], .media-options button { margin-right: 10px; }
-
-        /* Feed */
-        .feed {
-            margin-top: 60px;
-            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
         }
         .post {
-            background: #222;
+            background: rgba(0,0,0,0.75);
             padding: 15px;
             border-radius: 8px;
-            max-width: 600px;
+            text-align: left;
+        }
+        footer {
+            position: fixed;
+            bottom: 12px;
+            width: 100%;
+            text-align: center;
+            font-size: 13px;
+            color: #f1f1f1;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+        }
+        footer a {
+            color: #1da1f2;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        @media(max-width:400px) {
+            .menu-overlay a { font-size: 18px; }
+            .announcement-controls { font-size: 18px; gap: 15px; }
         }
     </style>
 </head>
 <body>
-    <!-- Top Navigation -->
-    <div class="top-nav">
-        <div class="menu-btn" onclick="toggleMenu()">☰</div>
-        <button class="post-btn" onclick="togglePostModal()">Post</button>
-    </div>
+    <!-- Menu Button -->
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
 
     <!-- Menu Overlay -->
     <div class="menu-overlay" id="menuOverlay">
-        <a href="#" onclick="toggleFeedback()">Feedback</a>
+        <a href="#" onclick="toggleFeedback()">Community Feedback</a>
         <a href="#" onclick="toggleAnnouncement()">Announcements</a>
-        <div id="feedbackForm">
-            <h3>Feedback</h3>
-            <form action="https://formspree.io/f/xzzvwrap" method="POST">
-                <select name="category" required><option value="Community Feedback">Community Feedback</option><option value="Error Report">Error / Issue</option><option value="Event or Campaign">Event / Campaign</option></select>
-                <textarea name="message" rows="3" placeholder="Your feedback..." required></textarea>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <button type="submit">Send</button>
-            </form>
-        </div>
-        <!-- Existing menu links -->
         <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
-        <!-- Add other links here -->
+        <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">Fly The Kite NFT🪁</a>
+        <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder🪁</a>
+        <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Kite: Community & Ecosystem🪁</a>
+        <a href="https://x.com/KiteAIChinese?t=bR1Bi5KbAeZLdozFOKqtGg&s=09" target="_blank">KiteAIChinese🪁</a>
+        <a href="https://x.com/buidloor?t=6nD_KJzIePhdytOA3Ss-2w&s=09" target="_blank">Vikthebuilder🪁</a>
+        <a href="https://x.com/lei_lei0904?t=yL6KX5W6lCKf0Fnk6VAIBA&s=09" target="_blank">Lei-Lei🪁</a>
+        <a href="https://x.com/scottshics?t=UMpx5b2XMH1kLa2JgMyXDw&s=09" target="_blank">Scott Shi🪁</a>
+        <a href="https://x.com/Henryleemr?t=ZZVY_CCK88fGLRM56VkXnQ&s=09" target="_blank">Henry Lee🪁</a>
+        <a href="https://x.com/superamscom?t=jr23SY_GKnnNEUr5EP-6eA&s=09" target="_blank">Spring🪁</a>
+        <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing🪁</a>
+        <form id="feedbackForm" action="https://formspree.io/f/xzzvwrap" method="POST">
+            <h2>Community Feedback</h2>
+            <select name="category" required>
+                <option value="">Select Category</option>
+                <option value="Community Feedback">Community Feedback</option>
+                <option value="Error Report">Error / Issue</option>
+                <option value="Event or Campaign">Event / Campaign</option>
+                <option value="Coming Soon" disabled>Coming Soon</option>
+            </select>
+            <textarea name="message" rows="5" placeholder="Write your feedback here..." required></textarea>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <button type="submit">Send Feedback</button>
+        </form>
     </div>
 
-    <!-- Announcement Modal (unchanged, just triggered from menu) -->
+    <!-- Announcement Modal -->
     <div id="announcementModal">
         <div id="announcementContent">
-            <div id="tweetContainer"></div>
-            <div class="announcement-controls"><span id="prevBtn">⇚</span><span id="closeBtn">❌</span><span id="nextBtn">⇛</span></div>
+            <div id="tweetContainer" style="text-align:center;"></div>
+            <div class="announcement-controls">
+                <span id="prevBtn">⇚</span>
+                <span id="closeBtn">❌</span>
+                <span id="nextBtn">⇛</span>
+            </div>
         </div>
     </div>
+
+    <!-- Logo -->
+    <header>
+        <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="Logo">
+    </header>
 
     <!-- Post Modal -->
     <div id="postModal">
         <div id="postContent">
+            <div style="display:flex; justify-content:flex-end;">
+                <img id="closePostBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" 
+                     alt="Close" style="width:28px; height:28px; cursor:pointer;">
+            </div>
             <textarea id="postInput" placeholder="What's happening with KiteAI?"></textarea>
             <div class="media-options">
                 <input type="file" id="imageUpload" accept="image/*">
-                <button onclick="takePhoto()">Camera</button>
+                <button class="post-btn" onclick="takePhoto()">Camera</button>
             </div>
-            <button onclick="postMessage()">Post</button>
-            <button onclick="togglePostModal()">Close</button>
+            <button class="post-btn" onclick="postMessage()">Post</button>
         </div>
     </div>
 
@@ -165,34 +262,98 @@
         <!-- Posts will be added here dynamically -->
     </div>
 
+    <footer>
+        Made for the KiteAI community · Follow on 
+        <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank">@Crypto_King877</a> 
+        & 
+        <a href="https://x.com/GoKiteAI?t=fzEmGeci_aCKBgJRAYEwsA&s=09" target="_blank">@GoKiteAI</a>
+    </footer>
+
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <script>
         // Menu toggle
-        function toggleMenu() { document.getElementById('menuOverlay').classList.toggle('show'); }
-        function toggleFeedback() { document.getElementById('feedbackForm').classList.toggle('show'); }
-        function toggleAnnouncement() { document.getElementById('announcementModal').style.display = 'flex'; loadTweet(0); }
+        function toggleMenu() {
+            const menu = document.getElementById('menuOverlay');
+            menu.classList.toggle('show');
+        }
+
+        // Feedback toggle
+        function toggleFeedback() {
+            document.getElementById('feedbackForm').classList.toggle('show');
+        }
+
+        // Announcement toggle
+        function toggleAnnouncement() {
+            document.getElementById('announcementModal').style.display = 'flex';
+            loadTweet(currentTweet);
+        }
+
+        // Tweets
+        const tweets = [
+            "https://x.com/GoKiteAI/status/1951245795216200146",
+            "https://x.com/GoKiteAI/status/1955919782785503588",
+            "https://x.com/GoKiteAI/status/1955792638948597868",
+            "https://x.com/GoKiteAI/status/1955104976801349904",
+            "https://x.com/wallet/status/1954052040939753923"
+        ];
+        let currentTweet = 0;
+        function loadTweet(index) {
+            document.getElementById("tweetContainer").innerHTML = "";
+            twttr.widgets.createTweet(
+                tweets[index].split("/status/")[1],
+                document.getElementById("tweetContainer"),
+                { align: "center" }
+            );
+        }
+
+        document.getElementById("closeBtn").addEventListener("click", () => {
+            document.getElementById("announcementModal").style.display = "none";
+        });
+        document.getElementById("prevBtn").addEventListener("click", () => {
+            currentTweet = (currentTweet - 1 + tweets.length) % tweets.length;
+            loadTweet(currentTweet);
+        });
+        document.getElementById("nextBtn").addEventListener("click", () => {
+            currentTweet = (currentTweet + 1) % tweets.length;
+            loadTweet(currentTweet);
+        });
 
         // Post Modal
-        function togglePostModal() { document.getElementById('postModal').style.display = 'flex'; }
+        document.getElementById("closePostBtn").addEventListener("click", () => {
+            document.getElementById("postModal").style.display = "none";
+        });
         function postMessage() {
-            const text = document.getElementById('postInput').value;
+            const text = document.getElementById("postInput").value;
             if (text) {
-                const post = document.createElement('div');
-                post.classList.add('post');
+                const post = document.createElement("div");
+                post.classList.add("post");
                 post.textContent = text;
-                document.getElementById('feed').prepend(post);
-                document.getElementById('postInput').value = '';
-                document.getElementById('postModal').style.display = 'none';
+                document.getElementById("feed").prepend(post);
+                document.getElementById("postInput").value = "";
+                document.getElementById("postModal").style.display = "none";
             }
         }
-        function takePhoto() { alert('Camera functionality to be implemented'); } // Placeholder
+        function takePhoto() { alert("Camera functionality to be implemented"); }
 
-        // Tweets (unchanged)
-        const tweets = ["https://x.com/GoKiteAI/status/1951245795216200146", /* other tweets */];
-        let currentTweet = 0;
-        function loadTweet(index) { /* existing tweet loading code */ }
+        // Post button (top of the feed)
+        document.addEventListener("DOMContentLoaded", () => {
+            const postBtn = document.createElement("button");
+            postBtn.classList.add("post-btn");
+            postBtn.textContent = "Post";
+            postBtn.style.position = "fixed";
+            postBtn.style.top = "20px";
+            postBtn.style.right = "80px";
+            postBtn.style.padding = "8px 16px";
+            postBtn.onclick = () => document.getElementById("postModal").style.display = "flex";
+            document.body.appendChild(postBtn);
+        });
 
-        // Close modals
-        document.getElementById('closeBtn').addEventListener('click', () => document.getElementById('announcementModal').style.display = 'none');
+        // Form submit confirmation
+        document.getElementById('feedbackForm').addEventListener('submit', function(e){
+            setTimeout(() => {
+                alert("Thank you for your feedback! 🙏");
+            }, 100);
+        });
     </script>
 </body>
 </html>
