@@ -32,29 +32,81 @@
             padding: 0.5rem 0.75rem;
             border-radius: 0.5rem;
             transition: background 0.3s;
+            display: none; /* Hidden by default, shown on mobile */
         }
         .menu-btn:hover { background: rgba(0,0,0,0.8); }
 
-        /* Desktop Navbar */
+        /* Desktop Navbar (Professional) */
         .desktop-nav {
-            display: none;
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(8px);
-            padding: 1rem;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .desktop-nav a {
+        .desktop-nav .logo img {
+            height: 2.5rem;
+            border-radius: 0.5rem;
+        }
+        .desktop-nav .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        .desktop-nav .nav-links a {
             color: #f1f1f1;
             text-decoration: none;
-            margin: 0 1rem;
+            margin-left: 1.5rem;
             font-size: 1.1rem;
             transition: color 0.3s;
+            position: relative;
         }
-        .desktop-nav a:hover {
+        .desktop-nav .nav-links a:hover {
             color: #1da1f2;
+        }
+        .desktop-nav .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #1da1f2;
+            transition: width 0.3s ease;
+        }
+        .desktop-nav .nav-links a:hover::after {
+            width: 100%;
+        }
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 0.5rem;
+            z-index: 1;
+            padding: 0.5rem 0;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            color: #f1f1f1;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            display: block;
+            font-size: 1rem;
+        }
+        .dropdown-content a:hover {
+            background-color: #1da1f2;
         }
 
         /* Overlay Menu (Mobile) */
@@ -322,11 +374,7 @@
         @media (min-width: 768px) {
             .menu-btn { display: none; }
             .menu-overlay { display: none; }
-            .desktop-nav {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
+            .desktop-nav { display: flex; }
             form {
                 max-width: 600px;
                 display: grid;
@@ -348,6 +396,8 @@
 
         /* Mobile Styles */
         @media (max-width: 767px) {
+            .desktop-nav { display: none; }
+            .menu-btn { display: block; }
             form { max-width: 400px; padding: 1rem; }
             .menu-overlay a { font-size: 1.2rem; }
             .announcement-controls { font-size: 1.2rem; gap: 1rem; }
@@ -360,19 +410,34 @@
 </head>
 <body>
 
-    <!-- Desktop Navbar -->
+    <!-- Desktop Navbar (Professional) -->
     <nav class="desktop-nav">
-        <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
-        <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">Fly The Kite NFT🪁</a>
-        <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder🪁</a>
-        <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Kite: Community & Ecosystem🪁</a>
-        <a href="https://x.com/KiteAIChinese?t=bR1Bi5KbAeZLdozFOKqtGg&s=09" target="_blank">KiteAIChinese🪁</a>
-        <a href="https://x.com/buidloor?t=6nD_KJzIePhdytOA3Ss-2w&s=09" target="_blank">Vikthebuilder🪁</a>
-        <a href="https://x.com/lei_lei0904?t=yL6KX5W6lCKf0Fnk6VAIBA&s=09" target="_blank">Lei-Lei🪁</a>
-        <a href="https://x.com/scottshics?t=UMpx5b2XMH1kLa2JgMyXDw&s=09" target="_blank">Scott Shi🪁</a>
-        <a href="https://x.com/Henryleemr?t=ZZVY_CCK88fGLRM56VkXnQ&s=09" target="_blank">Henry Lee🪁</a>
-        <a href="https://x.com/superamscom?t=jr23SY_GKnnNEUr5EP-6eA&s=09" target="_blank">Spring🪁</a>
-        <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing🪁</a>
+        <div class="logo">
+            <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo">
+        </div>
+        <div class="nav-links">
+            <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">Testnet</a>
+            <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">NFTs</a>
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Community</a>
+                <div class="dropdown-content">
+                    <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder</a>
+                    <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Community & Ecosystem</a>
+                    <a href="https://x.com/KiteAIChinese?t=bR1Bi5KbAeZLdozFOKqtGg&s=09" target="_blank">KiteAI Chinese</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Team</a>
+                <div class="dropdown-content">
+                    <a href="https://x.com/buidloor?t=6nD_KJzIePhdytOA3Ss-2w&s=09" target="_blank">Vikthebuilder</a>
+                    <a href="https://x.com/lei_lei0904?t=yL6KX5W6lCKf0Fnk6VAIBA&s=09" target="_blank">Lei-Lei</a>
+                    <a href="https://x.com/scottshics?t=UMpx5b2XMH1kLa2JgMyXDw&s=09" target="_blank">Scott Shi</a>
+                    <a href="https://x.com/Henryleemr?t=ZZVY_CCK88fGLRM56VkXnQ&s=09" target="_blank">Henry Lee</a>
+                    <a href="https://x.com/superamscom?t=jr23SY_GKnnNEUr5EP-6eA&s=09" target="_blank">Spring</a>
+                    <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing</a>
+                </div>
+            </div>
+        </div>
     </nav>
 
     <!-- Menu Button (Mobile) -->
@@ -482,13 +547,14 @@
             "https://x.com/GoKiteAI/status/1955919782785503588",
             "https://x.com/GoKiteAI/status/1955792638948597868",
             "https://x.com/GoKiteAI/status/1955104976801349904",
-            "https://x.com/wallet/status/1954052040939753923"
+            "https://x.com/wallet/status/1954052040939753923",
+            "https://x.com/GoKiteAI/status/1956244265958564185?t=FSvQKtpHlSZubCmNs6VY0w&s=19"
         ];
         let currentTweet = 0;
         function loadTweet(index) {
             document.getElementById("tweetContainer").innerHTML = "";
             twttr.widgets.createTweet(
-                tweets[index].split("/status/")[1],
+                tweets[index].split("/status/")[1].split("?")[0], // Remove query params if any
                 document.getElementById("tweetContainer"),
                 { align: "center" }
             );
