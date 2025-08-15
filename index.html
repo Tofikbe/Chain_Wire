@@ -576,7 +576,7 @@
             loadTweet(currentTweet);
         });
 
-        // KiteAI Community Agent
+        // KiteAI Community Agent with AI Integration
         const agentModal = document.getElementById('agentModal');
         const agentBtn = document.getElementById('agentBtn');
         const chatMessages = document.getElementById('chatMessages');
@@ -585,13 +585,8 @@
         const sendBtn = document.getElementById('sendBtn');
         const closeAgentBtn = document.getElementById('closeAgentBtn');
 
-        const answers = {
-            "how can i use kiteai?": "You can use KiteAI by joining our community and trying out the Testnet features.",
-            "what are kiteai nfts?": "KiteAI NFTs are unique digital collectibles that represent community membership and rewards.",
-            "how to join kiteai community?": "Join our community through our social channels and participate in discussions and events.",
-            "how to report an issue?": "Report issues via our Feedback form or reach out through official channels for quick support.",
-            "upcoming events in kiteai?": "Check our official social media channels for the latest events and campaigns."
-        };
+        // xAI API Key (Use securely in production, e.g., via backend)
+        const API_KEY = 'xai-kAN30gSYPpMRbw7WB2eUGaLquG6yHvcXZ5uTSk4sowzawnSazFYl8l9etwFp7rR7jsNeqdVpbiKoIcuz';
 
         function addMessage(text, sender) {
             const div = document.createElement('div');
@@ -602,23 +597,49 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
+        async function getAIResponse(query) {
+            try {
+                const response = await fetch('https://api.x.ai/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: 'grok-3', // Assuming Grok 3 is available, adjust if needed
+                        messages: [{ role: 'user', content: query }],
+                        temperature: 0.7,
+                        max_tokens: 150
+                    })
+                });
+
+                if (!response.ok) throw new Error('API request failed');
+                const data = await response.json();
+                return data.choices[0].message.content;
+            } catch (error) {
+                console.error('Error fetching AI response:', error);
+                return "Sorry, I couldn't process your request. Please try again later or contact support.";
+            }
+        }
+
         agentBtn.addEventListener('click', () => agentModal.style.display = 'flex');
         closeAgentBtn.addEventListener('click', () => agentModal.style.display = 'none');
 
         document.querySelectorAll('.question-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const q = btn.textContent;
+            btn.addEventListener('click', async () => {
+                const q = btn.textContent.toLowerCase();
                 addMessage(q, 'user');
-                addMessage(answers[q.toLowerCase()] || "Thanks! We'll get back to you soon.", 'agent');
+                const reply = await getAIResponse(`Provide a concise answer about ${q}. Focus on @GoKiteAI, its ecosystem, community, X account, Testnet, TGE, or Airdrop if relevant.`);
+                addMessage(reply, 'agent');
             });
         });
 
-        sendBtn.addEventListener('click', () => {
-            const q = userInput.value.trim();
-            if(q){
-                addMessage(q,'user');
-                const reply = answers[q.toLowerCase()] || "Thanks! We'll get back to you soon.";
-                addMessage(reply,'agent');
+        sendBtn.addEventListener('click', async () => {
+            const q = userInput.value.trim().toLowerCase();
+            if (q) {
+                addMessage(q, 'user');
+                const reply = await getAIResponse(`Provide a concise answer about "${q}". Focus on @GoKiteAI, its ecosystem, community, X account, Testnet, TGE, or Airdrop if relevant.`);
+                addMessage(reply, 'agent');
                 userInput.value = '';
             }
         });
@@ -659,6 +680,7 @@
             { rank: 32, name: "0xArk21", url: "https://x.com/0xark21?t=_kMjjfvuT88PLP3hvBNwkg&s=09" },
             { rank: 33, name: "CindyShi0907", url: "https://x.com/Cindyshi0907?t=nCUXeX1g7OP2PY4PbMHm6A&s=09" },
             { rank: 34, name: "0xCryptoHowe", url: "https://x.com/0xcryptoHowe?t=LIHUgzvn1Wv65gHDj-sVqw&s=09" },
+            { rank: 35, name: "Jyamidfx", url: "https://x.com/Jyamidfx?t=0M5Q7kN8eYvS2q3bP9w5AQ&s=09" }
             { rank: 35, name: "Jyamidfx", url: "https://x.com/iyamidfx?t=r4RD4G45Vewftrsu9Hpm3Q&s=09" },
             { rank: 36, name: "Sergej", url: "https://x.com/Sergej549190?t=dRqLJlmK-vZItnq8Z12rFQ&s=09" },
             { rank: 37, name: "Oleh", url: "https://x.com/OLEH_SYROVATKA?t=q4Zbotl9jegMUVeygtyHzA&s=09" },
@@ -727,16 +749,16 @@
             { rank: 100, name: "SadiCool", url: "https://x.com/sadicoool7?t=1g4XwNmxuRlB6DgIKGKO9A&s=09" }
         ];
 
-        function loadLeaderboard() {
-            const table = document.getElementById('leaderboardTable');
-            table.innerHTML = '';
+        document.getElementById("leaderboardBtn").addEventListener("click", () => {
+            const table = document.getElementById("leaderboardTable");
+            table.innerHTML = "";
             leaderboardData.forEach(user => {
-                const row = document.createElement('div');
-                row.classList.add('leaderboard-row');
+                const row = document.createElement("div");
+                row.classList.add("leaderboard-row");
                 row.innerHTML = `
                     <div class="leaderboard-rank">${user.rank}</div>
                     <div class="leaderboard-profile">
-                        <img src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Profile">
+                        <img src="https://i.postimg.cc/0y7d1P6F/profile.jpg" alt="${user.name}">
                     </div>
                     <div class="leaderboard-name">
                         <a href="${user.url}" target="_blank">${user.name}</a>
@@ -744,24 +766,12 @@
                 `;
                 table.appendChild(row);
             });
-        }
-
-        document.getElementById('leaderboardBtn').addEventListener('click', () => {
-            document.getElementById('leaderboardModal').style.display = 'flex';
-            loadLeaderboard();
+            document.getElementById("leaderboardModal").style.display = "flex";
         });
 
-        document.getElementById('closeLeaderboardBtn').addEventListener('click', () => {
-            document.getElementById('leaderboardModal').style.display = 'none';
-        });
-
-        // Form submit confirmation
-        document.getElementById('feedbackForm').addEventListener('submit', function(e){
-            setTimeout(() => {
-                alert("Thank you for your feedback! 🙏");
-            }, 100); // short delay to allow Formspree submit
+        document.getElementById("closeLeaderboardBtn").addEventListener("click", () => {
+            document.getElementById("leaderboardModal").style.display = "none";
         });
     </script>
-
 </body>
 </html>
