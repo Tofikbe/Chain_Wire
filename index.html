@@ -1,593 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community Feedback</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            background: url('https://i.postimg.cc/qzpBwFQk/background.jpg') no-repeat center center fixed;
-            background-size: cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #f1f1f1;
-            text-align: center;
-            transition: filter 0.3s ease;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KiteAI Community</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: url('https://i.postimg.cc/qzpBwFQk/background.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #fff;
+    }
+    header, footer {
+        text-align: center;
+        padding: 10px;
+        background: rgba(0,0,0,0.6);
+    }
+    button {
+        cursor: pointer;
+        margin: 5px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        background: #444;
+        color: #fff;
+    }
+    button:hover { background: #555; }
 
-        /* Top menu button */
-        .menu-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 28px;
-            cursor: pointer;
-            z-index: 1001;
-            background: rgba(0,0,0,0.5);
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-        .menu-btn:hover { background: rgba(0,0,0,0.8); }
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8);
+        justify-content: center;
+        align-items: center;
+    }
+    .modal-content {
+        background: #111;
+        padding: 20px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 600px;
+        position: relative;
+    }
+    .close-btn {
+        position: absolute;
+        top: 10px; right: 15px;
+        cursor: pointer;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    th, td {
+        padding: 8px;
+        border-bottom: 1px solid #444;
+        text-align: left;
+    }
+    th { background: #222; }
+    a { color: #4fc3f7; text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-        /* Overlay menu */
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: 0.3s;
-        }
-        .menu-overlay a {
-            color: #f1f1f1;
-            font-size: 22px;
-            text-decoration: none;
-            padding: 15px 0;
-            width: 80%;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            transition: 0.3s;
-        }
-        .menu-overlay a:hover {
-            color: #1da1f2;
-            border-bottom-color: #1da1f2;
-        }
-
-        /* Announcement modal */
-        #announcementModal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        #announcementContent {
-            max-width: 520px;
-            width: 100%;
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 20px;
-            overflow-y: auto;
-            max-height: 85vh;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-            color: #000;
-        }
-        .announcement-controls {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 15px;
-            font-size: 22px;
-        }
-        .announcement-controls span {
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .announcement-controls span:hover { color: #1da1f2; }
-
-        header {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-        header img { height: 60px; border-radius: 10px; }
-
-        form {
-            background: rgba(0, 0, 0, 0.65);
-            padding: 25px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 420px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        form h2 { margin-bottom: 15px; font-size: 24px; }
-        select, textarea, input, button {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border: none;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        select, textarea, input { background: rgba(255,255,255,0.1); color: #fff; }
-        select option { color: #000; }
-        button {
-            background-color: #1da1f2;
-            color: white;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-        button:hover { background-color: #0d95e8; }
-
-        /* Announcement & Agent buttons */
-        .announcement-btn {
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: #1da1f2;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-        .announcement-btn:hover { background: #0d95e8; }
-
-        /* Leaderboard Modal */
-        #leaderboardModal {
-            display: none;
-            position: fixed;
-            top:0; left:0;
-            width:100%; height:100%;
-            background: rgba(0,0,0,0.6); /* semi-transparent dark */
-            backdrop-filter: blur(6px);  /* background blur */
-            z-index: 10001;
-            justify-content:center;
-            align-items:center;
-        }
-        #leaderboardContent {
-            background:#000; /* black background */
-            color:#fff;      /* white text */
-            width:90%;
-            max-width:520px;
-            border-radius:12px;
-            padding:20px;
-            max-height:85vh;
-            overflow-y:auto;
-            text-align:center;
-            backdrop-filter: none; /* content clear */
-        }
-        #leaderboardContent table {
-            width:100%;
-            border-collapse: collapse;
-            margin-top:10px;
-        }
-        #leaderboardContent th, #leaderboardContent td {
-            border:1px solid #ccc;
-            padding:8px;
-        }
-        #closeLeaderboard {
-            cursor:pointer;
-            font-size:22px;
-            display:block;
-            text-align:right;
-        }
-
-        /* KiteAI Community Agent Modal */
-        #agentModal {
-            display: none;
-            position: fixed;
-            top:0; left:0;
-            width:100%; height:100%;
-            backdrop-filter: blur(6px);
-            background: rgba(0,0,0,0.75);
-            z-index: 10000;
-            justify-content:center;
-            align-items:center;
-        }
-        #agentContent {
-            background:#000;
-            color:#fff;
-            width:90%;
-            max-width:520px;
-            border-radius:12px;
-            padding:20px;
-            display:flex;
-            flex-direction:column;
-            max-height:85vh;
-            overflow-y:auto;
-        }
-        #closeAgent {
-            align-self: flex-end;
-            cursor: pointer;
-            font-size: 22px;
-            margin-bottom:10px;
-        }
-        #chatMessages {
-            flex-grow:1;
-            overflow-y:auto;
-            margin-bottom:10px;
-            border:1px solid #444;
-            padding:10px;
-            border-radius:8px;
-            background:#111;
-        }
-        .chat-msg { margin:5px 0; padding:8px 12px; border-radius:8px; max-width:80%; }
-        .chat-agent { background:#1da1f2; color:#fff; align-self:flex-start; }
-        .chat-user { background:#333; color:#fff; align-self:flex-end; }
-
-        .question-btn {
-            margin:3px;
-            padding:6px 10px;
-            border:none;
-            border-radius:6px;
-            background:#0d95e8;
-            color:white;
-            cursor:pointer;
-        }
-        .question-btn:hover { background:#1da1f2; }
-
-        #userInput { padding:8px; width: calc(100% - 16px); margin-bottom:10px; border-radius:6px; border:1px solid #444; background:#222; color:#fff; }
-        #sendBtn { padding:8px; background:#1da1f2; color:white; border:none; border-radius:6px; cursor:pointer; }
-        #sendBtn:hover { background:#0d95e8; }
-
-        footer {
-            position: fixed;
-            bottom: 12px;
-            width: 100%;
-            text-align: center;
-            font-size: 13px;
-            color: #f1f1f1;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-        }
-        footer a {
-            color: #1da1f2;
-            text-decoration: none;
-            font-weight: 500;
-        }
-    </style>
+    /* Chat Styles */
+    #chatMessages {
+        max-height: 250px;
+        overflow-y: auto;
+        margin-bottom: 10px;
+        border: 1px solid #444;
+        padding: 10px;
+        border-radius: 5px;
+        background: #000;
+    }
+    .chat-msg {
+        margin: 5px 0;
+        padding: 8px;
+        border-radius: 5px;
+    }
+    .chat-agent { background: #222; text-align: left; }
+    .chat-user { background: #333; text-align: right; }
+    .question-btn {
+        margin: 5px 3px;
+        padding: 5px 10px;
+        background: #444;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+    }
+    .question-btn:hover { background: #555; }
+</style>
 </head>
 <body>
 
-    <!-- Menu Button -->
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+<header>
+    <h1>KiteAI Community</h1>
+    <button id="leaderboardBtn">Leaderboard</button>
+    <button id="announcementBtn">Announcements</button>
+    <button id="agentBtn">Community Agent</button>
+</header>
 
-    <!-- Menu Overlay -->
-    <div class="menu-overlay" id="menuOverlay">
-        <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
-        <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">Fly The Kite NFT🪁</a>
-        <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder🪁</a>
-        <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Kite: Community & Ecosystem🪁</a>
-        <a href="https://x.com/KiteAIChinese?t=bR1Bi5KbAeZLdozFOKqtGg&s=09" target="_blank">KiteAIChinese🪁</a>
-        <a href="https://x.com/buidloor?t=6nD_KJzIePhdytOA3Ss-2w&s=09" target="_blank">Vikthebuilder🪁</a>
-        <a href="https://x.com/lei_lei0904?t=yL6KX5W6lCKf0Fnk6VAIBA&s=09" target="_blank">Lei-Lei🪁</a>
-        <a href="https://x.com/scottshics?t=UMpx5b2XMH1kLa2JgMyXDw&s=09" target="_blank">Scott Shi🪁</a>
-        <a href="https://x.com/Henryleemr?t=ZZVY_CCK88fGLRM56VkXnQ&s=09" target="_blank">Henry Lee🪁</a>
-        <a href="https://x.com/superamscom?t=jr23SY_GKnnNEUr5EP-6eA&s=09" target="_blank">Spring🪁</a>
-        <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing🪁</a>
+<!-- Leaderboard Modal -->
+<div id="leaderboardModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeLeaderboard">❌ Close</span>
+        <h2>Leaderboard</h2>
+        <table id="leaderboardTable">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
+</div>
 
-    <!-- Announcement Modal -->
-    <div id="announcementModal">
-        <div id="announcementContent">
-            <div id="tweetContainer" style="text-align:center;"></div>
-            <div class="announcement-controls">
-                <span id="prevBtn">⇚</span>
-                <span id="closeBtn">❌</span>
-                <span id="nextBtn">⇛</span>
-            </div>
+<!-- Announcements Modal -->
+<div id="announcementModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeBtn">❌ Close</span>
+        <h2>Announcements</h2>
+        <div id="tweetContainer"></div>
+        <div style="margin-top:10px; text-align:center;">
+            <button id="prevBtn">Previous</button>
+            <button id="nextBtn">Next</button>
         </div>
     </div>
+</div>
 
-    <!-- Logo -->
-    <header>
-        <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="Logo">
-    </header>
-
-    <!-- Feedback Form -->
-    <form action="https://formspree.io/f/xzzvwrap" method="POST">
-        <h2>Community Feedback</h2>
-        <select name="category" required>
-            <option value="">Select Category</option>
-            <option value="Community Feedback">Community Feedback</option>
-            <option value="Error Report">Error / Issue</option>
-            <option value="Event or Campaign">Event / Campaign</option>
-            <option value="Coming Soon" disabled>Coming Soon</option>
-        </select>
-        <textarea name="message" rows="5" placeholder="Write your feedback here..." required></textarea>
-        <input type="email" name="email" placeholder="Your Email" required>
-        <button type="submit">Send Feedback</button>
-
-        <!-- Announcement Button -->
-        <button type="button" class="announcement-btn" id="announcementBtn">📢 Announcements</button>
-
-        <!-- KiteAI Community Agent Button -->
-        <button type="button" class="announcement-btn" id="agentBtn">🤖 KiteAI Community Agent</button>
-
-        <!-- Leaderboard Button -->
-        <button type="button" class="announcement-btn" id="leaderboardBtn">🏆 Leaderboard</button>
-    </form>
-
-    <!-- Leaderboard Modal -->
-    <div id="leaderboardModal">
-        <div id="leaderboardContent">
-            <span id="closeLeaderboard">❌ Close</span>
-            <h2>KiteAI Leaderboard</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>KiteAI Fam</th>
-                        <th>Points</th>
-                    </tr>
-                </thead>
-                <tbody id="leaderboardTable">
-                    const users = [
-  {rank:1, name:"Crypto_King877", link:"https://x.com/Crypto_King877?t=M_jfPjKPbHKPhMwaEfRGrg&s=09"},
-  {rank:2, name:"Daniel Wabuisi0", link:"https://x.com/danielnwabuisi0?t=OoTOQXk8VUY6Av2zYOaCmA&s=09"},
-  {rank:3, name:"Sarcastic_AU", link:"https://x.com/Sarcastic_AU?t=Z-riE0FULUeXEzxzGIPN4w&s=09"},
-  {rank:4, name:"Kartik Boy45", link:"https://x.com/Kartikboy45?t=QVk_3mX_O9gJC7jGu_daKA&s=09"},
-  {rank:5, name:"Alfian_Paddaus", link:"https://x.com/alfian_paddaus?t=kq_-SyZEIlLBGLY7tCMtIQ&s=09"},
-  {rank:6, name:"Givnix", link:"https://x.com/Givnix?t=n2lqQAvGKN8viHtMXkmh6A&s=09"},
-  {rank:7, name:"ChingZhangData", link:"https://x.com/ChiZhangData?t=VeO099Z1cQctspfpkb-iOw&s=09"},
-  {rank:8, name:"0xLaughing", link:"https://x.com/0xLaughing?t=FQQDbwwjqhPe43G6vGH6Ag&s=09"},
-  {rank:9, name:"KingTowdah", link:"https://x.com/KingTowdah?t=H3ipXL6J99FGaI7GvEm2Dw&s=09"},
-  {rank:10, name:"Spring", link:"https://x.com/superamscom?t=LPSNv40LwZ9Bi5g9fe2baA&s=09"},
-  {rank:11, name:"Scott Shi", link:"https://x.com/scottshics?t=EUoxo7laWPElaLyriuPL3w&s=09"},
-  {rank:12, name:"Henry Lee", link:"https://x.com/Henryleemr?t=tA675qNGEAbbnYLouHYJBQ&s=09"},
-  {rank:13, name:"JiuHuang", link:"https://x.com/JiuHuangKOL?t=lkG1AHNfO43zw4OXW5aS-Q&s=09"},
-  {rank:14, name:"LiCrazy", link:"https://x.com/0xFeng?t=K-xdgrI6vSObZevIphHuOw&s=09"},
-  {rank:15, name:"Linsajio", link:"https://x.com/linsajiao?t=MiIEcjUOQBluMWP_Ndx9pQ&s=09"},
-  {rank:16, name:"Taniya Aggarwal", link:"https://x.com/iamtanya338?t=y2p2tNMePACgnXeBPypI5A&s=09"},
-  {rank:17, name:"Jmhuolongguo", link:"https://x.com/jmhuolongguo?t=3gGiUyuzflaXKtilN23MDA&s=09"},
-  {rank:18, name:"Stephen", link:"https://x.com/imastephen_?t=L5X7sAjecvfVy3EOn1W7fA&s=09"},
-  {rank:19, name:"Baby Yui", link:"https://x.com/Oldoggie88?t=Th7WvT6QILC4LCSEbf8AjA&s=09"},
-  {rank:20, name:"EarronYu", link:"https://x.com/EarronYu?t=p77FavuKZAkEULP7oZAD6g&s=09"},
-  {rank:21, name:"CreaMyHaOsCar", link:"https://x.com/CreaMyHaOsCar?t=e9SM3sxOQqfy5jK8U2mqOg&s=09"},
-  {rank:22, name:"Ssovoovo", link:"https://x.com/ssovoovo?t=8Q363FPjpwM7FGMTnyDP6A&s=09"},
-  {rank:23, name:"Bingo_Eth", link:"https://x.com/bingo_eth?t=C4CbDkueecokyPEgbTUYtg&s=09"},
-  {rank:24, name:"0xTykoo", link:"https://x.com/0xTykoo?t=-86anzkrAKTibzF_db1EYQ&s=09"},
-  {rank:25, name:"0xBolin123", link:"https://x.com/0xBolin123?t=9D-uZtEUJij0AA_flhdzVA&s=09"},
-  {rank:26, name:"Ariel Choii", link:"https://x.com/ArielChoii?t=n7xyDbiTCJe8YMTicN4RNQ&s=09"},
-  {rank:27, name:"Crypto Makabaka", link:"https://x.com/CryptoMakabaka?t=c5muLiT3PvVI6ReUNJQeBA&s=09"},
-  {rank:28, name:"0xYae", link:"https://x.com/0x0xyae?t=24cUn3JuH4gimcuqCnN9Tw&s=09"},
-  {rank:29, name:"Guomin184935", link:"https://x.com/Guomin184935?t=I-qrURmE2oNW3wjYVDEGbw&s=09"},
-  {rank:30, name:"Sweet91268", link:"https://x.com/sweet919268?t=_l93-XBFYOu-Tiwh5qEKgg&s=09"},
-  {rank:31, name:"Vikthebuilder", link:"https://x.com/buidloor?t=8flJ3JS8f9rGsv3LCJ40nQ&s=09"},
-  {rank:32, name:"0xArk21", link:"https://x.com/0xark21?t=_kMjjfvuT88PLP3hvBNwkg&s=09"},
-  {rank:33, name:"CindyShi0907", link:"https://x.com/Cindyshi0907?t=nCUXeX1g7OP2PY4PbMHm6A&s=09"},
-  {rank:34, name:"0xCryptoHowe", link:"https://x.com/0xcryptoHowe?t=LIHUgzvn1Wv65gHDj-sVqw&s=09"},
-  {rank:35, name:"Jyamidfx", link:"https://x.com/iyamidfx?t=r4RD4G45Vewftrsu9Hpm3Q&s=09"},
-  {rank:36, name:"Sergej", link:"https://x.com/Sergej549190?t=dRqLJlmK-vZItnq8Z12rFQ&s=09"},
-  {rank:37, name:"Oleh", link:"https://x.com/OLEH_SYROVATKA?t=q4Zbotl9jegMUVeygtyHzA&s=09"},
-  {rank:38, name:"Ranaone", link:"https://x.com/ranaone185?t=1EF214uR-8GFiaERuiO1cQ&s=09"},
-  {rank:39, name:"ErlanggaH", link:"https://x.com/ErlanggaH31985?t=aTxsMdEw3CjuXSDtgGRO6Q&s=09"},
-  {rank:40, name:"Theefehalo", link:"https://x.com/THEEFEHALO?t=JQnPv_6E246rLUCqbilPPQ&s=09"},
-  {rank:41, name:"Senna", link:"https://x.com/sennxenna?t=uVqmd1UahL4p1iEyFVQWgw&s=09"},
-  {rank:42, name:"Apeng", link:"https://x.com/Apeng2006?t=k9fuTSR3YMDlVocF5T5ioQ&s=09"},
-  {rank:43, name:"StlightLeon", link:"https://x.com/StlightLeon?t=rtX05b7rCsIDsquJ6l5BLA&s=09"},
-  {rank:44, name:"Kabsne", link:"https://x.com/kabsne4?t=utIZ8I_BswWRd0ZX2f716w&s=09"},
-  {rank:45, name:"Marurlemo", link:"https://x.com/marurlemo?t=dw2QG3ndU1V91WSQSI71iA&s=09"},
-  {rank:46, name:"Aminullah", link:"https://x.com/aminullah4life?t=lNAYcXjc8_AgUU2-4sfn7g&s=09"},
-  {rank:47, name:"KryptoNickDC", link:"https://x.com/KrYpToNiCkDC?t=BBpw8s6uXkgcu92mM-9X0Q&s=09"},
-  {rank:48, name:"Jyamidfx", link:"https://x.com/iyamidfx?t=xOToxHE1VAjMI5w2ESBNZg&s=09"},
-  {rank:49, name:"Moki", link:"https://x.com/moki62166?t=zREI0esE_RI5e9HH8YnYQg&s=09"},
-  {rank:50, name:"Sergey", link:"https://x.com/sergey_sgs?t=WWGv4cGtwQQ9Bmrg1jTeIQ&s=09"},
-  {rank:51, name:"0xVanss", link:"https://x.com/0xVanssStrong?t=uImXUBA939XG10Y3IPfVIw&s=09"},
-  {rank:52, name:"Thanhaa", link:"https://x.com/thanhha3071997?t=QM3qzk2A7gY4iDooFtSm1A&s=09"},
-  {rank:53, name:"LifeanyiDavidAI", link:"https://x.com/IfeanyiDavidAI?t=UseGrADY5iAWqsXcK9zMMQ&s=09"},
-  {rank:54, name:"LekhCando", link:"https://x.com/lekhcando?t=c2OajrHK-1GohZEa9a-ZRg&s=09"},
-  {rank:55, name:"FiifibiNeyTS", link:"https://x.com/fiifibiNeyTs?t=lYMxtSXFvy5pAr5BpDQrIw&s=09"},
-  {rank:56, name:"DinoDied", link:"https://x.com/GameversusW3?t=FzT0md8o3V42-lOkDh1exQ&s=09"},
-  {rank:57, name:"Web3 Guru", link:"https://x.com/web3gurru?t=GOvFCqOy4XIVB01O9ZlQtQ&s=09"},
-  {rank:58, name:"Tanmu Dgreat", link:"https://x.com/tanmuDgreat?t=gBgn57BW8W-L-oFbUh5ALw&s=09"},
-  {rank:59, name:"Junzna", link:"https://x.com/Junzna3L?t=D6Dp6VdcRdIKmubaMqpaXA&s=09"},
-  {rank:60, name:"Sandy Crypto", link:"https://x.com/SandyMikaila?t=atStiBTaVhGCVDwDbi66KQ&s=09"},
-  {rank:61, name:"Kaizah Flow", link:"https://x.com/KaizahFlow?t=pa9I8NEuKjR3Pbjo8FySeQ&s=09"},
-  {rank:62, name:"Gaby", link:"https://x.com/0xgabyy?t=d9ScCda0-097PFpgk4q7cg&s=09"},
-  {rank:63, name:"Just Do It", link:"https://x.com/mysucesstory?t=uSt6Sf21bGzSk780bM4Hkg&s=09"},
-  {rank:64, name:"Dorotheaxx", link:"https://x.com/dorotheaxx_?t=evKA41y52JH7y_RB3ZlivA&s=09"},
-  {rank:65, name:"Fark", link:"https://x.com/AwolusiAyobola?t=OGD08Otv0oLuT-nclSmIkw&s=09"},
-  {rank:66, name:"Mic", link:"https://x.com/summerftw1119?t=vKal6jjK0xqSr8ER94k7UQ&s=09"},
-  {rank:67, name:"Boy Trader", link:"https://x.com/boytrader__?t=gp8tu3aajD6v44JOR6KNCg&s=09"},
-  {rank:68, name:"UgwuezeChijioke", link:"https://x.com/UgwuezeChijioke?t=bhbJBesu75JGSr5dCK4BRA&s=09"},
-  {rank:69, name:"GabrielN2H", link:"https://x.com/GabrielN2H?t=AXB1aQqma3wh6EvmtR49Kw&s=09"},
-  {rank:70, name:"Abdullahi", link:"https://x.com/suremethod007?t=dEBI5Ssg1_CuZQAETxa0Bw&s=09"},
-  {rank:71, name:"Eslam", link:"https://x.com/Eslam57795041?t=qsMOnGLUFg-le4BCjI8ojw&s=09"},
-  {rank:72, name:"HIB_BTC", link:"https://x.com/HIB_BTC?t=jZvpH-ykugZGVy0L0uTEew&s=09"},
-  {rank:73, name:"Darcy", link:"https://x.com/BitBull2003?t=JDpEudCB_UWJVTBiQamaYA&s=09"},
-  {rank:74, name:"HVBlumNews", link:"https://x.com/HVBlumnews?t=C7tyoBrMk01O5dqTc30MbQ&s=09"},
-  {rank:75, name:"Ufaz", link:"https://x.com/Zee_edge?t=QSwoXCHg4UwnE1l8WoFz0g&s=09"},
-  {rank:76, name:"GiaKhiêm", link:"https://x.com/Giakhiem_bnb?t=kWvUCTUBI9TGiE9KRFr_ng&s=09"},
-  {rank:77, name:"Sohan", link:"https://x.com/sohan269?t=HPHSxOhvzD-qC5izgjqOiw&s=09"},
-  {rank:78, name:"Johnny", link:"https://x.com/Johnnygoldvc?t=qgk1mB8iGNIfRMapr4QYOg&s=09"},
-  {rank:79, name:"Baris", link:"https://x.com/barcengiz?t=uPICxOStNUi9VutqyzJ8UA&s=09"},
-  {rank:80, name:"Darth", link:"https://x.com/DrthXyler?t=x0hxEmKOA7Y9o4o4aPB0yA&s=09"},
-  {rank:81, name:"Meek Of Web3", link:"https://x.com/Meekofweb3?t=euH9YpospYh-ajzBC2ULjA&s=09"},
-  {rank:82, name:"Bozzx Japan", link:"https://x.com/aidropIdn?t=F4ADcJlnNBp5gnOgy7x_1w&s=09"},
-  {rank:83, name:"Unaiyang", link:"https://x.com/unaiyang?t=RNcpB8FHZrZ5wCi8Kb6a8A&s=09"},
-  {rank:84, name:"Kiarh205", link:"https://x.com/kiarh205?t=LKWaV54W6NFlK74nAOoODg&s=09"},
-  {rank:85, name:"Oli Web3", link:"https://x.com/OliWeb3_?t=rTWzMLR5c-uTc67EMtRAhQ&s=09"},
-  {rank:86, name:"ElF", link:"https://x.com/elf_dpfvm?t=3RUUj7JySGBBLycePlDHFw&s=09"},
-  {rank:87, name:"JAEY", link:"https://x.com/Dudeisjaey?t=fsgsx6cb4RrsLbOCQpOzgg&s=09"},
-  {rank:88, name:"MR ICE", link:"https://x.com/MR_ICE355?t=mDsLTZ8joR-JiilkPaVPfg&s=09"},
-  {rank:89, name:"Geyzee Of Web3", link:"https://x.com/Geyzee_Francis?t=inFmY2cYd5hlcZucabPHXg&s=09"},
-  {rank:90, name:"IPadee", link:"https://x.com/ipadeeWeb3?t=RFVHcalYIUQFWWfjXdoRJg&s=09"},
-  {rank:91, name:"Fre", link:"https://x.com/Nixit333?t=iv8KD7TKHcBaIjirrmP0sQ&s=09"},
-  {rank:92, name:"Memo ETH", link:"https://x.com/mehmetavc199727?t=Z7v_DpxWDegbr8dPrxg72w&s=09"},
-  {rank:93, name:"King Sley41", link:"https://x.com/kingsley41w?t=03m35D86oOLJ4eaSSEUi_w&s=09"},
-  {rank:94, name:"Simi", link:"https://x.com/dara_see_me?t=tS0bAE3eUBLc_5TFmqFnPg&s=09"},
-  {rank:95, name:"0xCway", link:"https://x.com/0xcway?t=3wbJzAzS55NnrFvoZw8hGA&s=09"},
-  {rank:96, name:"Erictus", link:"https://x.com/erictus_ai?t=rfS6jPDhTS-ue7SJz9cDUg&s=09"},
-  {rank:97, name:"Mehmeet", link:"https://x.com/mehmeet43?t=FZYTrPRRB7rGeAJ8ual4jA&s=09"},
-  {rank:98, name:"GoGori", link:"https://x.com/ABUGOGORI?t=O4SA8KUW8XGLKv7jrlK_-Q&s=09"},
-  {rank:99, name:"Yos.Eth", link:"https://x.com/0xyos_ril?t=pUN8pf2xDIwlAU8L5s0siA&s=09"},
-  {rank:100, name:"SadiCool", link:"https://x.com/sadicoool7?t=1g4XwNmxuRlB6DgIKGKO9A&s=09"}
-                    ];
-                </tbody>
-            </table>
+<!-- Agent Chat Modal -->
+<div id="agentModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeAgent">❌ Close</span>
+        <div id="chatMessages"></div>
+        <div id="preQuestions" style="margin-bottom:10px;">
+            <button class="question-btn">How can I use KiteAI?</button>
+            <button class="question-btn">What are KiteAI NFTs?</button>
+            <button class="question-btn">How to join KiteAI community?</button>
+            <button class="question-btn">How to report an issue?</button>
+            <button class="question-btn">Upcoming events in KiteAI?</button>
         </div>
+        <input type="text" id="userInput" placeholder="Type your question here..." style="width:70%; padding:5px;">
+        <button id="sendBtn">Send</button>
     </div>
+</div>
 
-    <!-- Agent Chat Modal -->
-    <div id="agentModal">
-        <div id="agentContent">
-            <span id="closeAgent">❌ Close</span>
-            <div id="chatMessages"></div>
-            <div>
-                <div id="preQuestions" style="margin-bottom:10px;">
-                    <button class="question-btn">How can I use KiteAI?</button>
-                    <button class="question-btn">What are KiteAI NFTs?</button>
-                    <button class="question-btn">How to join KiteAI community?</button>
-                    <button class="question-btn">How to report an issue?</button>
-                    <button class="question-btn">Upcoming events in KiteAI?</button>
-                </div>
-                <input type="text" id="userInput" placeholder="Type your question here...">
-                <button id="sendBtn">Send</button>
-            </div>
-        </div>
-    </div>
+<footer>
+    Made for the KiteAI community · Follow on 
+    <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank">@Crypto_King877</a> 
+    & 
+    <a href="https://x.com/GoKiteAI?t=fzEmGeci_aCKBgJRAYEwsA&s=09" target="_blank">@GoKiteAI</a>
+</footer>
 
-    <footer>
-        Made for the KiteAI community · Follow on 
-        <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank">@Crypto_King877</a> 
-        & 
-        <a href="https://x.com/GoKiteAI?t=fzEmGeci_aCKBgJRAYEwsA&s=09" target="_blank">@GoKiteAI</a>
-    </footer>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script>
+    // Leaderboard
+    const leaderboardBtn = document.getElementById('leaderboardBtn');
+    const leaderboardModal = document.getElementById('leaderboardModal');
+    const closeLeaderboard = document.getElementById('closeLeaderboard');
+    leaderboardBtn.addEventListener('click', () => leaderboardModal.style.display = 'flex');
+    closeLeaderboard.addEventListener('click', () => leaderboardModal.style.display = 'none');
 
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    <script>
-        function toggleMenu() {
-            const menu = document.getElementById('menuOverlay');
-            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
-        }
+    const users = [
+        {rank:87, name:"JAEY", link:"https://x.com/Dudeisjaey?t=fsgsx6cb4RrsLbOCQpOzgg&s=09"},
+        {rank:88, name:"MR ICE", link:"https://x.com/MR_ICE355?t=mDsLTZ8joR-JiilkPaVPfg&s=09"},
+        {rank:89, name:"Geyzee Of Web3", link:"https://x.com/Geyzee_Francis?t=inFmY2cYd5hlcZucabPHXg&s=09"},
+        {rank:90, name:"IPadee", link:"https://x.com/ipadeeWeb3?t=RFVHcalYIUQFWWfjXdoRJg&s=09"},
+        {rank:91, name:"Fre", link:"https://x.com/Nixit333?t=iv8KD7TKHcBaIjirrmP0sQ&s=09"},
+        {rank:92, name:"Memo ETH", link:"https://x.com/mehmetavc199727?t=Z7v_DpxWDegbr8dPrxg72w&s=09"},
+        {rank:93, name:"King Sley41", link:"https://x.com/kingsley41w?t=03m35D86oOLJ4eaSSEUi_w&s=09"},
+        {rank:94, name:"Simi", link:"https://x.com/dara_see_me?t=tS0bAE3eUBLc_5TFmqFnPg&s=09"},
+        {rank:95, name:"0xCway", link:"https://x.com/0xcway?t=3wbJzAzS55NnrFvoZw8hGA&s=09"},
+        {rank:96, name:"Erictus", link:"https://x.com/erictus_ai?t=rfS6jPDhTS-ue7SJz9cDUg&s=09"},
+        {rank:97, name:"Mehmeet", link:"https://x.com/mehmeet43?t=FZYTrPRRB7rGeAJ8ual4jA&s=09"},
+        {rank:98, name:"GoGori", link:"https://x.com/ABUGOGORI?t=O4SA8KUW8XGLKv7jrlK_-Q&s=09"},
+        {rank:99, name:"Yos.Eth", link:"https://x.com/0xyos_ril?t=pUN8pf2xDIwlAU8L5s0siA&s=09"},
+        {rank:100, name:"SadiCool", link:"https://x.com/sadicoool7?t=1g4XwNmxuRlB6DgIKGKO9A&s=09"}
+    ];
 
-        const tweets = [
-            "https://x.com/GoKiteAI/status/1951245795216200146",
-            "https://x.com/GoKiteAI/status/1955919782785503588",
-            "https://x.com/GoKiteAI/status/1955792638948597868",
-            "https://x.com/GoKiteAI/status/1955104976801349904",
-            "https://x.com/wallet/status/1954052040939753923"
-        ];
-        let currentTweet = 0;
-
-        function loadTweet(index) {
-            document.getElementById("tweetContainer").innerHTML = "";
-            twttr.widgets.createTweet(
-                tweets[index].split("/status/")[1],
-                document.getElementById("tweetContainer"),
-                { align: "center" }
-            );
-        }
-
-        document.getElementById("announcementBtn").addEventListener("click", () => {
-            document.getElementById("announcementModal").style.display = "flex";
-            loadTweet(currentTweet);
-        });
-
-        document.getElementById("closeBtn").addEventListener("click", () => {
-            document.getElementById("announcementModal").style.display = "none";
-        });
-
-        document.getElementById("prevBtn").addEventListener("click", () => {
-            currentTweet = (currentTweet - 1 + tweets.length) % tweets.length;
-            loadTweet(currentTweet);
-        });
-
-        document.getElementById("nextBtn").addEventListener("click", () => {
-            currentTweet = (currentTweet + 1) % tweets.length;
-            loadTweet(currentTweet);
-        });
-
-        // KiteAI Community Agent Logic
-        const agentModal = document.getElementById('agentModal');
-        const agentBtn = document.getElementById('agentBtn');
-        const chatMessages = document.getElementById('chatMessages');
-        const preQuestions = document.getElementById('preQuestions');
-        const userInput = document.getElementById('userInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const closeAgent = document.getElementById('closeAgent');
-
-const answers = {
-    "How can I use KiteAI?": "You can use KiteAI by joining our community and trying out the Testnet features.",
-    "What are KiteAI NFTs?": "KiteAI NFTs are unique digital collectibles that represent community membership and rewards.",
-    "How to join KiteAI community?": "Join our community through our social channels and participate in discussions and events.",
-    "How to report an issue?": "Report issues via our Feedback form or reach out through official channels for quick support.",
-    "Upcoming events in KiteAI?": "Check our official social media channels for the latest events and campaigns."
-};
-
-function addMessage(text, sender) {
-    const div = document.createElement('div');
-    div.classList.add('chat-msg');
-    div.classList.add(sender === 'agent' ? 'chat-agent' : 'chat-user');
-    div.textContent = text;
-    chatMessages.appendChild(div);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-agentBtn.addEventListener('click', () => {
-    agentModal.style.display = 'flex';
-});
-
-closeAgent.addEventListener('click', () => {
-    agentModal.style.display = 'none';
-});
-
-document.querySelectorAll('.question-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const q = btn.textContent;
-        addMessage(q, 'user');
-        addMessage(answers[q], 'agent');
+    const leaderboardTable = document.getElementById('leaderboardTable').querySelector('tbody');
+    users.forEach(user => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${user.rank}</td><td><a href="${user.link}" target="_blank">${user.name}</a></td><td>${user.rank*10}</td>`;
+        leaderboardTable.appendChild(tr);
     });
-});
 
-sendBtn.addEventListener('click', () => {
-    const q = userInput.value.trim();
-    if(q){
-        addMessage(q,'user');
-        const reply = answers[q] || "Thank you for your question! Our team will get back to you soon.";
-        addMessage(reply,'agent');
-        userInput.value = '';
+    // Announcements
+    const announcementBtn = document.getElementById('announcementBtn');
+    const announcementModal = document.getElementById('announcementModal');
+    const closeBtn = document.getElementById('closeBtn');
+    let currentTweet = 0;
+    const tweets = [
+        "https://x.com/GoKiteAI/status/1951245795216200146",
+        "https://x.com/GoKiteAI/status/1955919782785503588",
+        "https://x.com/GoKiteAI/status/1955792638948597868",
+        "https://x.com/GoKiteAI/status/1955104976801349904",
+        "https://x.com/wallet/status/1954052040939753923"
+    ];
+    function loadTweet(index){
+        document.getElementById("tweetContainer").innerHTML = "";
+        twttr.widgets.createTweet(
+            tweets[index].split("/status/")[1],
+            document.getElementById("tweetContainer"),
+            {align:"center"}
+        );
     }
-});
+    announcementBtn.addEventListener('click', ()=>{
+        announcementModal.style.display = 'flex';
+        loadTweet(currentTweet);
+    });
+    closeBtn.addEventListener('click', ()=>announcementModal.style.display='none');
+    document.getElementById('prevBtn').addEventListener('click', ()=>{
+        currentTweet=(currentTweet-1+tweets.length)%tweets.length;
+        loadTweet(currentTweet);
+    });
+    document.getElementById('nextBtn').addEventListener('click', ()=>{
+        currentTweet=(currentTweet+1)%tweets.length;
+        loadTweet(currentTweet);
+    });
 
-// Leaderboard Logic
-const leaderboardBtn = document.getElementById('leaderboardBtn');
-const leaderboardModal = document.getElementById('leaderboardModal');
-const closeLeaderboard = document.getElementById('closeLeaderboard');
+    // Agent Chat
+    const agentModal = document.getElementById('agentModal');
+    const agentBtn = document.getElementById('agentBtn');
+    const chatMessages = document.getElementById('chatMessages');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const closeAgent = document.getElementById('closeAgent');
 
-leaderboardBtn.addEventListener('click', () => {
-    leaderboardModal.style.display = 'flex';
-});
+    const answers = {
+        "How can I use KiteAI?":"You can use KiteAI by joining our community and trying out the Testnet features.",
+        "What are KiteAI NFTs?":"KiteAI NFTs are unique digital collectibles that represent community membership and rewards.",
+        "How to join KiteAI community?":"Join our community through our social channels and participate in discussions and events.",
+        "How to report an issue?":"Report issues via our Feedback form or reach out through official channels for quick support.",
+        "Upcoming events in KiteAI?":"Check our official social media channels for the latest events and campaigns."
+    };
 
-closeLeaderboard.addEventListener('click', () => {
-    leaderboardModal.style.display = 'none';
-});
+    function addMessage(text,sender){
+        const div=document.createElement('div');
+        div.classList.add('chat-msg',sender==='agent'?'chat-agent':'chat-user');
+        div.textContent=text;
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop=chatMessages.scrollHeight;
+    }
+
+    agentBtn.addEventListener('click',()=>agentModal.style.display='flex');
+    closeAgent.addEventListener('click',()=>agentModal.style.display='none');
+
+    document.querySelectorAll('.question-btn').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+            const q=btn.textContent;
+            addMessage(q,'user');
+            addMessage(answers[q],'agent');
+        });
+    });
+
+    sendBtn.addEventListener('click',()=>{
+        const q=userInput.value.trim();
+        if(q){
+            addMessage(q,'user');
+            addMessage(answers[q] || "Thank you for your question! Our team will get back to you soon.",'agent');
+            userInput.value='';
+        }
+    });
 </script>
 </body>
 </html>
