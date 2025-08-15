@@ -19,22 +19,45 @@
             color: #f1f1f1;
             text-align: center;
         }
-        /* Top menu button */
+
+        /* Menu Button (Mobile Only) */
         .menu-btn {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 28px;
+            top: 1rem;
+            left: 1rem;
+            font-size: 1.8rem;
             cursor: pointer;
             z-index: 1001;
             background: rgba(0,0,0,0.5);
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: 0.3s;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            transition: background 0.3s;
         }
         .menu-btn:hover { background: rgba(0,0,0,0.8); }
 
-        /* Overlay menu */
+        /* Desktop Navbar */
+        .desktop-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            padding: 1rem;
+            z-index: 1000;
+        }
+        .desktop-nav a {
+            color: #f1f1f1;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+        .desktop-nav a:hover {
+            color: #1da1f2;
+        }
+
+        /* Overlay Menu (Mobile) */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -57,9 +80,9 @@
         }
         .menu-overlay a {
             color: #f1f1f1;
-            font-size: 22px;
+            font-size: 1.4rem;
             text-decoration: none;
-            padding: 15px 0;
+            padding: 1rem 0;
             width: 80%;
             text-align: center;
             border-bottom: 1px solid rgba(255,255,255,0.2);
@@ -70,7 +93,7 @@
             border-bottom-color: #1da1f2;
         }
 
-        /* Announcement modal */
+        /* Announcement Modal */
         #announcementModal {
             display: none;
             position: fixed;
@@ -81,34 +104,33 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            padding: 20px;
+            padding: 1rem;
             box-sizing: border-box;
         }
         #announcementContent {
-            max-width: 520px;
-            width: 100%;
+            width: 90%;
             background: #ffffff;
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
             overflow-y: auto;
             max-height: 85vh;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.3);
             color: #000;
         }
         .announcement-controls {
             display: flex;
             justify-content: center;
-            gap: 25px;
-            margin-top: 15px;
-            font-size: 22px;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            font-size: 1.4rem;
         }
         .announcement-controls span {
             cursor: pointer;
-            transition: 0.3s;
+            transition: color 0.3s;
         }
         .announcement-controls span:hover { color: #1da1f2; }
 
-        /* Leaderboard modal */
+        /* Leaderboard Modal */
         #leaderboardModal {
             display: none;
             position: fixed;
@@ -119,18 +141,17 @@
             z-index: 10000;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 1rem;
             box-sizing: border-box;
         }
         #leaderboardContent {
-            max-width: 600px;
-            width: 100%;
+            width: 90%;
             background: #111;
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
             overflow-y: auto;
             max-height: 85vh;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.3);
             color: #f1f1f1;
         }
         #leaderboardTable {
@@ -140,7 +161,7 @@
         .leaderboard-row {
             display: flex;
             align-items: center;
-            padding: 10px 0;
+            padding: 0.75rem 0;
             border-bottom: 1px solid rgba(255,255,255,0.2);
             transition: background 0.3s;
         }
@@ -148,17 +169,17 @@
             background: rgba(255,255,255,0.1);
         }
         .leaderboard-rank {
-            flex: 0 0 60px;
+            flex: 0 0 4rem;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 1rem;
         }
         .leaderboard-profile {
-            flex: 0 0 40px;
-            margin-right: 10px;
+            flex: 0 0 3rem;
+            margin-right: 0.75rem;
         }
         .leaderboard-profile img {
-            width: 40px;
-            height: 40px;
+            width: 3rem;
+            height: 3rem;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #1da1f2;
@@ -170,7 +191,7 @@
         .leaderboard-name a {
             color: #1da1f2;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 1rem;
         }
         .leaderboard-name a:hover {
             text-decoration: underline;
@@ -178,30 +199,29 @@
 
         header {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 1rem;
+            right: 1rem;
         }
-        header img { height: 60px; border-radius: 10px; }
+        header img { height: 4rem; border-radius: 0.625rem; }
 
         form {
             background: rgba(0, 0, 0, 0.75);
-            padding: 25px;
-            border-radius: 15px;
+            padding: 1.5rem;
+            border-radius: 1rem;
             width: 90%;
-            max-width: 420px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.4);
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        form h2 { margin-bottom: 15px; font-size: 24px; }
+        form h2 { margin-bottom: 1rem; font-size: 1.5rem; }
         select, textarea, input, button {
             width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 8px;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 0.5rem;
             border: none;
-            font-size: 16px;
+            font-size: 1rem;
             box-sizing: border-box;
         }
         select, textarea, input { background: rgba(255,255,255,0.1); color: #fff; }
@@ -211,21 +231,22 @@
             color: white;
             cursor: pointer;
             font-weight: 600;
-            transition: 0.3s;
+            transition: background 0.3s;
         }
         button:hover { background-color: #0d95e8; }
 
-        /* Announcement & Agent buttons */
         .announcement-btn {
-            margin-top: 15px;
-            padding: 10px 20px;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
             background: #1da1f2;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 0.5rem;
             cursor: pointer;
             font-weight: 600;
-            transition: 0.3s;
+            transition: background 0.3s;
+            width: 100%;
+            max-width: 15rem;
         }
         .announcement-btn:hover { background: #0d95e8; }
 
@@ -233,62 +254,61 @@
         #agentModal {
             display: none;
             position: fixed;
-            top:0; left:0;
-            width:100%; height:100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             backdrop-filter: blur(6px);
             background: rgba(0,0,0,0.75);
             z-index: 10000;
-            justify-content:center;
-            align-items:center;
+            justify-content: center;
+            align-items: center;
         }
         #agentContent {
-            background:#111;
+            background: #111;
             color: #f1f1f1;
-            width:90%;
-            max-width:520px;
-            border-radius:12px;
-            padding:20px;
-            display:flex;
-            flex-direction:column;
-            max-height:85vh;
-            overflow-y:auto;
+            width: 90%;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            max-height: 85vh;
+            overflow-y: auto;
         }
         #chatMessages {
-            flex-grow:1;
-            overflow-y:auto;
-            margin-bottom:10px;
-            border:1px solid #444;
-            padding:10px;
-            border-radius:8px;
-            background:#222;
-            color:#f1f1f1;
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 0.75rem;
+            border: 1px solid #444;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background: #222;
+            color: #f1f1f1;
         }
-        .chat-msg { margin:5px 0; padding:8px 12px; border-radius:8px; max-width:80%; }
-        .chat-agent { background:#0d95e8; color:#fff; align-self:flex-start; }
-        .chat-user { background:#333; color:#fff; align-self:flex-end; }
+        .chat-msg { margin: 0.3rem 0; padding: 0.5rem 0.75rem; border-radius: 0.5rem; max-width: 80%; }
+        .chat-agent { background: #0d95e8; color: #fff; align-self: flex-start; }
+        .chat-user { background: #333; color: #fff; align-self: flex-end; }
 
         .question-btn {
-            margin:3px;
-            padding:6px 10px;
-            border:none;
-            border-radius:6px;
-            background:#0d95e8;
-            color:white;
-            cursor:pointer;
-            transition:0.3s;
+            margin: 0.2rem;
+            padding: 0.4rem 0.75rem;
+            border: none;
+            border-radius: 0.4rem;
+            background: #0d95e8;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
         }
-        .question-btn:hover { background:#1da1f2; }
+        .question-btn:hover { background: #1da1f2; }
 
-        #userInput { padding:8px; width: calc(100% - 16px); margin-bottom:10px; border-radius:6px; border:1px solid #444; background:#222; color:#f1f1f1; }
-        #sendBtn { padding:8px; background:#0d95e8; color:white; border:none; border-radius:6px; cursor:pointer; }
-        #sendBtn:hover { background:#1da1f2; }
+        #userInput { padding: 0.5rem; width: calc(100% - 1rem); margin-bottom: 0.75rem; border-radius: 0.4rem; border: 1px solid #444; background: #222; color: #f1f1f1; }
+        #sendBtn { padding: 0.5rem; background: #0d95e8; color: white; border: none; border-radius: 0.4rem; cursor: pointer; }
+        #sendBtn:hover { background: #1da1f2; }
 
         footer {
             position: fixed;
-            bottom: 12px;
+            bottom: 0.75rem;
             width: 100%;
             text-align: center;
-            font-size: 13px;
+            font-size: 0.9rem;
             color: #f1f1f1;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
         }
@@ -298,23 +318,67 @@
             font-weight: 500;
         }
 
-        /* Mobile tweaks */
-        @media(max-width:400px){
-            form { padding:20px; }
-            .menu-overlay a { font-size:18px; }
-            .announcement-controls { font-size:18px; gap:15px; }
-            .leaderboard-rank { font-size: 14px; flex: 0 0 50px; }
-            .leaderboard-profile img { width: 30px; height: 30px; }
-            .leaderboard-name a { font-size: 14px; }
+        /* Desktop Styles */
+        @media (min-width: 768px) {
+            .menu-btn { display: none; }
+            .menu-overlay { display: none; }
+            .desktop-nav {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            form {
+                max-width: 600px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+                padding: 2rem;
+            }
+            form h2 { grid-column: span 2; }
+            select, textarea, input { grid-column: span 2; }
+            .announcement-btn { grid-column: span 1; max-width: none; }
+            #announcementContent, #agentContent, #leaderboardContent {
+                max-width: 800px;
+            }
+            .leaderboard-rank { flex: 0 0 5rem; font-size: 1.2rem; }
+            .leaderboard-profile img { width: 3.5rem; height: 3.5rem; }
+            .leaderboard-name a { font-size: 1.2rem; }
+            header img { height: 5rem; }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 767px) {
+            form { max-width: 400px; padding: 1rem; }
+            .menu-overlay a { font-size: 1.2rem; }
+            .announcement-controls { font-size: 1.2rem; gap: 1rem; }
+            .leaderboard-rank { font-size: 0.9rem; flex: 0 0 3rem; }
+            .leaderboard-profile img { width: 2rem; height: 2rem; }
+            .leaderboard-name a { font-size: 0.9rem; }
+            .announcement-btn { padding: 0.75rem; font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Menu Button -->
+    <!-- Desktop Navbar -->
+    <nav class="desktop-nav">
+        <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
+        <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">Fly The Kite NFT🪁</a>
+        <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder🪁</a>
+        <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Kite: Community & Ecosystem🪁</a>
+        <a href="https://x.com/KiteAIChinese?t=bR1Bi5KbAeZLdozFOKqtGg&s=09" target="_blank">KiteAIChinese🪁</a>
+        <a href="https://x.com/buidloor?t=6nD_KJzIePhdytOA3Ss-2w&s=09" target="_blank">Vikthebuilder🪁</a>
+        <a href="https://x.com/lei_lei0904?t=yL6KX5W6lCKf0Fnk6VAIBA&s=09" target="_blank">Lei-Lei🪁</a>
+        <a href="https://x.com/scottshics?t=UMpx5b2XMH1kLa2JgMyXDw&s=09" target="_blank">Scott Shi🪁</a>
+        <a href="https://x.com/Henryleemr?t=ZZVY_CCK88fGLRM56VkXnQ&s=09" target="_blank">Henry Lee🪁</a>
+        <a href="https://x.com/superamscom?t=jr23SY_GKnnNEUr5EP-6eA&s=09" target="_blank">Spring🪁</a>
+        <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing🪁</a>
+    </nav>
+
+    <!-- Menu Button (Mobile) -->
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
 
-    <!-- Menu Overlay -->
+    <!-- Menu Overlay (Mobile) -->
     <div class="menu-overlay" id="menuOverlay">
         <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
         <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">Fly The Kite NFT🪁</a>
@@ -344,9 +408,9 @@
     <!-- Leaderboard Modal -->
     <div id="leaderboardModal">
         <div id="leaderboardContent">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h2 style="margin: 0; font-size: 24px;">Leaderboard</h2>
-                <img id="closeLeaderboardBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close" style="width: 28px; height: 28px; cursor: pointer;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2 style="margin: 0; font-size: 1.5rem;">Leaderboard</h2>
+                <img id="closeLeaderboardBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close" style="width: 1.75rem; height: 1.75rem; cursor: pointer;">
             </div>
             <div id="leaderboardTable"></div>
         </div>
@@ -370,14 +434,8 @@
         <textarea name="message" rows="5" placeholder="Write your feedback here..." required></textarea>
         <input type="email" name="email" placeholder="Your Email" required>
         <button type="submit">Send Feedback</button>
-
-        <!-- Announcement Button -->
         <button type="button" class="announcement-btn" id="announcementBtn">📢 Announcements</button>
-
-        <!-- KiteAI Community Agent Button -->
         <button type="button" class="announcement-btn" id="agentBtn">🤖 KiteAI Community Agent</button>
-
-        <!-- Leaderboard Button -->
         <button type="button" class="announcement-btn" id="leaderboardBtn">📊 Leaderboard</button>
     </form>
 
@@ -386,12 +444,11 @@
         <div id="agentContent">
             <div style="display:flex; justify-content:flex-end;">
                 <img id="closeAgentBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" 
-                     alt="Close" style="width:28px; height:28px; cursor:pointer;">
+                     alt="Close" style="width:1.75rem; height:1.75rem; cursor:pointer;">
             </div>
-
             <div id="chatMessages"></div>
             <div>
-                <div id="preQuestions" style="margin-bottom:10px;">
+                <div id="preQuestions" style="margin-bottom:0.75rem;">
                     <button class="question-btn">How can I use KiteAI?</button>
                     <button class="question-btn">What are KiteAI NFTs?</button>
                     <button class="question-btn">How to join KiteAI community?</button>
@@ -413,7 +470,7 @@
 
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <script>
-        // Menu toggle
+        // Menu toggle (Mobile)
         function toggleMenu() {
             const menu = document.getElementById('menuOverlay');
             menu.classList.toggle('show');
