@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community Feedback</title>
     <style>
-        /* ---------------- Body & Background ---------------- */
         body {
             margin: 0;
             padding: 0;
@@ -20,8 +19,7 @@
             color: #f1f1f1;
             text-align: center;
         }
-
-        /* ---------------- Menu ---------------- */
+        /* Top menu button */
         .menu-btn {
             position: absolute;
             top: 20px;
@@ -35,6 +33,8 @@
             transition: 0.3s;
         }
         .menu-btn:hover { background: rgba(0,0,0,0.8); }
+
+        /* Overlay menu */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -51,7 +51,10 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        .menu-overlay.show { display: flex; opacity: 1; }
+        .menu-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
         .menu-overlay a {
             color: #f1f1f1;
             font-size: 22px;
@@ -67,45 +70,7 @@
             border-bottom-color: #1da1f2;
         }
 
-        /* ---------------- Header Logo ---------------- */
-        header { position: absolute; top: 20px; right: 20px; }
-        header img { height: 60px; border-radius: 10px; }
-
-        /* ---------------- Form ---------------- */
-        form {
-            background: rgba(0, 0, 0, 0.75);
-            padding: 25px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 420px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        form h2 { margin-bottom: 15px; font-size: 24px; }
-        select, textarea, input, button {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border: none;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        select, textarea, input { background: rgba(255,255,255,0.1); color: #fff; }
-        select option { color: #000; }
-        button {
-            background-color: #1da1f2;
-            color: white;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-        button:hover { background-color: #0d95e8; }
-        .announcement-btn { margin-top: 15px; padding: 10px 20px; border-radius: 8px; }
-
-        /* ---------------- Announcement Modal ---------------- */
+        /* Announcement modal */
         #announcementModal {
             display: none;
             position: fixed;
@@ -137,10 +102,66 @@
             margin-top: 15px;
             font-size: 22px;
         }
-        .announcement-controls span { cursor: pointer; transition: 0.3s; }
+        .announcement-controls span {
+            cursor: pointer;
+            transition: 0.3s;
+        }
         .announcement-controls span:hover { color: #1da1f2; }
 
-        /* ---------------- Agent Modal ---------------- */
+        header {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        header img { height: 60px; border-radius: 10px; }
+
+        form {
+            background: rgba(0, 0, 0, 0.75);
+            padding: 25px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        form h2 { margin-bottom: 15px; font-size: 24px; }
+        select, textarea, input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        select, textarea, input { background: rgba(255,255,255,0.1); color: #fff; }
+        select option { color: #000; }
+        button {
+            background-color: #1da1f2;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        button:hover { background-color: #0d95e8; }
+
+        /* Announcement & Agent buttons */
+        .announcement-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #1da1f2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .announcement-btn:hover { background: #0d95e8; }
+
+        /* Agent Chat Modal */
         #agentModal {
             display: none;
             position: fixed;
@@ -177,6 +198,7 @@
         .chat-msg { margin:5px 0; padding:8px 12px; border-radius:8px; max-width:80%; }
         .chat-agent { background:#0d95e8; color:#fff; align-self:flex-start; }
         .chat-user { background:#333; color:#fff; align-self:flex-end; }
+
         .question-btn {
             margin:3px;
             padding:6px 10px;
@@ -188,52 +210,10 @@
             transition:0.3s;
         }
         .question-btn:hover { background:#1da1f2; }
+
         #userInput { padding:8px; width: calc(100% - 16px); margin-bottom:10px; border-radius:6px; border:1px solid #444; background:#222; color:#f1f1f1; }
         #sendBtn { padding:8px; background:#0d95e8; color:white; border:none; border-radius:6px; cursor:pointer; }
         #sendBtn:hover { background:#1da1f2; }
-
-        /* ---------------- Feedback Feed Modal (New) ---------------- */
-        #feedModal {
-            display:none;
-            position:fixed;
-            top:0; left:0;
-            width:100%; height:100%;
-            background:rgba(0,0,0,0.85);
-            z-index:10001;
-            justify-content:center;
-            align-items:center;
-            overflow-y:auto;
-            padding:20px;
-            box-sizing:border-box;
-        }
-        #feedContent {
-            background:#111;
-            color:#f1f1f1;
-            width:90%;
-            max-width:520px;
-            border-radius:12px;
-            padding:20px;
-            max-height:90vh;
-            overflow-y:auto;
-            display:flex;
-            flex-direction:column;
-        }
-        #feedContent h2 { text-align:center; margin-bottom:15px; }
-        #feedForm input, #feedForm textarea, #feedForm button { width:100%; margin-bottom:10px; }
-        #feedForm input, #feedForm textarea { padding:8px; border-radius:6px; border:none; }
-        #feedForm textarea { resize:none; }
-        #feedForm button { padding:8px; border:none; border-radius:6px; background:#1da1f2; color:white; cursor:pointer; font-weight:600; }
-        #feedForm button:hover { background:#0d95e8; }
-
-        /* Feed posts */
-        .feed-post {
-            background:#222;
-            padding:10px;
-            border-radius:8px;
-            margin-bottom:12px;
-        }
-        .feed-post b { display:block; margin-bottom:6px; }
-        .feed-post img { max-width:100%; border-radius:6px; margin-top:6px; }
 
         footer {
             position: fixed;
@@ -244,8 +224,13 @@
             color: #f1f1f1;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
         }
-        footer a { color: #1da1f2; text-decoration: none; font-weight: 500; }
+        footer a {
+            color: #1da1f2;
+            text-decoration: none;
+            font-weight: 500;
+        }
 
+        /* Mobile tweaks */
         @media(max-width:400px){
             form { padding:20px; }
             .menu-overlay a { font-size:18px; }
@@ -257,10 +242,20 @@
 
     <!-- Menu Button -->
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+    <!-- Menu Overlay -->
     <div class="menu-overlay" id="menuOverlay">
         <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
         <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">Fly The Kite NFT🪁</a>
-        <!-- Add remaining menu items as in your original -->
+        <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder🪁</a>
+        <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Kite: Community & Ecosystem🪁</a>
+        <a href="https://x.com/KiteAIChinese?t=bR1Bi5KbAeZLdozFOKqtGg&s=09" target="_blank">KiteAIChinese🪁</a>
+        <a href="https://x.com/buidloor?t=6nD_KJzIePhdytOA3Ss-2w&s=09" target="_blank">Vikthebuilder🪁</a>
+        <a href="https://x.com/lei_lei0904?t=yL6KX5W6lCKf0Fnk6VAIBA&s=09" target="_blank">Lei-Lei🪁</a>
+        <a href="https://x.com/scottshics?t=UMpx5b2XMH1kLa2JgMyXDw&s=09" target="_blank">Scott Shi🪁</a>
+        <a href="https://x.com/Henryleemr?t=ZZVY_CCK88fGLRM56VkXnQ&s=09" target="_blank">Henry Lee🪁</a>
+        <a href="https://x.com/superamscom?t=jr23SY_GKnnNEUr5EP-6eA&s=09" target="_blank">Spring🪁</a>
+        <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing🪁</a>
     </div>
 
     <!-- Announcement Modal -->
@@ -288,21 +283,27 @@
             <option value="Community Feedback">Community Feedback</option>
             <option value="Error Report">Error / Issue</option>
             <option value="Event or Campaign">Event / Campaign</option>
+            <option value="Coming Soon" disabled>Coming Soon</option>
         </select>
         <textarea name="message" rows="5" placeholder="Write your feedback here..." required></textarea>
         <input type="email" name="email" placeholder="Your Email" required>
         <button type="submit">Send Feedback</button>
+
+        <!-- Announcement Button -->
         <button type="button" class="announcement-btn" id="announcementBtn">📢 Announcements</button>
+
+        <!-- KiteAI Community Agent Button -->
         <button type="button" class="announcement-btn" id="agentBtn">🤖 KiteAI Community Agent</button>
-        <button type="button" class="announcement-btn" id="feedBtn">💬 Feedback Feed</button>
     </form>
 
-    <!-- Agent Modal -->
+    <!-- Agent Chat Modal -->
     <div id="agentModal">
         <div id="agentContent">
             <div style="display:flex; justify-content:flex-end;">
-                <img id="closeAgentBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close" style="width:28px; height:28px; cursor:pointer;">
+                <img id="closeAgentBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" 
+                     alt="Close" style="width:28px; height:28px; cursor:pointer;">
             </div>
+
             <div id="chatMessages"></div>
             <div>
                 <div id="preQuestions" style="margin-bottom:10px;">
@@ -318,35 +319,22 @@
         </div>
     </div>
 
-    <!-- Feedback Feed Modal -->
-    <div id="feedModal">
-        <div id="feedContent">
-            <div style="display:flex; justify-content:flex-end;">
-                <img id="closeFeedBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close" style="width:28px; height:28px; cursor:pointer;">
-            </div>
-            <h2>Feedback Feed</h2>
-            <form id="feedForm">
-                <input type="text" id="feedName" placeholder="Your Name (optional)">
-                <textarea id="feedMessage" rows="4" placeholder="Write your feedback..." required></textarea>
-                <input type="file" id="feedImage">
-                <button type="submit">Post Feedback</button>
-            </form>
-            <div id="feedContainer"></div>
-        </div>
-    </div>
-
     <footer>
         Made for the KiteAI community · Follow on 
-        <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank">@Crypto_King877</a> & 
+        <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank">@Crypto_King877</a> 
+        & 
         <a href="https://x.com/GoKiteAI?t=fzEmGeci_aCKBgJRAYEwsA&s=09" target="_blank">@GoKiteAI</a>
     </footer>
 
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <script>
-        // ---------- Menu ----------
-        function toggleMenu() { document.getElementById('menuOverlay').classList.toggle('show'); }
+        // Menu toggle
+        function toggleMenu() {
+            const menu = document.getElementById('menuOverlay');
+            menu.classList.toggle('show');
+        }
 
-        // ---------- Announcements ----------
+        // Tweets
         const tweets = [
             "https://x.com/GoKiteAI/status/1951245795216200146",
             "https://x.com/GoKiteAI/status/1955919782785503588",
@@ -355,86 +343,86 @@
             "https://x.com/wallet/status/1954052040939753923"
         ];
         let currentTweet = 0;
-        function loadTweet(index){
-            document.getElementById("tweetContainer").innerHTML="";
+        function loadTweet(index) {
+            document.getElementById("tweetContainer").innerHTML = "";
             twttr.widgets.createTweet(
                 tweets[index].split("/status/")[1],
                 document.getElementById("tweetContainer"),
-                { align:"center" }
+                { align: "center" }
             );
         }
-        document.getElementById("announcementBtn").addEventListener("click", ()=>{ document.getElementById("announcementModal").style.display="flex"; loadTweet(currentTweet); });
-        document.getElementById("closeBtn").addEventListener("click", ()=>{ document.getElementById("announcementModal").style.display="none"; });
-        document.getElementById("prevBtn").addEventListener("click", ()=>{ currentTweet=(currentTweet-1+tweets.length)%tweets.length; loadTweet(currentTweet); });
-        document.getElementById("nextBtn").addEventListener("click", ()=>{ currentTweet=(currentTweet+1)%tweets.length; loadTweet(currentTweet); });
 
-        // ---------- Agent ----------
-        const agentModal=document.getElementById('agentModal'), chatMessages=document.getElementById('chatMessages');
-        const preQuestions=document.getElementById('preQuestions'), userInput=document.getElementById('userInput');
-        const sendBtn=document.getElementById('sendBtn'), closeAgentBtn=document.getElementById('closeAgentBtn');
-        const answers={
-            "how can i use kiteai?":"You can use KiteAI by joining our community and trying out the Testnet features.",
-            "what are kiteai nfts?":"KiteAI NFTs are unique digital collectibles that represent community membership and rewards.",
-            "how to join kiteai community?":"Join our community through our social channels and participate in discussions and events.",
-            "how to report an issue?":"Report issues via our Feedback form or reach out through official channels for quick support.",
-            "upcoming events in kiteai?":"Check our official social media channels for the latest events and campaigns."
+        document.getElementById("announcementBtn").addEventListener("click", () => {
+            document.getElementById("announcementModal").style.display = "flex";
+            loadTweet(currentTweet);
+        });
+        document.getElementById("closeBtn").addEventListener("click", () => {
+            document.getElementById("announcementModal").style.display = "none";
+        });
+        document.getElementById("prevBtn").addEventListener("click", () => {
+            currentTweet = (currentTweet - 1 + tweets.length) % tweets.length;
+            loadTweet(currentTweet);
+        });
+        document.getElementById("nextBtn").addEventListener("click", () => {
+            currentTweet = (currentTweet + 1) % tweets.length;
+            loadTweet(currentTweet);
+        });
+
+        // KiteAI Community Agent
+        const agentModal = document.getElementById('agentModal');
+        const agentBtn = document.getElementById('agentBtn');
+        const chatMessages = document.getElementById('chatMessages');
+        const preQuestions = document.getElementById('preQuestions');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const closeAgentBtn = document.getElementById('closeAgentBtn');
+
+        const answers = {
+            "how can i use kiteai?": "You can use KiteAI by joining our community and trying out the Testnet features.",
+            "what are kiteai nfts?": "KiteAI NFTs are unique digital collectibles that represent community membership and rewards.",
+            "how to join kiteai community?": "Join our community through our social channels and participate in discussions and events.",
+            "how to report an issue?": "Report issues via our Feedback form or reach out through official channels for quick support.",
+            "upcoming events in kiteai?": "Check our official social media channels for the latest events and campaigns."
         };
-        function addMessage(text,sender){ const div=document.createElement('div'); div.classList.add('chat-msg'); div.classList.add(sender==='agent'?'chat-agent':'chat-user'); div.textContent=text; chatMessages.appendChild(div); chatMessages.scrollTop=chatMessages.scrollHeight; }
-        document.getElementById('agentBtn').addEventListener('click',()=>agentModal.style.display='flex');
-        closeAgentBtn.addEventListener('click',()=>agentModal.style.display='none');
-        document.querySelectorAll('.question-btn').forEach(btn=>{ btn.addEventListener('click',()=>{ const q=btn.textContent; addMessage(q,'user'); addMessage(answers[q.toLowerCase()]||"Thanks! We'll get back to you soon.",'agent'); }); });
-        sendBtn.addEventListener('click',()=>{ const q=userInput.value.trim(); if(q){ addMessage(q,'user'); addMessage(answers[q.toLowerCase()]||"Thanks! We'll get back to you soon.",'agent'); userInput.value=''; } });
 
-        // ---------- Feedback Form ----------
-        document.getElementById('feedbackForm').addEventListener('submit',function(e){ setTimeout(()=>{
-            e.preventDefault(); // Prevent default to avoid page reload
-        alert('Feedback sent successfully!');
-        this.reset();
-    });
-
-    // ---------- Feedback Feed ----------
-    const feedModal = document.getElementById('feedModal');
-    const feedBtn = document.getElementById('feedBtn');
-    const closeFeedBtn = document.getElementById('closeFeedBtn');
-    const feedForm = document.getElementById('feedForm');
-    const feedContainer = document.getElementById('feedContainer');
-
-    // Open / Close Feed Modal
-    feedBtn.addEventListener('click', () => feedModal.style.display = 'flex');
-    closeFeedBtn.addEventListener('click', () => feedModal.style.display = 'none');
-
-    // Handle Feed Post
-    feedForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('feedName').value || "Anonymous";
-        const message = document.getElementById('feedMessage').value;
-        const imageInput = document.getElementById('feedImage');
-        const postDiv = document.createElement('div');
-        postDiv.classList.add('feed-post');
-
-        let contentHTML = `<b>${name}</b><p>${message}</p>`;
-        if (imageInput.files && imageInput.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e){
-                contentHTML += `<img src="${e.target.result}" alt="Feed Image">`;
-                postDiv.innerHTML = contentHTML;
-                feedContainer.prepend(postDiv);
-            };
-            reader.readAsDataURL(imageInput.files[0]);
-        } else {
-            postDiv.innerHTML = contentHTML;
-            feedContainer.prepend(postDiv);
+        function addMessage(text, sender) {
+            const div = document.createElement('div');
+            div.classList.add('chat-msg');
+            div.classList.add(sender === 'agent' ? 'chat-agent' : 'chat-user');
+            div.textContent = text;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        feedForm.reset();
-    });
+        agentBtn.addEventListener('click', () => agentModal.style.display = 'flex');
+        closeAgentBtn.addEventListener('click', () => agentModal.style.display = 'none');
 
-    // Close modals if clicked outside
-    window.addEventListener('click', (e) => {
-        if(e.target == feedModal) feedModal.style.display='none';
-        if(e.target == agentModal) agentModal.style.display='none';
-        if(e.target == document.getElementById('announcementModal')) document.getElementById('announcementModal').style.display='none';
-    });
+        document.querySelectorAll('.question-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const q = btn.textContent;
+                addMessage(q, 'user');
+                addMessage(answers[q.toLowerCase()] || "Thanks! We'll get back to you soon.", 'agent');
+            });
+        });
+
+        sendBtn.addEventListener('click', () => {
+            const q = userInput.value.trim();
+            if(q){
+                addMessage(q,'user');
+                const reply = answers[q.toLowerCase()] || "Thanks! We'll get back to you soon.";
+                addMessage(reply,'agent');
+                userInput.value = '';
+            }
+        });
+
+        // Form submit confirmation
+        document.getElementById('feedbackForm').addEventListener('submit', function(e){
+            setTimeout(() => {
+                alert("Thank you for your feedback! 🙏");
+            }, 100); // short delay to allow Formspree submit
+        });
+
     </script>
+
 </body>
 </html>
