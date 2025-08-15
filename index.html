@@ -19,7 +19,6 @@
             color: #f1f1f1;
             text-align: center;
         }
-
         /* Top menu button */
         .menu-btn {
             position: absolute;
@@ -34,7 +33,6 @@
             transition: 0.3s;
         }
         .menu-btn:hover { background: rgba(0,0,0,0.8); }
-
         /* Overlay menu */
         .menu-overlay {
             position: fixed;
@@ -65,16 +63,6 @@
             color: #1da1f2;
             border-bottom-color: #1da1f2;
         }
-
-        /* Top scrolling ad */
-        #topAd {
-            position: absolute;
-            top: 100px; /* below logo & menu */
-            left: 100%; /* start offscreen right */
-            height: 60px;
-            z-index: 1002;
-        }
-
         /* Announcement modal */
         #announcementModal {
             display: none;
@@ -151,7 +139,6 @@
             transition: 0.3s;
         }
         button:hover { background-color: #0d95e8; }
-
         /* Announcement & Agent buttons */
         .announcement-btn {
             margin-top: 15px;
@@ -240,9 +227,6 @@
     <!-- Menu Button -->
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
 
-    <!-- Top scrolling ad (only on front page) -->
-    <img id="topAd" src="https://postimg.cc/Mn4Drkjt" alt="Top Ad">
-
     <!-- Menu Overlay -->
     <div class="menu-overlay" id="menuOverlay">
         <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
@@ -299,10 +283,12 @@
     <!-- Agent Chat Modal -->
     <div id="agentModal">
         <div id="agentContent">
+            <!-- Close Button -->
             <div style="display:flex; justify-content:flex-end;">
                 <img id="closeAgentBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" 
                      alt="Close" style="width:28px; height:28px; cursor:pointer;">
             </div>
+
             <div id="chatMessages"></div>
             <div>
                 <div id="preQuestions" style="margin-bottom:10px;">
@@ -331,17 +317,6 @@
             const menu = document.getElementById('menuOverlay');
             menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
         }
-
-        // Scrolling top ad only
-        const topAd = document.getElementById('topAd');
-        let adPos = window.innerWidth;
-        function moveAd() {
-            adPos -= 2; // speed
-            if(adPos < -topAd.offsetWidth) adPos = window.innerWidth;
-            topAd.style.left = adPos + 'px';
-            requestAnimationFrame(moveAd);
-        }
-        moveAd();
 
         const tweets = [
             "https://x.com/GoKiteAI/status/1951245795216200146",
@@ -384,6 +359,7 @@
         const agentModal = document.getElementById('agentModal');
         const agentBtn = document.getElementById('agentBtn');
         const chatMessages = document.getElementById('chatMessages');
+        const preQuestions = document.getElementById('preQuestions');
         const userInput = document.getElementById('userInput');
         const sendBtn = document.getElementById('sendBtn');
         const closeAgentBtn = document.getElementById('closeAgentBtn');
@@ -413,9 +389,9 @@
             agentModal.style.display = 'none';
         });
 
+        // Predefined question click
         document.querySelectorAll('.question-btn').forEach(btn => {
-            btn.addEventListener('click', ()
-                btn.addEventListener('click', () => {
+            btn.addEventListener('click', () => {
                 const q = btn.textContent;
                 addMessage(q, 'user');
                 addMessage(answers[q], 'agent');
@@ -432,6 +408,7 @@
                 userInput.value = '';
             }
         });
+
     </script>
 
 </body>
