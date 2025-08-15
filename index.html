@@ -33,6 +33,20 @@
             transition: 0.3s;
         }
         .menu-btn:hover { background: rgba(0,0,0,0.8); }
+
+        /* Top scrolling ad */
+        #topAd {
+            position: absolute;
+            top: 90px; /* below menu & logo */
+            left: 100%;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+        }
+        #topAd img {
+            height: 60px; /* adjust size */
+        }
+
         /* Overlay menu */
         .menu-overlay {
             position: fixed;
@@ -227,6 +241,11 @@
     <!-- Menu Button -->
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
 
+    <!-- Top Scrolling Ad -->
+    <div id="topAd">
+        <img src="https://i.postimg.cc/Mn4Drkjt/your-ad-image.png" alt="Top Ad">
+    </div>
+
     <!-- Menu Overlay -->
     <div class="menu-overlay" id="menuOverlay">
         <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
@@ -309,14 +328,23 @@
         <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank">@Crypto_King877</a> 
         & 
         <a href="https://x.com/GoKiteAI?t=fzEmGeci_aCKBgJRAYEwsA&s=09" target="_blank">@GoKiteAI</a>
-    </footer>
-
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <script>
         function toggleMenu() {
             const menu = document.getElementById('menuOverlay');
             menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
         }
+
+        // Top scrolling ad animation
+        const topAd = document.getElementById('topAd');
+        let adPos = window.innerWidth; // start offscreen right
+        function moveAd() {
+            adPos -= 2; // speed
+            if(adPos < -topAd.offsetWidth) adPos = window.innerWidth;
+            topAd.style.left = adPos + 'px';
+            requestAnimationFrame(moveAd);
+        }
+        moveAd(); // start animation
 
         const tweets = [
             "https://x.com/GoKiteAI/status/1951245795216200146",
@@ -409,7 +437,11 @@
             }
         });
 
-    </script>
+        // Make sure ad resizes on window resize
+        window.addEventListener('resize', () => {
+            if(adPos > window.innerWidth) adPos = window.innerWidth;
+        });
 
+    </script>
 </body>
 </html>
