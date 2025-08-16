@@ -32,7 +32,7 @@
             padding: 0.5rem 0.75rem;
             border-radius: 0.5rem;
             transition: background 0.3s;
-            display: none; /* Hidden by default, shown on mobile */
+            display: none;
         }
         .menu-btn:hover { background: rgba(0,0,0,0.8); }
 
@@ -281,6 +281,7 @@
             display: block;
             margin: 0 auto;
             border: 2px solid #1da1f2;
+            background: rgba(0, 0, 0, 0.1); /* Slight transparency for polish */
         }
         #closeGameBtn {
             position: absolute;
@@ -456,7 +457,7 @@
             .leaderboard-profile img { width: 2rem; height: 2rem; }
             .leaderboard-name a { font-size: 0.9rem; }
             .announcement-btn { padding: 0.75rem; font-size: 0.9rem; }
-            #gameCanvas { height: 300px; } /* Smaller canvas for mobile */
+            #gameCanvas { height: 300px; }
         }
     </style>
 </head>
@@ -537,7 +538,7 @@
     <div id="gameModal">
         <div id="gameContent">
             <img id="closeGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close">
-            <div id="gameScore">Score: 0</div>
+            <div id="gameScore">Score: 0 | High Score: 0</div>
             <canvas id="gameCanvas" width="600" height="400"></canvas>
         </div>
     </div>
@@ -836,8 +837,8 @@
         let playerKite = {
             x: 100,
             y: 100,
-            width: 50,
-            height: 50,
+            width: 60,
+            height: 60,
             speed: 5,
             image: new Image()
         };
@@ -845,19 +846,32 @@
 
         let enemyKites = [];
         let score = 0;
+        let highScore = localStorage.getItem('kiteGameHighScore') || 0;
         let isDragging = false;
         let startX, startY;
+        const maxEnemyKites = 5; // Limit to 5 enemy kites for performance
+
+        // Load sound
+        const sliceSound = new Audio('https://www.soundjay.com/sword/sword-swish-01.mp3'); // Replace with your sword slice sound URL
+
+        // Preload images to avoid loading issues
+        const loadedImages = [];
+        kiteImages.forEach(src => {
+            const img = new Image();
+            img.src = src;
+            loadedImages.push(img);
+        });
 
         function spawnEnemyKite() {
+            if (enemyKites.length >= maxEnemyKites) return; // Limit enemy kites
             const kite = {
                 x: Math.random() * (canvas.width - 50),
                 y: Math.random() * (canvas.height - 50),
                 width: 50,
                 height: 50,
-                speed: 2,
-                image: new Image()
+                speed: 1.5, // Slower for smoother gameplay
+                image: loadedImages[Math.floor(Math.random() * loadedImages.length)]
             };
-            kite.image.src = kiteImages[Math.floor(Math.random() * kiteImages.length)];
             enemyKites.push(kite);
         }
 
@@ -894,13 +908,20 @@
         function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+            // Draw player kite with yellow glow
+            ctx.save();
+            ctx.shadowColor = '#ffff00';
+            ctx.shadowBlur = 10;
             ctx.drawImage(playerKite.image, playerKite.x, playerKite.y, playerKite.width, playerKite.height);
+            ctx.restore();
 
+            // Draw and update enemy kites
             enemyKites.forEach((kite, index) => {
                 kite.x += kite.speed * (Math.random() - 0.5);
                 kite.y += kite.speed * (Math.random() - 0.5);
                 ctx.drawImage(kite.image, kite.x, kite.y, kite.width, kite.height);
 
+                // Check collision for cutting
                 if (
                     playerKite.x < kite.x + kite.width &&
                     playerKite.x + playerKite.width > kite.x &&
@@ -909,12 +930,19 @@
                 ) {
                     enemyKites.splice(index, 1);
                     score += 10;
-                    scoreDisplay.textContent = `Score: ${score}`;
+                    if (score > highScore) {
+                        highScore = score;
+                        localStorage.setItem('kiteGameHighScore', highScore);
+                    }
+                    scoreDisplay.textContent = `Score: ${score} | High Score: ${highScore}`;
+                    sliceSound.play().catch(() => {}); // Play sound, ignore errors
                 }
             });
 
-            if (Math.random() < 0.02) spawnEnemyKite();
+            // Spawn new enemy kite every 3 seconds
+            if (Math.random() < 0.01) spawnEnemyKite();
 
+            // Keep player kite in bounds
             playerKite.x = Math.max(0, Math.min(canvas.width - playerKite.width, playerKite.x));
             playerKite.y = Math.max(0, Math.min(canvas.height - playerKite.height, playerKite.y));
 
@@ -924,7 +952,8 @@
         gameBtn.addEventListener('click', () => {
             gameModal.style.display = 'flex';
             score = 0;
-            scoreDisplay.textContent = `Score: ${score}`;
+            highScore = localStorage.getItem('kiteGameHighScore') || 0;
+            scoreDisplay.textContent = `Score: ${score} | High Score: ${highScore}`;
             enemyKites = [];
             spawnEnemyKite();
             if (!gameLoopStarted) {
@@ -945,6 +974,11 @@
                 alert("Thank you for your feedback! 🙏");
             }, 100);
         });
+
+        // Preload first enemy kite to start game
+        playerKite.image.onload = () => {
+            spawnEnemyKite();
+        };
     </script>
 
 </body>
