@@ -42,6 +42,8 @@
             background: url('https://i.postimg.cc/mzMZpf0r/logo.jpg') no-repeat center/cover;
             animation: floatKite 10s ease-in-out infinite;
             opacity: 0.3;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.7), 0 0 20px rgba(59, 130, 246, 0.5);
         }
         .kite:nth-child(1) { top: 10%; left: 15%; animation-delay: 0s; }
         .kite:nth-child(2) { top: 30%; left: 70%; animation-delay: 2s; }
@@ -68,8 +70,9 @@
         }
         .top-nav .logo img {
             height: 2.8rem;
-            border-radius: 10px;
+            border-radius: 50%;
             transition: transform 0.3s ease;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.7), 0 0 20px rgba(59, 130, 246, 0.5);
             loading: lazy;
         }
         .top-nav .logo img:hover, .top-nav .logo img:focus {
@@ -236,6 +239,8 @@
             height: 1.5rem;
             cursor: pointer;
             transition: transform 0.3s ease;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.7), 0 0 20px rgba(59, 130, 246, 0.5);
             loading: lazy;
         }
         .modal-close:hover, .modal-close:focus {
@@ -523,6 +528,78 @@
             100% { transform: scale(2); opacity: 0; }
         }
 
+        /* RugPull Game Styles */
+        #rugpullGameContent {
+            max-width: 800px;
+        }
+        #rugpullGameTitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        #rugpullGameCanvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            border-radius: 10px;
+            border: 2px solid #3b82f6;
+            position: relative;
+            background: url('https://i.postimg.cc/tZc59k09/background.jpg') no-repeat center/cover;
+        }
+        .game-controls-rugpull {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 0.5rem;
+        }
+        #rugpullGameScore, #rugpullGameHealth, #rugpullGameTimer {
+            font-size: 1rem;
+            font-weight: 500;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            flex: 1;
+            text-align: center;
+        }
+        #rugpullGameHealth {
+            background: linear-gradient(45deg, #dc2626, #b91c1c);
+        }
+        #restartRugpullGameBtn {
+            padding: 0.6rem 1.2rem;
+            background: linear-gradient(45deg, #3b82f6, #2563eb);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s ease, background 0.3s ease;
+            flex: 1;
+        }
+        #restartRugpullGameBtn:hover, #restartRugpullGameBtn:focus {
+            background: linear-gradient(45deg, #2563eb, #3b82f6);
+            transform: scale(1.05);
+            outline: none;
+        }
+        #rugpullGameOverMessage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: rgba(15, 23, 42, 0.9);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        #rugpullGameOverMessage.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
         /* Feedback Form */
         .feedback-form {
             background: #1e293b;
@@ -692,7 +769,8 @@
         }
         footer img {
             height: 1.2rem;
-            border-radius: 4px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.7), 0 0 20px rgba(59, 130, 246, 0.5);
             loading: lazy;
         }
         footer a {
@@ -727,14 +805,14 @@
             #puzzleGrid {
                 gap: 0.3rem;
             }
-            #gameTitle, #shootingGameTitle {
+            #gameTitle, #shootingGameTitle, #rugpullGameTitle {
                 font-size: 1.2rem;
             }
-            #gameScore, #shootingGameScore {
+            #gameScore, #shootingGameScore, #rugpullGameScore, #rugpullGameHealth, #rugpullGameTimer {
                 font-size: 0.9rem;
                 padding: 0.3rem 0.6rem;
             }
-            #winMessage, #gameOverMessage {
+            #winMessage, #gameOverMessage, #rugpullGameOverMessage {
                 font-size: 1.2rem;
                 padding: 0.75rem 1.5rem;
             }
@@ -753,11 +831,19 @@
                 width: 40px;
                 height: 40px;
             }
-            #shootingGameCanvas {
+            #shootingGameCanvas, #rugpullGameCanvas {
                 height: 300px;
             }
             .game-option {
                 width: 90%;
+            }
+            .game-controls-rugpull {
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+            #rugpullGameScore, #rugpullGameHealth, #rugpullGameTimer, #restartRugpullGameBtn {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
             }
         }
 
@@ -768,7 +854,7 @@
             .feedback-form {
                 padding: 2rem;
             }
-            #gameContent, #shootingGameContent {
+            #gameContent, #shootingGameContent, #rugpullGameContent {
                 max-width: 800px;
             }
         }
@@ -786,6 +872,8 @@
     <!-- Click Sound -->
     <audio id="clickSound" src="https://cdn.pixabay.com/audio/2022/03/10/audio_5b3d3b4213.mp3" preload="auto"></audio>
     <audio id="shootSound" src="https://cdn.pixabay.com/audio/2022/03/10/audio_5b3d3b4213.mp3" preload="auto"></audio>
+    <audio id="coinSound" src="https://cdn.pixabay.com/audio/2022/03/10/audio_5b3d3b4213.mp3" preload="auto"></audio>
+    <audio id="damageSound" src="https://cdn.pixabay.com/audio/2022/03/10/audio_5b3d3b4213.mp3" preload="auto"></audio>
 
     <!-- Top Navbar -->
     <nav class="top-nav">
@@ -819,6 +907,7 @@
                 <div class="dropdown-content">
                     <a href="#" id="flippingGameLink" aria-label="KiteAI Flipping Game">KiteAI Flipping</a>
                     <a href="#" id="shootingGameLink" aria-label="KiteAI Shooting Game">KiteAI Shooting</a>
+                    <a href="#" id="rugpullGameLink" aria-label="KiteAI RugPull Game">KiteAI RugPull</a>
                 </div>
             </div>
         </div>
@@ -848,6 +937,7 @@
             <h2 id="gamesTitle">KiteAI Games</h2>
             <a href="#" class="game-option" id="flippingGameOption" aria-label="KiteAI Flipping Game">KiteAI Flipping</a>
             <a href="#" class="game-option" id="shootingGameOption" aria-label="KiteAI Shooting Game">KiteAI Shooting</a>
+            <a href="#" class="game-option" id="rugpullGameOption" aria-label="KiteAI RugPull Game">KiteAI RugPull</a>
         </div>
     </div>
 
@@ -899,6 +989,22 @@
             </div>
             <canvas id="shootingGameCanvas"></canvas>
             <div id="gameOverMessage" aria-live="assertive">Game Over!</div>
+        </div>
+    </div>
+
+    <!-- RugPull Game Modal -->
+    <div id="rugpullGameModal" class="modal" role="dialog" aria-labelledby="rugpullGameTitle">
+        <div id="rugpullGameContent" class="modal-content">
+            <img class="modal-close" id="closeRugpullGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close RugPull Game" aria-label="Close RugPull Game" role="button" tabindex="0">
+            <div id="rugpullGameTitle">KiteAI RugPull Game</div>
+            <div class="game-controls-rugpull">
+                <div id="rugpullGameScore" aria-live="polite">Score: 0</div>
+                <div id="rugpullGameHealth" aria-live="polite">Health: 100</div>
+                <div id="rugpullGameTimer" aria-live="polite">Time: 0s</div>
+                <button id="restartRugpullGameBtn" aria-label="Restart RugPull Game">Restart</button>
+            </div>
+            <canvas id="rugpullGameCanvas"></canvas>
+            <div id="rugpullGameOverMessage" aria-live="assertive">Game Over!</div>
         </div>
     </div>
 
@@ -958,6 +1064,8 @@
         // Click Sound
         const clickSound = document.getElementById('clickSound');
         const shootSound = document.getElementById('shootSound');
+        const coinSound = document.getElementById('coinSound');
+        const damageSound = document.getElementById('damageSound');
         function playClickSound() {
             clickSound.currentTime = 0;
             clickSound.play().catch(() => {});
@@ -965,6 +1073,14 @@
         function playShootSound() {
             shootSound.currentTime = 0;
             shootSound.play().catch(() => {});
+        }
+        function playCoinSound() {
+            coinSound.currentTime = 0;
+            coinSound.play().catch(() => {});
+        }
+        function playDamageSound() {
+            damageSound.currentTime = 0;
+            damageSound.play().catch(() => {});
         }
 
         document.querySelectorAll('button, a, .card, .sidebar-btn, .announcement-controls span, .modal-close, #scopeToggleBtn').forEach(el => {
@@ -999,6 +1115,7 @@
         const closeGamesBtn = document.getElementById('closeGamesBtn');
         const flippingGameOption = document.getElementById('flippingGameOption');
         const shootingGameOption = document.getElementById('shootingGameOption');
+        const rugpullGameOption = document.getElementById('rugpullGameOption');
 
         gamesBtn.addEventListener('click', () => {
             gamesModal.classList.add('show');
@@ -1418,7 +1535,10 @@
             gunX = shootingGameCanvas.width / 2 - 50;
         }
 
-        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            resizeRugpullCanvas();
+        });
         resizeCanvas();
 
         function startShootingTimer() {
@@ -1438,10 +1558,10 @@
         }
 
         function createTarget() {
-            const size = Math.random() * 20 + 30; // 30-50px
+            const size = Math.random() * 20 + 30;
             const x = Math.random() * (shootingGameCanvas.width - size);
-            const y = Math.random() * (shootingGameCanvas.height - size - 60); // Avoid gun area
-            const speed = 1 + score / 200; // Increase difficulty
+            const y = Math.random() * (shootingGameCanvas.height - size - 60);
+            const speed = 1 + score / 200;
             targets.push({
                 x, y, size,
                 vx: (Math.random() - 0.5) * speed,
@@ -1462,7 +1582,6 @@
                     let points = isScopeActive ? Math.max(20, 150 - Math.floor(timeTaken * 15)) : Math.max(10, 75 - Math.floor(timeTaken * 10));
                     score += points;
                     showToast(`Hit! +${points} points`, 1000);
-                    // Add hit effect
                     ctx.beginPath();
                     ctx.arc(x, y, 10, 0, Math.PI * 2);
                     ctx.fillStyle = 'rgba(255, 0, 0, 0.8)';
@@ -1481,7 +1600,7 @@
         function updateTargets() {
             const now = Date.now();
             targets = targets.filter(t => {
-                if (now - t.spawnTime > 4000) return false; // Targets disappear after 4s
+                if (now - t.spawnTime > 4000) return false;
                 t.x += t.vx;
                 t.y += t.vy;
                 if (t.x < 0 || t.x > shootingGameCanvas.width - t.size) t.vx *= -1;
@@ -1493,19 +1612,15 @@
 
         function drawGame() {
             ctx.clearRect(0, 0, shootingGameCanvas.width, shootingGameCanvas.height);
-            // Draw background
             const gradient = ctx.createLinearGradient(0, 0, 0, shootingGameCanvas.height);
             gradient.addColorStop(0, '#1e293b');
             gradient.addColorStop(1, '#334155');
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, shootingGameCanvas.width, shootingGameCanvas.height);
-            // Draw targets
             targets.forEach(t => {
                 ctx.drawImage(targetImage, t.x, t.y, t.size, t.size);
             });
-            // Draw gun
             ctx.drawImage(gunImage, gunX, shootingGameCanvas.height - 60, 100, 60);
-            // Draw scope
             if (isScopeActive && mouseX !== null && mouseY !== null) {
                 ctx.drawImage(scopeImage, mouseX - 50, mouseY - 50, 100, 100);
             }
@@ -1590,52 +1705,62 @@
             initShootingGame();
         });
 
-        // Form Handling
-        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const submitBtn = document.getElementById('submitBtn');
-            const form = this;
-            const category = form.category.value;
-            const message = form.message.value.trim();
-            const email = form.email.value.trim();
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        // RugPull Game
+        const rugpullGameModal = document.getElementById('rugpullGameModal');
+        const closeRugpullGameBtn = document.getElementById('closeRugpullGameBtn');
+        const restartRugpullGameBtn = document.getElementById('restartRugpullGameBtn');
+        const rugpullGameCanvas = document.getElementById('rugpullGameCanvas');
+        const rugpullGameScore = document.getElementById('rugpullGameScore');
+        const rugpullGameHealth = document.getElementById('rugpullGameHealth');
+        const rugpullGameTimer = document.getElementById('rugpullGameTimer');
+        const rugpullGameOverMessage = document.getElementById('rugpullGameOverMessage');
+        const rugpullCtx = rugpullGameCanvas.getContext('2d');
 
-            if (!category || !message || !email) {
-                showToast('Please fill in all fields!', 3000);
-                return;
-            }
-            if (!emailRegex.test(email)) {
-                showToast('Please enter a valid email address!', 3000);
-                return;
-            }
+        let rugScore = 0;
+        let rugBestScore = localStorage.getItem('rugpullGameBestScore') || 0;
+        let rugTimer = 0;
+        let rugTimerInterval = null;
+        let rugHealth = 100;
+        let rugIsGameOver = false;
+        let rugGameLoop = null;
+        let player = { x: 0, y: 0, width: 50, height: 50, vx: 0, vy: 0 };
+        let coins = [];
+        let obstacles = [];
+        const coinImages = [
+            new Image(), new Image(), new Image(), new Image()
+        ];
+        coinImages[0].src = 'https://i.postimg.cc/jWg6hcSy/coin1.png';
+        coinImages[1].src = 'https://i.postimg.cc/FkvMVhRf/coin2.png';
+        coinImages[2].src = 'https://i.postimg.cc/VSCs7LY4/coin3.png';
+        coinImages[3].src = 'https://i.postimg.cc/YLppq6Qy/coin4.png';
+        const playerImage = new Image();
+        playerImage.src = 'https://i.postimg.cc/sBsyJPNf/character.png';
+        const obstacleImage = new Image();
+        obstacleImage.src = 'https://i.postimg.cc/hfvByPsx/rugpull.png';
+        const warningImage = new Image();
+        warningImage.src = 'https://i.postimg.cc/47W0VVr0/scam-alert.png';
+        const backgroundImage = new Image();
+        backgroundImage.src = 'https://i.postimg.cc/tZc59k09/background.jpg';
 
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Submitting...';
-            fetch(form.action, {
-                method: 'POST',
-                body: new FormData(form),
-                headers: { 'Accept': 'application/json' }
-            }).then(response => {
-                if (response.ok) {
-                    showToast('Thank you for your feedback! 🙏', 4000);
-                    form.reset();
-                } else {
-                    showToast('Error submitting feedback. Try again!', 4000);
+        function resizeRugpullCanvas() {
+            const parent = rugpullGameCanvas.parentElement;
+            rugpullGameCanvas.width = parent.clientWidth > 800 ? 800 : parent.clientWidth;
+            rugpullGameCanvas.height = window.innerWidth <= 767 ? 300 : 500;
+            player.x = rugpullGameCanvas.width / 2 - player.width / 2;
+            player.y = rugpullGameCanvas.height - player.height - 10;
+        }
+
+        function startRugpullTimer() {
+            rugTimer = 0;
+            if (rugTimerInterval) clearInterval(rugTimerInterval);
+            rugTimerInterval = setInterval(() => {
+                rugTimer++;
+                rugpullGameTimer.textContent = `Time: ${rugTimer}s`;
+                if (rugHealth <= 0) {
+                    endRugpullGame();
                 }
-            }).catch(() => {
-                showToast('Network error. Please try again!', 4000);
-            }).finally(() => {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Feedback';
-            });
-        });
+            }, 1000);
+        }
 
-        // Real-time Form Validation
-        document.querySelectorAll('#feedbackForm input, #feedbackForm textarea, #feedbackForm select').forEach(input => {
-            input.addEventListener('input', () => {
-                input.style.borderColor = input.value.trim() ? '#3b82f6' : 'rgba(255, 255, 255, 0.2)';
-            });
-        });
-    </script>
-</body>
-</html>
+        function stopRugpullTimer() {
+            i
