@@ -6,6 +6,7 @@
     <title>KiteAI Community Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Existing styles remain unchanged */
         * {
             margin: 0;
             padding: 0;
@@ -313,10 +314,10 @@
         }
 
         /* Game Modal */
-        #gameContent {
-            max-width: 500px;
+        #gameContent, #shootingGameContent {
+            max-width: 600px;
         }
-        #gameTitle {
+        #gameTitle, #shootingGameTitle {
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 1rem;
@@ -368,7 +369,7 @@
             border-radius: 10px;
             loading: lazy;
         }
-        #gameScore {
+        #gameScore, #shootingGameScore {
             position: absolute;
             top: 1rem;
             left: 1rem;
@@ -378,7 +379,7 @@
             padding: 0.5rem 1rem;
             border-radius: 10px;
         }
-        #restartGameBtn {
+        #restartGameBtn, #restartShootingGameBtn {
             padding: 0.6rem 1.2rem;
             background: linear-gradient(45deg, #3b82f6, #2563eb);
             color: #fff;
@@ -388,12 +389,13 @@
             font-weight: 600;
             transition: transform 0.3s ease, background 0.3s ease;
         }
-        #restartGameBtn:hover, #restartGameBtn:focus {
+        #restartGameBtn:hover, #restartGameBtn:focus,
+        #restartShootingGameBtn:hover, #restartShootingGameBtn:focus {
             background: linear-gradient(45deg, #2563eb, #3b82f6);
             transform: scale(1.05);
             outline: none;
         }
-        #winMessage {
+        #winMessage, #gameOverMessage {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -406,13 +408,71 @@
             opacity: 0;
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
-        #winMessage.show {
+        #winMessage.show, #gameOverMessage.show {
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
         }
         #puzzleGrid.won .card {
             filter: blur(4px);
             transition: filter 0.5s ease;
+        }
+
+        /* Shooting Game Styles */
+        #shootingGameCanvas {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            background: #1e293b;
+            border-radius: 10px;
+            position: relative;
+            cursor: none;
+            overflow: hidden;
+        }
+        #gunElement {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 60px;
+            background: url('https://i.postimg.cc/LnrJcszr/gun.png') no-repeat center/contain;
+            z-index: 10;
+        }
+        #scopeElement {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.postimg.cc/yDVMYmX9/scope.png') no-repeat center/contain;
+            display: none;
+            z-index: 15;
+            pointer-events: none;
+        }
+        #scopeToggleBtn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            background: #3b82f6;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        #scopeToggleBtn:hover, #scopeToggleBtn:focus {
+            background: #2563eb;
+            transform: scale(1.05);
+            outline: none;
+        }
+        .target {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: url('https://i.postimg.cc/zyBhrQMg/target.png') no-repeat center/contain;
+            transition: transform 0.2s ease;
         }
 
         /* Feedback Form */
@@ -616,14 +676,14 @@
             #puzzleGrid {
                 gap: 0.3rem;
             }
-            #gameTitle {
+            #gameTitle, #shootingGameTitle {
                 font-size: 1.2rem;
             }
-            #gameScore {
+            #gameScore, #shootingGameScore {
                 font-size: 0.9rem;
                 padding: 0.3rem 0.6rem;
             }
-            #winMessage {
+            #winMessage, #gameOverMessage {
                 font-size: 1.2rem;
                 padding: 0.75rem 1.5rem;
             }
@@ -642,6 +702,17 @@
                 width: 40px;
                 height: 40px;
             }
+            #shootingGameCanvas {
+                height: 300px;
+            }
+            #gunElement {
+                width: 80px;
+                height: 48px;
+            }
+            .target {
+                width: 30px;
+                height: 30px;
+            }
         }
 
         @media (min-width: 768px) {
@@ -651,7 +722,7 @@
             .feedback-form {
                 padding: 2rem;
             }
-            #gameContent {
+            #gameContent, #shootingGameContent {
                 max-width: 600px;
             }
         }
@@ -668,6 +739,7 @@
 
     <!-- Click Sound -->
     <audio id="clickSound" src="https://cdn.pixabay.com/audio/2022/03/10/audio_5b3d3b4213.mp3" preload="auto"></audio>
+    <audio id="shootSound" src="https://cdn.pixabay.com/audio/2022/03/10/audio_5b3d3b4213.mp3" preload="auto"></audio>
 
     <!-- Top Navbar -->
     <nav class="top-nav">
@@ -696,6 +768,13 @@
                     <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing</a>
                 </div>
             </div>
+            <div class="dropdown">
+                <a href="#" class="dropbtn" aria-label="Games Menu" tabindex="0">Games</a>
+                <div class="dropdown-content">
+                    <a href="#" id="flippingGameLink" aria-label="KiteAI Flipping Game">KiteAI Flipping</a>
+                    <a href="#" id="shootingGameLink" aria-label="KiteAI Shooting Game">KiteAI Shooting</a>
+                </div>
+            </div>
         </div>
         <button class="sidebar-btn" aria-label="Toggle Menu" tabindex="0">☰</button>
     </nav>
@@ -713,6 +792,8 @@
         <a href="https://x.com/Henryleemr?t=ZZVY_CCK88fGLRM56VkXnQ&s=09" target="_blank">Henry Lee 🪁</a>
         <a href="https://x.com/superamscom?t=jr23SY_GKnnNEUr5EP-6eA&s=09" target="_blank">Spring 🪁</a>
         <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing 🪁</a>
+        <a href="#" id="sidebarFlippingGameLink">KiteAI Flipping 🪁</a>
+        <a href="#" id="sidebarShootingGameLink">KiteAI Shooting 🪁</a>
     </div>
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
@@ -738,15 +819,31 @@
         </div>
     </div>
 
-    <!-- Game Modal -->
+    <!-- Flipping Game Modal -->
     <div id="gameModal" class="modal" role="dialog" aria-labelledby="gameTitle">
         <div id="gameContent" class="modal-content">
             <img class="modal-close" id="closeGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Game" aria-label="Close Game" role="button" tabindex="0">
             <div id="gameScore" aria-live="polite">Level: 1 | Best Level: 1 | Time: 0s</div>
-            <div id="gameTitle">Kite Flipping Game</div>
+            <div id="gameTitle">KiteAI Flipping Game</div>
             <div id="puzzleGrid"></div>
             <button id="restartGameBtn" aria-label="Restart Game">Restart</button>
             <div id="winMessage" aria-live="assertive">You Won!</div>
+        </div>
+    </div>
+
+    <!-- Shooting Game Modal -->
+    <div id="shootingGameModal" class="modal" role="dialog" aria-labelledby="shootingGameTitle">
+        <div id="shootingGameContent" class="modal-content">
+            <img class="modal-close" id="closeShootingGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Shooting Game" aria-label="Close Shooting Game" role="button" tabindex="0">
+            <div id="shootingGameScore" aria-live="polite">Score: 0 | Best Score: 0 | Time: 0s</div>
+            <div id="shootingGameTitle">KiteAI Shooting Game</div>
+            <div id="shootingGameCanvas">
+                <div id="gunElement"></div>
+                <div id="scopeElement"></div>
+            </div>
+            <button id="scopeToggleBtn" aria-label="Toggle Scope">Toggle Scope</button>
+            <button id="restartShootingGameBtn" aria-label="Restart Shooting Game">Restart</button>
+            <div id="gameOverMessage" aria-live="assertive">Game Over!</div>
         </div>
     </div>
 
@@ -767,7 +864,13 @@
             <button type="button" id="announcementBtn" aria-label="Open Announcements">📢 Announcements</button>
             <button type="button" id="agentBtn" aria-label="Open Community Agent">🤖 Community Agent</button>
             <button type="button" id="leaderboardBtn" aria-label="Open Leaderboard">📊 Leaderboard</button>
-            <button type="button" id="gameBtn" aria-label="Open KiteAI Game">🎮 KiteAI Game</button>
+            <div class="dropdown">
+                <button type="button" class="dropbtn" aria-label="Games Menu" tabindex="0">🎮 Games</button>
+                <div class="dropdown-content">
+                    <a href="#" id="feedbackFlippingGameLink" aria-label="KiteAI Flipping Game">KiteAI Flipping</a>
+                    <a href="#" id="feedbackShootingGameLink" aria-label="KiteAI Shooting Game">KiteAI Shooting</a>
+                </div>
+            </div>
         </div>
     </form>
 
@@ -805,12 +908,17 @@
     <script>
         // Click Sound
         const clickSound = document.getElementById('clickSound');
+        const shootSound = document.getElementById('shootSound');
         function playClickSound() {
             clickSound.currentTime = 0;
             clickSound.play().catch(() => {});
         }
+        function playShootSound() {
+            shootSound.currentTime = 0;
+            shootSound.play().catch(() => {});
+        }
 
-        document.querySelectorAll('button, a, .card, .sidebar-btn, .announcement-controls span, .modal-close').forEach(el => {
+        document.querySelectorAll('button, a, .card, .sidebar-btn, .announcement-controls span, .modal-close, #scopeToggleBtn').forEach(el => {
             el.addEventListener('click', playClickSound);
             el.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') playClickSound();
@@ -1058,9 +1166,11 @@
             document.getElementById('leaderboardModal').classList.remove('show');
         });
 
-        // Puzzle Game
+        // Flipping Game
         const gameModal = document.getElementById('gameModal');
-        const gameBtn = document.getElementById('gameBtn');
+        const flippingGameLink = document.getElementById('flippingGameLink');
+        const sidebarFlippingGameLink = document.getElementById('sidebarFlippingGameLink');
+        const feedbackFlippingGameLink = document.getElementById('feedbackFlippingGameLink');
         const closeGameBtn = document.getElementById('closeGameBtn');
         const restartGameBtn = document.getElementById('restartGameBtn');
         const puzzleGrid = document.getElementById('puzzleGrid');
@@ -1194,7 +1304,17 @@
             }
         }
 
-        gameBtn.addEventListener('click', () => {
+        flippingGameLink.addEventListener('click', () => {
+            gameModal.classList.add('show');
+            level = 1;
+            initPuzzle();
+        });
+        sidebarFlippingGameLink.addEventListener('click', () => {
+            gameModal.classList.add('show');
+            level = 1;
+            initPuzzle();
+        });
+        feedbackFlippingGameLink.addEventListener('click', () => {
             gameModal.classList.add('show');
             level = 1;
             initPuzzle();
@@ -1206,6 +1326,173 @@
         restartGameBtn.addEventListener('click', () => {
             level = 1;
             initPuzzle();
+        });
+
+        // Shooting Game
+        const shootingGameModal = document.getElementById('shootingGameModal');
+        const shootingGameLink = document.getElementById('shootingGameLink');
+        const sidebarShootingGameLink = document.getElementById('sidebarShootingGameLink');
+        const feedbackShootingGameLink = document.getElementById('feedbackShootingGameLink');
+        const closeShootingGameBtn = document.getElementById('closeShootingGameBtn');
+        const restartShootingGameBtn = document.getElementById('restartShootingGameBtn');
+        const shootingGameCanvas = document.getElementById('shootingGameCanvas');
+        const shootingGameScore = document.getElementById('shootingGameScore');
+        const gameOverMessage = document.getElementById('gameOverMessage');
+        const scopeToggleBtn = document.getElementById('scopeToggleBtn');
+        const scopeElement = document.getElementById('scopeElement');
+        const gunElement = document.getElementById('gunElement');
+
+        let score = 0;
+        let bestScore = localStorage.getItem('shootingGameBestScore') || 0;
+        let shootingTimer = 0;
+        let shootingTimerInterval = null;
+        let targets = [];
+        let isScopeActive = false;
+        let isGameOver = false;
+        let gameLoop = null;
+
+        function startShootingTimer() {
+            shootingTimer = 0;
+            if (shootingTimerInterval) clearInterval(shootingTimerInterval);
+            shootingTimerInterval = setInterval(() => {
+                shootingTimer++;
+                shootingGameScore.textContent = `Score: ${score} | Best Score: ${bestScore} | Time: ${shootingTimer}s`;
+                if (shootingTimer >= 60) {
+                    endShootingGame();
+                }
+            }, 1000);
+        }
+
+        function stopShootingTimer() {
+            if (shootingTimerInterval) clearInterval(shootingTimerInterval);
+        }
+
+        function createTarget() {
+            const target = document.createElement('div');
+            target.classList.add('target');
+            const canvasRect = shootingGameCanvas.getBoundingClientRect();
+            const maxX = canvasRect.width - 40; // Target width
+            const maxY = canvasRect.height - 40 - 60; // Target height, accounting for gun height
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+            target.style.left = `${x}px`;
+            target.style.top = `${y}px`;
+            target.addEventListener('click', () => hitTarget(target));
+            shootingGameCanvas.appendChild(target);
+            targets.push({ element: target, spawnTime: Date.now() });
+        }
+
+        function hitTarget(target) {
+            if (isGameOver) return;
+            playShootSound();
+            const index = targets.findIndex(t => t.element === target);
+            if (index !== -1) {
+                const spawnTime = targets[index].spawnTime;
+                const timeTaken = (Date.now() - spawnTime) / 1000;
+                let points = isScopeActive ? Math.max(10, 100 - Math.floor(timeTaken * 10)) : Math.max(5, 50 - Math.floor(timeTaken * 5));
+                score += points;
+                targets.splice(index, 1);
+                target.remove();
+                shootingGameScore.textContent = `Score: ${score} | Best Score: ${bestScore} | Time: ${shootingTimer}s`;
+                showToast(`Hit! +${points} points`, 1000);
+            }
+        }
+
+        function updateTargets() {
+            const now = Date.now();
+            targets = targets.filter(t => {
+                if (now - t.spawnTime > 5000) { // Targets disappear after 5 seconds
+                    t.element.remove();
+                    return false;
+                }
+                return true;
+            });
+            if (targets.length < 3 && Math.random() < 0.05) { // Spawn new targets
+                createTarget();
+            }
+            targets.forEach(t => {
+                const speed = 2 + score / 100; // Increase difficulty with score
+                const angle = (now / 1000) * speed;
+                t.element.style.transform = `translateY(${Math.sin(angle) * 10}px)`; // Simulate distant movement
+            });
+        }
+
+        function endShootingGame() {
+            isGameOver = true;
+            stopShootingTimer();
+            gameOverMessage.classList.add('show');
+            shootingGameCanvas.style.filter = 'blur(4px)';
+            if (score > bestScore) {
+                bestScore = score;
+                localStorage.setItem('shootingGameBestScore', bestScore);
+            }
+            showToast(`Game Over! Score: ${score}`, 4000);
+            cancelAnimationFrame(gameLoop);
+        }
+
+        function initShootingGame() {
+            shootingGameCanvas.innerHTML = '<div id="gunElement"></div><div id="scopeElement"></div>';
+            score = 0;
+            shootingTimer = 0;
+            targets = [];
+            isGameOver = false;
+            isScopeActive = false;
+            scopeElement.style.display = 'none';
+            shootingGameCanvas.style.filter = 'none';
+            gameOverMessage.classList.remove('show');
+            shootingGameScore.textContent = `Score: ${score} | Best Score: ${bestScore} | Time: ${shootingTimer}s`;
+            startShootingTimer();
+            createTarget();
+            gameLoop = requestAnimationFrame(gameLoopFunction);
+        }
+
+        function gameLoopFunction() {
+            if (!isGameOver) {
+                updateTargets();
+                gameLoop = requestAnimationFrame(gameLoopFunction);
+            }
+        }
+
+        shootingGameCanvas.addEventListener('mousemove', (e) => {
+            if (isGameOver) return;
+            const rect = shootingGameCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left - 50; // Center gun
+            gunElement.style.left = `${Math.max(0, Math.min(rect.width - 100, x))}px`;
+            if (isScopeActive) {
+                scopeElement.style.left = `${e.clientX - rect.left - rect.width / 2}px`;
+                scopeElement.style.top = `${e.clientY - rect.top - rect.height / 2}px`;
+            }
+        });
+
+        scopeToggleBtn.addEventListener('click', () => {
+            isScopeActive = !isScopeActive;
+            scopeElement.style.display = isScopeActive ? 'block' : 'none';
+            shootingGameCanvas.style.cursor = isScopeActive ? 'none' : 'default';
+            showToast(isScopeActive ? 'Scope On' : 'Scope Off', 2000);
+        });
+
+        shootingGameLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            shootingGameModal.classList.add('show');
+            initShootingGame();
+        });
+        sidebarShootingGameLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            shootingGameModal.classList.add('show');
+            initShootingGame();
+        });
+        feedbackShootingGameLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            shootingGameModal.classList.add('show');
+            initShootingGame();
+        });
+        closeShootingGameBtn.addEventListener('click', () => {
+            shootingGameModal.classList.remove('show');
+            stopShootingTimer();
+            cancelAnimationFrame(gameLoop);
+        });
+        restartShootingGameBtn.addEventListener('click', () => {
+            initShootingGame();
         });
 
         // Form Handling
