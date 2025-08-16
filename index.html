@@ -11,7 +11,7 @@
             min-height: 100vh;
             background: url('https://i.postimg.cc/qzpBwFQk/background.jpg') no-repeat center center fixed;
             background-size: cover;
-            background-color: #111;
+            background-color: #111; /* Fallback for slow image load */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -22,6 +22,7 @@
             overflow-x: hidden;
         }
 
+        /* Menu Button (Mobile Only) */
         .menu-btn {
             position: fixed;
             top: 1rem;
@@ -37,6 +38,7 @@
         }
         .menu-btn:hover { background: rgba(0,0,0,0.9); transform: scale(1.1); }
 
+        /* Desktop Navbar */
         .desktop-nav {
             position: fixed;
             top: 0;
@@ -115,6 +117,7 @@
             background-color: #1da1f2;
         }
 
+        /* Overlay Menu (Mobile) */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -151,6 +154,7 @@
             transform: scale(1.05);
         }
 
+        /* Announcement Modal */
         #announcementModal {
             display: none;
             position: fixed;
@@ -192,6 +196,7 @@
             transform: scale(1.2);
         }
 
+        /* Leaderboard Modal */
         #leaderboardModal {
             display: none;
             position: fixed;
@@ -264,6 +269,7 @@
         }
         .leaderboard-name a:hover { color: #0d95e8; text-decoration: underline; }
 
+        /* Game Modal */
         #gameModal {
             display: none;
             position: fixed;
@@ -282,23 +288,66 @@
         #gameContent {
             width: 90%;
             max-width: 800px;
-            background: url('https://i.postimg.cc/KkZpHNjv/background.jpg') no-repeat center center;
-            background-size: cover;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
             border-radius: 0.75rem;
             padding: 2rem;
             box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.4);
             color: #f1f1f1;
             position: relative;
         }
-        #gameCanvas {
-            width: 100%;
+        #gameTitle {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+        }
+        #puzzleGrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
             max-width: 600px;
-            height: 400px;
-            display: block;
             margin: 0 auto 1rem;
-            border: 3px solid #1da1f2;
+        }
+        .card {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; /* Square aspect ratio */
+            cursor: pointer;
+            perspective: 1000px;
+        }
+        .card-inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s ease;
+            transform-style: preserve-3d;
+        }
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
             border-radius: 0.5rem;
-            background: rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0.2rem 0.5rem rgba(0,0,0,0.3);
+        }
+        .card-front {
+            transform: rotateY(180deg);
+        }
+        .card-back {
+            background: #333;
+        }
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.5rem;
         }
         #closeGameBtn {
             position: absolute;
@@ -321,9 +370,8 @@
         }
         #restartGameBtn {
             position: absolute;
-            top: 0.5rem;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: 1rem;
+            right: 1rem;
             padding: 0.5rem 1rem;
             background: linear-gradient(45deg, #1da1f2, #0d95e8);
             color: white;
@@ -334,7 +382,26 @@
             transition: transform 0.2s, background 0.3s;
         }
         #restartGameBtn:hover { background: linear-gradient(45deg, #0d95e8, #1da1f2); transform: scale(1.05); }
+        #winMessage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 1001;
+        }
+        #winMessage.show { opacity: 1; }
+        #puzzleGrid.won .card { filter: blur(5px); }
 
+        /* Toast Notification */
         .toast {
             position: fixed;
             bottom: 2rem;
@@ -430,6 +497,7 @@
         }
         .announcement-btn:hover { background: linear-gradient(45deg, #0d95e8, #1da1f2); transform: scale(1.05); }
 
+        /* Agent Chat Modal */
         #agentModal {
             display: none;
             position: fixed;
@@ -528,6 +596,7 @@
         }
         footer a:hover { color: #0d95e8; }
 
+        /* Desktop Styles */
         @media (min-width: 768px) {
             .menu-btn { display: none; }
             .menu-overlay { display: none; }
@@ -549,8 +618,10 @@
             .leaderboard-profile img { width: 3.5rem; height: 3.5rem; }
             .leaderboard-name a { font-size: 1.2rem; }
             header img { height: 5rem; }
+            #puzzleGrid { max-width: 600px; }
         }
 
+        /* Mobile Styles */
         @media (max-width: 767px) {
             .desktop-nav { display: none; }
             .menu-btn { display: block; }
@@ -561,12 +632,16 @@
             .leaderboard-profile img { width: 2.5rem; height: 2.5rem; }
             .leaderboard-name a { font-size: 1rem; }
             .announcement-btn { padding: 0.8rem; font-size: 1rem; }
-            #gameCanvas { height: 300px; }
+            #puzzleGrid { max-width: 400px; gap: 0.5rem; }
+            #gameTitle { font-size: 1.5rem; }
+            #gameScore { font-size: 1rem; }
+            #winMessage { font-size: 1.5rem; padding: 0.8rem 1.5rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Desktop Navbar -->
     <nav class="desktop-nav">
         <div class="logo">
             <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo" aria-label="KiteAI Logo">
@@ -596,8 +671,10 @@
         </div>
     </nav>
 
+    <!-- Menu Button (Mobile) -->
     <div class="menu-btn" onclick="toggleMenu()" aria-label="Toggle Menu">☰</div>
 
+    <!-- Menu Overlay (Mobile) -->
     <div class="menu-overlay" id="menuOverlay">
         <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
         <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">Fly The Kite NFT🪁</a>
@@ -612,6 +689,7 @@
         <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing🪁</a>
     </div>
 
+    <!-- Announcement Modal -->
     <div id="announcementModal">
         <div id="announcementContent">
             <div id="tweetContainer" style="text-align:center;"></div>
@@ -623,6 +701,7 @@
         </div>
     </div>
 
+    <!-- Leaderboard Modal -->
     <div id="leaderboardModal">
         <div id="leaderboardContent">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
@@ -633,19 +712,24 @@
         </div>
     </div>
 
+    <!-- Game Modal -->
     <div id="gameModal">
         <div id="gameContent">
             <img id="closeGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Game" aria-label="Close Game">
-            <div id="gameScore">Score: 0 | High Score: 0</div>
+            <div id="gameScore">Level: 1 | Best Level: 1 | Time: 0s</div>
+            <div id="gameTitle">Kite Flipping Game</div>
+            <div id="puzzleGrid"></div>
             <button id="restartGameBtn" aria-label="Restart Game">Restart</button>
-            <canvas id="gameCanvas" width="600" height="400"></canvas>
+            <div id="winMessage">You Won!</div>
         </div>
     </div>
 
+    <!-- Logo -->
     <header>
         <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo" aria-label="KiteAI Logo">
     </header>
 
+    <!-- Feedback Form -->
     <form id="feedbackForm" action="https://formspree.io/f/xzzvwrap" method="POST">
         <h2>Community Feedback</h2>
         <select name="category" required aria-label="Select Feedback Category">
@@ -661,9 +745,10 @@
         <button type="button" class="announcement-btn" id="announcementBtn" title="View latest announcements" aria-label="Open Announcements">📢 Announcements</button>
         <button type="button" class="announcement-btn" id="agentBtn" title="Chat with KiteAI Community Agent" aria-label="Open Community Agent">🤖 KiteAI Community Agent</button>
         <button type="button" class="announcement-btn" id="leaderboardBtn" title="View community leaderboard" aria-label="Open Leaderboard">📊 Leaderboard</button>
-        <button type="button" class="announcement-btn" id="gameBtn" title="Play KiteAI Puzzle Game" aria-label="Open KiteAI Puzzle Game">🎮 KiteAI Puzzle Game</button>
+        <button type="button" class="announcement-btn" id="gameBtn" title="Play KiteAI Game" aria-label="Open KiteAI Game">🎮 KiteAI Game</button>
     </form>
 
+    <!-- Agent Chat Modal -->
     <div id="agentModal">
         <div id="agentContent">
             <div style="display:flex; justify-content:flex-end;">
@@ -685,6 +770,7 @@
         </div>
     </div>
 
+    <!-- Toast Notification -->
     <div id="toast" class="toast"></div>
 
     <footer>
@@ -940,168 +1026,141 @@
         const gameBtn = document.getElementById('gameBtn');
         const closeGameBtn = document.getElementById('closeGameBtn');
         const restartGameBtn = document.getElementById('restartGameBtn');
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
+        const puzzleGrid = document.getElementById('puzzleGrid');
         const scoreDisplay = document.getElementById('gameScore');
+        const winMessage = document.getElementById('winMessage');
 
-        const backImage = new Image();
-        backImage.src = 'https://i.postimg.cc/6TkVmjdM/close-icon.png';
+        const backsideImage = 'https://i.postimg.cc/6TkVmjdM/close-icon.png';
         const frontImages = [
-            new Image(),
-            new Image(),
-            new Image()
+            'https://i.postimg.cc/FfpWLBgg/image1.png',
+            'https://i.postimg.cc/FfpWLBgg/image1.png',
+            'https://i.postimg.cc/FfpWLBgg/image1.png',
+            'https://i.postimg.cc/68NY1XMf/image2.png',
+            'https://i.postimg.cc/68NY1XMf/image2.png',
+            'https://i.postimg.cc/68NY1XMf/image2.png',
+            'https://i.postimg.cc/PNpyXxcM/image3.png',
+            'https://i.postimg.cc/PNpyXxcM/image3.png',
+            'https://i.postimg.cc/PNpyXxcM/image3.png'
         ];
-        frontImages[0].src = 'https://i.postimg.cc/FfpWLBgg/image1.png';
-        frontImages[1].src = 'https://i.postimg.cc/68NY1XMf/image2.png';
-        frontImages[2].src = 'https://i.postimg.cc/PNpyXxcM/image3.png';
 
-        const tiles = [];
-        let score = 0;
-        let highScore = localStorage.getItem('kitePuzzleHighScore') || 0;
-        let selectedTiles = [];
+        let level = 1;
+        let bestLevel = localStorage.getItem('puzzleGameBestLevel') || 1;
         let matchedSets = 0;
-        const tileSize = 150;
-        const gap = 10;
-        const gridSize = 3;
+        let flippedCards = [];
+        let timer = 0;
+        let timerInterval = null;
 
-        // Sounds
-        const flipSound = new Audio('https://www.soundjay.com/switch/switch-1.mp3'); // Placeholder flip sound
-        const matchSound = new Audio('https://www.soundjay.com/success/success-1.mp3'); // Placeholder match sound
-
-        // Initialize tiles
-        function initTiles() {
-            tiles.length = 0;
-            matchedSets = 0;
-            const imageIndices = [0, 0, 0, 1, 1, 1, 2, 2, 2]; // 3 of each image
-            imageIndices.sort(() => Math.random() - 0.5); // Shuffle
-            for (let i = 0; i < gridSize; i++) {
-                for (let j = 0; j < gridSize; j++) {
-                    tiles.push({
-                        x: j * (tileSize + gap) + (canvas.width - gridSize * (tileSize + gap) + gap) / 2,
-                        y: i * (tileSize + gap) + (canvas.height - gridSize * (tileSize + gap) + gap) / 2,
-                        width: tileSize,
-                        height: tileSize,
-                        imageIndex: imageIndices[i * gridSize + j],
-                        flipped: false,
-                        matched: false
-                    });
-                }
-            }
+        function shuffle(array) {
+            return array.sort(() => Math.random() - 0.5);
         }
 
-        function resetGame() {
-            score = 0;
-            highScore = localStorage.getItem('kitePuzzleHighScore') || 0;
-            scoreDisplay.textContent = `Score: ${score} | High Score: ${highScore}`;
-            selectedTiles = [];
-            matchedSets = 0;
-            initTiles();
+        function startTimer() {
+            timer = 0;
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timer++;
+                scoreDisplay.textContent = `Level: ${level} | Best Level: ${bestLevel} | Time: ${timer}s`;
+            }, 1000);
         }
 
-        canvas.addEventListener('click', (e) => {
-            const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+        function stopTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+        }
 
-            if (selectedTiles.length < 3) {
-                tiles.forEach(tile => {
-                    if (!tile.flipped && !tile.matched &&
-                        x >= tile.x && x <= tile.x + tile.width &&
-                        y >= tile.y && y <= tile.y + tile.height) {
-                        tile.flipped = true;
-                        selectedTiles.push(tile);
-                        flipSound.play().catch(() => {});
-                        if (selectedTiles.length === 3) {
-                            setTimeout(checkMatch, 1000);
-                        }
-                    }
-                });
-            }
-        });
+        function createCard(imageSrc) {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            const inner = document.createElement('div');
+            inner.classList.add('card-inner');
+            const front = document.createElement('div');
+            front.classList.add('card-front');
+            const frontImg = document.createElement('img');
+            frontImg.src = imageSrc;
+            front.appendChild(frontImg);
+            const back = document.createElement('div');
+            back.classList.add('card-back');
+            const backImg = document.createElement('img');
+            backImg.src = backsideImage;
+            back.appendChild(backImg);
+            inner.appendChild(front);
+            inner.appendChild(back);
+            card.appendChild(inner);
+            card.addEventListener('click', handleCardClick);
+            card.addEventListener('touchstart', handleCardClick, { passive: false });
+            return card;
+        }
 
-        canvas.addEventListener('touchstart', (e) => {
+        function initPuzzle() {
+            puzzleGrid.innerHTML = '';
+            winMessage.classList.remove('show');
+            puzzleGrid.classList.remove('won');
+            const shuffledImages = shuffle([...frontImages]);
+            shuffledImages.forEach(src => {
+                puzzleGrid.appendChild(createCard(src));
+            });
+            flippedCards = [];
+            matchedSets = 0;
+            startTimer();
+            scoreDisplay.textContent = `Level: ${level} | Best Level: ${bestLevel} | Time: ${timer}s`;
+        }
+
+        function handleCardClick(e) {
             e.preventDefault();
-            const rect = canvas.getBoundingClientRect();
-            const x = e.touches[0].clientX - rect.left;
-            const y = e.touches[0].clientY - rect.top;
+            const card = e.target.closest('.card');
+            if (!card || card.classList.contains('flipped') || flippedCards.length >= 3 || puzzleGrid.classList.contains('won')) return;
 
-            if (selectedTiles.length < 3) {
-                tiles.forEach(tile => {
-                    if (!tile.flipped && !tile.matched &&
-                        x >= tile.x && x <= tile.x + tile.width &&
-                        y >= tile.y && y <= tile.y + tile.height) {
-                        tile.flipped = true;
-                        selectedTiles.push(tile);
-                        flipSound.play().catch(() => {});
-                        if (selectedTiles.length === 3) {
-                            setTimeout(checkMatch, 1000);
-                        }
-                    }
-                });
+            card.classList.add('flipped');
+            flippedCards.push(card);
+
+            if (flippedCards.length === 3) {
+                checkMatch();
             }
-        });
+        }
 
         function checkMatch() {
-            if (selectedTiles.length === 3) {
-                const sameImage = selectedTiles.every(tile => tile.imageIndex === selectedTiles[0].imageIndex);
-                if (sameImage) {
-                    selectedTiles.forEach(tile => tile.matched = true);
-                    matchedSets++;
-                    score += 10;
-                    if (score > highScore) {
-                        highScore = score;
-                        localStorage.setItem('kitePuzzleHighScore', highScore);
+            const fronts = flippedCards.map(card => card.querySelector('.card-front img').src);
+            if (fronts[0] === fronts[1] && fronts[1] === fronts[2]) {
+                matchedSets++;
+                flippedCards = [];
+                if (matchedSets === 3) {
+                    stopTimer();
+                    puzzleGrid.classList.add('won');
+                    winMessage.classList.add('show');
+                    showToast(`Level ${level} Completed in ${timer}s!`, 3000);
+                    level++;
+                    if (level > bestLevel) {
+                        bestLevel = level;
+                        localStorage.setItem('puzzleGameBestLevel', bestLevel);
                     }
-                    scoreDisplay.textContent = `Score: ${score} | High Score: ${highScore}`;
-                    matchSound.play().catch(() => {});
-                    if (matchedSets === 3) {
-                        showToast('Congratulations! You won!', 3000);
-                        setTimeout(resetGame, 2000);
-                    }
-                } else {
-                    selectedTiles.forEach(tile => tile.flipped = false);
+                    setTimeout(() => {
+                        initPuzzle();
+                    }, 2000);
                 }
-                selectedTiles = [];
+            } else {
+                setTimeout(() => {
+                    flippedCards.forEach(card => card.classList.remove('flipped'));
+                    flippedCards = [];
+                }, 1000 - (level - 1) * 100); // Decrease flip-back time with level
             }
-        }
-
-        function gameLoop() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            tiles.forEach(tile => {
-                ctx.save();
-                if (tile.matched || tile.flipped) {
-                    ctx.drawImage(frontImages[tile.imageIndex], tile.x, tile.y, tile.width, tile.height);
-                } else {
-                    ctx.drawImage(backImage, tile.x, tile.y, tile.width, tile.height);
-                    ctx.strokeStyle = '#1da1f2';
-                    ctx.lineWidth = 2;
-                    ctx.strokeRect(tile.x, tile.y, tile.width, tile.height);
-                }
-                ctx.restore();
-            });
-
-            requestAnimationFrame(gameLoop);
         }
 
         gameBtn.addEventListener('click', () => {
-            gameModal.style.display = 'flex';
-            gameModal.classList.add('show');
-            resetGame();
-            if (!gameLoopStarted) {
-                gameLoop();
-                gameLoopStarted = true;
-            }
+            document.getElementById('gameModal').style.display = 'flex';
+            document.getElementById('gameModal').classList.add('show');
+            level = 1;
+            initPuzzle();
         });
 
         closeGameBtn.addEventListener('click', () => {
-            gameModal.style.display = 'none';
-            gameModal.classList.remove('show');
+            document.getElementById('gameModal').style.display = 'none';
+            document.getElementById('gameModal').classList.remove('show');
+            stopTimer();
         });
 
-        restartGameBtn.addEventListener('click', resetGame);
-
-        let gameLoopStarted = false;
+        restartGameBtn.addEventListener('click', () => {
+            level = 1;
+            initPuzzle();
+        });
 
         // Form submit handling
         document.getElementById('feedbackForm').addEventListener('submit', function(e){
@@ -1133,16 +1192,6 @@
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Send Feedback';
             });
-        });
-
-        // Preload images
-        Promise.all([
-            new Promise(resolve => backImage.onload = resolve),
-            new Promise(resolve => frontImages[0].onload = resolve),
-            new Promise(resolve => frontImages[1].onload = resolve),
-            new Promise(resolve => frontImages[2].onload = resolve)
-        ]).then(() => {
-            initTiles();
         });
     </script>
 </body>
