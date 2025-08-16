@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community Feedback</title>
+    <title>KiteAI Community Feedback</title>
     <style>
         body {
             margin: 0;
@@ -11,6 +11,7 @@
             min-height: 100vh;
             background: url('https://i.postimg.cc/qzpBwFQk/background.jpg') no-repeat center center fixed;
             background-size: cover;
+            background-color: #111; /* Fallback for slow image load */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -18,56 +19,61 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #f1f1f1;
             text-align: center;
+            overflow-x: hidden;
         }
 
         /* Menu Button (Mobile Only) */
         .menu-btn {
-            position: absolute;
+            position: fixed;
             top: 1rem;
             left: 1rem;
             font-size: 1.8rem;
             cursor: pointer;
             z-index: 1001;
-            background: rgba(0,0,0,0.5);
-            padding: 0.5rem 0.75rem;
+            background: rgba(0,0,0,0.7);
+            padding: 0.6rem 0.9rem;
             border-radius: 0.5rem;
-            transition: background 0.3s;
+            transition: transform 0.2s, background 0.3s;
             display: none;
         }
-        .menu-btn:hover { background: rgba(0,0,0,0.8); }
+        .menu-btn:hover { background: rgba(0,0,0,0.9); transform: scale(1.1); }
 
-        /* Desktop Navbar (Professional) */
+        /* Desktop Navbar */
         .desktop-nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .desktop-nav .logo img {
-            height: 2.5rem;
+            height: 3rem;
             border-radius: 0.5rem;
+            transition: transform 0.3s;
         }
+        .desktop-nav .logo img:hover { transform: scale(1.05); }
         .desktop-nav .nav-links {
             display: flex;
             align-items: center;
+            gap: 1.5rem;
         }
         .desktop-nav .nav-links a {
             color: #f1f1f1;
             text-decoration: none;
-            margin-left: 1.5rem;
             font-size: 1.1rem;
-            transition: color 0.3s;
+            font-weight: 500;
+            transition: color 0.3s, transform 0.2s;
             position: relative;
         }
         .desktop-nav .nav-links a:hover {
             color: #1da1f2;
+            transform: scale(1.05);
         }
         .desktop-nav .nav-links a::after {
             content: '';
@@ -88,22 +94,24 @@
         .dropdown-content {
             display: none;
             position: absolute;
-            background: rgba(0, 0, 0, 0.9);
-            min-width: 160px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.95);
+            min-width: 180px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
             border-radius: 0.5rem;
             z-index: 1;
             padding: 0.5rem 0;
+            top: 2rem;
         }
         .dropdown:hover .dropdown-content {
             display: block;
         }
         .dropdown-content a {
             color: #f1f1f1;
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1rem;
             text-decoration: none;
             display: block;
             font-size: 1rem;
+            transition: background 0.3s;
         }
         .dropdown-content a:hover {
             background-color: #1da1f2;
@@ -116,8 +124,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
             display: none;
             flex-direction: column;
             justify-content: center;
@@ -132,17 +140,18 @@
         }
         .menu-overlay a {
             color: #f1f1f1;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             text-decoration: none;
-            padding: 1rem 0;
-            width: 80%;
+            padding: 1.2rem 0;
+            width: 85%;
             text-align: center;
             border-bottom: 1px solid rgba(255,255,255,0.2);
-            transition: 0.3s;
+            transition: color 0.3s, transform 0.2s;
         }
         .menu-overlay a:hover {
             color: #1da1f2;
             border-bottom-color: #1da1f2;
+            transform: scale(1.05);
         }
 
         /* Announcement Modal */
@@ -151,36 +160,41 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.9);
             z-index: 9999;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             padding: 1rem;
             box-sizing: border-box;
+            transition: opacity 0.3s ease;
         }
+        #announcementModal.show { opacity: 1; }
         #announcementContent {
             width: 90%;
             background: #ffffff;
             border-radius: 0.75rem;
-            padding: 1.5rem;
+            padding: 2rem;
             overflow-y: auto;
             max-height: 85vh;
-            box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.3);
+            box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.4);
             color: #000;
         }
         .announcement-controls {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
-            font-size: 1.4rem;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            font-size: 1.5rem;
         }
         .announcement-controls span {
             cursor: pointer;
-            transition: color 0.3s;
+            transition: color 0.3s, transform 0.2s;
         }
-        .announcement-controls span:hover { color: #1da1f2; }
+        .announcement-controls span:hover {
+            color: #1da1f2;
+            transform: scale(1.2);
+        }
 
         /* Leaderboard Modal */
         #leaderboardModal {
@@ -188,22 +202,24 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(6px);
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
             z-index: 10000;
             justify-content: center;
             align-items: center;
             padding: 1rem;
             box-sizing: border-box;
+            transition: opacity 0.3s ease;
         }
+        #leaderboardModal.show { opacity: 1; }
         #leaderboardContent {
             width: 90%;
             background: #111;
             border-radius: 0.75rem;
-            padding: 1.5rem;
+            padding: 2rem;
             overflow-y: auto;
             max-height: 85vh;
-            box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.3);
+            box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.4);
             color: #f1f1f1;
         }
         #leaderboardTable {
@@ -213,29 +229,34 @@
         .leaderboard-row {
             display: flex;
             align-items: center;
-            padding: 0.75rem 0;
+            padding: 0.8rem 0;
             border-bottom: 1px solid rgba(255,255,255,0.2);
             transition: background 0.3s;
         }
-        .leaderboard-row:hover {
-            background: rgba(255,255,255,0.1);
-        }
+        .leaderboard-row:nth-child(odd) { background: rgba(255,255,255,0.05); }
+        .leaderboard-row:hover { background: rgba(255,255,255,0.15); }
         .leaderboard-rank {
             flex: 0 0 4rem;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            position: relative;
         }
+        .leaderboard-rank.rank-1::before { content: '🥇'; position: absolute; left: -1rem; }
+        .leaderboard-rank.rank-2::before { content: '🥈'; position: absolute; left: -1rem; }
+        .leaderboard-rank.rank-3::before { content: '🥉'; position: absolute; left: -1rem; }
         .leaderboard-profile {
-            flex: 0 0 3rem;
-            margin-right: 0.75rem;
+            flex: 0 0 3.5rem;
+            margin-right: 1rem;
         }
         .leaderboard-profile img {
-            width: 3rem;
-            height: 3rem;
+            width: 3.5rem;
+            height: 3.5rem;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #1da1f2;
+            transition: transform 0.2s;
         }
+        .leaderboard-profile img:hover { transform: scale(1.1); }
         .leaderboard-name {
             flex: 1;
             text-align: left;
@@ -243,11 +264,10 @@
         .leaderboard-name a {
             color: #1da1f2;
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            transition: color 0.3s;
         }
-        .leaderboard-name a:hover {
-            text-decoration: underline;
-        }
+        .leaderboard-name a:hover { color: #0d95e8; text-decoration: underline; }
 
         /* Game Modal */
         #gameModal {
@@ -255,22 +275,24 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(6px);
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
             z-index: 10000;
             justify-content: center;
             align-items: center;
             padding: 1rem;
             box-sizing: border-box;
+            transition: opacity 0.3s ease;
         }
+        #gameModal.show { opacity: 1; }
         #gameContent {
             width: 90%;
             max-width: 800px;
             background: url('https://i.postimg.cc/KkZpHNjv/background.jpg') no-repeat center center;
             background-size: cover;
             border-radius: 0.75rem;
-            padding: 1.5rem;
-            box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.3);
+            padding: 2rem;
+            box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.4);
             color: #f1f1f1;
             position: relative;
         }
@@ -279,80 +301,141 @@
             max-width: 600px;
             height: 400px;
             display: block;
-            margin: 0 auto;
-            border: 2px solid #1da1f2;
-            background: rgba(0, 0, 0, 0.1); /* Slight transparency for polish */
+            margin: 0 auto 1rem;
+            border: 3px solid #1da1f2;
+            border-radius: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
         }
         #closeGameBtn {
             position: absolute;
             top: 0.5rem;
             right: 0.5rem;
-            width: 1.75rem;
-            height: 1.75rem;
+            width: 2rem;
+            height: 2rem;
             cursor: pointer;
+            transition: transform 0.2s;
         }
+        #closeGameBtn:hover { transform: scale(1.2); }
         #gameScore {
             position: absolute;
             top: 0.5rem;
             left: 0.5rem;
-            font-size: 1.2rem;
-            font-weight: bold;
+            font-size: 1.3rem;
+            font-weight: 600;
             color: #fff;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
         }
+        #restartGameBtn {
+            position: absolute;
+            top: 0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.5rem 1rem;
+            background: linear-gradient(45deg, #1da1f2, #0d95e8);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s, background 0.3s;
+        }
+        #restartGameBtn:hover { background: linear-gradient(45deg, #0d95e8, #1da1f2); transform: scale(1.05); }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1da1f2;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.3rem 1rem rgba(0,0,0,0.3);
+            z-index: 10001;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .toast.show { opacity: 1; }
 
         header {
-            position: absolute;
+            position: fixed;
             top: 1rem;
             right: 1rem;
         }
-        header img { height: 4rem; border-radius: 0.625rem; }
+        header img {
+            height: 4.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 0.3rem 1rem rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+        header img:hover { transform: scale(1.05); }
 
         form {
-            background: rgba(0, 0, 0, 0.75);
-            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 2rem;
             border-radius: 1rem;
             width: 90%;
-            box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.4);
+            max-width: 600px;
+            box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.5);
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: transform 0.3s;
         }
-        form h2 { margin-bottom: 1rem; font-size: 1.5rem; }
-        select, textarea, input, button {
+        form:hover { transform: scale(1.02); }
+        form h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        select, textarea, input {
             width: 100%;
-            padding: 0.75rem;
-            margin: 0.5rem 0;
+            padding: 0.9rem;
+            margin: 0.6rem 0;
             border-radius: 0.5rem;
-            border: none;
+            border: 1px solid transparent;
             font-size: 1rem;
             box-sizing: border-box;
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            transition: border 0.3s, box-shadow 0.3s;
         }
-        select, textarea, input { background: rgba(255,255,255,0.1); color: #fff; }
+        select:focus, textarea:focus, input:focus {
+            border: 1px solid #1da1f2;
+            box-shadow: 0 0 0.3rem #1da1f2;
+            outline: none;
+        }
         select option { color: #000; }
         button {
-            background-color: #1da1f2;
+            background: linear-gradient(45deg, #1da1f2, #0d95e8);
             color: white;
             cursor: pointer;
             font-weight: 600;
-            transition: background 0.3s;
+            transition: transform 0.2s, background 0.3s;
         }
-        button:hover { background-color: #0d95e8; }
+        button:hover { background: linear-gradient(45deg, #0d95e8, #1da1f2); transform: scale(1.05); }
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
 
         .announcement-btn {
             margin-top: 1rem;
-            padding: 0.75rem 1.5rem;
-            background: #1da1f2;
+            padding: 0.9rem 1.8rem;
+            background: linear-gradient(45deg, #1da1f2, #0d95e8);
             color: white;
             border: none;
             border-radius: 0.5rem;
             cursor: pointer;
             font-weight: 600;
-            transition: background 0.3s;
             width: 100%;
             max-width: 15rem;
+            transition: transform 0.2s, background 0.3s;
         }
-        .announcement-btn:hover { background: #0d95e8; }
+        .announcement-btn:hover { background: linear-gradient(45deg, #0d95e8, #1da1f2); transform: scale(1.05); }
 
         /* Agent Chat Modal */
         #agentModal {
@@ -360,67 +443,98 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            backdrop-filter: blur(6px);
-            background: rgba(0,0,0,0.75);
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
             z-index: 10000;
             justify-content: center;
             align-items: center;
+            transition: opacity 0.3s ease;
         }
+        #agentModal.show { opacity: 1; }
         #agentContent {
             background: #111;
             color: #f1f1f1;
             width: 90%;
             border-radius: 0.75rem;
-            padding: 1.5rem;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             max-height: 85vh;
             overflow-y: auto;
+            box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.4);
         }
         #chatMessages {
             flex-grow: 1;
             overflow-y: auto;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
             border: 1px solid #444;
-            padding: 0.75rem;
+            padding: 0.8rem;
             border-radius: 0.5rem;
             background: #222;
             color: #f1f1f1;
         }
-        .chat-msg { margin: 0.3rem 0; padding: 0.5rem 0.75rem; border-radius: 0.5rem; max-width: 80%; }
+        .chat-msg {
+            margin: 0.4rem 0;
+            padding: 0.6rem 1rem;
+            border-radius: 0.5rem;
+            max-width: 85%;
+        }
         .chat-agent { background: #0d95e8; color: #fff; align-self: flex-start; }
         .chat-user { background: #333; color: #fff; align-self: flex-end; }
 
         .question-btn {
-            margin: 0.2rem;
-            padding: 0.4rem 0.75rem;
+            margin: 0.3rem;
+            padding: 0.5rem 1rem;
             border: none;
-            border-radius: 0.4rem;
+            border-radius: 0.5rem;
             background: #0d95e8;
             color: white;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: transform 0.2s, background 0.3s;
         }
-        .question-btn:hover { background: #1da1f2; }
+        .question-btn:hover { background: #1da1f2; transform: scale(1.05); }
 
-        #userInput { padding: 0.5rem; width: calc(100% - 1rem); margin-bottom: 0.75rem; border-radius: 0.4rem; border: 1px solid #444; background: #222; color: #f1f1f1; }
-        #sendBtn { padding: 0.5rem; background: #0d95e8; color: white; border: none; border-radius: 0.4rem; cursor: pointer; }
-        #sendBtn:hover { background: #1da1f2; }
+        #userInput {
+            padding: 0.6rem;
+            width: calc(100% - 1.2rem);
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #444;
+            background: #222;
+            color: #f1f1f1;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+        #userInput:focus { border: 1px solid #1da1f2; box-shadow: 0 0 0.3rem #1da1f2; }
+        #sendBtn {
+            padding: 0.6rem;
+            background: #0d95e8;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+        #sendBtn:hover { background: #1da1f2; transform: scale(1.05); }
 
         footer {
             position: fixed;
             bottom: 0.75rem;
             width: 100%;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: #f1f1f1;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.7);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
         }
         footer a {
             color: #1da1f2;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
+            transition: color 0.3s;
         }
+        footer a:hover { color: #0d95e8; }
 
         /* Desktop Styles */
         @media (min-width: 768px) {
@@ -431,8 +545,8 @@
                 max-width: 600px;
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                gap: 1rem;
-                padding: 2rem;
+                gap: 1.2rem;
+                padding: 2.5rem;
             }
             form h2 { grid-column: span 2; }
             select, textarea, input { grid-column: span 2; }
@@ -450,29 +564,29 @@
         @media (max-width: 767px) {
             .desktop-nav { display: none; }
             .menu-btn { display: block; }
-            form { max-width: 400px; padding: 1rem; }
-            .menu-overlay a { font-size: 1.2rem; }
-            .announcement-controls { font-size: 1.2rem; gap: 1rem; }
-            .leaderboard-rank { font-size: 0.9rem; flex: 0 0 3rem; }
-            .leaderboard-profile img { width: 2rem; height: 2rem; }
-            .leaderboard-name a { font-size: 0.9rem; }
-            .announcement-btn { padding: 0.75rem; font-size: 0.9rem; }
+            form { max-width: 400px; padding: 1.5rem; }
+            .menu-overlay a { font-size: 1.3rem; }
+            .announcement-controls { font-size: 1.3rem; gap: 1.2rem; }
+            .leaderboard-rank { font-size: 1rem; flex: 0 0 3rem; }
+            .leaderboard-profile img { width: 2.5rem; height: 2.5rem; }
+            .leaderboard-name a { font-size: 1rem; }
+            .announcement-btn { padding: 0.8rem; font-size: 1rem; }
             #gameCanvas { height: 300px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Desktop Navbar (Professional) -->
+    <!-- Desktop Navbar -->
     <nav class="desktop-nav">
         <div class="logo">
-            <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo">
+            <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo" aria-label="KiteAI Logo">
         </div>
         <div class="nav-links">
-            <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">Testnet</a>
-            <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">NFTs</a>
+            <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank" aria-label="KiteAI Testnet">Testnet</a>
+            <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank" aria-label="KiteAI NFTs">NFTs</a>
             <div class="dropdown">
-                <a href="#" class="dropbtn">Community</a>
+                <a href="#" class="dropbtn" aria-label="Community Menu">Community</a>
                 <div class="dropdown-content">
                     <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder</a>
                     <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Community & Ecosystem</a>
@@ -480,7 +594,7 @@
                 </div>
             </div>
             <div class="dropdown">
-                <a href="#" class="dropbtn">Team</a>
+                <a href="#" class="dropbtn" aria-label="Team Menu">Team</a>
                 <div class="dropdown-content">
                     <a href="https://x.com/buidloor?t=6nD_KJzIePhdytOA3Ss-2w&s=09" target="_blank">Vikthebuilder</a>
                     <a href="https://x.com/lei_lei0904?t=yL6KX5W6lCKf0Fnk6VAIBA&s=09" target="_blank">Lei-Lei</a>
@@ -494,7 +608,7 @@
     </nav>
 
     <!-- Menu Button (Mobile) -->
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+    <div class="menu-btn" onclick="toggleMenu()" aria-label="Toggle Menu">☰</div>
 
     <!-- Menu Overlay (Mobile) -->
     <div class="menu-overlay" id="menuOverlay">
@@ -516,9 +630,9 @@
         <div id="announcementContent">
             <div id="tweetContainer" style="text-align:center;"></div>
             <div class="announcement-controls">
-                <span id="prevBtn">⇚</span>
-                <span id="closeBtn">❌</span>
-                <span id="nextBtn">⇛</span>
+                <span id="prevBtn" aria-label="Previous Tweet">⇚</span>
+                <span id="closeBtn" aria-label="Close Announcements">❌</span>
+                <span id="nextBtn" aria-label="Next Tweet">⇛</span>
             </div>
         </div>
     </div>
@@ -526,9 +640,9 @@
     <!-- Leaderboard Modal -->
     <div id="leaderboardModal">
         <div id="leaderboardContent">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h2 style="margin: 0; font-size: 1.5rem;">Leaderboard</h2>
-                <img id="closeLeaderboardBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close" style="width: 1.75rem; height: 1.75rem; cursor: pointer;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 style="margin: 0; font-size: 1.8rem; font-weight: 600;">Leaderboard</h2>
+                <img id="closeLeaderboardBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Leaderboard" style="width: 2rem; height: 2rem; cursor: pointer;" aria-label="Close Leaderboard">
             </div>
             <div id="leaderboardTable"></div>
         </div>
@@ -537,34 +651,35 @@
     <!-- Game Modal -->
     <div id="gameModal">
         <div id="gameContent">
-            <img id="closeGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close">
+            <img id="closeGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Game" aria-label="Close Game">
             <div id="gameScore">Score: 0 | High Score: 0</div>
+            <button id="restartGameBtn" aria-label="Restart Game">Restart</button>
             <canvas id="gameCanvas" width="600" height="400"></canvas>
         </div>
     </div>
 
     <!-- Logo -->
     <header>
-        <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="Logo">
+        <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo" aria-label="KiteAI Logo">
     </header>
 
     <!-- Feedback Form -->
     <form id="feedbackForm" action="https://formspree.io/f/xzzvwrap" method="POST">
         <h2>Community Feedback</h2>
-        <select name="category" required>
+        <select name="category" required aria-label="Select Feedback Category">
             <option value="">Select Category</option>
             <option value="Community Feedback">Community Feedback</option>
             <option value="Error Report">Error / Issue</option>
             <option value="Event or Campaign">Event / Campaign</option>
             <option value="Coming Soon" disabled>Coming Soon</option>
         </select>
-        <textarea name="message" rows="5" placeholder="Write your feedback here..." required></textarea>
-        <input type="email" name="email" placeholder="Your Email" required>
-        <button type="submit">Send Feedback</button>
-        <button type="button" class="announcement-btn" id="announcementBtn">📢 Announcements</button>
-        <button type="button" class="announcement-btn" id="agentBtn">🤖 KiteAI Community Agent</button>
-        <button type="button" class="announcement-btn" id="leaderboardBtn">📊 Leaderboard</button>
-        <button type="button" class="announcement-btn" id="gameBtn">🎮 KiteAI Game</button>
+        <textarea name="message" rows="5" placeholder="Describe your feedback or issue..." required aria-label="Feedback Message"></textarea>
+        <input type="email" name="email" placeholder="Your Email (e.g., example@domain.com)" required aria-label="Your Email">
+        <button type="submit" id="submitBtn" aria-label="Submit Feedback">Send Feedback</button>
+        <button type="button" class="announcement-btn" id="announcementBtn" title="View latest announcements" aria-label="Open Announcements">📢 Announcements</button>
+        <button type="button" class="announcement-btn" id="agentBtn" title="Chat with KiteAI Community Agent" aria-label="Open Community Agent">🤖 KiteAI Community Agent</button>
+        <button type="button" class="announcement-btn" id="leaderboardBtn" title="View community leaderboard" aria-label="Open Leaderboard">📊 Leaderboard</button>
+        <button type="button" class="announcement-btn" id="gameBtn" title="Play KiteAI Game" aria-label="Open KiteAI Game">🎮 KiteAI Game</button>
     </form>
 
     <!-- Agent Chat Modal -->
@@ -572,28 +687,32 @@
         <div id="agentContent">
             <div style="display:flex; justify-content:flex-end;">
                 <img id="closeAgentBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" 
-                     alt="Close" style="width:1.75rem; height:1.75rem; cursor:pointer;">
+                     alt="Close Chat" style="width:2rem; height:2rem; cursor:pointer;" aria-label="Close Chat">
             </div>
             <div id="chatMessages"></div>
             <div>
-                <div id="preQuestions" style="margin-bottom:0.75rem;">
-                    <button class="question-btn">How can I use KiteAI?</button>
-                    <button class="question-btn">What are KiteAI NFTs?</button>
-                    <button class="question-btn">How to join KiteAI community?</button>
-                    <button class="question-btn">How to report an issue?</button>
-                    <button class="question-btn">Upcoming events in KiteAI?</button>
+                <div id="preQuestions" style="margin-bottom:1rem;">
+                    <button class="question-btn" aria-label="How to use KiteAI">How can I use KiteAI?</button>
+                    <button class="question-btn" aria-label="What are KiteAI NFTs">What are KiteAI NFTs?</button>
+                    <button class="question-btn" aria-label="Join KiteAI community">How to join KiteAI community?</button>
+                    <button class="question-btn" aria-label="Report an issue">How to report an issue?</button>
+                    <button class="question-btn" aria-label="Upcoming events">Upcoming events in KiteAI?</button>
                 </div>
-                <input type="text" id="userInput" placeholder="Type your question here...">
-                <button id="sendBtn">Send</button>
+                <input type="text" id="userInput" placeholder="Type your question here..." aria-label="Type your question">
+                <button id="sendBtn" aria-label="Send Message">Send</button>
             </div>
         </div>
     </div>
 
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
     <footer>
-        Made for the KiteAI community · Follow on 
-        <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank">@Crypto_King877</a> 
+        <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo" style="height: 2rem; vertical-align: middle; margin-right: 0.5rem;">
+        Made for the KiteAI Community · Follow on 
+        <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank" aria-label="Follow Crypto_King877">@Crypto_King877</a> 
         & 
-        <a href="https://x.com/GoKiteAI?t=fzEmGeci_aCKBgJRAYEwsA&s=09" target="_blank">@GoKiteAI</a>
+        <a href="https://x.com/GoKiteAI?t=fzEmGeci_aCKBgJRAYEwsA&s=09" target="_blank" aria-label="Follow GoKiteAI">@GoKiteAI</a>
     </footer>
 
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -602,6 +721,14 @@
         function toggleMenu() {
             const menu = document.getElementById('menuOverlay');
             menu.classList.toggle('show');
+        }
+
+        // Toast Notification
+        function showToast(message, duration = 3000) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), duration);
         }
 
         // Tweets
@@ -625,10 +752,12 @@
 
         document.getElementById("announcementBtn").addEventListener("click", () => {
             document.getElementById("announcementModal").style.display = "flex";
+            document.getElementById("announcementModal").classList.add("show");
             loadTweet(currentTweet);
         });
         document.getElementById("closeBtn").addEventListener("click", () => {
             document.getElementById("announcementModal").style.display = "none";
+            document.getElementById("announcementModal").classList.remove("show");
         });
         document.getElementById("prevBtn").addEventListener("click", () => {
             currentTweet = (currentTweet - 1 + tweets.length) % tweets.length;
@@ -665,8 +794,14 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        agentBtn.addEventListener('click', () => agentModal.style.display = 'flex');
-        closeAgentBtn.addEventListener('click', () => agentModal.style.display = 'none');
+        agentBtn.addEventListener('click', () => {
+            agentModal.style.display = 'flex';
+            agentModal.classList.add('show');
+        });
+        closeAgentBtn.addEventListener('click', () => {
+            agentModal.style.display = 'none';
+            agentModal.classList.remove('show');
+        });
 
         document.querySelectorAll('.question-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -797,12 +932,12 @@
                 const row = document.createElement('div');
                 row.classList.add('leaderboard-row');
                 row.innerHTML = `
-                    <div class="leaderboard-rank">${user.rank}</div>
+                    <div class="leaderboard-rank rank-${user.rank}">${user.rank}</div>
                     <div class="leaderboard-profile">
-                        <img src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Profile">
+                        <img src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Profile of ${user.name}">
                     </div>
                     <div class="leaderboard-name">
-                        <a href="${user.url}" target="_blank">${user.name}</a>
+                        <a href="${user.url}" target="_blank" aria-label="Visit ${user.name}'s profile">${user.name}</a>
                     </div>
                 `;
                 table.appendChild(row);
@@ -811,17 +946,20 @@
 
         document.getElementById('leaderboardBtn').addEventListener('click', () => {
             document.getElementById('leaderboardModal').style.display = 'flex';
+            document.getElementById('leaderboardModal').classList.add('show');
             loadLeaderboard();
         });
 
         document.getElementById('closeLeaderboardBtn').addEventListener('click', () => {
             document.getElementById('leaderboardModal').style.display = 'none';
+            document.getElementById('leaderboardModal').classList.remove('show');
         });
 
         // Game Logic
         const gameModal = document.getElementById('gameModal');
         const gameBtn = document.getElementById('gameBtn');
         const closeGameBtn = document.getElementById('closeGameBtn');
+        const restartGameBtn = document.getElementById('restartGameBtn');
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const scoreDisplay = document.getElementById('gameScore');
@@ -837,8 +975,8 @@
         let playerKite = {
             x: 100,
             y: 100,
-            width: 60,
-            height: 60,
+            width: 70,
+            height: 70,
             speed: 5,
             image: new Image()
         };
@@ -849,12 +987,12 @@
         let highScore = localStorage.getItem('kiteGameHighScore') || 0;
         let isDragging = false;
         let startX, startY;
-        const maxEnemyKites = 5; // Limit to 5 enemy kites for performance
+        const maxEnemyKites = 3; // Reduced for performance
 
         // Load sound
-        const sliceSound = new Audio('https://www.soundjay.com/sword/sword-swish-01.mp3'); // Replace with your sword slice sound URL
+        const sliceSound = new Audio('https://www.soundjay.com/sword/sword-swish-01.mp3'); // Replace with your own sound URL
 
-        // Preload images to avoid loading issues
+        // Preload images
         const loadedImages = [];
         kiteImages.forEach(src => {
             const img = new Image();
@@ -863,16 +1001,25 @@
         });
 
         function spawnEnemyKite() {
-            if (enemyKites.length >= maxEnemyKites) return; // Limit enemy kites
+            if (enemyKites.length >= maxEnemyKites) return;
             const kite = {
                 x: Math.random() * (canvas.width - 50),
                 y: Math.random() * (canvas.height - 50),
                 width: 50,
                 height: 50,
-                speed: 1.5, // Slower for smoother gameplay
+                speed: 1.2,
                 image: loadedImages[Math.floor(Math.random() * loadedImages.length)]
             };
             enemyKites.push(kite);
+        }
+
+        function resetGame() {
+            score = 0;
+            enemyKites = [];
+            playerKite.x = 100;
+            playerKite.y = 100;
+            scoreDisplay.textContent = `Score: ${score} | High Score: ${highScore}`;
+            spawnEnemyKite();
         }
 
         canvas.addEventListener('mousedown', (e) => {
@@ -908,10 +1055,10 @@
         function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Draw player kite with yellow glow
+            // Draw player kite with glow and slight scale
             ctx.save();
             ctx.shadowColor = '#ffff00';
-            ctx.shadowBlur = 10;
+            ctx.shadowBlur = 12;
             ctx.drawImage(playerKite.image, playerKite.x, playerKite.y, playerKite.width, playerKite.height);
             ctx.restore();
 
@@ -921,7 +1068,7 @@
                 kite.y += kite.speed * (Math.random() - 0.5);
                 ctx.drawImage(kite.image, kite.x, kite.y, kite.width, kite.height);
 
-                // Check collision for cutting
+                // Check collision
                 if (
                     playerKite.x < kite.x + kite.width &&
                     playerKite.x + playerKite.width > kite.x &&
@@ -935,12 +1082,12 @@
                         localStorage.setItem('kiteGameHighScore', highScore);
                     }
                     scoreDisplay.textContent = `Score: ${score} | High Score: ${highScore}`;
-                    sliceSound.play().catch(() => {}); // Play sound, ignore errors
+                    sliceSound.play().catch(() => {});
                 }
             });
 
-            // Spawn new enemy kite every 3 seconds
-            if (Math.random() < 0.01) spawnEnemyKite();
+            // Spawn new enemy kite
+            if (Math.random() < 0.008) spawnEnemyKite();
 
             // Keep player kite in bounds
             playerKite.x = Math.max(0, Math.min(canvas.width - playerKite.width, playerKite.x));
@@ -951,11 +1098,8 @@
 
         gameBtn.addEventListener('click', () => {
             gameModal.style.display = 'flex';
-            score = 0;
-            highScore = localStorage.getItem('kiteGameHighScore') || 0;
-            scoreDisplay.textContent = `Score: ${score} | High Score: ${highScore}`;
-            enemyKites = [];
-            spawnEnemyKite();
+            gameModal.classList.add('show');
+            resetGame();
             if (!gameLoopStarted) {
                 gameLoop();
                 gameLoopStarted = true;
@@ -964,22 +1108,52 @@
 
         closeGameBtn.addEventListener('click', () => {
             gameModal.style.display = 'none';
+            gameModal.classList.remove('show');
         });
+
+        restartGameBtn.addEventListener('click', resetGame);
 
         let gameLoopStarted = false;
 
-        // Form submit confirmation
+        // Form submit handling
         document.getElementById('feedbackForm').addEventListener('submit', function(e){
-            setTimeout(() => {
-                alert("Thank you for your feedback! 🙏");
-            }, 100);
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            const form = this;
+            if (!form.category.value || !form.message.value || !form.email.value) {
+                showToast('Please fill in all fields!', 3000);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Feedback';
+                return;
+            }
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    showToast('Thank you for your feedback! 🙏', 3000);
+                    form.reset();
+                } else {
+                    showToast('Error submitting feedback. Try again!', 3000);
+                }
+            }).catch(() => {
+                showToast('Network error. Please try again!', 3000);
+            }).finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Feedback';
+            });
         });
 
-        // Preload first enemy kite to start game
+        // Preload images
         playerKite.image.onload = () => {
             spawnEnemyKite();
         };
-    </script>
 
+        // Note: For offline support, consider adding a Service Worker to cache assets
+        // Example: https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
+    </script>
 </body>
 </html>
