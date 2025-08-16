@@ -11,7 +11,7 @@
             min-height: 100vh;
             background: url('https://i.postimg.cc/qzpBwFQk/background.jpg') no-repeat center center fixed;
             background-size: cover;
-            background-color: #111; /* Fallback for slow image load */
+            background-color: #111;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -22,7 +22,6 @@
             overflow-x: hidden;
         }
 
-        /* Menu Button (Mobile Only) */
         .menu-btn {
             position: fixed;
             top: 1rem;
@@ -38,7 +37,6 @@
         }
         .menu-btn:hover { background: rgba(0,0,0,0.9); transform: scale(1.1); }
 
-        /* Desktop Navbar */
         .desktop-nav {
             position: fixed;
             top: 0;
@@ -117,7 +115,6 @@
             background-color: #1da1f2;
         }
 
-        /* Overlay Menu (Mobile) */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -154,7 +151,6 @@
             transform: scale(1.05);
         }
 
-        /* Announcement Modal */
         #announcementModal {
             display: none;
             position: fixed;
@@ -196,7 +192,6 @@
             transform: scale(1.2);
         }
 
-        /* Leaderboard Modal */
         #leaderboardModal {
             display: none;
             position: fixed;
@@ -269,7 +264,6 @@
         }
         .leaderboard-name a:hover { color: #0d95e8; text-decoration: underline; }
 
-        /* Game Modal */
         #gameModal {
             display: none;
             position: fixed;
@@ -341,7 +335,6 @@
         }
         #restartGameBtn:hover { background: linear-gradient(45deg, #0d95e8, #1da1f2); transform: scale(1.05); }
 
-        /* Toast Notification */
         .toast {
             position: fixed;
             bottom: 2rem;
@@ -437,7 +430,6 @@
         }
         .announcement-btn:hover { background: linear-gradient(45deg, #0d95e8, #1da1f2); transform: scale(1.05); }
 
-        /* Agent Chat Modal */
         #agentModal {
             display: none;
             position: fixed;
@@ -536,7 +528,6 @@
         }
         footer a:hover { color: #0d95e8; }
 
-        /* Desktop Styles */
         @media (min-width: 768px) {
             .menu-btn { display: none; }
             .menu-overlay { display: none; }
@@ -560,7 +551,6 @@
             header img { height: 5rem; }
         }
 
-        /* Mobile Styles */
         @media (max-width: 767px) {
             .desktop-nav { display: none; }
             .menu-btn { display: block; }
@@ -577,7 +567,6 @@
 </head>
 <body>
 
-    <!-- Desktop Navbar -->
     <nav class="desktop-nav">
         <div class="logo">
             <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo" aria-label="KiteAI Logo">
@@ -607,10 +596,8 @@
         </div>
     </nav>
 
-    <!-- Menu Button (Mobile) -->
     <div class="menu-btn" onclick="toggleMenu()" aria-label="Toggle Menu">☰</div>
 
-    <!-- Menu Overlay (Mobile) -->
     <div class="menu-overlay" id="menuOverlay">
         <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
         <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">Fly The Kite NFT🪁</a>
@@ -625,7 +612,6 @@
         <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing🪁</a>
     </div>
 
-    <!-- Announcement Modal -->
     <div id="announcementModal">
         <div id="announcementContent">
             <div id="tweetContainer" style="text-align:center;"></div>
@@ -637,7 +623,6 @@
         </div>
     </div>
 
-    <!-- Leaderboard Modal -->
     <div id="leaderboardModal">
         <div id="leaderboardContent">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
@@ -648,7 +633,6 @@
         </div>
     </div>
 
-    <!-- Game Modal -->
     <div id="gameModal">
         <div id="gameContent">
             <img id="closeGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Game" aria-label="Close Game">
@@ -658,12 +642,10 @@
         </div>
     </div>
 
-    <!-- Logo -->
     <header>
         <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo" aria-label="KiteAI Logo">
     </header>
 
-    <!-- Feedback Form -->
     <form id="feedbackForm" action="https://formspree.io/f/xzzvwrap" method="POST">
         <h2>Community Feedback</h2>
         <select name="category" required aria-label="Select Feedback Category">
@@ -679,10 +661,9 @@
         <button type="button" class="announcement-btn" id="announcementBtn" title="View latest announcements" aria-label="Open Announcements">📢 Announcements</button>
         <button type="button" class="announcement-btn" id="agentBtn" title="Chat with KiteAI Community Agent" aria-label="Open Community Agent">🤖 KiteAI Community Agent</button>
         <button type="button" class="announcement-btn" id="leaderboardBtn" title="View community leaderboard" aria-label="Open Leaderboard">📊 Leaderboard</button>
-        <button type="button" class="announcement-btn" id="gameBtn" title="Play KiteAI Game" aria-label="Open KiteAI Game">🎮 KiteAI Game</button>
+        <button type="button" class="announcement-btn" id="gameBtn" title="Play KiteAI Puzzle Game" aria-label="Open KiteAI Puzzle Game">🎮 KiteAI Puzzle Game</button>
     </form>
 
-    <!-- Agent Chat Modal -->
     <div id="agentModal">
         <div id="agentContent">
             <div style="display:flex; justify-content:flex-end;">
@@ -704,7 +685,6 @@
         </div>
     </div>
 
-    <!-- Toast Notification -->
     <div id="toast" class="toast"></div>
 
     <footer>
@@ -955,7 +935,7 @@
             document.getElementById('leaderboardModal').classList.remove('show');
         });
 
-        // Game Logic
+        // Puzzle Game Logic
         const gameModal = document.getElementById('gameModal');
         const gameBtn = document.getElementById('gameBtn');
         const closeGameBtn = document.getElementById('closeGameBtn');
@@ -964,134 +944,142 @@
         const ctx = canvas.getContext('2d');
         const scoreDisplay = document.getElementById('gameScore');
 
-        const kiteImages = [
-            'https://i.postimg.cc/PCgB2Y1P/kite1.png',
-            'https://i.postimg.cc/Y4QTV0x8/kite2.png',
-            'https://i.postimg.cc/phZ4WS4F/kite3.png',
-            'https://i.postimg.cc/QV8v4XKk/kite4.png',
-            'https://i.postimg.cc/MX9Nghyk/kite5.png'
+        const backImage = new Image();
+        backImage.src = 'https://i.postimg.cc/6TkVmjdM/close-icon.png';
+        const frontImages = [
+            new Image(),
+            new Image(),
+            new Image()
         ];
+        frontImages[0].src = 'https://i.postimg.cc/FfpWLBgg/image1.png';
+        frontImages[1].src = 'https://i.postimg.cc/68NY1XMf/image2.png';
+        frontImages[2].src = 'https://i.postimg.cc/PNpyXxcM/image3.png';
 
-        let playerKite = {
-            x: 100,
-            y: 100,
-            width: 70,
-            height: 70,
-            speed: 5,
-            image: new Image()
-        };
-        playerKite.image.src = kiteImages[0];
-
-        let enemyKites = [];
+        const tiles = [];
         let score = 0;
-        let highScore = localStorage.getItem('kiteGameHighScore') || 0;
-        let isDragging = false;
-        let startX, startY;
-        const maxEnemyKites = 3; // Reduced for performance
+        let highScore = localStorage.getItem('kitePuzzleHighScore') || 0;
+        let selectedTiles = [];
+        let matchedSets = 0;
+        const tileSize = 150;
+        const gap = 10;
+        const gridSize = 3;
 
-        // Load sound
-        const sliceSound = new Audio('https://www.soundjay.com/sword/sword-swish-01.mp3'); // Replace with your own sound URL
+        // Sounds
+        const flipSound = new Audio('https://www.soundjay.com/switch/switch-1.mp3'); // Placeholder flip sound
+        const matchSound = new Audio('https://www.soundjay.com/success/success-1.mp3'); // Placeholder match sound
 
-        // Preload images
-        const loadedImages = [];
-        kiteImages.forEach(src => {
-            const img = new Image();
-            img.src = src;
-            loadedImages.push(img);
-        });
-
-        function spawnEnemyKite() {
-            if (enemyKites.length >= maxEnemyKites) return;
-            const kite = {
-                x: Math.random() * (canvas.width - 50),
-                y: Math.random() * (canvas.height - 50),
-                width: 50,
-                height: 50,
-                speed: 1.2,
-                image: loadedImages[Math.floor(Math.random() * loadedImages.length)]
-            };
-            enemyKites.push(kite);
+        // Initialize tiles
+        function initTiles() {
+            tiles.length = 0;
+            matchedSets = 0;
+            const imageIndices = [0, 0, 0, 1, 1, 1, 2, 2, 2]; // 3 of each image
+            imageIndices.sort(() => Math.random() - 0.5); // Shuffle
+            for (let i = 0; i < gridSize; i++) {
+                for (let j = 0; j < gridSize; j++) {
+                    tiles.push({
+                        x: j * (tileSize + gap) + (canvas.width - gridSize * (tileSize + gap) + gap) / 2,
+                        y: i * (tileSize + gap) + (canvas.height - gridSize * (tileSize + gap) + gap) / 2,
+                        width: tileSize,
+                        height: tileSize,
+                        imageIndex: imageIndices[i * gridSize + j],
+                        flipped: false,
+                        matched: false
+                    });
+                }
+            }
         }
 
         function resetGame() {
             score = 0;
-            enemyKites = [];
-            playerKite.x = 100;
-            playerKite.y = 100;
+            highScore = localStorage.getItem('kitePuzzleHighScore') || 0;
             scoreDisplay.textContent = `Score: ${score} | High Score: ${highScore}`;
-            spawnEnemyKite();
+            selectedTiles = [];
+            matchedSets = 0;
+            initTiles();
         }
 
-        canvas.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            startX = e.offsetX;
-            startY = e.offsetY;
-        });
-        canvas.addEventListener('mousemove', (e) => {
-            if (isDragging) {
-                playerKite.x = e.offsetX - playerKite.width / 2;
-                playerKite.y = e.offsetY - playerKite.height / 2;
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            if (selectedTiles.length < 3) {
+                tiles.forEach(tile => {
+                    if (!tile.flipped && !tile.matched &&
+                        x >= tile.x && x <= tile.x + tile.width &&
+                        y >= tile.y && y <= tile.y + tile.height) {
+                        tile.flipped = true;
+                        selectedTiles.push(tile);
+                        flipSound.play().catch(() => {});
+                        if (selectedTiles.length === 3) {
+                            setTimeout(checkMatch, 1000);
+                        }
+                    }
+                });
             }
-        });
-        canvas.addEventListener('mouseup', () => {
-            isDragging = false;
         });
 
         canvas.addEventListener('touchstart', (e) => {
-            isDragging = true;
-            startX = e.touches[0].clientX - canvas.offsetLeft;
-            startY = e.touches[0].clientY - canvas.offsetTop;
-        });
-        canvas.addEventListener('touchmove', (e) => {
-            if (isDragging) {
-                playerKite.x = e.touches[0].clientX - canvas.offsetLeft - playerKite.width / 2;
-                playerKite.y = e.touches[0].clientY - canvas.offsetTop - playerKite.height / 2;
+            e.preventDefault();
+            const rect = canvas.getBoundingClientRect();
+            const x = e.touches[0].clientX - rect.left;
+            const y = e.touches[0].clientY - rect.top;
+
+            if (selectedTiles.length < 3) {
+                tiles.forEach(tile => {
+                    if (!tile.flipped && !tile.matched &&
+                        x >= tile.x && x <= tile.x + tile.width &&
+                        y >= tile.y && y <= tile.y + tile.height) {
+                        tile.flipped = true;
+                        selectedTiles.push(tile);
+                        flipSound.play().catch(() => {});
+                        if (selectedTiles.length === 3) {
+                            setTimeout(checkMatch, 1000);
+                        }
+                    }
+                });
             }
         });
-        canvas.addEventListener('touchend', () => {
-            isDragging = false;
-        });
+
+        function checkMatch() {
+            if (selectedTiles.length === 3) {
+                const sameImage = selectedTiles.every(tile => tile.imageIndex === selectedTiles[0].imageIndex);
+                if (sameImage) {
+                    selectedTiles.forEach(tile => tile.matched = true);
+                    matchedSets++;
+                    score += 10;
+                    if (score > highScore) {
+                        highScore = score;
+                        localStorage.setItem('kitePuzzleHighScore', highScore);
+                    }
+                    scoreDisplay.textContent = `Score: ${score} | High Score: ${highScore}`;
+                    matchSound.play().catch(() => {});
+                    if (matchedSets === 3) {
+                        showToast('Congratulations! You won!', 3000);
+                        setTimeout(resetGame, 2000);
+                    }
+                } else {
+                    selectedTiles.forEach(tile => tile.flipped = false);
+                }
+                selectedTiles = [];
+            }
+        }
 
         function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Draw player kite with glow and slight scale
-            ctx.save();
-            ctx.shadowColor = '#ffff00';
-            ctx.shadowBlur = 12;
-            ctx.drawImage(playerKite.image, playerKite.x, playerKite.y, playerKite.width, playerKite.height);
-            ctx.restore();
-
-            // Draw and update enemy kites
-            enemyKites.forEach((kite, index) => {
-                kite.x += kite.speed * (Math.random() - 0.5);
-                kite.y += kite.speed * (Math.random() - 0.5);
-                ctx.drawImage(kite.image, kite.x, kite.y, kite.width, kite.height);
-
-                // Check collision
-                if (
-                    playerKite.x < kite.x + kite.width &&
-                    playerKite.x + playerKite.width > kite.x &&
-                    playerKite.y < kite.y + kite.height &&
-                    playerKite.y + playerKite.height > kite.y
-                ) {
-                    enemyKites.splice(index, 1);
-                    score += 10;
-                    if (score > highScore) {
-                        highScore = score;
-                        localStorage.setItem('kiteGameHighScore', highScore);
-                    }
-                    scoreDisplay.textContent = `Score: ${score} | High Score: ${highScore}`;
-                    sliceSound.play().catch(() => {});
+            tiles.forEach(tile => {
+                ctx.save();
+                if (tile.matched || tile.flipped) {
+                    ctx.drawImage(frontImages[tile.imageIndex], tile.x, tile.y, tile.width, tile.height);
+                } else {
+                    ctx.drawImage(backImage, tile.x, tile.y, tile.width, tile.height);
+                    ctx.strokeStyle = '#1da1f2';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(tile.x, tile.y, tile.width, tile.height);
                 }
+                ctx.restore();
             });
-
-            // Spawn new enemy kite
-            if (Math.random() < 0.008) spawnEnemyKite();
-
-            // Keep player kite in bounds
-            playerKite.x = Math.max(0, Math.min(canvas.width - playerKite.width, playerKite.x));
-            playerKite.y = Math.max(0, Math.min(canvas.height - playerKite.height, playerKite.y));
 
             requestAnimationFrame(gameLoop);
         }
@@ -1148,12 +1136,14 @@
         });
 
         // Preload images
-        playerKite.image.onload = () => {
-            spawnEnemyKite();
-        };
-
-        // Note: For offline support, consider adding a Service Worker to cache assets
-        // Example: https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
+        Promise.all([
+            new Promise(resolve => backImage.onload = resolve),
+            new Promise(resolve => frontImages[0].onload = resolve),
+            new Promise(resolve => frontImages[1].onload = resolve),
+            new Promise(resolve => frontImages[2].onload = resolve)
+        ]).then(() => {
+            initTiles();
+        });
     </script>
 </body>
 </html>
