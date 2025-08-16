@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community Feedback</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -33,25 +32,82 @@
             padding: 0.5rem 0.75rem;
             border-radius: 0.5rem;
             transition: background 0.3s;
-            display: block;
+            display: none; /* Hidden by default, shown on mobile */
         }
         .menu-btn:hover { background: rgba(0,0,0,0.8); }
 
-        /* Live Chat Button (Mobile Only) */
-        .live-chat-btn {
-            position: absolute;
-            top: 4rem; /* Positioned below the menu button */
-            left: 1rem;
-            font-size: 1.8rem;
-            cursor: pointer;
-            z-index: 1001;
-            background: rgba(0,0,0,0.5);
-            padding: 0.5rem 0.75rem;
+        /* Desktop Navbar (Professional) */
+        .desktop-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .desktop-nav .logo img {
+            height: 2.5rem;
             border-radius: 0.5rem;
-            transition: background 0.3s;
+        }
+        .desktop-nav .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        .desktop-nav .nav-links a {
+            color: #f1f1f1;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+        .desktop-nav .nav-links a:hover {
+            color: #1da1f2;
+        }
+        .desktop-nav .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #1da1f2;
+            transition: width 0.3s ease;
+        }
+        .desktop-nav .nav-links a:hover::after {
+            width: 100%;
+        }
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 0.5rem;
+            z-index: 1;
+            padding: 0.5rem 0;
+        }
+        .dropdown:hover .dropdown-content {
             display: block;
         }
-        .live-chat-btn:hover { background: rgba(0,0,0,0.8); }
+        .dropdown-content a {
+            color: #f1f1f1;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            display: block;
+            font-size: 1rem;
+        }
+        .dropdown-content a:hover {
+            background-color: #1da1f2;
+        }
 
         /* Overlay Menu (Mobile) */
         .menu-overlay {
@@ -193,8 +249,8 @@
             text-decoration: underline;
         }
 
-        /* Live Chat Modal */
-        #liveChatModal {
+        /* Game Modal */
+        #gameModal {
             display: none;
             position: fixed;
             top: 0; left: 0;
@@ -207,69 +263,41 @@
             padding: 1rem;
             box-sizing: border-box;
         }
-        #liveChatContent {
+        #gameContent {
             width: 90%;
-            max-width: 600px;
-            background: #111;
+            max-width: 800px;
+            background: url('https://i.postimg.cc/KkZpHNjv/background.jpg') no-repeat center center;
+            background-size: cover;
             border-radius: 0.75rem;
             padding: 1.5rem;
-            overflow-y: auto;
-            max-height: 85vh;
             box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.3);
             color: #f1f1f1;
-            display: flex;
-            flex-direction: column;
+            position: relative;
         }
-        #chatMessagesLive {
-            flex-grow: 1;
-            overflow-y: auto;
-            margin-bottom: 0.75rem;
-            border: 1px solid #444;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            background: #222;
-            color: #f1f1f1;
+        #gameCanvas {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            display: block;
+            margin: 0 auto;
+            border: 2px solid #1da1f2;
         }
-        .chat-msg-live {
-            margin: 0.3rem 0;
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.5rem;
-            max-width: 80%;
-        }
-        .chat-anonymous {
-            background: #0d95e8;
-            color: #fff;
-            align-self: flex-start;
-        }
-        .chat-self {
-            background: #333;
-            color: #fff;
-            align-self: flex-end;
-        }
-        #liveChatInput {
-            padding: 0.5rem;
-            width: calc(100% - 1rem);
-            margin-bottom: 0.75rem;
-            border-radius: 0.4rem;
-            border: 1px solid #444;
-            background: #222;
-            color: #f1f1f1;
-        }
-        #sendLiveChatBtn {
-            padding: 0.5rem;
-            background: #0d95e8;
-            color: white;
-            border: none;
-            border-radius: 0.4rem;
-            cursor: pointer;
-        }
-        #sendLiveChatBtn:hover {
-            background: #1da1f2;
-        }
-        #closeLiveChatBtn {
+        #closeGameBtn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
             width: 1.75rem;
             height: 1.75rem;
             cursor: pointer;
+        }
+        #gameScore {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
         header {
@@ -396,6 +424,8 @@
         /* Desktop Styles */
         @media (min-width: 768px) {
             .menu-btn { display: none; }
+            .menu-overlay { display: none; }
+            .desktop-nav { display: flex; }
             form {
                 max-width: 600px;
                 display: grid;
@@ -406,7 +436,7 @@
             form h2 { grid-column: span 2; }
             select, textarea, input { grid-column: span 2; }
             .announcement-btn { grid-column: span 1; max-width: none; }
-            #announcementContent, #agentContent, #leaderboardContent, #liveChatContent {
+            #announcementContent, #agentContent, #leaderboardContent, #gameContent {
                 max-width: 800px;
             }
             .leaderboard-rank { flex: 0 0 5rem; font-size: 1.2rem; }
@@ -417,7 +447,8 @@
 
         /* Mobile Styles */
         @media (max-width: 767px) {
-            .menu-btn, .live-chat-btn { display: block; }
+            .desktop-nav { display: none; }
+            .menu-btn { display: block; }
             form { max-width: 400px; padding: 1rem; }
             .menu-overlay a { font-size: 1.2rem; }
             .announcement-controls { font-size: 1.2rem; gap: 1rem; }
@@ -425,15 +456,44 @@
             .leaderboard-profile img { width: 2rem; height: 2rem; }
             .leaderboard-name a { font-size: 0.9rem; }
             .announcement-btn { padding: 0.75rem; font-size: 0.9rem; }
+            #gameCanvas { height: 300px; } /* Smaller canvas for mobile */
         }
     </style>
 </head>
 <body>
+
+    <!-- Desktop Navbar (Professional) -->
+    <nav class="desktop-nav">
+        <div class="logo">
+            <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo">
+        </div>
+        <div class="nav-links">
+            <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">Testnet</a>
+            <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">NFTs</a>
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Community</a>
+                <div class="dropdown-content">
+                    <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder</a>
+                    <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Community & Ecosystem</a>
+                    <a href="https://x.com/KiteAIChinese?t=bR1Bi5KbAeZLdozFOKqtGg&s=09" target="_blank">KiteAI Chinese</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Team</a>
+                <div class="dropdown-content">
+                    <a href="https://x.com/buidloor?t=6nD_KJzIePhdytOA3Ss-2w&s=09" target="_blank">Vikthebuilder</a>
+                    <a href="https://x.com/lei_lei0904?t=yL6KX5W6lCKf0Fnk6VAIBA&s=09" target="_blank">Lei-Lei</a>
+                    <a href="https://x.com/scottshics?t=UMpx5b2XMH1kLa2JgMyXDw&s=09" target="_blank">Scott Shi</a>
+                    <a href="https://x.com/Henryleemr?t=ZZVY_CCK88fGLRM56VkXnQ&s=09" target="_blank">Henry Lee</a>
+                    <a href="https://x.com/superamscom?t=jr23SY_GKnnNEUr5EP-6eA&s=09" target="_blank">Spring</a>
+                    <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
     <!-- Menu Button (Mobile) -->
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
-
-    <!-- Live Chat Button (Mobile) -->
-    <div class="live-chat-btn" onclick="openLiveChat()">☎️</div>
 
     <!-- Menu Overlay (Mobile) -->
     <div class="menu-overlay" id="menuOverlay">
@@ -473,18 +533,12 @@
         </div>
     </div>
 
-    <!-- Live Chat Modal -->
-    <div id="liveChatModal">
-        <div id="liveChatContent">
-            <div style="display:flex; justify-content:flex-end;">
-                <img id="closeLiveChatBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" 
-                     alt="Close" style="width:1.75rem; height:1.75rem; cursor:pointer;">
-            </div>
-            <div id="chatMessagesLive"></div>
-            <div>
-                <input type="text" id="liveChatInput" placeholder="Type your message here...">
-                <button id="sendLiveChatBtn">Send</button>
-            </div>
+    <!-- Game Modal -->
+    <div id="gameModal">
+        <div id="gameContent">
+            <img id="closeGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close">
+            <div id="gameScore">Score: 0</div>
+            <canvas id="gameCanvas" width="600" height="400"></canvas>
         </div>
     </div>
 
@@ -509,6 +563,7 @@
         <button type="button" class="announcement-btn" id="announcementBtn">📢 Announcements</button>
         <button type="button" class="announcement-btn" id="agentBtn">🤖 KiteAI Community Agent</button>
         <button type="button" class="announcement-btn" id="leaderboardBtn">📊 Leaderboard</button>
+        <button type="button" class="announcement-btn" id="gameBtn">🎮 KiteAI Game</button>
     </form>
 
     <!-- Agent Chat Modal -->
@@ -546,11 +601,6 @@
         function toggleMenu() {
             const menu = document.getElementById('menuOverlay');
             menu.classList.toggle('show');
-        }
-
-        // Live Chat toggle
-        function openLiveChat() {
-            document.getElementById('liveChatModal').style.display = 'flex';
         }
 
         // Tweets
@@ -635,69 +685,15 @@
             }
         });
 
-        // Live Chat Functionality
-        const liveChatModal = document.getElementById('liveChatModal');
-        const liveChatInput = document.getElementById('liveChatInput');
-        const sendLiveChatBtn = document.getElementById('sendLiveChatBtn');
-        const closeLiveChatBtn = document.getElementById('closeLiveChatBtn');
-        const chatMessagesLive = document.getElementById('chatMessagesLive');
-        let anonymousId = '';
-
-        function addLiveChatMessage(text, sender, isSelf = false) {
-            const div = document.createElement('div');
-            div.classList.add('chat-msg-live');
-            div.classList.add(isSelf ? 'chat-self' : 'chat-anonymous');
-            div.textContent = `${sender}: ${text}`;
-            chatMessagesLive.appendChild(div);
-            chatMessagesLive.scrollTop = chatMessagesLive.scrollHeight;
-        }
-
-        // Socket.IO setup
-        const socket = io('https://your-socket-server-url'); // Replace with your Socket.IO server URL
-        socket.on('connect', () => {
-            anonymousId = `Anonymous${Math.floor(Math.random() * 10000)}`;
-            socket.emit('setAnonymousId', anonymousId);
-            addLiveChatMessage('Connected to chat as ' + anonymousId, 'System', false);
-        });
-
-        socket.on('message', (msg) => {
-            const isSelf = msg.user === anonymousId;
-            addLiveChatMessage(msg.text, msg.user, isSelf);
-        });
-
-        sendLiveChatBtn.addEventListener('click', () => {
-            const msg = liveChatInput.value.trim();
-            if (msg) {
-                socket.emit('message', msg);
-                addLiveChatMessage(msg, anonymousId, true);
-                liveChatInput.value = '';
-            }
-        });
-
-        liveChatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                const msg = liveChatInput.value.trim();
-                if (msg) {
-                    socket.emit('message', msg);
-                    addLiveChatMessage(msg, anonymousId, true);
-                    liveChatInput.value = '';
-                }
-            }
-        });
-
-        closeLiveChatBtn.addEventListener('click', () => {
-            liveChatModal.style.display = 'none';
-        });
-
         // Leaderboard
         const leaderboardData = [
             { rank: 1, name: "Crypto_King877", url: "https://x.com/Crypto_King877?t=M_jfPjKPbHKPhMwaEfRGrg&s=09" },
-            { rank: 2, name: "ChingZhangData", url: "https://x.com/ChiZhangData?t=e6wJ7E6Zt8-cI8UrLptD1A&s=09" },
-            { rank: 3, name: "Danielnwabuisi0", url: "https://x.com/danielnwabuisi0?t=OoTOQXk8VUY6Av2zYOaCmA&s=09" },
+            { rank: 2, name: "Daniel Wabuisi0", url: "https://x.com/danielnwabuisi0?t=OoTOQXk8VUY6Av2zYOaCmA&s=09" },
+            { rank: 3, name: "Sarcastic_AU", url: "https://x.com/Sarcastic_AU?t=Z-riE0FULUeXEzxzGIPN4w&s=09" },
             { rank: 4, name: "Kartik Boy45", url: "https://x.com/Kartikboy45?t=QVk_3mX_O9gJC7jGu_daKA&s=09" },
             { rank: 5, name: "Alfian_Paddaus", url: "https://x.com/alfian_paddaus?t=kq_-SyZEIlLBGLY7tCMtIQ&s=09" },
             { rank: 6, name: "Givnix", url: "https://x.com/Givnix?t=n2lqQAvGKN8viHtMXkmh6A&s=09" },
-            { rank: 7, name: "Sarcastic_AU", url: "https://x.com/Sarcastic_AU?t=Z-riE0FULUeXEzxzGIPN4w&s=09" },
+            { rank: 7, name: "ChingZhangData", url: "https://x.com/ChiZhangData?t=VeO099Z1cQctspfpkb-iOw&s=09" },
             { rank: 8, name: "0xLaughing", url: "https://x.com/0xLaughing?t=FQQDbwwjqhPe43G6vGH6Ag&s=09" },
             { rank: 9, name: "KingTowdah", url: "https://x.com/KingTowdah?t=H3ipXL6J99FGaI7GvEm2Dw&s=09" },
             { rank: 10, name: "Spring", url: "https://x.com/superamscom?t=LPSNv40LwZ9Bi5g9fe2baA&s=09" },
@@ -821,6 +817,128 @@
             document.getElementById('leaderboardModal').style.display = 'none';
         });
 
+        // Game Logic
+        const gameModal = document.getElementById('gameModal');
+        const gameBtn = document.getElementById('gameBtn');
+        const closeGameBtn = document.getElementById('closeGameBtn');
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreDisplay = document.getElementById('gameScore');
+
+        const kiteImages = [
+            'https://i.postimg.cc/PCgB2Y1P/kite1.png',
+            'https://i.postimg.cc/Y4QTV0x8/kite2.png',
+            'https://i.postimg.cc/phZ4WS4F/kite3.png',
+            'https://i.postimg.cc/QV8v4XKk/kite4.png',
+            'https://i.postimg.cc/MX9Nghyk/kite5.png'
+        ];
+
+        let playerKite = {
+            x: 100,
+            y: 100,
+            width: 50,
+            height: 50,
+            speed: 5,
+            image: new Image()
+        };
+        playerKite.image.src = kiteImages[0];
+
+        let enemyKites = [];
+        let score = 0;
+        let isDragging = false;
+        let startX, startY;
+
+        function spawnEnemyKite() {
+            const kite = {
+                x: Math.random() * (canvas.width - 50),
+                y: Math.random() * (canvas.height - 50),
+                width: 50,
+                height: 50,
+                speed: 2,
+                image: new Image()
+            };
+            kite.image.src = kiteImages[Math.floor(Math.random() * kiteImages.length)];
+            enemyKites.push(kite);
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.offsetX;
+            startY = e.offsetY;
+        });
+        canvas.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                playerKite.x = e.offsetX - playerKite.width / 2;
+                playerKite.y = e.offsetY - playerKite.height / 2;
+            }
+        });
+        canvas.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        canvas.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startX = e.touches[0].clientX - canvas.offsetLeft;
+            startY = e.touches[0].clientY - canvas.offsetTop;
+        });
+        canvas.addEventListener('touchmove', (e) => {
+            if (isDragging) {
+                playerKite.x = e.touches[0].clientX - canvas.offsetLeft - playerKite.width / 2;
+                playerKite.y = e.touches[0].clientY - canvas.offsetTop - playerKite.height / 2;
+            }
+        });
+        canvas.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.drawImage(playerKite.image, playerKite.x, playerKite.y, playerKite.width, playerKite.height);
+
+            enemyKites.forEach((kite, index) => {
+                kite.x += kite.speed * (Math.random() - 0.5);
+                kite.y += kite.speed * (Math.random() - 0.5);
+                ctx.drawImage(kite.image, kite.x, kite.y, kite.width, kite.height);
+
+                if (
+                    playerKite.x < kite.x + kite.width &&
+                    playerKite.x + playerKite.width > kite.x &&
+                    playerKite.y < kite.y + kite.height &&
+                    playerKite.y + playerKite.height > kite.y
+                ) {
+                    enemyKites.splice(index, 1);
+                    score += 10;
+                    scoreDisplay.textContent = `Score: ${score}`;
+                }
+            });
+
+            if (Math.random() < 0.02) spawnEnemyKite();
+
+            playerKite.x = Math.max(0, Math.min(canvas.width - playerKite.width, playerKite.x));
+            playerKite.y = Math.max(0, Math.min(canvas.height - playerKite.height, playerKite.y));
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameBtn.addEventListener('click', () => {
+            gameModal.style.display = 'flex';
+            score = 0;
+            scoreDisplay.textContent = `Score: ${score}`;
+            enemyKites = [];
+            spawnEnemyKite();
+            if (!gameLoopStarted) {
+                gameLoop();
+                gameLoopStarted = true;
+            }
+        });
+
+        closeGameBtn.addEventListener('click', () => {
+            gameModal.style.display = 'none';
+        });
+
+        let gameLoopStarted = false;
+
         // Form submit confirmation
         document.getElementById('feedbackForm').addEventListener('submit', function(e){
             setTimeout(() => {
@@ -828,5 +946,6 @@
             }, 100);
         });
     </script>
+
 </body>
 </html>
