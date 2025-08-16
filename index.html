@@ -6,7 +6,6 @@
     <title>KiteAI Community Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Existing styles remain unchanged */
         * {
             margin: 0;
             padding: 0;
@@ -244,6 +243,30 @@
             outline: none;
         }
 
+        /* Games Modal */
+        #gamesModal .modal-content {
+            text-align: center;
+        }
+        .game-option {
+            display: block;
+            padding: 0.75rem 1rem;
+            margin: 0.5rem auto;
+            background: linear-gradient(45deg, #3b82f6, #2563eb);
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 300px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        .game-option:hover, .game-option:focus {
+            background: linear-gradient(45deg, #2563eb, #3b82f6);
+            transform: scale(1.05);
+            outline: none;
+        }
+
         /* Announcement Modal */
         #announcementModal .modal-content {
             background: #ffffff;
@@ -313,14 +336,15 @@
             outline: none;
         }
 
-        /* Game Modal */
-        #gameContent, #shootingGameContent {
+        /* Flipping Game Modal */
+        #gameContent {
             max-width: 600px;
         }
-        #gameTitle, #shootingGameTitle {
+        #gameTitle {
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 1rem;
+            text-align: center;
         }
         #puzzleGrid {
             display: grid;
@@ -369,17 +393,20 @@
             border-radius: 10px;
             loading: lazy;
         }
-        #gameScore, #shootingGameScore {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
+        .game-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        #gameScore {
             font-size: 1rem;
             font-weight: 500;
             background: rgba(15, 23, 42, 0.8);
             padding: 0.5rem 1rem;
             border-radius: 10px;
         }
-        #restartGameBtn, #restartShootingGameBtn {
+        #restartGameBtn {
             padding: 0.6rem 1.2rem;
             background: linear-gradient(45deg, #3b82f6, #2563eb);
             color: #fff;
@@ -389,13 +416,12 @@
             font-weight: 600;
             transition: transform 0.3s ease, background 0.3s ease;
         }
-        #restartGameBtn:hover, #restartGameBtn:focus,
-        #restartShootingGameBtn:hover, #restartShootingGameBtn:focus {
+        #restartGameBtn:hover, #restartGameBtn:focus {
             background: linear-gradient(45deg, #2563eb, #3b82f6);
             transform: scale(1.05);
             outline: none;
         }
-        #winMessage, #gameOverMessage {
+        #winMessage {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -408,7 +434,7 @@
             opacity: 0;
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
-        #winMessage.show, #gameOverMessage.show {
+        #winMessage.show {
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
         }
@@ -418,61 +444,83 @@
         }
 
         /* Shooting Game Styles */
+        #shootingGameContent {
+            max-width: 800px;
+        }
+        #shootingGameTitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
         #shootingGameCanvas {
             width: 100%;
-            max-width: 600px;
-            height: 400px;
-            background: #1e293b;
+            max-width: 800px;
+            height: 500px;
+            background: linear-gradient(180deg, #1e293b, #334155);
             border-radius: 10px;
+            border: 2px solid #3b82f6;
             position: relative;
-            cursor: none;
-            overflow: hidden;
+            cursor: crosshair;
         }
-        #gunElement {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 60px;
-            background: url('https://i.postimg.cc/LnrJcszr/gun.png') no-repeat center/contain;
-            z-index: 10;
+        .game-controls-shooting {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
         }
-        #scopeElement {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://i.postimg.cc/yDVMYmX9/scope.png') no-repeat center/contain;
-            display: none;
-            z-index: 15;
-            pointer-events: none;
-        }
-        #scopeToggleBtn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
+        #shootingGameScore {
+            font-size: 1rem;
+            font-weight: 500;
+            background: rgba(15, 23, 42, 0.8);
             padding: 0.5rem 1rem;
-            background: #3b82f6;
+            border-radius: 10px;
+        }
+        #scopeToggleBtn, #restartShootingGameBtn {
+            padding: 0.6rem 1.2rem;
+            background: linear-gradient(45deg, #3b82f6, #2563eb);
             color: #fff;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
             transition: transform 0.3s ease, background 0.3s ease;
         }
-        #scopeToggleBtn:hover, #scopeToggleBtn:focus {
-            background: #2563eb;
+        #scopeToggleBtn:hover, #scopeToggleBtn:focus,
+        #restartShootingGameBtn:hover, #restartShootingGameBtn:focus {
+            background: linear-gradient(45deg, #2563eb, #3b82f6);
             transform: scale(1.05);
             outline: none;
         }
-        .target {
+        #gameOverMessage {
             position: absolute;
-            width: 40px;
-            height: 40px;
-            background: url('https://i.postimg.cc/zyBhrQMg/target.png') no-repeat center/contain;
-            transition: transform 0.2s ease;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: rgba(15, 23, 42, 0.9);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        #gameOverMessage.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .hit-effect {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.8), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: hitFade 0.5s ease-out forwards;
+        }
+        @keyframes hitFade {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
         }
 
         /* Feedback Form */
@@ -520,7 +568,7 @@
             gap: 0.5rem;
             margin-top: 1rem;
         }
-        .form-buttons button {
+        .form-buttons button, .form-buttons .dropbtn {
             padding: 0.75rem;
             background: linear-gradient(45deg, #3b82f6, #2563eb);
             color: #fff;
@@ -529,8 +577,11 @@
             font-weight: 500;
             cursor: pointer;
             transition: transform 0.3s ease, background 0.3s ease;
+            font-size: 1rem;
+            text-align: center;
         }
-        .form-buttons button:hover, .form-buttons button:focus {
+        .form-buttons button:hover, .form-buttons button:focus,
+        .form-buttons .dropbtn:hover, .form-buttons .dropbtn:focus {
             background: linear-gradient(45deg, #2563eb, #3b82f6);
             transform: scale(1.05);
             outline: none;
@@ -705,13 +756,8 @@
             #shootingGameCanvas {
                 height: 300px;
             }
-            #gunElement {
-                width: 80px;
-                height: 48px;
-            }
-            .target {
-                width: 30px;
-                height: 30px;
+            .game-option {
+                width: 90%;
             }
         }
 
@@ -723,7 +769,7 @@
                 padding: 2rem;
             }
             #gameContent, #shootingGameContent {
-                max-width: 600px;
+                max-width: 800px;
             }
         }
     </style>
@@ -769,7 +815,7 @@
                 </div>
             </div>
             <div class="dropdown">
-                <a href="#" class="dropbtn" aria-label="Games Menu" tabindex="0">Games</a>
+                <a href="#" id="navGamesLink" class="dropbtn" aria-label="Games Menu" tabindex="0">Games</a>
                 <div class="dropdown-content">
                     <a href="#" id="flippingGameLink" aria-label="KiteAI Flipping Game">KiteAI Flipping</a>
                     <a href="#" id="shootingGameLink" aria-label="KiteAI Shooting Game">KiteAI Shooting</a>
@@ -792,10 +838,18 @@
         <a href="https://x.com/Henryleemr?t=ZZVY_CCK88fGLRM56VkXnQ&s=09" target="_blank">Henry Lee 🪁</a>
         <a href="https://x.com/superamscom?t=jr23SY_GKnnNEUr5EP-6eA&s=09" target="_blank">Spring 🪁</a>
         <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing 🪁</a>
-        <a href="#" id="sidebarFlippingGameLink">KiteAI Flipping 🪁</a>
-        <a href="#" id="sidebarShootingGameLink">KiteAI Shooting 🪁</a>
     </div>
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Games Modal -->
+    <div id="gamesModal" class="modal" role="dialog" aria-labelledby="gamesTitle">
+        <div class="modal-content">
+            <img class="modal-close" id="closeGamesBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Games" aria-label="Close Games" role="button" tabindex="0">
+            <h2 id="gamesTitle">KiteAI Games</h2>
+            <a href="#" class="game-option" id="flippingGameOption" aria-label="KiteAI Flipping Game">KiteAI Flipping</a>
+            <a href="#" class="game-option" id="shootingGameOption" aria-label="KiteAI Shooting Game">KiteAI Shooting</a>
+        </div>
+    </div>
 
     <!-- Announcement Modal -->
     <div id="announcementModal" class="modal" role="dialog" aria-labelledby="announcementTitle">
@@ -823,10 +877,12 @@
     <div id="gameModal" class="modal" role="dialog" aria-labelledby="gameTitle">
         <div id="gameContent" class="modal-content">
             <img class="modal-close" id="closeGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Game" aria-label="Close Game" role="button" tabindex="0">
-            <div id="gameScore" aria-live="polite">Level: 1 | Best Level: 1 | Time: 0s</div>
             <div id="gameTitle">KiteAI Flipping Game</div>
+            <div class="game-controls">
+                <div id="gameScore" aria-live="polite">Level: 1 | Best Level: 1 | Time: 0s</div>
+                <button id="restartGameBtn" aria-label="Restart Game">Restart</button>
+            </div>
             <div id="puzzleGrid"></div>
-            <button id="restartGameBtn" aria-label="Restart Game">Restart</button>
             <div id="winMessage" aria-live="assertive">You Won!</div>
         </div>
     </div>
@@ -835,14 +891,13 @@
     <div id="shootingGameModal" class="modal" role="dialog" aria-labelledby="shootingGameTitle">
         <div id="shootingGameContent" class="modal-content">
             <img class="modal-close" id="closeShootingGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Shooting Game" aria-label="Close Shooting Game" role="button" tabindex="0">
-            <div id="shootingGameScore" aria-live="polite">Score: 0 | Best Score: 0 | Time: 0s</div>
             <div id="shootingGameTitle">KiteAI Shooting Game</div>
-            <div id="shootingGameCanvas">
-                <div id="gunElement"></div>
-                <div id="scopeElement"></div>
+            <div class="game-controls-shooting">
+                <div id="shootingGameScore" aria-live="polite">Score: 0 | Best Score: 0 | Time: 0s</div>
+                <button id="scopeToggleBtn" aria-label="Toggle Scope">Toggle Scope</button>
+                <button id="restartShootingGameBtn" aria-label="Restart Shooting Game">Restart</button>
             </div>
-            <button id="scopeToggleBtn" aria-label="Toggle Scope">Toggle Scope</button>
-            <button id="restartShootingGameBtn" aria-label="Restart Shooting Game">Restart</button>
+            <canvas id="shootingGameCanvas"></canvas>
             <div id="gameOverMessage" aria-live="assertive">Game Over!</div>
         </div>
     </div>
@@ -864,13 +919,7 @@
             <button type="button" id="announcementBtn" aria-label="Open Announcements">📢 Announcements</button>
             <button type="button" id="agentBtn" aria-label="Open Community Agent">🤖 Community Agent</button>
             <button type="button" id="leaderboardBtn" aria-label="Open Leaderboard">📊 Leaderboard</button>
-            <div class="dropdown">
-                <button type="button" class="dropbtn" aria-label="Games Menu" tabindex="0">🎮 Games</button>
-                <div class="dropdown-content">
-                    <a href="#" id="feedbackFlippingGameLink" aria-label="KiteAI Flipping Game">KiteAI Flipping</a>
-                    <a href="#" id="feedbackShootingGameLink" aria-label="KiteAI Shooting Game">KiteAI Shooting</a>
-                </div>
-            </div>
+            <button type="button" id="gamesBtn" class="dropbtn" aria-label="Open Games">🎮 Games</button>
         </div>
     </form>
 
@@ -942,6 +991,25 @@
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), duration);
         }
+
+        // Games Modal
+        const gamesModal = document.getElementById('gamesModal');
+        const gamesBtn = document.getElementById('gamesBtn');
+        const navGamesLink = document.getElementById('navGamesLink');
+        const closeGamesBtn = document.getElementById('closeGamesBtn');
+        const flippingGameOption = document.getElementById('flippingGameOption');
+        const shootingGameOption = document.getElementById('shootingGameOption');
+
+        gamesBtn.addEventListener('click', () => {
+            gamesModal.classList.add('show');
+        });
+        navGamesLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            gamesModal.classList.add('show');
+        });
+        closeGamesBtn.addEventListener('click', () => {
+            gamesModal.classList.remove('show');
+        });
 
         // Announcement Modal
         const tweets = [
@@ -1168,9 +1236,6 @@
 
         // Flipping Game
         const gameModal = document.getElementById('gameModal');
-        const flippingGameLink = document.getElementById('flippingGameLink');
-        const sidebarFlippingGameLink = document.getElementById('sidebarFlippingGameLink');
-        const feedbackFlippingGameLink = document.getElementById('feedbackFlippingGameLink');
         const closeGameBtn = document.getElementById('closeGameBtn');
         const restartGameBtn = document.getElementById('restartGameBtn');
         const puzzleGrid = document.getElementById('puzzleGrid');
@@ -1304,17 +1369,9 @@
             }
         }
 
-        flippingGameLink.addEventListener('click', () => {
-            gameModal.classList.add('show');
-            level = 1;
-            initPuzzle();
-        });
-        sidebarFlippingGameLink.addEventListener('click', () => {
-            gameModal.classList.add('show');
-            level = 1;
-            initPuzzle();
-        });
-        feedbackFlippingGameLink.addEventListener('click', () => {
+        flippingGameOption.addEventListener('click', (e) => {
+            e.preventDefault();
+            gamesModal.classList.remove('show');
             gameModal.classList.add('show');
             level = 1;
             initPuzzle();
@@ -1330,17 +1387,13 @@
 
         // Shooting Game
         const shootingGameModal = document.getElementById('shootingGameModal');
-        const shootingGameLink = document.getElementById('shootingGameLink');
-        const sidebarShootingGameLink = document.getElementById('sidebarShootingGameLink');
-        const feedbackShootingGameLink = document.getElementById('feedbackShootingGameLink');
         const closeShootingGameBtn = document.getElementById('closeShootingGameBtn');
         const restartShootingGameBtn = document.getElementById('restartShootingGameBtn');
         const shootingGameCanvas = document.getElementById('shootingGameCanvas');
         const shootingGameScore = document.getElementById('shootingGameScore');
         const gameOverMessage = document.getElementById('gameOverMessage');
         const scopeToggleBtn = document.getElementById('scopeToggleBtn');
-        const scopeElement = document.getElementById('scopeElement');
-        const gunElement = document.getElementById('gunElement');
+        const ctx = shootingGameCanvas.getContext('2d');
 
         let score = 0;
         let bestScore = localStorage.getItem('shootingGameBestScore') || 0;
@@ -1350,6 +1403,23 @@
         let isScopeActive = false;
         let isGameOver = false;
         let gameLoop = null;
+        let gunX = 0;
+        const gunImage = new Image();
+        gunImage.src = 'https://i.postimg.cc/LnrJcszr/gun.png';
+        const scopeImage = new Image();
+        scopeImage.src = 'https://i.postimg.cc/yDVMYmX9/scope.png';
+        const targetImage = new Image();
+        targetImage.src = 'https://i.postimg.cc/zyBhrQMg/target.png';
+
+        function resizeCanvas() {
+            const parent = shootingGameCanvas.parentElement;
+            shootingGameCanvas.width = parent.clientWidth > 800 ? 800 : parent.clientWidth;
+            shootingGameCanvas.height = window.innerWidth <= 767 ? 300 : 500;
+            gunX = shootingGameCanvas.width / 2 - 50;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
         function startShootingTimer() {
             shootingTimer = 0;
@@ -1368,53 +1438,77 @@
         }
 
         function createTarget() {
-            const target = document.createElement('div');
-            target.classList.add('target');
-            const canvasRect = shootingGameCanvas.getBoundingClientRect();
-            const maxX = canvasRect.width - 40; // Target width
-            const maxY = canvasRect.height - 40 - 60; // Target height, accounting for gun height
-            const x = Math.random() * maxX;
-            const y = Math.random() * maxY;
-            target.style.left = `${x}px`;
-            target.style.top = `${y}px`;
-            target.addEventListener('click', () => hitTarget(target));
-            shootingGameCanvas.appendChild(target);
-            targets.push({ element: target, spawnTime: Date.now() });
+            const size = Math.random() * 20 + 30; // 30-50px
+            const x = Math.random() * (shootingGameCanvas.width - size);
+            const y = Math.random() * (shootingGameCanvas.height - size - 60); // Avoid gun area
+            const speed = 1 + score / 200; // Increase difficulty
+            targets.push({
+                x, y, size,
+                vx: (Math.random() - 0.5) * speed,
+                vy: (Math.random() - 0.5) * speed,
+                spawnTime: Date.now()
+            });
         }
 
-        function hitTarget(target) {
-            if (isGameOver) return;
-            playShootSound();
-            const index = targets.findIndex(t => t.element === target);
-            if (index !== -1) {
-                const spawnTime = targets[index].spawnTime;
-                const timeTaken = (Date.now() - spawnTime) / 1000;
-                let points = isScopeActive ? Math.max(10, 100 - Math.floor(timeTaken * 10)) : Math.max(5, 50 - Math.floor(timeTaken * 5));
-                score += points;
-                targets.splice(index, 1);
-                target.remove();
-                shootingGameScore.textContent = `Score: ${score} | Best Score: ${bestScore} | Time: ${shootingTimer}s`;
-                showToast(`Hit! +${points} points`, 1000);
-            }
+        function hitTarget(x, y) {
+            let hit = false;
+            targets = targets.filter(t => {
+                const dx = x - (t.x + t.size / 2);
+                const dy = y - (t.y + t.size / 2);
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < t.size / 2) {
+                    hit = true;
+                    const timeTaken = (Date.now() - t.spawnTime) / 1000;
+                    let points = isScopeActive ? Math.max(20, 150 - Math.floor(timeTaken * 15)) : Math.max(10, 75 - Math.floor(timeTaken * 10));
+                    score += points;
+                    showToast(`Hit! +${points} points`, 1000);
+                    // Add hit effect
+                    ctx.beginPath();
+                    ctx.arc(x, y, 10, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255, 0, 0, 0.8)';
+                    ctx.fill();
+                    setTimeout(() => {
+                        ctx.clearRect(x - 15, y - 15, 30, 30);
+                    }, 500);
+                    return false;
+                }
+                return true;
+            });
+            if (hit) playShootSound();
+            return hit;
         }
 
         function updateTargets() {
             const now = Date.now();
             targets = targets.filter(t => {
-                if (now - t.spawnTime > 5000) { // Targets disappear after 5 seconds
-                    t.element.remove();
-                    return false;
-                }
+                if (now - t.spawnTime > 4000) return false; // Targets disappear after 4s
+                t.x += t.vx;
+                t.y += t.vy;
+                if (t.x < 0 || t.x > shootingGameCanvas.width - t.size) t.vx *= -1;
+                if (t.y < 0 || t.y > shootingGameCanvas.height - t.size - 60) t.vy *= -1;
                 return true;
             });
-            if (targets.length < 3 && Math.random() < 0.05) { // Spawn new targets
-                createTarget();
-            }
+            if (targets.length < 4 && Math.random() < 0.1) createTarget();
+        }
+
+        function drawGame() {
+            ctx.clearRect(0, 0, shootingGameCanvas.width, shootingGameCanvas.height);
+            // Draw background
+            const gradient = ctx.createLinearGradient(0, 0, 0, shootingGameCanvas.height);
+            gradient.addColorStop(0, '#1e293b');
+            gradient.addColorStop(1, '#334155');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, shootingGameCanvas.width, shootingGameCanvas.height);
+            // Draw targets
             targets.forEach(t => {
-                const speed = 2 + score / 100; // Increase difficulty with score
-                const angle = (now / 1000) * speed;
-                t.element.style.transform = `translateY(${Math.sin(angle) * 10}px)`; // Simulate distant movement
+                ctx.drawImage(targetImage, t.x, t.y, t.size, t.size);
             });
+            // Draw gun
+            ctx.drawImage(gunImage, gunX, shootingGameCanvas.height - 60, 100, 60);
+            // Draw scope
+            if (isScopeActive && mouseX !== null && mouseY !== null) {
+                ctx.drawImage(scopeImage, mouseX - 50, mouseY - 50, 100, 100);
+            }
         }
 
         function endShootingGame() {
@@ -1430,14 +1524,17 @@
             cancelAnimationFrame(gameLoop);
         }
 
+        let mouseX = null;
+        let mouseY = null;
+
         function initShootingGame() {
-            shootingGameCanvas.innerHTML = '<div id="gunElement"></div><div id="scopeElement"></div>';
+            resizeCanvas();
             score = 0;
             shootingTimer = 0;
             targets = [];
             isGameOver = false;
             isScopeActive = false;
-            scopeElement.style.display = 'none';
+            shootingGameCanvas.style.cursor = 'crosshair';
             shootingGameCanvas.style.filter = 'none';
             gameOverMessage.classList.remove('show');
             shootingGameScore.textContent = `Score: ${score} | Best Score: ${bestScore} | Time: ${shootingTimer}s`;
@@ -1449,6 +1546,7 @@
         function gameLoopFunction() {
             if (!isGameOver) {
                 updateTargets();
+                drawGame();
                 gameLoop = requestAnimationFrame(gameLoopFunction);
             }
         }
@@ -1456,33 +1554,30 @@
         shootingGameCanvas.addEventListener('mousemove', (e) => {
             if (isGameOver) return;
             const rect = shootingGameCanvas.getBoundingClientRect();
-            const x = e.clientX - rect.left - 50; // Center gun
-            gunElement.style.left = `${Math.max(0, Math.min(rect.width - 100, x))}px`;
-            if (isScopeActive) {
-                scopeElement.style.left = `${e.clientX - rect.left - rect.width / 2}px`;
-                scopeElement.style.top = `${e.clientY - rect.top - rect.height / 2}px`;
-            }
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+            gunX = mouseX - 50;
+            gunX = Math.max(0, Math.min(shootingGameCanvas.width - 100, gunX));
+        });
+
+        shootingGameCanvas.addEventListener('click', (e) => {
+            if (isGameOver) return;
+            const rect = shootingGameCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            hitTarget(x, y);
         });
 
         scopeToggleBtn.addEventListener('click', () => {
+            if (isGameOver) return;
             isScopeActive = !isScopeActive;
-            scopeElement.style.display = isScopeActive ? 'block' : 'none';
-            shootingGameCanvas.style.cursor = isScopeActive ? 'none' : 'default';
+            shootingGameCanvas.style.cursor = isScopeActive ? 'none' : 'crosshair';
             showToast(isScopeActive ? 'Scope On' : 'Scope Off', 2000);
         });
 
-        shootingGameLink.addEventListener('click', (e) => {
+        shootingGameOption.addEventListener('click', (e) => {
             e.preventDefault();
-            shootingGameModal.classList.add('show');
-            initShootingGame();
-        });
-        sidebarShootingGameLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            shootingGameModal.classList.add('show');
-            initShootingGame();
-        });
-        feedbackShootingGameLink.addEventListener('click', (e) => {
-            e.preventDefault();
+            gamesModal.classList.remove('show');
             shootingGameModal.classList.add('show');
             initShootingGame();
         });
