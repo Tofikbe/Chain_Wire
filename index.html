@@ -3,98 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KiteAI Community Feedback</title>
+    <title>KiteAI Community Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             min-height: 100vh;
-            background: url('https://i.postimg.cc/qzpBwFQk/background.jpg') no-repeat center center fixed;
-            background-size: cover;
-            background-color: #111;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #f1f1f1;
-            text-align: center;
             overflow-x: hidden;
         }
 
-        /* Menu Button (Mobile Only) */
-        .menu-btn {
-            position: fixed;
-            top: 1rem;
-            left: 1rem;
-            font-size: 1.8rem;
-            cursor: pointer;
-            z-index: 1001;
-            background: rgba(0,0,0,0.7);
-            padding: 0.6rem 0.9rem;
-            border-radius: 0.5rem;
-            transition: transform 0.3s ease, background 0.3s ease;
-            display: none;
-        }
-        .menu-btn:hover, .menu-btn:focus { 
-            background: rgba(0,0,0,0.9); 
-            transform: scale(1.1); 
-            outline: none;
-        }
-
-        /* Desktop Navbar */
-        .desktop-nav {
+        /* Top Navbar */
+        .top-nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.8));
-            backdrop-filter: blur(12px);
-            padding: 1.2rem 2rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
-        .desktop-nav .logo img {
-            height: 3rem;
-            border-radius: 0.5rem;
+        .top-nav .logo img {
+            height: 2.5rem;
+            border-radius: 8px;
             transition: transform 0.3s ease;
-            loading: lazy;
         }
-        .desktop-nav .logo img:hover, .desktop-nav .logo img:focus { 
-            transform: scale(1.05); 
-        }
-        .desktop-nav .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 1.8rem;
-        }
-        .desktop-nav .nav-links a {
-            color: #f1f1f1;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 500;
-            transition: color 0.3s ease, transform 0.3s ease;
-            position: relative;
-        }
-        .desktop-nav .nav-links a:hover, .desktop-nav .nav-links a:focus {
-            color: #1da1f2;
+        .top-nav .logo img:hover {
             transform: scale(1.05);
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        }
+        .nav-links a:hover, .nav-links a:focus {
+            background: rgba(29, 161, 242, 0.2);
+            color: #1da1f2;
+            transform: translateY(-2px);
             outline: none;
-        }
-        .desktop-nav .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: #1da1f2;
-            transition: width 0.3s ease;
-        }
-        .desktop-nav .nav-links a:hover::after, .desktop-nav .nav-links a:focus::after {
-            width: 100%;
         }
         .dropdown {
             position: relative;
@@ -102,16 +71,16 @@
         .dropdown-content {
             display: none;
             position: absolute;
+            top: 2.5rem;
             background: rgba(0, 0, 0, 0.95);
-            min-width: 180px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-            border-radius: 0.5rem;
-            z-index: 1;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            min-width: 200px;
             padding: 0.5rem 0;
-            top: 2rem;
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 1;
             transform: translateY(-10px);
             opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
         .dropdown:hover .dropdown-content, .dropdown:focus-within .dropdown-content {
             display: block;
@@ -119,103 +88,134 @@
             transform: translateY(0);
         }
         .dropdown-content a {
-            color: #f1f1f1;
-            padding: 0.6rem 1rem;
-            text-decoration: none;
             display: block;
-            font-size: 1rem;
-            transition: background 0.3s ease;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            color: #e0e0e0;
         }
         .dropdown-content a:hover, .dropdown-content a:focus {
-            background-color: #1da1f2;
-            outline: none;
+            background: #1da1f2;
+            color: #fff;
         }
 
-        /* Overlay Menu (Mobile) */
-        .menu-overlay {
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+        .mobile-menu-btn:hover, .mobile-menu-btn:focus {
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+        }
+        .mobile-menu {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px);
             display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 999;
             opacity: 0;
-            transition: opacity 0.4s ease, transform 0.4s ease;
             transform: translateY(-20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
-        .menu-overlay.show {
+        .mobile-menu.show {
             display: flex;
             opacity: 1;
             transform: translateY(0);
         }
-        .menu-overlay a {
-            color: #f1f1f1;
-            font-size: 1.5rem;
+        .mobile-menu a {
+            color: #fff;
+            font-size: 1.2rem;
             text-decoration: none;
-            padding: 1.2rem 0;
-            width: 85%;
+            padding: 1rem;
+            width: 80%;
             text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            transition: color 0.3s ease, transform 0.3s ease;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            transition: background 0.3s ease, transform 0.3s ease;
         }
-        .menu-overlay a:hover, .menu-overlay a:focus {
-            color: #1da1f2;
-            border-bottom-color: #1da1f2;
-            transform: scale(1.05);
+        .mobile-menu a:hover, .mobile-menu a:focus {
+            background: rgba(29, 161, 242, 0.3);
+            transform: translateY(-2px);
             outline: none;
         }
 
-        /* Announcement Modal */
-        #announcementModal {
+        /* Modals */
+        .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 9999;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
             padding: 1rem;
-            box-sizing: border-box;
-            transition: opacity 0.4s ease;
             opacity: 0;
+            transition: opacity 0.4s ease;
         }
-        #announcementModal.show {
+        .modal.show {
             display: flex;
             opacity: 1;
         }
-        #announcementContent {
+        .modal-content {
+            background: #1c2526;
+            border-radius: 12px;
+            padding: 1.5rem;
             width: 90%;
-            background: #ffffff;
-            border-radius: 0.75rem;
-            padding: 2rem;
-            overflow-y: auto;
+            max-width: 600px;
             max-height: 85vh;
-            box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.5);
-            color: #000;
-            transition: transform 0.4s ease;
+            overflow-y: auto;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
             transform: scale(0.95);
+            transition: transform 0.4s ease;
         }
-        #announcementModal.show #announcementContent {
+        .modal.show .modal-content {
             transform: scale(1);
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .modal-close:hover, .modal-close:focus {
+            transform: scale(1.2);
+            outline: none;
+        }
+
+        /* Announcement Modal */
+        #announcementModal .modal-content {
+            background: #fff;
+            color: #000;
         }
         .announcement-controls {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin-top: 1.5rem;
-            font-size: 1.5rem;
+            gap: 1.5rem;
+            margin-top: 1rem;
         }
         .announcement-controls span {
+            font-size: 1.5rem;
             cursor: pointer;
             transition: color 0.3s ease, transform 0.3s ease;
         }
@@ -226,103 +226,44 @@
         }
 
         /* Leaderboard Modal */
-        #leaderboardModal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(12px);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-            box-sizing: border-box;
-            transition: opacity 0.4s ease;
-            opacity: 0;
-        }
-        #leaderboardModal.show {
-            opacity: 1;
-        }
-        #leaderboardContent {
-            width: 90%;
-            background: #111;
-            border-radius: 0.75rem;
-            padding: 2rem;
-            overflow-y: auto;
-            max-height: 85vh;
-            box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.5);
-            color: #f1f1f1;
-            transition: transform 0.4s ease;
-            transform: scale(0.95);
-        }
-        #leaderboardModal.show #leaderboardContent {
-            transform: scale(1);
-        }
         #leaderboardTable {
             width: 100%;
-            border-collapse: collapse;
         }
         .leaderboard-row {
             display: flex;
             align-items: center;
-            padding: 0.8rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             transition: background 0.3s ease;
         }
-        .leaderboard-row:nth-child(odd) {
-            background: rgba(255,255,255,0.05);
-        }
         .leaderboard-row:hover, .leaderboard-row:focus-within {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255, 255, 255, 0.1);
         }
         .leaderboard-rank {
-            flex: 0 0 4rem;
-            font-weight: bold;
-            font-size: 1.1rem;
+            flex: 0 0 3rem;
+            font-weight: 600;
+            font-size: 1rem;
             position: relative;
         }
-        .leaderboard-rank.rank-1::before {
-            content: '🥇';
-            position: absolute;
-            left: -1rem;
-        }
-        .leaderboard-rank.rank-2::before {
-            content: '🥈';
-            position: absolute;
-            left: -1rem;
-        }
-        .leaderboard-rank.rank-3::before {
-            content: '🥉';
-            position: absolute;
-            left: -1rem;
-        }
-        .leaderboard-profile {
-            flex: 0 0 3.5rem;
-            margin-right: 1rem;
-        }
+        .leaderboard-rank.rank-1::before { content: '🥇'; position: absolute; left: -1rem; }
+        .leaderboard-rank.rank-2::before { content: '🥈'; position: absolute; left: -1rem; }
+        .leaderboard-rank.rank-3::before { content: '🥉'; position: absolute; left: -1rem; }
         .leaderboard-profile img {
-            width: 3.5rem;
-            height: 3.5rem;
+            width: 2.5rem;
+            height: 2.5rem;
             border-radius: 50%;
-            object-fit: cover;
             border: 2px solid #1da1f2;
+            margin-right: 1rem;
             transition: transform 0.3s ease;
             loading: lazy;
         }
         .leaderboard-profile img:hover, .leaderboard-profile img:focus {
             transform: scale(1.1);
         }
-        .leaderboard-name {
-            flex: 1;
-            text-align: left;
-        }
         .leaderboard-name a {
             color: #1da1f2;
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: color 0.3s ease;
         }
         .leaderboard-name a:hover, .leaderboard-name a:focus {
@@ -332,55 +273,19 @@
         }
 
         /* Game Modal */
-        #gameModal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(12px);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-            box-sizing: border-box;
-            transition: opacity 0.4s ease;
-            opacity: 0;
-        }
-        #gameModal.show {
-            opacity: 1;
-        }
         #gameContent {
-            width: 90%;
-            max-width: 800px;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(12px);
-            border-radius: 0.75rem;
-            padding: 2rem;
-            box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.5);
-            color: #f1f1f1;
-            position: relative;
-            transition: transform 0.4s ease;
-            transform: scale(0.95);
-        }
-        #gameModal.show #gameContent {
-            transform: scale(1);
+            max-width: 500px;
         }
         #gameTitle {
-            text-align: center;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
         }
         #puzzleGrid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 0.8rem;
-            max-width: 600px;
-            margin: 0 auto 1rem;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
         }
         .card {
             position: relative;
@@ -388,7 +293,6 @@
             padding-top: 100%;
             cursor: pointer;
             perspective: 1000px;
-            transform-style: preserve-3d;
         }
         .card-inner {
             position: absolute;
@@ -396,7 +300,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            transition: transform 0.6s ease;
+            transition: transform 0.5s ease;
             transform-style: preserve-3d;
             will-change: transform;
         }
@@ -408,54 +312,38 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 0.5rem;
-            box-shadow: 0 0.2rem 0.5rem rgba(0,0,0,0.4);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
         .card-front {
             transform: rotateY(180deg);
         }
         .card-back {
-            background: #333;
+            background: #2c3e50;
         }
         .card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 0.5rem;
+            border-radius: 8px;
             loading: lazy;
-        }
-        #closeGameBtn {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            width: 2rem;
-            height: 2rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            loading: lazy;
-        }
-        #closeGameBtn:hover, #closeGameBtn:focus {
-            transform: scale(1.2);
-            outline: none;
         }
         #gameScore {
             position: absolute;
-            top: 0.5rem;
-            left: 0.5rem;
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #fff;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+            top: 1rem;
+            left: 1rem;
+            font-size: 1rem;
+            font-weight: 500;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
         }
         #restartGameBtn {
-            position: absolute;
-            bottom: 1rem;
-            right: 1rem;
             padding: 0.5rem 1rem;
             background: linear-gradient(45deg, #1da1f2, #0d95e8);
-            color: white;
+            color: #fff;
             border: none;
-            border-radius: 0.5rem;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             transition: transform 0.3s ease, background 0.3s ease;
@@ -470,38 +358,163 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.8);
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
-            color: #fff;
-            font-size: 2rem;
-            font-weight: 600;
+            background: rgba(0, 0, 0, 0.8);
             padding: 1rem 2rem;
-            border-radius: 0.5rem;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: 600;
             opacity: 0;
             transition: opacity 0.5s ease, transform 0.5s ease;
-            z-index: 1001;
         }
         #winMessage.show {
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
         }
         #puzzleGrid.won .card {
-            filter: blur(5px);
+            filter: blur(4px);
             transition: filter 0.5s ease;
+        }
+
+        /* Feedback Form */
+        .feedback-form {
+            background: #1c2526;
+            padding: 1.5rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+            margin: 1rem;
+            transition: transform 0.3s ease;
+        }
+        .feedback-form:hover, .feedback-form:focus-within {
+            transform: scale(1.02);
+        }
+        .feedback-form h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        select, textarea, input {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: #2c3e50;
+            color: #fff;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        select:focus, textarea:focus, input:focus {
+            border-color: #1da1f2;
+            box-shadow: 0 0 8px rgba(29, 161, 242, 0.3);
+            outline: none;
+        }
+        select option {
+            background: #2c3e50;
+            color: #fff;
+        }
+        .form-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .form-buttons button {
+            padding: 0.75rem;
+            background: linear-gradient(45deg, #1da1f2, #0d95e8);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        .form-buttons button:hover, .form-buttons button:focus {
+            background: linear-gradient(45deg, #0d95e8, #1da1f2);
+            transform: scale(1.05);
+            outline: none;
+        }
+        .form-buttons button:disabled {
+            background: #4a4a4a;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Agent Chat Modal */
+        #agentContent {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        #chatMessages {
+            flex-grow: 1;
+            background: #2c3e50;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-y: auto;
+            max-height: 50vh;
+        }
+        .chat-msg {
+            margin: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+        .chat-agent {
+            background: #1da1f2;
+            color: #fff;
+            align-self: flex-start;
+        }
+        .chat-user {
+            background: #34495e;
+            color: #fff;
+            align-self: flex-end;
+        }
+        #preQuestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .question-btn {
+            padding: 0.5rem 1rem;
+            background: #1da1f2;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        .question-btn:hover, .question-btn:focus {
+            background: #0d95e8;
+            transform: scale(1.05);
+            outline: none;
+        }
+        #userInput {
+            background: #2c3e50;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        #sendBtn {
+            background: #1da1f2;
+        }
+        #sendBtn:hover, #sendBtn:focus {
+            background: #0d95e8;
         }
 
         /* Toast Notification */
         .toast {
             position: fixed;
-            bottom: 2rem;
+            bottom: 1rem;
             left: 50%;
             transform: translateX(-50%) scale(0.95);
             background: #1da1f2;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 0.3rem 1rem rgba(0,0,0,0.4);
-            z-index: 10001;
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
             opacity: 0;
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
@@ -510,225 +523,31 @@
             transform: translateX(-50%) scale(1);
         }
 
-        header {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-        }
-        header img {
-            height: 4.5rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 0.3rem 1rem rgba(0,0,0,0.4);
-            transition: transform 0.3s ease;
-            loading: lazy;
-        }
-        header img:hover, header img:focus {
-            transform: scale(1.05);
-        }
-
-        form {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 2rem;
-            border-radius: 1rem;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.6);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: transform 0.3s ease;
-        }
-        form:hover, form:focus-within {
-            transform: scale(1.02);
-        }
-        form h2 {
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-            font-weight: 600;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
-        }
-        select, textarea, input {
-            width: 100%;
-            padding: 0.9rem;
-            margin: 0.6rem 0;
-            border-radius: 0.5rem;
-            border: 1px solid transparent;
-            font-size: 1rem;
-            box-sizing: border-box;
-            background: rgba(255,255,255,0.2);
-            color: #fff;
-            transition: border 0.3s ease, box-shadow 0.3s ease;
-        }
-        select:focus, textarea:focus, input:focus {
-            border: 1px solid #1da1f2;
-            box-shadow: 0 0 0.3rem #1da1f2;
-            outline: none;
-        }
-        select option {
-            color: #000;
-        }
-        button {
-            background: linear-gradient(45deg, #1da1f2, #0d95e8);
-            color: white;
-            padding: 0.9rem 1.8rem;
-            border: none;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            font-weight: 600;
-            transition: transform 0.3s ease, background 0.3s ease;
-        }
-        button:hover, button:focus {
-            background: linear-gradient(45deg, #0d95e8, #1da1f2);
-            transform: scale(1.05);
-            outline: none;
-        }
-        button:disabled {
-            background: #666;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .announcement-btn {
-            margin-top: 1rem;
-            width: 100%;
-            max-width: 15rem;
-        }
-
-        /* Agent Chat Modal */
-        #agentModal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(12px);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.4s ease;
-            opacity: 0;
-        }
-        #agentModal.show {
-            opacity: 1;
-        }
-        #agentContent {
-            background: #111;
-            color: #f1f1f1;
-            width: 90%;
-            border-radius: 0.75rem;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            max-height: 85vh;
-            overflow-y: auto;
-            box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.5);
-            transition: transform 0.4s ease;
-            transform: scale(0.95);
-        }
-        #agentModal.show #agentContent {
-            transform: scale(1);
-        }
-        #chatMessages {
-            flex-grow: 1;
-            overflow-y: auto;
-            margin-bottom: 1rem;
-            border: 1px solid #444;
-            padding: 0.8rem;
-            border-radius: 0.5rem;
-            background: #222;
-            color: #f1f1f1;
-        }
-        .chat-msg {
-            margin: 0.4rem 0;
-            padding: 0.6rem 1rem;
-            border-radius: 0.5rem;
-            max-width: 85%;
-        }
-        .chat-agent {
-            background: #0d95e8;
-            color: #fff;
-            align-self: flex-start;
-        }
-        .chat-user {
-            background: #333;
-            color: #fff;
-            align-self: flex-end;
-        }
-
-        .question-btn {
-            margin: 0.3rem;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 0.5rem;
-            background: #0d95e8;
-            color: white;
-            cursor: pointer;
-            transition: transform 0.3s ease, background 0.3s ease;
-        }
-        .question-btn:hover, .question-btn:focus {
-            background: #1da1f2;
-            transform: scale(1.05);
-            outline: none;
-        }
-
-        #userInput {
-            padding: 0.6rem;
-            width: calc(100% - 1.2rem);
-            margin-bottom: 1rem;
-            border-radius: 0.5rem;
-            border: 1px solid #444;
-            background: #222;
-            color: #f1f1f1;
-            transition: border 0.3s ease, box-shadow 0.3s ease;
-        }
-        #userInput:focus {
-            border: 1px solid #1da1f2;
-            box-shadow: 0 0 0.3rem #1da1f2;
-            outline: none;
-        }
-        #sendBtn {
-            padding: 0.6rem;
-            background: #0d95e8;
-            color: white;
-            border: none;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: transform 0.3s ease, background 0.3s ease;
-        }
-        #sendBtn:hover, #sendBtn:focus {
-            background: #1da1f2;
-            transform: scale(1.05);
-            outline: none;
-        }
-
+        /* Footer */
         footer {
             position: fixed;
             bottom: 0.5rem;
             width: 100%;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #f1f1f1;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-            background: rgba(0,0,0,0.8);
-            padding: 0.4rem;
-            border-radius: 0.5rem;
-            z-index: 10;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 0.5rem;
+            font-size: 0.85rem;
+            color: #e0e0e0;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 0.5rem;
+            border-radius: 8px;
+            z-index: 10;
         }
         footer img {
-            height: 1.5rem;
-            vertical-align: middle;
+            height: 1.2rem;
+            border-radius: 4px;
             loading: lazy;
         }
         footer a {
             color: #1da1f2;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
             transition: color 0.3s ease;
         }
         footer a:hover, footer a:focus {
@@ -736,113 +555,70 @@
             outline: none;
         }
 
-        /* Desktop Styles */
-        @media (min-width: 768px) {
-            .menu-btn {
+        /* Mobile Styles */
+        @media (max-width: 767px) {
+            .top-nav .nav-links {
                 display: none;
             }
-            .menu-overlay {
-                display: none;
+            .mobile-menu-btn {
+                display: block;
             }
-            .desktop-nav {
-                display: flex;
+            .feedback-form {
+                padding: 1rem;
+                max-width: 90%;
             }
-            form {
-                max-width: 600px;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 1.2rem;
-                padding: 2.5rem;
+            .form-buttons {
+                grid-template-columns: 1fr;
             }
-            form h2 {
-                grid-column: span 2;
-            }
-            select, textarea, input {
-                grid-column: span 2;
-            }
-            .announcement-btn {
-                grid-column: span 1;
-                max-width: none;
-            }
-            #announcementContent, #agentContent, #leaderboardContent, #gameContent {
-                max-width: 800px;
-            }
-            .leaderboard-rank {
-                flex: 0 0 5rem;
-                font-size: 1.2rem;
-            }
-            .leaderboard-profile img {
-                width: 3.5rem;
-                height: 3.5rem;
-            }
-            .leaderboard-name a {
-                font-size: 1.2rem;
-            }
-            header img {
-                height: 5rem;
+            .modal-content {
+                padding: 1rem;
             }
             #puzzleGrid {
-                max-width: 600px;
+                gap: 0.3rem;
+            }
+            #gameTitle {
+                font-size: 1.2rem;
+            }
+            #gameScore {
+                font-size: 0.9rem;
+                padding: 0.3rem 0.6rem;
+            }
+            #winMessage {
+                font-size: 1.2rem;
+                padding: 0.75rem 1.5rem;
+            }
+            .leaderboard-profile img {
+                width: 2rem;
+                height: 2rem;
+            }
+            .leaderboard-rank {
+                font-size: 0.9rem;
+                flex: 0 0 2.5rem;
+            }
+            .leaderboard-name a {
+                font-size: 0.9rem;
             }
         }
 
-        /* Mobile Styles */
-        @media (max-width: 767px) {
-            .desktop-nav {
+        @media (min-width: 768px) {
+            .mobile-menu-btn, .mobile-menu {
                 display: none;
             }
-            .menu-btn {
-                display: block;
+            .feedback-form {
+                padding: 2rem;
             }
-            form {
-                max-width: 400px;
-                padding: 1.5rem;
-            }
-            .menu-overlay a {
-                font-size: 1.3rem;
-            }
-            .announcement-controls {
-                font-size: 1.3rem;
-                gap: 1.2rem;
-            }
-            .leaderboard-rank {
-                font-size: 1rem;
-                flex: 0 0 3rem;
-            }
-            .leaderboard-profile img {
-                width: 2.5rem;
-                height: 2.5rem;
-            }
-            .leaderboard-name a {
-                font-size: 1rem;
-            }
-            .announcement-btn {
-                padding: 0.8rem;
-                font-size: 1rem;
-            }
-            #puzzleGrid {
-                max-width: 400px;
-                gap: 0.5rem;
-            }
-            #gameTitle {
-                font-size: 1.5rem;
-            }
-            #gameScore {
-                font-size: 1rem;
-            }
-            #winMessage {
-                font-size: 1.5rem;
-                padding: 0.8rem 1.5rem;
+            #gameContent {
+                max-width: 600px;
             }
         }
     </style>
 </head>
 <body>
     <!-- Click Sound -->
-    <audio id="clickSound" src="https://www.soundjay.com/buttons/button-09.mp3" preload="auto"></audio>
+    <audio id="clickSound" src="https://cdn.pixabay.com/audio/2022/03/10/audio_5b3d3b4213.mp3" preload="auto"></audio>
 
-    <!-- Desktop Navbar -->
-    <nav class="desktop-nav">
+    <!-- Top Navbar -->
+    <nav class="top-nav">
         <div class="logo">
             <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo" aria-label="KiteAI Logo">
         </div>
@@ -869,54 +645,50 @@
                 </div>
             </div>
         </div>
+        <button class="mobile-menu-btn" aria-label="Toggle Menu" tabindex="0">☰</button>
     </nav>
 
-    <!-- Menu Button (Mobile) -->
-    <div class="menu-btn" onclick="toggleMenu()" aria-label="Toggle Menu" tabindex="0">☰</div>
-
-    <!-- Menu Overlay (Mobile) -->
-    <div class="menu-overlay" id="menuOverlay">
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
         <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
-        <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">Fly The Kite NFT🪁</a>
-        <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder🪁</a>
-        <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Kite: Community & Ecosystem🪁</a>
-        <a href="https://x.com/KiteAIChinese?t=bR1Bi5KbAeZLdozFOKqtGg&s=09" target="_blank">KiteAIChinese🪁</a>
-        <a href="https://x.com/buidloor?t=6nD_KJzIePhdytOA3Ss-2w&s=09" target="_blank">Vikthebuilder🪁</a>
-        <a href="https://x.com/lei_lei0904?t=yL6KX5W6lCKf0Fnk6VAIBA&s=09" target="_blank">Lei-Lei🪁</a>
-        <a href="https://x.com/scottshics?t=UMpx5b2XMH1kLa2JgMyXDw&s=09" target="_blank">Scott Shi🪁</a>
-        <a href="https://x.com/Henryleemr?t=ZZVY_CCK88fGLRM56VkXnQ&s=09" target="_blank">Henry Lee🪁</a>
-        <a href="https://x.com/superamscom?t=jr23SY_GKnnNEUr5EP-6eA&s=09" target="_blank">Spring🪁</a>
-        <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing🪁</a>
+        <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">Fly The Kite NFT 🪁</a>
+        <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder 🪁</a>
+        <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Community & Ecosystem 🪁</a>
+        <a href="https://x.com/KiteAIChinese?t=bR1Bi5KbAeZLdozFOKqtGg&s=09" target="_blank">KiteAI Chinese 🪁</a>
+        <a href="https://x.com/buidloor?t=6nD_KJzIePhdytOA3Ss-2w&s=09" target="_blank">Vikthebuilder 🪁</a>
+        <a href="https://x.com/lei_lei0904?t=yL6KX5W6lCKf0Fnk6VAIBA&s=09" target="_blank">Lei-Lei 🪁</a>
+        <a href="https://x.com/scottshics?t=UMpx5b2XMH1kLa2JgMyXDw&s=09" target="_blank">Scott Shi 🪁</a>
+        <a href="https://x.com/Henryleemr?t=ZZVY_CCK88fGLRM56VkXnQ&s=09" target="_blank">Henry Lee 🪁</a>
+        <a href="https://x.com/superamscom?t=jr23SY_GKnnNEUr5EP-6eA&s=09" target="_blank">Spring 🪁</a>
+        <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing 🪁</a>
     </div>
 
     <!-- Announcement Modal -->
-    <div id="announcementModal" role="dialog" aria-labelledby="announcementTitle">
-        <div id="announcementContent">
+    <div id="announcementModal" class="modal" role="dialog" aria-labelledby="announcementTitle">
+        <div class="modal-content">
+            <img class="modal-close" id="closeAnnouncementBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Announcements" aria-label="Close Announcements" role="button" tabindex="0">
             <h2 id="announcementTitle" style="display: none;">Announcements</h2>
             <div id="tweetContainer" style="text-align: center;"></div>
             <div class="announcement-controls">
                 <span id="prevBtn" aria-label="Previous Tweet" role="button" tabindex="0">⇚</span>
-                <span id="closeBtn" aria-label="Close Announcements" role="button" tabindex="0">❌</span>
                 <span id="nextBtn" aria-label="Next Tweet" role="button" tabindex="0">⇛</span>
             </div>
         </div>
     </div>
 
     <!-- Leaderboard Modal -->
-    <div id="leaderboardModal" role="dialog" aria-labelledby="leaderboardTitle">
-        <div id="leaderboardContent">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <h2 id="leaderboardTitle" style="margin: 0; font-size: 1.8rem; font-weight: 600;">Leaderboard</h2>
-                <img id="closeLeaderboardBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Leaderboard" style="width: 2rem; height: 2rem; cursor: pointer;" aria-label="Close Leaderboard" role="button" tabindex="0">
-            </div>
+    <div id="leaderboardModal" class="modal" role="dialog" aria-labelledby="leaderboardTitle">
+        <div class="modal-content">
+            <img class="modal-close" id="closeLeaderboardBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Leaderboard" aria-label="Close Leaderboard" role="button" tabindex="0">
+            <h2 id="leaderboardTitle">Leaderboard</h2>
             <div id="leaderboardTable"></div>
         </div>
     </div>
 
     <!-- Game Modal -->
-    <div id="gameModal" role="dialog" aria-labelledby="gameTitle">
-        <div id="gameContent">
-            <img id="closeGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Game" aria-label="Close Game" role="button" tabindex="0">
+    <div id="gameModal" class="modal" role="dialog" aria-labelledby="gameTitle">
+        <div id="gameContent" class="modal-content">
+            <img class="modal-close" id="closeGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Game" aria-label="Close Game" role="button" tabindex="0">
             <div id="gameScore" aria-live="polite">Level: 1 | Best Level: 1 | Time: 0s</div>
             <div id="gameTitle">Kite Flipping Game</div>
             <div id="puzzleGrid"></div>
@@ -925,13 +697,8 @@
         </div>
     </div>
 
-    <!-- Logo -->
-    <header>
-        <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo" aria-label="KiteAI Logo">
-    </header>
-
     <!-- Feedback Form -->
-    <form id="feedbackForm" action="https://formspree.io/f/xzzvwrap" method="POST">
+    <form id="feedbackForm" class="feedback-form" action="https://formspree.io/f/xzzvwrap" method="POST">
         <h2>Community Feedback</h2>
         <select name="category" required aria-label="Select Feedback Category">
             <option value="">Select Category</option>
@@ -940,43 +707,42 @@
             <option value="Event or Campaign">Event / Campaign</option>
             <option value="Coming Soon" disabled>Coming Soon</option>
         </select>
-        <textarea name="message" rows="5" placeholder="Describe your feedback or issue..." required aria-label="Feedback Message"></textarea>
+        <textarea name="message" rows="4" placeholder="Describe your feedback or issue..." required aria-label="Feedback Message"></textarea>
         <input type="email" name="email" placeholder="Your Email (e.g., example@domain.com)" required aria-label="Your Email">
         <button type="submit" id="submitBtn" aria-label="Submit Feedback">Send Feedback</button>
-        <button type="button" class="announcement-btn" id="announcementBtn" title="View latest announcements" aria-label="Open Announcements">📢 Announcements</button>
-        <button type="button" class="announcement-btn" id="agentBtn" title="Chat with KiteAI Community Agent" aria-label="Open Community Agent">🤖 KiteAI Community Agent</button>
-        <button type="button" class="announcement-btn" id="leaderboardBtn" title="View community leaderboard" aria-label="Open Leaderboard">📊 Leaderboard</button>
-        <button type="button" class="announcement-btn" id="gameBtn" title="Play KiteAI Game" aria-label="Open KiteAI Game">🎮 KiteAI Game</button>
+        <div class="form-buttons">
+            <button type="button" id="announcementBtn" aria-label="Open Announcements">📢 Announcements</button>
+            <button type="button" id="agentBtn" aria-label="Open Community Agent">🤖 Community Agent</button>
+            <button type="button" id="leaderboardBtn" aria-label="Open Leaderboard">📊 Leaderboard</button>
+            <button type="button" id="gameBtn" aria-label="Open KiteAI Game">🎮 KiteAI Game</button>
+        </div>
     </form>
 
     <!-- Agent Chat Modal -->
-    <div id="agentModal" role="dialog" aria-labelledby="agentTitle">
-        <div id="agentContent">
-            <div style="display: flex; justify-content: flex-end;">
-                <img id="closeAgentBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Chat" style="width: 2rem; height: 2rem; cursor: pointer;" aria-label="Close Chat" role="button" tabindex="0">
-            </div>
+    <div id="agentModal" class="modal" role="dialog" aria-labelledby="agentTitle">
+        <div id="agentContent" class="modal-content">
+            <img class="modal-close" id="closeAgentBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Chat" aria-label="Close Chat" role="button" tabindex="0">
             <h2 id="agentTitle" style="display: none;">Community Agent</h2>
             <div id="chatMessages" aria-live="polite"></div>
-            <div>
-                <div id="preQuestions" style="margin-bottom: 1rem;">
-                    <button class="question-btn" aria-label="How to use KiteAI">How can I use KiteAI?</button>
-                    <button class="question-btn" aria-label="What are KiteAI NFTs">What are KiteAI NFTs?</button>
-                    <button class="question-btn" aria-label="Join KiteAI community">How to join KiteAI community?</button>
-                    <button class="question-btn" aria-label="Report an issue">How to report an issue?</button>
-                    <button class="question-btn" aria-label="Upcoming events">Upcoming events in KiteAI?</button>
-                </div>
-                <input type="text" id="userInput" placeholder="Type your question here..." aria-label="Type your question">
-                <button id="sendBtn" aria-label="Send Message">Send</button>
+            <div id="preQuestions">
+                <button class="question-btn" aria-label="How to use KiteAI">How can I use KiteAI?</button>
+                <button class="question-btn" aria-label="What are KiteAI NFTs">What are KiteAI NFTs?</button>
+                <button class="question-btn" aria-label="Join KiteAI community">How to join KiteAI community?</button>
+                <button class="question-btn" aria-label="Report an issue">How to report an issue?</button>
+                <button class="question-btn" aria-label="Upcoming events">Upcoming events in KiteAI?</button>
             </div>
+            <input type="text" id="userInput" placeholder="Type your question here..." aria-label="Type your question">
+            <button id="sendBtn" aria-label="Send Message">Send</button>
         </div>
     </div>
 
     <!-- Toast Notification -->
     <div id="toast" class="toast" role="alert" aria-live="assertive"></div>
 
+    <!-- Footer -->
     <footer>
         <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo">
-        Made for the KiteAI Community · Follow 
+        Made for KiteAI · Follow 
         <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank" aria-label="Follow Crypto_King877">@Crypto_King877</a> 
         & 
         <a href="https://x.com/GoKiteAI?t=fzEmGeci_aCKBgJRAYEwsA&s=09" target="_blank" aria-label="Follow GoKiteAI">@GoKiteAI</a>
@@ -991,22 +757,17 @@
             clickSound.play().catch(() => {});
         }
 
-        // Add click sound to interactive elements
-        document.querySelectorAll('button, a, .card, .menu-btn, .announcement-controls span, #closeGameBtn, #closeLeaderboardBtn, #closeAgentBtn').forEach(el => {
+        document.querySelectorAll('button, a, .card, .mobile-menu-btn, .announcement-controls span, .modal-close').forEach(el => {
             el.addEventListener('click', playClickSound);
             el.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    playClickSound();
-                }
+                if (e.key === 'Enter' || e.key === ' ') playClickSound();
             });
         });
 
-        // Menu toggle (Mobile)
-        function toggleMenu() {
-            const menu = document.getElementById('menuOverlay');
-            menu.classList.toggle('show');
-            playClickSound();
-        }
+        // Mobile Menu
+        document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('show');
+        });
 
         // Toast Notification
         function showToast(message, duration = 4000) {
@@ -1016,7 +777,7 @@
             setTimeout(() => toast.classList.remove('show'), duration);
         }
 
-        // Tweets
+        // Announcement Modal
         const tweets = [
             "https://x.com/GoKiteAI/status/1951245795216200146",
             "https://x.com/GoKiteAI/status/1955919782785503588",
@@ -1041,12 +802,10 @@
         }
 
         document.getElementById("announcementBtn").addEventListener("click", () => {
-            document.getElementById("announcementModal").style.display = "flex";
             document.getElementById("announcementModal").classList.add("show");
             loadTweet(currentTweet);
         });
-        document.getElementById("closeBtn").addEventListener("click", () => {
-            document.getElementById("announcementModal").style.display = "none";
+        document.getElementById("closeAnnouncementBtn").addEventListener("click", () => {
             document.getElementById("announcementModal").classList.remove("show");
         });
         document.getElementById("prevBtn").addEventListener("click", () => {
@@ -1058,7 +817,7 @@
             loadTweet(currentTweet);
         });
 
-        // KiteAI Community Agent
+        // Agent Chat
         const agentModal = document.getElementById('agentModal');
         const agentBtn = document.getElementById('agentBtn');
         const chatMessages = document.getElementById('chatMessages');
@@ -1067,11 +826,11 @@
         const closeAgentBtn = document.getElementById('closeAgentBtn');
 
         const answers = {
-            "how can i use kiteai?": "You can use KiteAI by joining our community and trying out the Testnet features.",
-            "what are kiteai nfts?": "KiteAI NFTs are unique digital collectibles that represent community membership and rewards.",
-            "how to join kiteai community?": "Join our community through our social channels and participate in discussions and events.",
-            "how to report an issue?": "Report issues via our Feedback form or reach out through official channels for quick support.",
-            "upcoming events in kiteai?": "Check our official social media channels for the latest events and campaigns."
+            "how can i use kiteai?": "Join the KiteAI Testnet at testnet.gokite.ai and explore community features!",
+            "what are kiteai nfts?": "KiteAI NFTs are digital collectibles on OpenSea, offering exclusive community perks.",
+            "how to join kiteai community?": "Follow @GoKiteAI and @Kite_Frens_Eco on X to join our vibrant community!",
+            "how to report an issue?": "Use the feedback form or DM @GoKiteAI on X for quick support.",
+            "upcoming events in kiteai?": "Stay tuned to @GoKiteAI on X for the latest events and campaigns!"
         };
 
         function addMessage(text, sender) {
@@ -1083,39 +842,31 @@
         }
 
         agentBtn.addEventListener('click', () => {
-            agentModal.style.display = 'flex';
             agentModal.classList.add('show');
             userInput.focus();
         });
         closeAgentBtn.addEventListener('click', () => {
-            agentModal.style.display = 'none';
             agentModal.classList.remove('show');
         });
-
         document.querySelectorAll('.question-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const q = btn.textContent;
                 addMessage(q, 'user');
-                addMessage(answers[q.toLowerCase()] || "Thanks! We'll get back to you soon.", 'agent');
+                addMessage(answers[q.toLowerCase()] || "Thanks! We'll respond soon.", 'agent');
             });
         });
-
         sendBtn.addEventListener('click', () => {
             const q = userInput.value.trim();
             if (q) {
                 addMessage(q, 'user');
-                const reply = answers[q.toLowerCase()] || "Thanks! We'll get back to you soon.";
-                addMessage(reply, 'agent');
+                addMessage(answers[q.toLowerCase()] || "Thanks! We'll respond soon.", 'agent');
                 userInput.value = '';
             } else {
                 showToast('Please enter a question!', 3000);
             }
         });
-
         userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendBtn.click();
-            }
+            if (e.key === 'Enter') sendBtn.click();
         });
 
         // Leaderboard
@@ -1123,13 +874,6 @@
             { rank: 1, name: "Crypto_King877", url: "https://x.com/Crypto_King877?t=M_jfPjKPbHKPhMwaEfRGrg&s=09" },
             { rank: 2, name: "Daniel Wabuisi0", url: "https://x.com/danielnwabuisi0?t=OoTOQXk8VUY6Av2zYOaCmA&s=09" },
             { rank: 3, name: "Sarcastic_AU", url: "https://x.com/Sarcastic_AU?t=Z-riE0FULUeXEzxzGIPN4w&s=09" },
-            { rank: 4, name: "Kartik Boy45", url: "https://x.com/Kartikboy45?t=QVk_3mX_O9gJC7jGu_daKA&s=09" },
-            { rank: 5, name: "Alfian_Paddaus", url: "https://x.com/alfian_paddaus?t=kq_-SyZEIlLBGLY7tCMtIQ&s=09" },
-            { rank: 6, name: "Givnix", url: "https://x.com/Givnix?t=n2lqQAvGKN8viHtMXkmh6A&s=09" },
-            { rank: 7, name: "ChingZhangData", url: "https://x.com/ChiZhangData?t=VeO099Z1cQctspfpkb-iOw&s=09" },
-            { rank: 8, name: "0xLaughing", url: "https://x.com/0xLaughing?t=FQQDbwwjqhPe43G6vGH6Ag&s=09" },
-            { rank: 9, name: "KingTowdah", url: "https://x.com/KingTowdah?t=H3ipXL6J99FGaI7GvEm2Dw&s=09" },
-            { rank: 10, name: "Spring", url: "https://x.com/superamscom?t=LPSNv40LwZ9Bi5g9fe2baA&s=09" },
             // ... (rest of the leaderboard data remains unchanged)
         ];
 
@@ -1153,17 +897,14 @@
         }
 
         document.getElementById('leaderboardBtn').addEventListener('click', () => {
-            document.getElementById('leaderboardModal').style.display = 'flex';
             document.getElementById('leaderboardModal').classList.add('show');
             loadLeaderboard();
         });
-
         document.getElementById('closeLeaderboardBtn').addEventListener('click', () => {
-            document.getElementById('leaderboardModal').style.display = 'none';
             document.getElementById('leaderboardModal').classList.remove('show');
         });
 
-        // Puzzle Game Logic
+        // Puzzle Game
         const gameModal = document.getElementById('gameModal');
         const gameBtn = document.getElementById('gameBtn');
         const closeGameBtn = document.getElementById('closeGameBtn');
@@ -1238,9 +979,7 @@
             card.addEventListener('touchstart', handleCardClick, { passive: false });
             card.tabIndex = 0;
             card.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    handleCardClick(e);
-                }
+                if (e.key === 'Enter' || e.key === ' ') handleCardClick(e);
             });
             return card;
         }
@@ -1265,11 +1004,9 @@
             if (isProcessing) return;
             const card = e.target.closest('.card');
             if (!card || card.classList.contains('flipped') || flippedCards.length >= 3 || puzzleGrid.classList.contains('won')) return;
-
             card.classList.add('flipped');
             flippedCards.push(card);
             playClickSound();
-
             if (flippedCards.length === 3) {
                 isProcessing = true;
                 checkMatch();
@@ -1292,38 +1029,32 @@
                         bestLevel = level;
                         localStorage.setItem('puzzleGameBestLevel', bestLevel);
                     }
-                    setTimeout(() => {
-                        initPuzzle();
-                    }, 2000);
+                    setTimeout(() => initPuzzle(), 2000);
                 }
             } else {
                 setTimeout(() => {
                     flippedCards.forEach(card => card.classList.remove('flipped'));
                     flippedCards = [];
                     isProcessing = false;
-                }, 800 - (level - 1) * 80);
+                }, 700 - (level - 1) * 70);
             }
         }
 
         gameBtn.addEventListener('click', () => {
-            document.getElementById('gameModal').style.display = 'flex';
-            document.getElementById('gameModal').classList.add('show');
+            gameModal.classList.add('show');
             level = 1;
             initPuzzle();
         });
-
         closeGameBtn.addEventListener('click', () => {
-            document.getElementById('gameModal').style.display = 'none';
-            document.getElementById('gameModal').classList.remove('show');
+            gameModal.classList.remove('show');
             stopTimer();
         });
-
         restartGameBtn.addEventListener('click', () => {
             level = 1;
             initPuzzle();
         });
 
-        // Form submit handling
+        // Form Handling
         document.getElementById('feedbackForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const submitBtn = document.getElementById('submitBtn');
@@ -1363,14 +1094,10 @@
             });
         });
 
-        // Real-time form validation
+        // Real-time Form Validation
         document.querySelectorAll('#feedbackForm input, #feedbackForm textarea, #feedbackForm select').forEach(input => {
             input.addEventListener('input', () => {
-                if (input.value.trim()) {
-                    input.style.borderColor = '#1da1f2';
-                } else {
-                    input.style.borderColor = 'transparent';
-                }
+                input.style.borderColor = input.value.trim() ? '#1da1f2' : 'rgba(255, 255, 255, 0.2)';
             });
         });
     </script>
