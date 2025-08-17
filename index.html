@@ -1400,7 +1400,7 @@
             { rank: 68, name: "UgwuezeChijioke", url: "https://x.com/UgwuezeChijioke?t=bhbJBesu75JGSr5dCK4BRA&s=09" },
             { rank: 69, name: "GabrielN2H", url: "https://x.com/GabrielN2H?t=AXB1aQqma3wh6EvmtR49Kw&s=09" },
             { rank: 70, name: "Abdullahi", url: "https://x.com/suremethod007?t=dEBI5Ssg1_CuZQAETxa0Bw&s=09" },
-             { rank: 71, name: "Eslam", url: "https://x.com/Eslam57795041?t=qsMOnGLUFg-le4BCjI8ojw&s=09" },
+            { rank: 71, name: "Eslam", url: "https://x.com/Eslam57795041?t=qsMOnGLUFg-le4BCjI8ojw&s=09" },
             { rank: 72, name: "HIB_BTC", url: "https://x.com/HIB_BTC?t=jZvpH-ykugZGVy0L0uTEew&s=09" },
             { rank: 73, name: "Darcy", url: "https://x.com/BitBull2003?t=JDpEudCB_UWJVTBiQamaYA&s=09" },
             { rank: 74, name: "HVBlumNews", url: "https://x.com/HVBlumnews?t=C7tyoBrMk01O5dqTc30MbQ&s=09" },
@@ -1859,7 +1859,8 @@
                 username: generateGuestUsername(),
                 balance: 10000,
                 kiteBalance: 0,
-                orderHistory: []
+                orderHistory: [],
+                position: null
             };
             localStorage.setItem('tradingGuestUser', JSON.stringify(currentUser));
             tradingLoginModal.classList.remove('show');
@@ -1902,7 +1903,8 @@
                 password,
                 balance: 10000,
                 kiteBalance: 0,
-                orderHistory: []
+                orderHistory: [],
+                position: null
             };
             localStorage.setItem('tradingUser_' + username, JSON.stringify(currentUser));
             tradingLoginModal.classList.remove('show');
@@ -1926,85 +1928,247 @@
         const tradePrice = document.getElementById('tradePrice');
         const ordersTable = document.getElementById('ordersTable');
         const currentPriceDisplay = document.getElementById('currentPrice');
+        const ohlcDisplay = document.getElementById('ohlcDisplay');
+        const orderBook = document.getElementById('orderBook');
+        const tradeHistory = document.getElementById('tradeHistory');
+        const marginTypeSelect = document.getElementById('marginTypeSelect');
+        const positionSize = document.getElementById('positionSize');
+        const positionInfo = document.getElementById('positionInfo');
 
         let chart = null;
         let priceData = [];
         let chartInterval = null;
         let currentPrice = 1.0; // Base price: 1 KITE = 1 USDT
+        let orderBookData = { bids: [], asks: [] };
+        let tradeHistoryData = [];
 
         function generateChartData(timeframe) {
-            const dataPoints = timeframe === '1m' ? 60 : timeframe === '15m' ? 48 : timeframe === '1d' ? 24 : 30;
+            const dataPoints = timeframe === '1m' ? 60 : timeframe === '5m' ? 48 : timeframe === '15m' ? 36 : timeframe === '1h' ? 24 : timeframe === '4h' ? 12 : 6;
             const data = [];
             let lastPrice = currentPrice;
             const now = new Date();
             for (let i = dataPoints - 1; i >= 0; i--) {
-                const time = new Date(now - i * (timeframe === '1m' ? 60000 : timeframe === '15m' ? 900000 : timeframe === '1d' ? 86400000 : 2592000000));
+                const time = new Date(now - i * (timeframe === '1m' ? 60000 : timeframe === '5m' ? 300000 : timeframe === '15m' ? 900000 : timeframe === '1h' ? 3600000 : timeframe === '4h' ? 14400000 : 86400000));
                 const open = lastPrice;
-                const fluctuation = (Math.random() - 0.5) * 0.05; // Random fluctuation ±0.025 USDT
+                const fluctuation = (Math.random() - 0.5) * 0.05;
                 const close = Math.max(0.1, open + fluctuation);
                 const high = Math.max(open, close) + Math.random() * 0.02;
                 const low = Math.min(open, close) - Math.random() * 0.02;
-                const color = close >= open ? '#22c55e' : '#ef4444'; // Green for bullish, red for bearish
-                data.push({ x: time, o: open, h: high, l: low, c: close, color });
+                const volume = Math.random() * 1000 + 500;
+                const color = close >= open ? '#22c55e' : '#ef4444';
+                data.push({ x: time, o: open, h: high, l: low, c: close, v: volume, color });
                 lastPrice = close;
             }
             return data;
         }
 
+        function calculateIndicators(data) {
+            const closes = data.map(d => d.c);
+            // Simple Moving Average (SMA)
+            const ma = closes.map((_, i) => {
+                if (i < 9) return null;
+                return closes.slice(i - 9, i + 1).reduce((sum, val) => sum + val, 0) / 10;
+            });
+            // RSI (simplified)
+            const rsi = closes.map((_, i) => {
+                if (i < 14) return null;
+                const gains = closes.slice(i - 14, i + 1).reduce((acc, c, j) => j > 0 && c > closes[j - 1] ? acc + (c - closes[j - 1]) : acc, 0) / 14;
+                const losses = closes.slice(i - 14, i + 1).reduce((acc, c, j) => j > 0 && c < closes[j - 1] ? acc + (closes[j - 1] - c) : acc, 0) / 14;
+                return losses === 0 ? 100 : 100 - (100 / (1 + gains / losses));
+            });
+            // MACD (simplified)
+            const macd = closes.map((_, i) => {
+                if (i < 26) return null;
+                const ema12 = closes.slice(i - 12, i + 1).reduce((sum, val, j) => sum + val * Math.pow(0.15, 12 - j), 0) / closes.slice(i - 12, i + 1).reduce((sum, _, j) => sum + Math.pow(0.15, 12 - j), 0);
+                const ema26 = closes.slice(i - 26, i + 1).reduce((sum, val, j) => sum + val * Math.pow(0.08, 26 - j), 0) / closes.slice(i - 26, i + 1).reduce((sum, _, j) => sum + Math.pow(0.08, 26 - j), 0);
+                return ema12 - ema26;
+            });
+            return { ma, rsi, macd };
+        }
+
         function updateChart() {
             if (chart) chart.destroy();
+            const indicators = calculateIndicators(priceData);
             chart = new Chart(tradingChart, {
                 type: 'candlestick',
                 data: {
-                    datasets: [{
-                        label: 'KITE/USDT',
-                        data: priceData,
-                        borderColor: priceData.map(d => d.color),
-                        backgroundColor: priceData.map(d => d.color)
-                    }]
+                    datasets: [
+                        {
+                            label: 'KITE/USDT',
+                            data: priceData,
+                            borderColor: priceData.map(d => d.color),
+                            backgroundColor: priceData.map(d => d.color)
+                        },
+                        {
+                            label: 'MA',
+                            type: 'line',
+                            data: priceData.map((d, i) => ({ x: d.x, y: indicators.ma[i] })),
+                            borderColor: '#f59e0b',
+                            borderWidth: 1,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'RSI',
+                            type: 'line',
+                            data: priceData.map((d, i) => ({ x: d.x, y: indicators.rsi[i] })),
+                            borderColor: '#8b5cf6',
+                            borderWidth: 1,
+                            pointRadius: 0,
+                            yAxisID: 'rsi'
+                        },
+                        {
+                            label: 'MACD',
+                            type: 'line',
+                            data: priceData.map((d, i) => ({ x: d.x, y: indicators.macd[i] })),
+                            borderColor: '#ec4899',
+                            borderWidth: 1,
+                            pointRadius: 0,
+                            yAxisID: 'macd'
+                        },
+                        {
+                            label: 'Volume',
+                            type: 'bar',
+                            data: priceData.map(d => ({ x: d.x, y: d.v })),
+                            backgroundColor: priceData.map(d => d.color + '80'),
+                            yAxisID: 'volume'
+                        }
+                    ]
                 },
                 options: {
-                    plugins: { legend: { display: false } },
+                    plugins: {
+                        legend: { display: false },
+                        zoom: {
+                            zoom: {
+                                wheel: { enabled: true },
+                                pinch: { enabled: true },
+                                mode: 'xy'
+                            },
+                            pan: { enabled: true, mode: 'xy' }
+                        }
+                    },
                     scales: {
                         x: {
                             type: 'time',
-                            time: { unit: timeframeSelect.value === '1m' ? 'second' : timeframeSelect.value === '15m' ? 'minute' : timeframeSelect.value === '1d' ? 'hour' : 'day' }
+                            time: { unit: timeframeSelect.value === '1m' ? 'second' : timeframeSelect.value === '5m' ? 'second' : timeframeSelect.value === '15m' ? 'minute' : timeframeSelect.value === '1h' ? 'hour' : timeframeSelect.value === '4h' ? 'hour' : 'day' }
                         },
-                        y: { beginAtZero: false, title: { display: true, text: 'Price (USDT)' } }
+                        y: { beginAtZero: false, position: 'left', title: { display: true, text: 'Price (USDT)' } },
+                        rsi: { display: false, min: 0, max: 100 },
+                        macd: { display: false },
+                        volume: { display: false }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        intersect: false,
+                        axis: 'x'
+                    },
+                    onHover: (event, chartElement) => {
+                        if (chartElement.length) {
+                            const data = priceData[chartElement[0].index];
+                            ohlcDisplay.textContent = `O: ${data.o.toFixed(4)} H: ${data.h.toFixed(4)} L: ${data.l.toFixed(4)} C: ${data.c.toFixed(4)}`;
+                        }
                     }
                 }
             });
             currentPriceDisplay.textContent = `${currentPrice.toFixed(4)} USDT`;
+            // Draw current price line
+            chart.options.plugins.annotation = {
+                annotations: {
+                    priceLine: {
+                        type: 'line',
+                        yMin: currentPrice,
+                        yMax: currentPrice,
+                        borderColor: '#3b82f6',
+                        borderWidth: 2,
+                        label: { content: currentPrice.toFixed(4), enabled: true, position: 'right' }
+                    }
+                }
+            };
+            chart.update();
+        }
+
+        function updateOrderBook() {
+            orderBook.innerHTML = '<h3>Order Book</h3><div class="bids"><h4>Bids</h4></div><div class="asks"><h4>Asks</h4></div>';
+            const bidsDiv = orderBook.querySelector('.bids');
+            const asksDiv = orderBook.querySelector('.asks');
+            orderBookData.bids.forEach(bid => {
+                const row = document.createElement('div');
+                row.classList.add('order-row');
+                row.innerHTML = `<span>${bid.price.toFixed(4)}</span><span>${bid.amount.toFixed(2)}</span>`;
+                bidsDiv.appendChild(row);
+            });
+            orderBookData.asks.forEach(ask => {
+                const row = document.createElement('div');
+                row.classList.add('order-row');
+                row.innerHTML = `<span>${ask.price.toFixed(4)}</span><span>${ask.amount.toFixed(2)}</span>`;
+                asksDiv.appendChild(row);
+            });
+        }
+
+        function updateTradeHistory() {
+            tradeHistory.innerHTML = '<h3>Trade History</h3>';
+            tradeHistoryData.forEach(trade => {
+                const row = document.createElement('div');
+                row.classList.add('order-row');
+                row.innerHTML = `
+                    <span>${trade.type.toUpperCase()}</span>
+                    <span>${trade.amount.toFixed(2)}</span>
+                    <span>${trade.price.toFixed(4)}</span>
+                    <span>${trade.timestamp}</span>
+                `;
+                tradeHistory.appendChild(row);
+            });
         }
 
         function updatePrice(amount, isBuy) {
-            // Simulate price impact: large orders (>100 KITE) cause pump/dump
             const impact = amount > 100 ? (isBuy ? 0.05 : -0.05) : (Math.random() - 0.5) * 0.02;
             currentPrice = Math.max(0.1, currentPrice + impact);
+            // Update order book
+            orderBookData.bids = Array.from({ length: 5 }, () => ({
+                price: currentPrice - Math.random() * 0.01,
+                amount: Math.random() * 100 + 50
+            })).sort((a, b) => b.price - a.price);
+            orderBookData.asks = Array.from({ length: 5 }, () => ({
+                price: currentPrice + Math.random() * 0.01,
+                amount: Math.random() * 100 + 50
+            })).sort((a, b) => a.price - b.price);
+            updateOrderBook();
         }
 
-        function updateOrderHistory(type, amount, price, leverage) {
-            currentUser.orderHistory.unshift({
-                type,
-                amount,
-                price,
-                leverage,
-                timestamp: new Date().toLocaleString()
-            });
-            // Keep only the last 10 orders
+        function updatePositionInfo() {
+            if (currentUser.position) {
+                const { type, amount, entryPrice, leverage, marginType } = currentUser.position;
+                const pnL = type === 'buy' ? (currentPrice - entryPrice) * amount * leverage : (entryPrice - currentPrice) * amount * leverage;
+                const margin = (amount * entryPrice) / leverage;
+                const liquidationPrice = marginType === 'isolated' ? 
+                    (type === 'buy' ? entryPrice * (1 - 1 / leverage) : entryPrice * (1 + 1 / leverage)) : 
+                    (type === 'buy' ? entryPrice * 0.9 : entryPrice * 1.1);
+                positionInfo.innerHTML = `
+                    <h3>Position</h3>
+                    <div>Type: ${type.toUpperCase()}</div>
+                    <div>Amount: ${amount.toFixed(2)} KITE</div>
+                    <div>Entry Price: ${entryPrice.toFixed(4)} USDT</div>
+                    <div>PnL: ${pnL.toFixed(2)} USDT</div>
+                    <div>Leverage: ${leverage}x</div>
+                    <div>Margin Type: ${marginType}</div>
+                    <div>Margin: ${margin.toFixed(2)} USDT</div>
+                    <div>Liquidation Price: ${liquidationPrice.toFixed(4)} USDT</div>
+                `;
+            } else {
+                positionInfo.innerHTML = '<h3>Position</h3><div>No open position</div>';
+            }
+        }
+
+        function updateOrderHistory(type, amount, price, leverage, marginType) {
+            const timestamp = new Date().toLocaleString();
+            currentUser.orderHistory.unshift({ type, amount, price, leverage, marginType, timestamp });
             if (currentUser.orderHistory.length > 10) {
                 currentUser.orderHistory = currentUser.orderHistory.slice(0, 10);
             }
-            const row = document.createElement('div');
-            row.classList.add('order-row');
-            row.innerHTML = `
-                <span>${type.toUpperCase()}</span>
-                <span>${amount.toFixed(2)} KITE</span>
-                <span>${price.toFixed(4)} USDT</span>
-                <span>${leverage}x</span>
-                <span>${new Date().toLocaleTimeString()}</span>
-            `;
-            ordersTable.prepend(row);
+            tradeHistoryData.unshift({ type, amount, price, timestamp });
+            if (tradeHistoryData.length > 10) {
+                tradeHistoryData = tradeHistoryData.slice(0, 10);
+            }
+            updateTradeHistory();
             if (currentUser.username.startsWith('Guest_')) {
                 localStorage.setItem('tradingGuestUser', JSON.stringify(currentUser));
             } else {
@@ -2017,19 +2181,9 @@
             tradingBalance.textContent = `Balance: ${currentUser.balance.toFixed(2)} USDT | ${currentUser.kiteBalance.toFixed(2)} KITE`;
             priceData = generateChartData(timeframeSelect.value);
             updateChart();
-            ordersTable.innerHTML = '';
-            currentUser.orderHistory.forEach(order => {
-                const row = document.createElement('div');
-                row.classList.add('order-row');
-                row.innerHTML = `
-                    <span>${order.type.toUpperCase()}</span>
-                    <span>${order.amount.toFixed(2)} KITE</span>
-                    <span>${order.price.toFixed(4)} USDT</span>
-                    <span>${order.leverage}x</span>
-                    <span>${order.timestamp}</span>
-                `;
-                ordersTable.appendChild(row);
-            });
+            updateOrderBook();
+            updateTradeHistory();
+            updatePositionInfo();
             if (chartInterval) clearInterval(chartInterval);
             chartInterval = setInterval(() => {
                 const newPrice = generateChartData(timeframeSelect.value).slice(-1)[0];
@@ -2037,7 +2191,9 @@
                 priceData.push(newPrice);
                 currentPrice = newPrice.c;
                 updateChart();
-            }, timeframeSelect.value === '1m' ? 1000 : timeframeSelect.value === '15m' ? 5000 : timeframeSelect.value === '1d' ? 10000 : 20000);
+                updateOrderBook();
+                updatePositionInfo();
+            }, timeframeSelect.value === '1m' ? 1000 : timeframeSelect.value === '5m' ? 5000 : timeframeSelect.value === '15m' ? 10000 : timeframeSelect.value === '1h' ? 20000 : timeframeSelect.value === '4h' ? 40000 : 60000);
         }
 
         timeframeSelect.addEventListener('change', () => {
@@ -2054,25 +2210,28 @@
             const amount = parseFloat(tradeAmount.value);
             const price = orderTypeSelect.value === 'market' ? currentPrice : parseFloat(tradePrice.value);
             const leverage = parseFloat(leverageSelect.value);
+            const marginType = marginTypeSelect.value;
             if (!amount || amount <= 0 || (orderTypeSelect.value === 'limit' && (!price || price <= 0))) {
                 showToast('Invalid amount or price!', 3000);
                 return;
             }
-            const totalCost = amount * price * leverage;
-            if (currentUser.balance < totalCost) {
+            const margin = (amount * price) / leverage;
+            if (currentUser.balance < margin) {
                 showToast('Insufficient USDT balance!', 3000);
                 return;
             }
-            currentUser.balance -= totalCost;
+            currentUser.balance -= margin;
             currentUser.kiteBalance += amount;
+            currentUser.position = { type: 'buy', amount, entryPrice: price, leverage, marginType };
             updatePrice(amount, true);
-            updateOrderHistory('buy', amount, price, leverage);
+            updateOrderHistory('buy', amount, price, leverage, marginType);
             tradingBalance.textContent = `Balance: ${currentUser.balance.toFixed(2)} USDT | ${currentUser.kiteBalance.toFixed(2)} KITE`;
-            showToast(`Buy order executed: ${amount} KITE at ${price.toFixed(4)} USDT (Leverage: ${leverage}x)`, 3000);
+            showToast(`Buy order executed: ${amount} KITE at ${price.toFixed(4)} USDT (Leverage: ${leverage}x, ${marginType})`, 3000);
             tradeAmount.value = '';
             tradePrice.value = '';
             priceData = generateChartData(timeframeSelect.value);
             updateChart();
+            updatePositionInfo();
             if (currentUser.username.startsWith('Guest_')) {
                 localStorage.setItem('tradingGuestUser', JSON.stringify(currentUser));
             } else {
@@ -2084,6 +2243,7 @@
             const amount = parseFloat(tradeAmount.value);
             const price = orderTypeSelect.value === 'market' ? currentPrice : parseFloat(tradePrice.value);
             const leverage = parseFloat(leverageSelect.value);
+            const marginType = marginTypeSelect.value;
             if (!amount || amount <= 0 || (orderTypeSelect.value === 'limit' && (!price || price <= 0))) {
                 showToast('Invalid amount or price!', 3000);
                 return;
@@ -2092,16 +2252,19 @@
                 showToast('Insufficient KITE balance!', 3000);
                 return;
             }
+            const margin = (amount * price) / leverage;
             currentUser.kiteBalance -= amount;
-            currentUser.balance += amount * price * leverage;
+            currentUser.balance += margin;
+            currentUser.position = { type: 'sell', amount, entryPrice: price, leverage, marginType };
             updatePrice(amount, false);
-            updateOrderHistory('sell', amount, price, leverage);
+            updateOrderHistory('sell', amount, price, leverage, marginType);
             tradingBalance.textContent = `Balance: ${currentUser.balance.toFixed(2)} USDT | ${currentUser.kiteBalance.toFixed(2)} KITE`;
-            showToast(`Sell order executed: ${amount} KITE at ${price.toFixed(4)} USDT (Leverage: ${leverage}x)`, 3000);
+            showToast(`Sell order executed: ${amount} KITE at ${price.toFixed(4)} USDT (Leverage: ${leverage}x, ${marginType})`, 3000);
             tradeAmount.value = '';
             tradePrice.value = '';
             priceData = generateChartData(timeframeSelect.value);
             updateChart();
+            updatePositionInfo();
             if (currentUser.username.startsWith('Guest_')) {
                 localStorage.setItem('tradingGuestUser', JSON.stringify(currentUser));
             } else {
