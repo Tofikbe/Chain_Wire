@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KiteAI Community Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Add Chart.js and Financial Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.0"></script>
     <style>
         * {
             margin: 0;
@@ -654,6 +657,121 @@
             background: #2563eb;
         }
 
+        /* Trading Login Modal */
+        #tradingLoginModal .modal-content {
+            text-align: center;
+        }
+        #loginForm, #signupForm {
+            margin-top: 1rem;
+        }
+        #loginForm input, #signupForm input {
+            margin-bottom: 0.5rem;
+        }
+        #loginSubmitBtn, #signupSubmitBtn, #guestLoginBtn, #showLoginFormBtn, #showSignupFormBtn {
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+
+        /* Trading Modal */
+        #tradingContent {
+            max-width: 900px;
+        }
+        #tradingTitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .trading-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .trading-balance {
+            font-size: 1rem;
+            font-weight: 500;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+        }
+        .trading-user {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .user-icon {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+        }
+        .trading-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        #tradingChart {
+            width: 100%;
+            max-height: 400px;
+            background: #1e293b;
+            border-radius: 10px;
+            border: 2px solid #3b82f6;
+        }
+        .trading-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .trade-form {
+            flex: 1;
+            background: #334155;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+        .trade-form h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .trade-form input {
+            margin-bottom: 0.5rem;
+        }
+        .trade-form button {
+            width: 48%;
+            padding: 0.75rem;
+            background: linear-gradient(45deg, #3b82f6, #2563eb);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        .trade-form button:hover, .trade-form button:focus {
+            background: linear-gradient(45deg, #2563eb, #3b82f6);
+            transform: scale(1.05);
+            outline: none;
+        }
+        #openOrders {
+            flex: 1;
+            background: #334155;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+        #openOrders h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .order-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .order-row:last-child {
+            border-bottom: none;
+        }
+
         /* Toast Notification */
         .toast {
             position: fixed;
@@ -727,10 +845,10 @@
             #puzzleGrid {
                 gap: 0.3rem;
             }
-            #gameTitle, #shootingGameTitle {
+            #gameTitle, #shootingGameTitle, #tradingTitle {
                 font-size: 1.2rem;
             }
-            #gameScore, #shootingGameScore {
+            #gameScore, #shootingGameScore, .trading-balance {
                 font-size: 0.9rem;
                 padding: 0.3rem 0.6rem;
             }
@@ -759,6 +877,919 @@
             .game-option {
                 width: 90%;
             }
+            .trading-header {
+                flex-direction: column;
+ —
+
+System: * I notice this is a follow-up to your previous request to add a fake trading feature to your website. Since your instruction is to integrate the trading feature into the exact code you provided while keeping everything else the same, I’ll provide the complete modified HTML code with the trading feature added. The changes include:
+
+- Adding a "Trading" button to the feedback form’s `form-buttons` div.
+- Adding new modals for trading login/signup and the trading interface.
+- Updating the CSS to style the new modals and trading UI.
+- Adding JavaScript for user authentication, trading logic, and a dynamic candlestick chart using Chart.js.
+- Ensuring all existing functionality (navbar, sidebar, games, leaderboard, etc.) remains unchanged.
+
+Below is the complete HTML code with the trading feature integrated. You can copy and paste this into your file to replace the original code.
+
+### Complete Modified HTML Code
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KiteAI Community Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Add Chart.js and Financial Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.0"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .kite {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: url('https://i.postimg.cc/mzMZpf0r/logo.jpg') no-repeat center/cover;
+            animation: floatKite 10s ease-in-out infinite;
+            opacity: 0.3;
+        }
+        .kite:nth-child(1) { top: 10%; left: 15%; animation-delay: 0s; }
+        .kite:nth-child(2) { top: 30%; left: 70%; animation-delay: 2s; }
+        .kite:nth-child(3) { top: 60%; left: 20%; animation-delay: 4s; }
+        .kite:nth-child(4) { top: 80%; left: 80%; animation-delay: 6s; }
+        @keyframes floatKite {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(20px, -20px) rotate(10deg); }
+        }
+
+        /* Top Navbar */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+        .top-nav .logo img {
+            height: 2.8rem;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            loading: lazy;
+        }
+        .top-nav .logo img:hover, .top-nav .logo img:focus {
+            transform: scale(1.05);
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        }
+        .nav-links a:hover, .nav-links a:focus {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            transform: translateY(-2px);
+            outline: none;
+        }
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 2.5rem;
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            min-width: 200px;
+            padding: 0.5rem 0;
+            z-index: 1;
+            transform: translateY(-10px);
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .dropdown:hover .dropdown-content, .dropdown:focus-within .dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .dropdown-content a {
+            display: block;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            color: #e2e8f0;
+        }
+        .dropdown-content a:hover, .dropdown-content a:focus {
+            background: #3b82f6;
+            color: #fff;
+        }
+
+        /* Sidebar Menu (Mobile) */
+        .sidebar-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+        .sidebar-btn:hover, .sidebar-btn:focus {
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -75%;
+            width: 75%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 1rem;
+            z-index: 999;
+            transition: transform 0.4s ease;
+        }
+        .sidebar.show {
+            transform: translateX(100%);
+        }
+        .sidebar a {
+            color: #e2e8f0;
+            font-size: 1.1rem;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            margin: 0.3rem 0;
+            border-radius: 10px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .sidebar a:hover, .sidebar a:focus {
+            background: rgba(59, 130, 246, 0.3);
+            transform: translateX(5px);
+            outline: none;
+        }
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 998;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .sidebar-overlay.show {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 1.5rem;
+            width: 90%;
+            max-width: 550px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            transform: scale(0.95);
+            transition: transform 0.4s ease;
+        }
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            loading: lazy;
+        }
+        .modal-close:hover, .modal-close:focus {
+            transform: scale(1.2);
+            outline: none;
+        }
+
+        /* Games Modal */
+        #gamesModal .modal-content {
+            text-align: center;
+        }
+        .game-option {
+            display: block;
+            padding: 0.75rem 1rem;
+            margin: 0.5rem auto;
+            background: linear-gradient(45deg, #3b82f6, #2563eb);
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 300px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        .game-option:hover, .game-option:focus {
+            background: linear-gradient(45deg, #2563eb, #3b82f6);
+            transform: scale(1.05);
+            outline: none;
+        }
+
+        /* Announcement Modal */
+        #announcementModal .modal-content {
+            background: #ffffff;
+            color: #000;
+        }
+        .announcement-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .announcement-controls span {
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .announcement-controls span:hover, .announcement-controls span:focus {
+            color: #3b82f6;
+            transform: scale(1.2);
+            outline: none;
+        }
+
+        /* Leaderboard Modal */
+        #leaderboardTable {
+            width: 100%;
+        }
+        .leaderboard-row {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.3s ease;
+        }
+        .leaderboard-row:hover, .leaderboard-row:focus-within {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .leaderboard-rank {
+            flex: 0 0 3rem;
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+        }
+        .leaderboard-rank.rank-1::before { content: '🥇'; position: absolute; left: -1rem; }
+        .leaderboard-rank.rank-2::before { content: '🥈'; position: absolute; left: -1rem; }
+        .leaderboard-rank.rank-3::before { content: '🥉'; position: absolute; left: -1rem; }
+        .leaderboard-profile img {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            border: 2px solid #3b82f6;
+            margin-right: 1rem;
+            transition: transform 0.3s ease;
+            loading: lazy;
+        }
+        .leaderboard-profile img:hover, .leaderboard-profile img:focus {
+            transform: scale(1.1);
+        }
+        .leaderboard-name a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+        .leaderboard-name a:hover, .leaderboard-name a:focus {
+            color: #2563eb;
+            text-decoration: underline;
+            outline: none;
+        }
+
+        /* Flipping Game Modal */
+        #gameContent {
+            max-width: 600px;
+        }
+        #gameTitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        #puzzleGrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .card {
+            position: relative;
+            width: 100%;
+            padding-top: 100%;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+        .card-inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        .card-front {
+            transform: rotateY(180deg);
+        }
+        .card-back {
+            background: #334155;
+        }
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            loading: lazy;
+        }
+        .game-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        #gameScore {
+            font-size: 1rem;
+            font-weight: 500;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+        }
+        #restartGameBtn {
+            padding: 0.6rem 1.2rem;
+            background: linear-gradient(45deg, #3b82f6, #2563eb);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        #restartGameBtn:hover, #restartGameBtn:focus {
+            background: linear-gradient(45deg, #2563eb, #3b82f6);
+            transform: scale(1.05);
+            outline: none;
+        }
+        #winMessage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: rgba(15, 23, 42, 0.9);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        #winMessage.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        #puzzleGrid.won .card {
+            filter: blur(4px);
+            transition: filter 0.5s ease;
+        }
+
+        /* Shooting Game Styles */
+        #shootingGameContent {
+            max-width: 800px;
+        }
+        #shootingGameTitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        #shootingGameCanvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            background: linear-gradient(180deg, #1e293b, #334155);
+            border-radius: 10px;
+            border: 2px solid #3b82f6;
+            position: relative;
+            cursor: crosshair;
+        }
+        .game-controls-shooting {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        #shootingGameScore {
+            font-size: 1rem;
+            font-weight: 500;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+        }
+        #scopeToggleBtn, #restartShootingGameBtn {
+            padding: 0.6rem 1.2rem;
+            background: linear-gradient(45deg, #3b82f6, #2563eb);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        #scopeToggleBtn:hover, #scopeToggleBtn:focus,
+        #restartShootingGameBtn:hover, #restartShootingGameBtn:focus {
+            background: linear-gradient(45deg, #2563eb, #3b82f6);
+            transform: scale(1.05);
+            outline: none;
+        }
+        #gameOverMessage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: rgba(15, 23, 42, 0.9);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        #gameOverMessage.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .hit-effect {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.8), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: hitFade 0.5s ease-out forwards;
+        }
+        @keyframes hitFade {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        /* Feedback Form */
+        .feedback-form {
+            background: #1e293b;
+            padding: 1.5rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            margin: 1rem;
+            transition: transform 0.3s ease;
+        }
+        .feedback-form:hover, .feedback-form:focus-within {
+            transform: scale(1.02);
+        }
+        .feedback-form h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        select, textarea, input {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: #334155;
+            color: #fff;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        select:focus, textarea:focus, input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+            outline: none;
+        }
+        select option {
+            background: #334155;
+            color: #fff;
+        }
+        .form-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .form-buttons button, .form-buttons .dropbtn {
+            padding: 0.75rem;
+            background: linear-gradient(45deg, #3b82f6, #2563eb);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            font-size: 1rem;
+            text-align: center;
+        }
+        .form-buttons button:hover, .form-buttons button:focus,
+        .form-buttons .dropbtn:hover, .form-buttons .dropbtn:focus {
+            background: linear-gradient(45deg, #2563eb, #3b82f6);
+            transform: scale(1.05);
+            outline: none;
+        }
+        .form-buttons button:disabled {
+            background: #4b5563;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Agent Chat Modal */
+        #agentContent {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        #chatMessages {
+            flex-grow: 1;
+            background: #334155;
+            border-radius: 10px;
+            padding: 1rem;
+            overflow-y: auto;
+            max-height: 50vh;
+        }
+        .chat-msg {
+            margin: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+        .chat-agent {
+            background: #3b82f6;
+            color: #fff;
+            align-self: flex-start;
+        }
+        .chat-user {
+            background: #475569;
+            color: #fff;
+            align-self: flex-end;
+        }
+        #preQuestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .question-btn {
+            padding: 0.5rem 1rem;
+            background: #3b82f6;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        .question-btn:hover, .question-btn:focus {
+            background: #2563eb;
+            transform: scale(1.05);
+            outline: none;
+        }
+        #userInput {
+            background: #334155;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        #sendBtn {
+            background: #3b82f6;
+        }
+        #sendBtn:hover, #sendBtn:focus {
+            background: #2563eb;
+        }
+
+        /* Trading Login Modal */
+        #tradingLoginModal .modal-content {
+            text-align: center;
+        }
+        #loginForm, #signupForm {
+            margin-top: 1rem;
+        }
+        #loginForm input, #signupForm input {
+            margin-bottom: 0.5rem;
+        }
+        #loginSubmitBtn, #signupSubmitBtn, #guestLoginBtn, #showLoginFormBtn, #showSignupFormBtn {
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+
+        /* Trading Modal */
+        #tradingContent {
+            max-width: 900px;
+        }
+        #tradingTitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .trading-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .trading-balance {
+            font-size: 1rem;
+            font-weight: 500;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+        }
+        .trading-user {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .user-icon {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+        }
+        .trading-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        #tradingChart {
+            width: 100%;
+            max-height: 400px;
+            background: #1e293b;
+            border-radius: 10px;
+            border: 2px solid #3b82f6;
+        }
+        .trading-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .trade-form {
+            flex: 1;
+            background: #334155;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+        .trade-form h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .trade-form input {
+            margin-bottom: 0.5rem;
+        }
+        .trade-form button {
+            width: 48%;
+            padding: 0.75rem;
+            background: linear-gradient(45deg, #3b82f6, #2563eb);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        .trade-form button:hover, .trade-form button:focus {
+            background: linear-gradient(45deg, #2563eb, #3b82f6);
+            transform: scale(1.05);
+            outline: none;
+        }
+        #openOrders {
+            flex: 1;
+            background: #334155;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+        #openOrders h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .order-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .order-row:last-child {
+            border-bottom: none;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%) scale(0.95);
+            background: #3b82f6;
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        /* Footer */
+        footer {
+            position: fixed;
+            bottom: 0.5rem;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 0.5rem;
+            border-radius: 10px;
+            z-index: 10;
+        }
+        footer img {
+            height: 1.2rem;
+            border-radius: 4px;
+            loading: lazy;
+        }
+        footer a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        footer a:hover, footer a:focus {
+            color: #2563eb;
+            outline: none;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 767px) {
+            .top-nav .nav-links {
+                display: none;
+            }
+            .sidebar-btn {
+                display: block;
+            }
+            .feedback-form {
+                padding: 1rem;
+                max-width: 90%;
+            }
+            .form-buttons {
+                grid-template-columns: 1fr;
+            }
+            .modal-content {
+                padding: 1rem;
+            }
+            #puzzleGrid {
+                gap: 0.3rem;
+            }
+            #gameTitle, #shootingGameTitle, #tradingTitle {
+                font-size: 1.2rem;
+            }
+            #gameScore, #shootingGameScore, .trading-balance {
+                font-size: 0.9rem;
+                padding: 0.3rem 0.6rem;
+            }
+            #winMessage, #gameOverMessage {
+                font-size: 1.2rem;
+                padding: 0.75rem 1.5rem;
+            }
+            .leaderboard-profile img {
+                width: 2rem;
+                height: 2rem;
+            }
+            .leaderboard-rank {
+                font-size: 0.9rem;
+                flex: 0 0 2.5rem;
+            }
+            .leaderboard-name a {
+                font-size: 0.9rem;
+            }
+            .kite {
+                width: 40px;
+                height: 40px;
+            }
+            #shootingGameCanvas {
+                height: 300px;
+            }
+            .game-option {
+                width: 90%;
+            }
+            .trading-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .trading-controls {
+                flex-direction: column;
+            }
+            .trading-actions {
+                flex-direction: column;
+            }
+            .trade-form button {
+                width: 100%;
+                margin: 0.25rem 0;
+            }
+            #tradingChart {
+                max-height: 300px;
+            }
         }
 
         @media (min-width: 768px) {
@@ -768,7 +1799,7 @@
             .feedback-form {
                 padding: 2rem;
             }
-            #gameContent, #shootingGameContent {
+            #gameContent, #shootingGameContent, #tradingContent {
                 max-width: 800px;
             }
         }
@@ -887,7 +1918,7 @@
         </div>
     </div>
 
-    <!-- Shooting Game Modal -->
+    <!-- Shooting Game Modal (Continued) -->
     <div id="shootingGameModal" class="modal" role="dialog" aria-labelledby="shootingGameTitle">
         <div id="shootingGameContent" class="modal-content">
             <img class="modal-close" id="closeShootingGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Shooting Game" aria-label="Close Shooting Game" role="button" tabindex="0">
@@ -899,6 +1930,69 @@
             </div>
             <canvas id="shootingGameCanvas"></canvas>
             <div id="gameOverMessage" aria-live="assertive">Game Over!</div>
+        </div>
+    </div>
+
+    <!-- Trading Login Modal -->
+    <div id="tradingLoginModal" class="modal" role="dialog" aria-labelledby="tradingLoginTitle">
+        <div class="modal-content">
+            <img class="modal-close" id="closeTradingLoginBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Trading Login" aria-label="Close Trading Login" role="button" tabindex="0">
+            <h2 id="tradingLoginTitle">Trading Login</h2>
+            <button id="guestLoginBtn" class="form-buttons" aria-label="Login as Guest">Login with Guest</button>
+            <button id="showLoginFormBtn" class="form-buttons" aria-label="Show Login Form">Login</button>
+            <button id="showSignupFormBtn" class="form-buttons" aria-label="Show Signup Form">Signup</button>
+            <div id="loginForm" style="display: none;">
+                <input type="text" id="loginUsername" placeholder="Username" aria-label="Username" required>
+                <input type="password" id="loginPassword" placeholder="Password" aria-label="Password" required>
+                <button id="loginSubmitBtn" class="form-buttons" aria-label="Submit Login">Login</button>
+            </div>
+            <div id="signupForm" style="display: none;">
+                <input type="text" id="signupUsername" placeholder="Username" aria-label="Username" required>
+                <input type="password" id="signupPassword" placeholder="Password" aria-label="Password" required>
+                <input type="password" id="signupConfirmPassword" placeholder="Confirm Password" aria-label="Confirm Password" required>
+                <button id="signupSubmitBtn" class="form-buttons" aria-label="Submit Signup">Signup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trading Modal -->
+    <div id="tradingModal" class="modal" role="dialog" aria-labelledby="tradingTitle">
+        <div id="tradingContent" class="modal-content">
+            <img class="modal-close" id="closeTradingBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Trading" aria-label="Close Trading" role="button" tabindex="0">
+            <div id="tradingTitle">KITE/USDT Trading</div>
+            <div class="trading-header">
+                <div class="trading-balance" id="tradingBalance">Balance: 10,000 USDT</div>
+                <div class="trading-user">
+                    <span id="tradingUsername"></span>
+                    <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="User Icon" class="user-icon">
+                </div>
+            </div>
+            <div class="trading-controls">
+                <select id="timeframeSelect" aria-label="Select Timeframe">
+                    <option value="1m">1 Minute</option>
+                    <option value="15m">15 Minutes</option>
+                    <option value="1d">1 Day</option>
+                    <option value="30d">30 Days</option>
+                </select>
+                <select id="tokenSelect" aria-label="Select Token Pair">
+                    <option value="KITE/USDT">KITE/USDT</option>
+                    <option value="coming_soon" disabled>Coming Soon</option>
+                </select>
+            </div>
+            <canvas id="tradingChart"></canvas>
+            <div class="trading-actions">
+                <div class="trade-form">
+                    <h3>Place Order</h3>
+                    <input type="number" id="tradeAmount" placeholder="Amount (KITE)" aria-label="Trade Amount" min="0.01" step="0.01">
+                    <input type="number" id="tradePrice" placeholder="Price (USDT)" aria-label="Trade Price" min="0.01" step="0.01">
+                    <button id="buyBtn" aria-label="Buy KITE">Buy</button>
+                    <button id="sellBtn" aria-label="Sell KITE">Sell</button>
+                </div>
+                <div id="openOrders">
+                    <h3>Open Orders</h3>
+                    <div id="ordersTable"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -920,6 +2014,7 @@
             <button type="button" id="agentBtn" aria-label="Open Community Agent">🤖 Community Agent</button>
             <button type="button" id="leaderboardBtn" aria-label="Open Leaderboard">📊 Leaderboard</button>
             <button type="button" id="gamesBtn" class="dropbtn" aria-label="Open Games">🎮 Games</button>
+            <button type="button" id="tradingBtn" aria-label="Open Trading">💸 Trading</button>
         </div>
     </form>
 
@@ -947,9 +2042,9 @@
     <!-- Footer -->
     <footer>
         <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo">
-        Made for KiteAI · Follow 
-        <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank" aria-label="Follow Crypto_King877">@Crypto_King877</a> 
-        & 
+        Made for KiteAI · Follow
+        <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank" aria-label="Follow Crypto_King877">@Crypto_King877</a>
+        &
         <a href="https://x.com/GoKiteAI?t=fzEmGeci_aCKBgJRAYEwsA&s=09" target="_blank" aria-label="Follow GoKiteAI">@GoKiteAI</a>
     </footer>
 
@@ -1013,12 +2108,12 @@
 
         // Announcement Modal
         const tweets = [
-            "https://x.com/GoKiteAI/status/1951245795216200146",
-            "https://x.com/GoKiteAI/status/1955919782785503588",
-            "https://x.com/GoKiteAI/status/1955792638948597868",
-            "https://x.com/GoKiteAI/status/1955104976801349904",
-            "https://x.com/wallet/status/1954052040939753923",
-            "https://x.com/GoKiteAI/status/1956244265958564185?t=FSvQKtpHlSZubCmNs6VY0w&s=19"
+            'https://x.com/GoKiteAI/status/1951245795216200146',
+            'https://x.com/GoKiteAI/status/1955919782785503588',
+            'https://x.com/GoKiteAI/status/1955792638948597868',
+            'https://x.com/GoKiteAI/status/1955104976801349904',
+            'https://x.com/wallet/status/1954052040939753923',
+            'https://x.com/GoKiteAI/status/1956244265958564185?t=FSvQKtpHlSZubCmNs6VY0w&s=19'
         ];
         let currentTweet = 0;
         function loadTweet(index) {
@@ -1588,6 +2683,272 @@
         });
         restartShootingGameBtn.addEventListener('click', () => {
             initShootingGame();
+        });
+
+        // Trading Login Modal
+        const tradingLoginModal = document.getElementById('tradingLoginModal');
+        const tradingBtn = document.getElementById('tradingBtn');
+        const closeTradingLoginBtn = document.getElementById('closeTradingLoginBtn');
+        const guestLoginBtn = document.getElementById('guestLoginBtn');
+        const showLoginFormBtn = document.getElementById('showLoginFormBtn');
+        const showSignupFormBtn = document.getElementById('showSignupFormBtn');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+        const signupSubmitBtn = document.getElementById('signupSubmitBtn');
+
+        tradingBtn.addEventListener('click', () => {
+            tradingLoginModal.classList.add('show');
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'none';
+        });
+
+        closeTradingLoginBtn.addEventListener('click', () => {
+            tradingLoginModal.classList.remove('show');
+        });
+
+        showLoginFormBtn.addEventListener('click', () => {
+            loginForm.style.display = 'block';
+            signupForm.style.display = 'none';
+        });
+
+        showSignupFormBtn.addEventListener('click', () => {
+            signupForm.style.display = 'block';
+            loginForm.style.display = 'none';
+        });
+
+        // User Management
+        let currentUser = null;
+
+        function generateGuestUsername() {
+            return 'Guest_' + Math.random().toString(36).substr(2, 8);
+        }
+
+        guestLoginBtn.addEventListener('click', () => {
+            currentUser = {
+                username: generateGuestUsername(),
+                balance: 10000,
+                kiteBalance: 0,
+                orders: []
+            };
+            localStorage.setItem('tradingGuestUser', JSON.stringify(currentUser));
+            tradingLoginModal.classList.remove('show');
+            tradingModal.classList.add('show');
+            initTrading();
+        });
+
+        loginSubmitBtn.addEventListener('click', () => {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            const storedUser = JSON.parse(localStorage.getItem('tradingUser_' + username));
+            if (storedUser && storedUser.password === password) {
+                currentUser = storedUser;
+                tradingLoginModal.classList.remove('show');
+                tradingModal.classList.add('show');
+                initTrading();
+            } else {
+                showToast('Invalid username or password!', 3000);
+            }
+        });
+
+        signupSubmitBtn.addEventListener('click', () => {
+            const username = document.getElementById('signupUsername').value.trim();
+            const password = document.getElementById('signupPassword').value.trim();
+            const confirmPassword = document.getElementById('signupConfirmPassword').value.trim();
+            if (!username || !password || !confirmPassword) {
+                showToast('Please fill in all fields!', 3000);
+                return;
+            }
+            if (password !== confirmPassword) {
+                showToast('Passwords do not match!', 3000);
+                return;
+            }
+            if (localStorage.getItem('tradingUser_' + username)) {
+                showToast('Username already exists!', 3000);
+                return;
+            }
+            currentUser = {
+                username,
+                password,
+                balance: 10000,
+                kiteBalance: 0,
+                orders: []
+            };
+            localStorage.setItem('tradingUser_' + username, JSON.stringify(currentUser));
+            tradingLoginModal.classList.remove('show');
+            tradingModal.classList.add('show');
+            initTrading();
+        });
+
+        // Trading Logic
+        const tradingModal = document.getElementById('tradingModal');
+        const closeTradingBtn = document.getElementById('closeTradingBtn');
+        const tradingBalance = document.getElementById('tradingBalance');
+        const tradingUsername = document.getElementById('tradingUsername');
+        const timeframeSelect = document.getElementById('timeframeSelect');
+        const tokenSelect = document.getElementById('tokenSelect');
+        const tradingChart = document.getElementById('tradingChart');
+        const buyBtn = document.getElementById('buyBtn');
+        const sellBtn = document.getElementById('sellBtn');
+        const tradeAmount = document.getElementById('tradeAmount');
+        const tradePrice = document.getElementById('tradePrice');
+        const ordersTable = document.getElementById('ordersTable');
+
+        let chart = null;
+        let priceData = [];
+        let chartInterval = null;
+
+        function generateRandomPrice() {
+            return (Math.random() * 0.02 + 0.05).toFixed(4); // Price between 0.05 and 0.07 USDT
+        }
+
+        function generateChartData(timeframe) {
+            const dataPoints = timeframe === '1m' ? 60 : timeframe === '15m' ? 48 : timeframe === '1d' ? 24 : 30;
+            const data = [];
+            let lastPrice = parseFloat(generateRandomPrice());
+            const now = new Date();
+            for (let i = dataPoints - 1; i >= 0; i--) {
+                const time = new Date(now - i * (timeframe === '1m' ? 60000 : timeframe === '15m' ? 900000 : timeframe === '1d' ? 86400000 : 2592000000));
+                const open = lastPrice;
+                const close = lastPrice + (Math.random() - 0.5) * 0.002;
+                const high = Math.max(open, close) + Math.random() * 0.001;
+                const low = Math.min(open, close) - Math.random() * 0.001;
+                data.push({ x: time, o: open, h: high, l: low, c: close });
+                lastPrice = close;
+            }
+            return data;
+        }
+
+        function updateChart() {
+            if (chart) chart.destroy();
+            chart = new Chart(tradingChart, {
+                type: 'candlestick',
+                data: {
+                    datasets: [{
+                        label: 'KITE/USDT',
+                        data: priceData
+                    }]
+                },
+                options: {
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { type: 'time', time: { unit: timeframeSelect.value === '1m' ? 'second' : timeframeSelect.value === '15m' ? 'minute' : timeframeSelect.value === '1d' ? 'hour' : 'day' } },
+                        y: { beginAtZero: false }
+                    }
+                }
+            });
+        }
+
+        function initTrading() {
+            tradingUsername.textContent = currentUser.username + ' ' + (Math.random() < 0.5 ? '🪁' : '💸');
+            tradingBalance.textContent = `Balance: ${currentUser.balance.toFixed(2)} USDT | ${currentUser.kiteBalance.toFixed(2)} KITE`;
+            priceData = generateChartData(timeframeSelect.value);
+            updateChart();
+            updateOrders();
+            if (chartInterval) clearInterval(chartInterval);
+            chartInterval = setInterval(() => {
+                const newPrice = generateChartData(timeframeSelect.value).slice(-1)[0];
+                priceData.shift();
+                priceData.push(newPrice);
+                updateChart();
+                // Update open orders
+                currentUser.orders = currentUser.orders.filter(order => {
+                    if (order.type === 'buy' && parseFloat(newPrice.c) <= order.price) {
+                        currentUser.kiteBalance += order.amount;
+                        currentUser.balance -= order.amount * order.price;
+                        showToast(`Buy order executed: ${order.amount} KITE at ${order.price} USDT`, 3000);
+                        return false;
+                    } else if (order.type === 'sell' && parseFloat(newPrice.c) >= order.price) {
+                        currentUser.kiteBalance -= order.amount;
+                        currentUser.balance += order.amount * order.price;
+                        showToast(`Sell order executed: ${order.amount} KITE at ${order.price} USDT`, 3000);
+                        return false;
+                    }
+                    return true;
+                });
+                tradingBalance.textContent = `Balance: ${currentUser.balance.toFixed(2)} USDT | ${currentUser.kiteBalance.toFixed(2)} KITE`;
+                updateOrders();
+                if (currentUser.username.startsWith('Guest_')) {
+                    localStorage.setItem('tradingGuestUser', JSON.stringify(currentUser));
+                } else {
+                    localStorage.setItem('tradingUser_' + currentUser.username, JSON.stringify(currentUser));
+                }
+            }, timeframeSelect.value === '1m' ? 1000 : timeframeSelect.value === '15m' ? 5000 : timeframeSelect.value === '1d' ? 10000 : 20000);
+        }
+
+        function updateOrders() {
+            ordersTable.innerHTML = '';
+            currentUser.orders.forEach(order => {
+                const row = document.createElement('div');
+                row.classList.add('order-row');
+                row.innerHTML = `
+                    <span>${order.type.toUpperCase()}</span>
+                    <span>${order.amount} KITE</span>
+                    <span>${order.price} USDT</span>
+                `;
+                ordersTable.appendChild(row);
+            });
+        }
+
+        timeframeSelect.addEventListener('change', () => {
+            priceData = generateChartData(timeframeSelect.value);
+            updateChart();
+        });
+
+        buyBtn.addEventListener('click', () => {
+            const amount = parseFloat(tradeAmount.value);
+            const price = parseFloat(tradePrice.value);
+            if (!amount || !price || amount <= 0 || price <= 0) {
+                showToast('Invalid amount or price!', 3000);
+                return;
+            }
+            if (currentUser.balance < amount * price) {
+                showToast('Insufficient USDT balance!', 3000);
+                return;
+            }
+            currentUser.orders.push({ type: 'buy', amount, price });
+            showToast(`Buy order placed: ${amount} KITE at ${price} USDT`, 3000);
+            tradeAmount.value = '';
+            tradePrice.value = '';
+            updateOrders();
+            if (currentUser.username.startsWith('Guest_')) {
+                localStorage.setItem('tradingGuestUser', JSON.stringify(currentUser));
+            } else {
+                localStorage.setItem('tradingUser_' + currentUser.username, JSON.stringify(currentUser));
+            }
+        });
+
+        sellBtn.addEventListener('click', () => {
+            const amount = parseFloat(tradeAmount.value);
+            const price = parseFloat(tradePrice.value);
+            if (!amount || !price || amount <= 0 || price <= 0) {
+                showToast('Invalid amount or price!', 3000);
+                return;
+            }
+            if (currentUser.kiteBalance < amount) {
+                showToast('Insufficient KITE balance!', 3000);
+                return;
+            }
+            currentUser.orders.push({ type: 'sell', amount, price });
+            showToast(`Sell order placed: ${amount} KITE at ${price} USDT`, 3000);
+            tradeAmount.value = '';
+            tradePrice.value = '';
+            updateOrders();
+            if (currentUser.username.startsWith('Guest_')) {
+                localStorage.setItem('tradingGuestUser', JSON.stringify(currentUser));
+            } else {
+                localStorage.setItem('tradingUser_' + currentUser.username, JSON.stringify(currentUser));
+            }
+        });
+
+        closeTradingBtn.addEventListener('click', () => {
+            tradingModal.classList.remove('show');
+            if (chartInterval) clearInterval(chartInterval);
+        });
+
+        // Add click sound to trading buttons
+        [tradingBtn, closeTradingLoginBtn, guestLoginBtn, showLoginFormBtn, showSignupFormBtn, loginSubmitBtn, signupSubmitBtn, buyBtn, sellBtn].forEach(el => {
+            el.addEventListener('click', playClickSound);
         });
 
         // Form Handling
