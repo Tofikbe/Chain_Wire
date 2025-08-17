@@ -1956,7 +1956,7 @@
         const sellBtn = document.getElementById('sellBtn');
         const positionSize = document.getElementById('positionSize');
         const tradePrice = document.getElementById('tradePrice');
-        const ordersTable = document.getElementById('orderBook');
+        const orderBook = document.getElementById('orderBook');
         const tradeHistory = document.getElementById('tradeHistory');
         const positionInfo = document.getElementById('positionInfo');
         const currentPriceDisplay = document.getElementById('currentPrice');
@@ -1981,76 +1981,27 @@
                 const close = Math.max(0.1, open + fluctuation);
                 const high = Math.max(open, close) + Math.random() * 0.02;
                 const low = Math.min(open, close) - Math.random() * 0.02;
-                const volume = Math.random() * 1000 + 500;
                 const color = close >= open ? '#22c55e' : '#ef4444';
-                data.push({ x: time, o: open, h: high, l: low, c: close, v: volume, color });
+                data.push({ x: time, o: open, h: high, l: low, c: close, color });
                 lastPrice = close;
             }
             return data;
         }
-
-        function calculateIndicators(data) {
-            const closes = data.map(d => d.c);
-            // Simple Moving Average (SMA) - 10-period
-            const ma = closes.map((_, i) => {
-                if (i < 9) return null;
-                return closes.slice(i - 9, i + 1).reduce((sum, val) => sum + val, 0) / 10;
-            });
-            // RSI (14-period, simplified)
-            const rsi = closes.map((_, i) => {
-                if (i < 14) return null;
-                const gains = closes.slice(i - 14, i + 1).reduce((acc, c, j) => j > 0 && c > closes[j - 1] ? acc + (c - closes[j - 1]) : acc, 0) / 14;
-                const losses = closes.slice(i - 14, i + 1).reduce((acc, c, j) => j > 0 && c < closes[j - 1] ? acc + (closes[j - 1] - c) : acc, 0) / 14;
-                return losses === 0 ? 100 : 100 - (100 / (1 + gains / losses));
-            });
-            // MACD (12, 26, 9 - simplified)
-            const ema12 = closes.map((_, i) => {
-                if (i < 11) return null;
-                return closes.slice(i - 11, i + 1).reduce((sum, val, j) => sum + val * Math.pow(0.1538, 12 - j), 0) / closes.slice(i - 11, i + 1).reduce((sum, _, j) => sum + Math.pow(0.1538, 12 - j), 0);
-            });
-            const ema26 = closes.map((_, i) => {
-                if (i < 25) return null;
-                return closes.slice(i - 25, i + 1).reduce((sum, val, j) => sum + val * Math.pow(0.0741, 26 - j), 0) / closes.slice(i - 25, i + 1).reduce((sum, _, j) => sum + Math.pow(0.0741, 26 - j), 0);
-            });
-            const macd = ema12.map((e12, i) => e12 && ema26[i] ? e12 - ema26[i] : null);
-            const signal = macd.map((_, i) => {
-                if (i < 9) return null;
-                return macd.slice(i - 9, i + 1).reduce((sum, val) => sum + val, 0) / 9;
-            });
-            return { ma, rsi, macd, signal };
-        }
-
+        
         function updateChart() {
             if (chart) chart.destroy();
-            const indicators = calculateIndicators(priceData);
             chart = new Chart(tradingChart, {
                 type: 'candlestick',
                 data: {
-                    datasets: [
-                        {
-                            label: 'KITE/USDT',
-                            data: priceData,
-                            borderColor: priceData.map(d => d.color),
-                            backgroundColor: priceData.map(d => d.color + '80'),
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'MA (10)',
-                            type: 'line',
-                            data: priceData.map((d, i) => ({ x: d.x, y: indicators.ma[i] })),
-                            borderColor: '#f59e0b',
-                            borderWidth: 1,
-                            pointRadius: 0,
-                            fill: false
-                        },
-                        {
-                            label: 'Volume',
-                            type: 'bar',
-                            data: priceData.map(d => ({ x: d.x, y: d.v })),
-                            backgroundColor: priceData.map(d => d.color + '80'),
-                            yAxisID: 'volume'
-                        }
-                    ]
+                    datasets: [{
+                        label: 'KITE/USDT',
+                        data: priceData,
+                        borderColor: priceData.map(d => d.color),
+                        backgroundColor: priceData.map(d => d.color + '80'),
+                        borderWidth: 1,
+                        barPercentage: 0.7,
+                        categoryPercentage: 0.8
+                    }]
                 },
                 options: {
                     animation: { duration: 500, easing: 'easeInOutQuad' },
@@ -2071,31 +2022,19 @@
                             callbacks: {
                                 label: (context) => `${context.dataset.label}: ${context.raw.c.toFixed(4)} USDT`
                             }
-                        },
-                        crosshair: {
-                            line: { color: '#3b82f6', width: 1 },
-                            sync: { enabled: false },
-                            zoom: { enabled: true }
                         }
                     },
                     scales: {
                         x: {
                             type: 'time',
                             time: { unit: timeframeSelect.value === '1m' ? 'second' : timeframeSelect.value === '5m' ? 'minute' : timeframeSelect.value === '15m' ? 'minute' : timeframeSelect.value === '1h' ? 'hour' : timeframeSelect.value === '4h' ? 'hour' : 'day' },
-                            ticks: { source: 'auto' }
+                            ticks: { source: 'auto', maxRotation: 0, minRotation: 0 }
                         },
                         y: {
                             beginAtZero: false,
                             position: 'left',
                             title: { display: true, text: 'Price (USDT)', color: '#f0f0f0' },
-                            ticks: { color: '#d1d5db' }
-                        },
-                        volume: {
-                            display: true,
-                            position: 'right',
-                            title: { display: true, text: 'Volume', color: '#f0f0f0' },
-                            ticks: { color: '#d1d5db' },
-                            grid: { display: false }
+                            ticks: { color: '#d1d5db', padding: 5 }
                         }
                     },
                     interaction: {
@@ -2130,9 +2069,9 @@
         }
 
         function updateOrderBook() {
-            ordersTable.innerHTML = '<h3>Order Book</h3><div class="bids"><h4>Bids</h4></div><div class="asks"><h4>Asks</h4></div>';
-            const bidsDiv = ordersTable.querySelector('.bids');
-            const asksDiv = ordersTable.querySelector('.asks');
+            orderBook.innerHTML = '<h3>Order Book</h3><div class="bids"><h4>Bids</h4></div><div class="asks"><h4>Asks</h4></div>';
+            const bidsDiv = orderBook.querySelector('.bids');
+            const asksDiv = orderBook.querySelector('.asks');
             orderBookData.bids.forEach(bid => {
                 const row = document.createElement('div');
                 row.classList.add('order-row', 'bid');
