@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -386,7 +387,7 @@
             transform: rotateY(180deg);
         }
         .card-back {
-            background: #334155;
+            background: #334155 url('https://i.postimg.cc/mzMZpf0r/logo.jpg') no-repeat center/cover;
         }
         .card img {
             width: 100%;
@@ -673,25 +674,31 @@
 
         /* Trading Modal */
         #tradingContent {
-            max-width: 900px;
+            max-width: 100%;
+            background: #0f172a;
+            border-radius: 12px;
+            overflow: hidden;
         }
         #tradingTitle {
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 1rem;
             text-align: center;
+            color: #f0f0f0;
         }
         .trading-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background: #1a2637;
+            border-bottom: 1px solid #2a3a4a;
         }
         .trading-balance {
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 500;
-            background: rgba(15, 23, 42, 0.8);
-            padding: 0.5rem 1rem;
+            background: #2a3a4a;
+            padding: 0.3rem 0.6rem;
             border-radius: 10px;
         }
         .trading-user {
@@ -700,90 +707,104 @@
             gap: 0.5rem;
         }
         .user-icon {
-            width: 2rem;
-            height: 2rem;
+            width: 1.8rem;
+            height: 1.8rem;
             border-radius: 50%;
         }
         .trading-controls {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #1e293b;
+            border-bottom: 1px solid #2a3a4a;
         }
         .trading-price {
             font-size: 1.1rem;
-            font-weight: 500;
+            font-weight: 600;
             text-align: center;
-            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: #2a3a4a;
+            border-radius: 10px;
+            margin: 0.5rem;
         }
         #tradingChart {
             width: 100%;
-            max-height: 400px;
-            background: #1e293b;
-            border-radius: 10px;
-            border: 2px solid #3b82f6;
+            height: 300px;
+            background: #0f172a;
+            border-bottom: 1px solid #2a3a4a;
         }
-        .trading-actions {
+        .trading-sections {
             display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-top: 1rem;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
         }
-        .trade-form {
-            flex: 1;
-            background: #334155;
-            padding: 1rem;
-            border-radius: 10px;
+        #orderBook, #tradeHistory, #positionInfo {
+            background: #1e293b;
+            padding: 0.5rem;
+            border-radius: 8px;
+            overflow-y: auto;
+            max-height: 150px;
         }
-        .trade-form h3 {
-            font-size: 1.2rem;
+        #orderBook h3, #tradeHistory h3, #positionInfo h3 {
+            font-size: 1rem;
             margin-bottom: 0.5rem;
-        }
-        .trade-form input, .trade-form select {
-            margin-bottom: 0.5rem;
-        }
-        .trade-form button {
-            width: 48%;
-            padding: 0.75rem;
-            border: none;
-            border-radius: 10px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: transform 0.3s ease, background 0.3s ease;
-        }
-        #buyBtn {
-            background: linear-gradient(45deg, #22c55e, #16a34a); /* Green for Buy */
-        }
-        #buyBtn:hover, #buyBtn:focus {
-            background: linear-gradient(45deg, #16a34a, #22c55e);
-            transform: scale(1.05);
-            outline: none;
-        }
-        #sellBtn {
-            background: linear-gradient(45deg, #ef4444, #dc2626); /* Red for Sell */
-        }
-        #sellBtn:hover, #sellBtn:focus {
-            background: linear-gradient(45deg, #dc2626, #ef4444);
-            transform: scale(1.05);
-            outline: none;
-        }
-        #orderHistory {
-            flex: 1;
-            background: #334155;
-            padding: 1rem;
-            border-radius: 10px;
-        }
-        #orderHistory h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
+            color: #f0f0f0;
         }
         .order-row {
             display: flex;
             justify-content: space-between;
-            padding: 0.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.3rem 0;
+            font-size: 0.8rem;
+            color: #d1d5db;
         }
-        .order-row:last-child {
-            border-bottom: none;
+        .order-row.bid { color: #22c55e; }
+        .order-row.ask { color: #ef4444; }
+        .trade-form {
+            background: #1e293b;
+            padding: 0.5rem;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .trade-form h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #f0f0f0;
+        }
+        .trade-form input, .trade-form select {
+            padding: 0.4rem;
+            font-size: 0.9rem;
+            border: 1px solid #2a3a4a;
+            border-radius: 4px;
+            background: #334155;
+            color: #f0f0f0;
+        }
+        .trade-form button {
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        #buyBtn {
+            background: #22c55e;
+            color: #fff;
+        }
+        #buyBtn:hover, #buyBtn:focus {
+            background: #16a34a;
+            outline: none;
+        }
+        #sellBtn {
+            background: #ef4444;
+            color: #fff;
+        }
+        #sellBtn:hover, #sellBtn:focus {
+            background: #dc2626;
+            outline: none;
         }
 
         /* Toast Notification */
@@ -891,14 +912,13 @@
             .game-option {
                 width: 90%;
             }
-            .trading-header {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
             .trading-controls {
                 flex-direction: column;
             }
-            .trading-actions {
+            .trading-sections {
+                flex-direction: column;
+            }
+            .trade-form {
                 flex-direction: column;
             }
             .trade-form button {
@@ -906,7 +926,7 @@
                 margin: 0.25rem 0;
             }
             #tradingChart {
-                max-height: 300px;
+                height: 250px;
             }
         }
 
@@ -1077,7 +1097,7 @@
     <div id="tradingModal" class="modal" role="dialog" aria-labelledby="tradingTitle">
         <div id="tradingContent" class="modal-content">
             <span class="modal-close" id="closeTradingBtn" aria-label="Close Trading" role="button" tabindex="0">❌</span>
-            <div id="tradingTitle">KITE/USDT Trading</div>
+            <div id="tradingTitle">KITE/USDT Futures Trading</div>
             <div class="trading-header">
                 <div class="trading-balance" id="tradingBalance">Balance: 10,000 USDT | 0 KITE</div>
                 <div class="trading-user">
@@ -1087,10 +1107,12 @@
             </div>
             <div class="trading-controls">
                 <select id="timeframeSelect" aria-label="Select Timeframe">
-                    <option value="1m">1 Minute</option>
-                    <option value="15m">15 Minutes</option>
-                    <option value="1d">1 Day</option>
-                    <option value="30d">30 Days</option>
+                    <option value="1m">1m</option>
+                    <option value="5m">5m</option>
+                    <option value="15m">15m</option>
+                    <option value="1h">1h</option>
+                    <option value="4h">4h</option>
+                    <option value="1d">1d</option>
                 </select>
                 <select id="tokenSelect" aria-label="Select Token Pair">
                     <option value="KITE/USDT">KITE/USDT</option>
@@ -1103,24 +1125,31 @@
                 <select id="leverageSelect" aria-label="Select Leverage">
                     <option value="1">1x</option>
                     <option value="2">2x</option>
+                    <option value="3">3x</option>
                     <option value="5">5x</option>
+                    <option value="10">10x</option>
+                    <option value="20">20x</option>
+                </select>
+                <select id="marginTypeSelect" aria-label="Select Margin Type">
+                    <option value="isolated">Isolated</option>
+                    <option value="cross">Cross</option>
                 </select>
             </div>
             <div class="trading-price">
                 Current Price: <span id="currentPrice">1.0000 USDT</span>
             </div>
+            <div id="ohlcDisplay" style="text-align: center; padding: 0.5rem; background: #2a3a4a; border-radius: 10px; margin: 0.5rem;"></div>
             <canvas id="tradingChart"></canvas>
-            <div class="trading-actions">
+            <div class="trading-sections">
+                <div id="orderBook"></div>
+                <div id="tradeHistory"></div>
+                <div id="positionInfo"></div>
                 <div class="trade-form">
-                    <h3>Place Order</h3>
-                    <input type="number" id="tradeAmount" placeholder="Amount (KITE)" aria-label="Trade Amount" min="0.01" step="0.01">
+                    <h3>Trade</h3>
+                    <input type="number" id="positionSize" placeholder="Position Size (KITE)" aria-label="Position Size" min="0.01" step="0.01">
                     <input type="number" id="tradePrice" placeholder="Price (USDT)" aria-label="Trade Price" min="0.01" step="0.01">
-                    <button id="buyBtn" aria-label="Buy KITE">Buy</button>
-                    <button id="sellBtn" aria-label="Sell KITE">Sell</button>
-                </div>
-                <div id="orderHistory">
-                    <h3>Order History</h3>
-                    <div id="ordersTable"></div>
+                    <button id="buyBtn" aria-label="Buy KITE">Buy/Long</button>
+                    <button id="sellBtn" aria-label="Sell KITE">Sell/Short</button>
                 </div>
             </div>
         </div>
@@ -1921,19 +1950,17 @@
         const tokenSelect = document.getElementById('tokenSelect');
         const orderTypeSelect = document.getElementById('orderTypeSelect');
         const leverageSelect = document.getElementById('leverageSelect');
+        const marginTypeSelect = document.getElementById('marginTypeSelect');
         const tradingChart = document.getElementById('tradingChart');
         const buyBtn = document.getElementById('buyBtn');
         const sellBtn = document.getElementById('sellBtn');
-        const tradeAmount = document.getElementById('tradeAmount');
+        const positionSize = document.getElementById('positionSize');
         const tradePrice = document.getElementById('tradePrice');
-        const ordersTable = document.getElementById('ordersTable');
+        const ordersTable = document.getElementById('orderBook');
+        const tradeHistory = document.getElementById('tradeHistory');
+        const positionInfo = document.getElementById('positionInfo');
         const currentPriceDisplay = document.getElementById('currentPrice');
         const ohlcDisplay = document.getElementById('ohlcDisplay');
-        const orderBook = document.getElementById('orderBook');
-        const tradeHistory = document.getElementById('tradeHistory');
-        const marginTypeSelect = document.getElementById('marginTypeSelect');
-        const positionSize = document.getElementById('positionSize');
-        const positionInfo = document.getElementById('positionInfo');
 
         let chart = null;
         let priceData = [];
@@ -1964,26 +1991,33 @@
 
         function calculateIndicators(data) {
             const closes = data.map(d => d.c);
-            // Simple Moving Average (SMA)
+            // Simple Moving Average (SMA) - 10-period
             const ma = closes.map((_, i) => {
                 if (i < 9) return null;
                 return closes.slice(i - 9, i + 1).reduce((sum, val) => sum + val, 0) / 10;
             });
-            // RSI (simplified)
+            // RSI (14-period, simplified)
             const rsi = closes.map((_, i) => {
                 if (i < 14) return null;
                 const gains = closes.slice(i - 14, i + 1).reduce((acc, c, j) => j > 0 && c > closes[j - 1] ? acc + (c - closes[j - 1]) : acc, 0) / 14;
                 const losses = closes.slice(i - 14, i + 1).reduce((acc, c, j) => j > 0 && c < closes[j - 1] ? acc + (closes[j - 1] - c) : acc, 0) / 14;
                 return losses === 0 ? 100 : 100 - (100 / (1 + gains / losses));
             });
-            // MACD (simplified)
-            const macd = closes.map((_, i) => {
-                if (i < 26) return null;
-                const ema12 = closes.slice(i - 12, i + 1).reduce((sum, val, j) => sum + val * Math.pow(0.15, 12 - j), 0) / closes.slice(i - 12, i + 1).reduce((sum, _, j) => sum + Math.pow(0.15, 12 - j), 0);
-                const ema26 = closes.slice(i - 26, i + 1).reduce((sum, val, j) => sum + val * Math.pow(0.08, 26 - j), 0) / closes.slice(i - 26, i + 1).reduce((sum, _, j) => sum + Math.pow(0.08, 26 - j), 0);
-                return ema12 - ema26;
+            // MACD (12, 26, 9 - simplified)
+            const ema12 = closes.map((_, i) => {
+                if (i < 11) return null;
+                return closes.slice(i - 11, i + 1).reduce((sum, val, j) => sum + val * Math.pow(0.1538, 12 - j), 0) / closes.slice(i - 11, i + 1).reduce((sum, _, j) => sum + Math.pow(0.1538, 12 - j), 0);
             });
-            return { ma, rsi, macd };
+            const ema26 = closes.map((_, i) => {
+                if (i < 25) return null;
+                return closes.slice(i - 25, i + 1).reduce((sum, val, j) => sum + val * Math.pow(0.0741, 26 - j), 0) / closes.slice(i - 25, i + 1).reduce((sum, _, j) => sum + Math.pow(0.0741, 26 - j), 0);
+            });
+            const macd = ema12.map((e12, i) => e12 && ema26[i] ? e12 - ema26[i] : null);
+            const signal = macd.map((_, i) => {
+                if (i < 9) return null;
+                return macd.slice(i - 9, i + 1).reduce((sum, val) => sum + val, 0) / 9;
+            });
+            return { ma, rsi, macd, signal };
         }
 
         function updateChart() {
@@ -1997,33 +2031,17 @@
                             label: 'KITE/USDT',
                             data: priceData,
                             borderColor: priceData.map(d => d.color),
-                            backgroundColor: priceData.map(d => d.color)
+                            backgroundColor: priceData.map(d => d.color + '80'),
+                            borderWidth: 1
                         },
                         {
-                            label: 'MA',
+                            label: 'MA (10)',
                             type: 'line',
                             data: priceData.map((d, i) => ({ x: d.x, y: indicators.ma[i] })),
                             borderColor: '#f59e0b',
                             borderWidth: 1,
-                            pointRadius: 0
-                        },
-                        {
-                            label: 'RSI',
-                            type: 'line',
-                            data: priceData.map((d, i) => ({ x: d.x, y: indicators.rsi[i] })),
-                            borderColor: '#8b5cf6',
-                            borderWidth: 1,
                             pointRadius: 0,
-                            yAxisID: 'rsi'
-                        },
-                        {
-                            label: 'MACD',
-                            type: 'line',
-                            data: priceData.map((d, i) => ({ x: d.x, y: indicators.macd[i] })),
-                            borderColor: '#ec4899',
-                            borderWidth: 1,
-                            pointRadius: 0,
-                            yAxisID: 'macd'
+                            fill: false
                         },
                         {
                             label: 'Volume',
@@ -2035,26 +2053,50 @@
                     ]
                 },
                 options: {
+                    animation: { duration: 500, easing: 'easeInOutQuad' },
                     plugins: {
                         legend: { display: false },
                         zoom: {
                             zoom: {
                                 wheel: { enabled: true },
                                 pinch: { enabled: true },
-                                mode: 'xy'
+                                mode: 'xy',
+                                speed: 0.1
                             },
-                            pan: { enabled: true, mode: 'xy' }
+                            pan: { enabled: true, mode: 'xy', speed: 0.1 }
+                        },
+                        tooltip: {
+                            mode: 'nearest',
+                            intersect: false,
+                            callbacks: {
+                                label: (context) => `${context.dataset.label}: ${context.raw.c.toFixed(4)} USDT`
+                            }
+                        },
+                        crosshair: {
+                            line: { color: '#3b82f6', width: 1 },
+                            sync: { enabled: false },
+                            zoom: { enabled: true }
                         }
                     },
                     scales: {
                         x: {
                             type: 'time',
-                            time: { unit: timeframeSelect.value === '1m' ? 'second' : timeframeSelect.value === '5m' ? 'second' : timeframeSelect.value === '15m' ? 'minute' : timeframeSelect.value === '1h' ? 'hour' : timeframeSelect.value === '4h' ? 'hour' : 'day' }
+                            time: { unit: timeframeSelect.value === '1m' ? 'second' : timeframeSelect.value === '5m' ? 'minute' : timeframeSelect.value === '15m' ? 'minute' : timeframeSelect.value === '1h' ? 'hour' : timeframeSelect.value === '4h' ? 'hour' : 'day' },
+                            ticks: { source: 'auto' }
                         },
-                        y: { beginAtZero: false, position: 'left', title: { display: true, text: 'Price (USDT)' } },
-                        rsi: { display: false, min: 0, max: 100 },
-                        macd: { display: false },
-                        volume: { display: false }
+                        y: {
+                            beginAtZero: false,
+                            position: 'left',
+                            title: { display: true, text: 'Price (USDT)', color: '#f0f0f0' },
+                            ticks: { color: '#d1d5db' }
+                        },
+                        volume: {
+                            display: true,
+                            position: 'right',
+                            title: { display: true, text: 'Volume', color: '#f0f0f0' },
+                            ticks: { color: '#d1d5db' },
+                            grid: { display: false }
+                        }
                     },
                     interaction: {
                         mode: 'nearest',
@@ -2065,12 +2107,13 @@
                         if (chartElement.length) {
                             const data = priceData[chartElement[0].index];
                             ohlcDisplay.textContent = `O: ${data.o.toFixed(4)} H: ${data.h.toFixed(4)} L: ${data.l.toFixed(4)} C: ${data.c.toFixed(4)}`;
+                        } else {
+                            ohlcDisplay.textContent = '';
                         }
                     }
                 }
             });
             currentPriceDisplay.textContent = `${currentPrice.toFixed(4)} USDT`;
-            // Draw current price line
             chart.options.plugins.annotation = {
                 annotations: {
                     priceLine: {
@@ -2078,8 +2121,8 @@
                         yMin: currentPrice,
                         yMax: currentPrice,
                         borderColor: '#3b82f6',
-                        borderWidth: 2,
-                        label: { content: currentPrice.toFixed(4), enabled: true, position: 'right' }
+                        borderWidth: 1,
+                        label: { content: currentPrice.toFixed(4), enabled: true, position: 'end', backgroundColor: 'rgba(59, 130, 246, 0.7)' }
                     }
                 }
             };
@@ -2087,18 +2130,18 @@
         }
 
         function updateOrderBook() {
-            orderBook.innerHTML = '<h3>Order Book</h3><div class="bids"><h4>Bids</h4></div><div class="asks"><h4>Asks</h4></div>';
-            const bidsDiv = orderBook.querySelector('.bids');
-            const asksDiv = orderBook.querySelector('.asks');
+            ordersTable.innerHTML = '<h3>Order Book</h3><div class="bids"><h4>Bids</h4></div><div class="asks"><h4>Asks</h4></div>';
+            const bidsDiv = ordersTable.querySelector('.bids');
+            const asksDiv = ordersTable.querySelector('.asks');
             orderBookData.bids.forEach(bid => {
                 const row = document.createElement('div');
-                row.classList.add('order-row');
+                row.classList.add('order-row', 'bid');
                 row.innerHTML = `<span>${bid.price.toFixed(4)}</span><span>${bid.amount.toFixed(2)}</span>`;
                 bidsDiv.appendChild(row);
             });
             orderBookData.asks.forEach(ask => {
                 const row = document.createElement('div');
-                row.classList.add('order-row');
+                row.classList.add('order-row', 'ask');
                 row.innerHTML = `<span>${ask.price.toFixed(4)}</span><span>${ask.amount.toFixed(2)}</span>`;
                 asksDiv.appendChild(row);
             });
@@ -2119,10 +2162,17 @@
             });
         }
 
-        function updatePrice(amount, isBuy) {
-            const impact = amount > 100 ? (isBuy ? 0.05 : -0.05) : (Math.random() - 0.5) * 0.02;
+        function updatePrice(amount, isBuy, isFullSell = false) {
+            let impact = 0;
+            if (isFullSell && currentUser.kiteBalance === 0) {
+                impact = -0.5; // Significant dump for full portfolio sell
+            } else if (amount > 100) {
+                impact = isBuy ? 0.05 : -0.05; // Pump/dump for large orders
+            } else {
+                impact = (Math.random() - 0.5) * 0.02; // Random fluctuation
+            }
             currentPrice = Math.max(0.1, currentPrice + impact);
-            // Update order book
+            // Update order book with realistic spreads
             orderBookData.bids = Array.from({ length: 5 }, () => ({
                 price: currentPrice - Math.random() * 0.01,
                 amount: Math.random() * 100 + 50
@@ -2140,7 +2190,7 @@
                 const pnL = type === 'buy' ? (currentPrice - entryPrice) * amount * leverage : (entryPrice - currentPrice) * amount * leverage;
                 const margin = (amount * entryPrice) / leverage;
                 const liquidationPrice = marginType === 'isolated' ? 
-                    (type === 'buy' ? entryPrice * (1 - 1 / leverage) : entryPrice * (1 + 1 / leverage)) : 
+                    (type === 'buy' ? entryPrice * (1 - 0.5 / leverage) : entryPrice * (1 + 0.5 / leverage)) : 
                     (type === 'buy' ? entryPrice * 0.9 : entryPrice * 1.1);
                 positionInfo.innerHTML = `
                     <h3>Position</h3>
@@ -2207,7 +2257,7 @@
         });
 
         buyBtn.addEventListener('click', () => {
-            const amount = parseFloat(tradeAmount.value);
+            const amount = parseFloat(positionSize.value) || 0;
             const price = orderTypeSelect.value === 'market' ? currentPrice : parseFloat(tradePrice.value);
             const leverage = parseFloat(leverageSelect.value);
             const marginType = marginTypeSelect.value;
@@ -2227,7 +2277,7 @@
             updateOrderHistory('buy', amount, price, leverage, marginType);
             tradingBalance.textContent = `Balance: ${currentUser.balance.toFixed(2)} USDT | ${currentUser.kiteBalance.toFixed(2)} KITE`;
             showToast(`Buy order executed: ${amount} KITE at ${price.toFixed(4)} USDT (Leverage: ${leverage}x, ${marginType})`, 3000);
-            tradeAmount.value = '';
+            positionSize.value = '';
             tradePrice.value = '';
             priceData = generateChartData(timeframeSelect.value);
             updateChart();
@@ -2240,7 +2290,7 @@
         });
 
         sellBtn.addEventListener('click', () => {
-            const amount = parseFloat(tradeAmount.value);
+            const amount = parseFloat(positionSize.value) || 0;
             const price = orderTypeSelect.value === 'market' ? currentPrice : parseFloat(tradePrice.value);
             const leverage = parseFloat(leverageSelect.value);
             const marginType = marginTypeSelect.value;
@@ -2255,12 +2305,13 @@
             const margin = (amount * price) / leverage;
             currentUser.kiteBalance -= amount;
             currentUser.balance += margin;
-            currentUser.position = { type: 'sell', amount, entryPrice: price, leverage, marginType };
-            updatePrice(amount, false);
+            const isFullSell = amount === currentUser.kiteBalance + (currentUser.position?.amount || 0);
+            currentUser.position = isFullSell ? null : { type: 'sell', amount, entryPrice: price, leverage, marginType };
+            updatePrice(amount, false, isFullSell);
             updateOrderHistory('sell', amount, price, leverage, marginType);
             tradingBalance.textContent = `Balance: ${currentUser.balance.toFixed(2)} USDT | ${currentUser.kiteBalance.toFixed(2)} KITE`;
             showToast(`Sell order executed: ${amount} KITE at ${price.toFixed(4)} USDT (Leverage: ${leverage}x, ${marginType})`, 3000);
-            tradeAmount.value = '';
+            positionSize.value = '';
             tradePrice.value = '';
             priceData = generateChartData(timeframeSelect.value);
             updateChart();
