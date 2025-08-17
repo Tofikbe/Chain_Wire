@@ -5,11 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KiteAI Community Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chart.js and Financial Plugin -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -237,9 +232,11 @@
             position: absolute;
             top: 1rem;
             right: 1rem;
-            font-size: 1.5rem;
+            width: 1.5rem;
+            height: 1.5rem;
             cursor: pointer;
             transition: transform 0.3s ease;
+            loading: lazy;
         }
         .modal-close:hover, .modal-close:focus {
             transform: scale(1.2);
@@ -387,7 +384,7 @@
             transform: rotateY(180deg);
         }
         .card-back {
-            background: #334155 url('https://i.postimg.cc/mzMZpf0r/logo.jpg') no-repeat center/cover;
+            background: #334155;
         }
         .card img {
             width: 100%;
@@ -657,156 +654,6 @@
             background: #2563eb;
         }
 
-        /* Trading Login Modal */
-        #tradingLoginModal .modal-content {
-            text-align: center;
-        }
-        #loginForm, #signupForm {
-            margin-top: 1rem;
-        }
-        #loginForm input, #signupForm input {
-            margin-bottom: 0.5rem;
-        }
-        #loginSubmitBtn, #signupSubmitBtn, #guestLoginBtn, #showLoginFormBtn, #showSignupFormBtn {
-            width: 100%;
-            margin: 0.5rem 0;
-        }
-
-        /* Trading Modal */
-        #tradingContent {
-            max-width: 100%;
-            background: #0f172a;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        #tradingTitle {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            text-align: center;
-            color: #f0f0f0;
-        }
-        .trading-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            background: #1a2637;
-            border-bottom: 1px solid #2a3a4a;
-        }
-        .trading-balance {
-            font-size: 0.9rem;
-            font-weight: 500;
-            background: #2a3a4a;
-            padding: 0.3rem 0.6rem;
-            border-radius: 10px;
-        }
-        .trading-user {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .user-icon {
-            width: 1.8rem;
-            height: 1.8rem;
-            border-radius: 50%;
-        }
-        .trading-controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: #1e293b;
-            border-bottom: 1px solid #2a3a4a;
-        }
-        .trading-price {
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-align: center;
-            padding: 0.5rem;
-            background: #2a3a4a;
-            border-radius: 10px;
-            margin: 0.5rem;
-        }
-        #tradingChart {
-            width: 100%;
-            height: 300px;
-            background: #0f172a;
-            border-bottom: 1px solid #2a3a4a;
-        }
-        .trading-sections {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-        }
-        #orderBook, #tradeHistory, #positionInfo {
-            background: #1e293b;
-            padding: 0.5rem;
-            border-radius: 8px;
-            overflow-y: auto;
-            max-height: 150px;
-        }
-        #orderBook h3, #tradeHistory h3, #positionInfo h3 {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-            color: #f0f0f0;
-        }
-        .order-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.3rem 0;
-            font-size: 0.8rem;
-            color: #d1d5db;
-        }
-        .order-row.bid { color: #22c55e; }
-        .order-row.ask { color: #ef4444; }
-        .trade-form {
-            background: #1e293b;
-            padding: 0.5rem;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .trade-form h3 {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-            color: #f0f0f0;
-        }
-        .trade-form input, .trade-form select {
-            padding: 0.4rem;
-            font-size: 0.9rem;
-            border: 1px solid #2a3a4a;
-            border-radius: 4px;
-            background: #334155;
-            color: #f0f0f0;
-        }
-        .trade-form button {
-            padding: 0.5rem;
-            font-size: 0.9rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        #buyBtn {
-            background: #22c55e;
-            color: #fff;
-        }
-        #buyBtn:hover, #buyBtn:focus {
-            background: #16a34a;
-            outline: none;
-        }
-        #sellBtn {
-            background: #ef4444;
-            color: #fff;
-        }
-        #sellBtn:hover, #sellBtn:focus {
-            background: #dc2626;
-            outline: none;
-        }
-
         /* Toast Notification */
         .toast {
             position: fixed;
@@ -880,10 +727,10 @@
             #puzzleGrid {
                 gap: 0.3rem;
             }
-            #gameTitle, #shootingGameTitle, #tradingTitle {
+            #gameTitle, #shootingGameTitle {
                 font-size: 1.2rem;
             }
-            #gameScore, #shootingGameScore, .trading-balance {
+            #gameScore, #shootingGameScore {
                 font-size: 0.9rem;
                 padding: 0.3rem 0.6rem;
             }
@@ -912,22 +759,6 @@
             .game-option {
                 width: 90%;
             }
-            .trading-controls {
-                flex-direction: column;
-            }
-            .trading-sections {
-                flex-direction: column;
-            }
-            .trade-form {
-                flex-direction: column;
-            }
-            .trade-form button {
-                width: 100%;
-                margin: 0.25rem 0;
-            }
-            #tradingChart {
-                height: 250px;
-            }
         }
 
         @media (min-width: 768px) {
@@ -937,8 +768,8 @@
             .feedback-form {
                 padding: 2rem;
             }
-            #gameContent, #shootingGameContent, #tradingContent {
-                max-width: 900px;
+            #gameContent, #shootingGameContent {
+                max-width: 800px;
             }
         }
     </style>
@@ -1013,7 +844,7 @@
     <!-- Games Modal -->
     <div id="gamesModal" class="modal" role="dialog" aria-labelledby="gamesTitle">
         <div class="modal-content">
-            <span class="modal-close" id="closeGamesBtn" aria-label="Close Games" role="button" tabindex="0">❌</span>
+            <img class="modal-close" id="closeGamesBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Games" aria-label="Close Games" role="button" tabindex="0">
             <h2 id="gamesTitle">KiteAI Games</h2>
             <a href="#" class="game-option" id="flippingGameOption" aria-label="KiteAI Flipping Game">KiteAI Flipping</a>
             <a href="#" class="game-option" id="shootingGameOption" aria-label="KiteAI Shooting Game">KiteAI Shooting</a>
@@ -1023,7 +854,7 @@
     <!-- Announcement Modal -->
     <div id="announcementModal" class="modal" role="dialog" aria-labelledby="announcementTitle">
         <div class="modal-content">
-            <span class="modal-close" id="closeAnnouncementBtn" aria-label="Close Announcements" role="button" tabindex="0">❌</span>
+            <img class="modal-close" id="closeAnnouncementBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Announcements" aria-label="Close Announcements" role="button" tabindex="0">
             <h2 id="announcementTitle" style="display: none;">Announcements</h2>
             <div id="tweetContainer" style="text-align: center;"></div>
             <div class="announcement-controls">
@@ -1036,7 +867,7 @@
     <!-- Leaderboard Modal -->
     <div id="leaderboardModal" class="modal" role="dialog" aria-labelledby="leaderboardTitle">
         <div class="modal-content">
-            <span class="modal-close" id="closeLeaderboardBtn" aria-label="Close Leaderboard" role="button" tabindex="0">❌</span>
+            <img class="modal-close" id="closeLeaderboardBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Leaderboard" aria-label="Close Leaderboard" role="button" tabindex="0">
             <h2 id="leaderboardTitle">Leaderboard</h2>
             <div id="leaderboardTable"></div>
         </div>
@@ -1045,7 +876,7 @@
     <!-- Flipping Game Modal -->
     <div id="gameModal" class="modal" role="dialog" aria-labelledby="gameTitle">
         <div id="gameContent" class="modal-content">
-            <span class="modal-close" id="closeGameBtn" aria-label="Close Game" role="button" tabindex="0">❌</span>
+            <img class="modal-close" id="closeGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Game" aria-label="Close Game" role="button" tabindex="0">
             <div id="gameTitle">KiteAI Flipping Game</div>
             <div class="game-controls">
                 <div id="gameScore" aria-live="polite">Level: 1 | Best Level: 1 | Time: 0s</div>
@@ -1059,7 +890,7 @@
     <!-- Shooting Game Modal -->
     <div id="shootingGameModal" class="modal" role="dialog" aria-labelledby="shootingGameTitle">
         <div id="shootingGameContent" class="modal-content">
-            <span class="modal-close" id="closeShootingGameBtn" aria-label="Close Shooting Game" role="button" tabindex="0">❌</span>
+            <img class="modal-close" id="closeShootingGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Shooting Game" aria-label="Close Shooting Game" role="button" tabindex="0">
             <div id="shootingGameTitle">KiteAI Shooting Game</div>
             <div class="game-controls-shooting">
                 <div id="shootingGameScore" aria-live="polite">Score: 0 | Best Score: 0 | Time: 0s</div>
@@ -1068,90 +899,6 @@
             </div>
             <canvas id="shootingGameCanvas"></canvas>
             <div id="gameOverMessage" aria-live="assertive">Game Over!</div>
-        </div>
-    </div>
-
-    <!-- Trading Login Modal -->
-    <div id="tradingLoginModal" class="modal" role="dialog" aria-labelledby="tradingLoginTitle">
-        <div class="modal-content">
-            <span class="modal-close" id="closeTradingLoginBtn" aria-label="Close Trading Login" role="button" tabindex="0">❌</span>
-            <h2 id="tradingLoginTitle">Trading Login</h2>
-            <button id="guestLoginBtn" class="form-buttons" aria-label="Login as Guest">Login with Guest</button>
-            <button id="showLoginFormBtn" class="form-buttons" aria-label="Show Login Form">Login</button>
-            <button id="showSignupFormBtn" class="form-buttons" aria-label="Show Signup Form">Signup</button>
-            <div id="loginForm" style="display: none;">
-                <input type="text" id="loginUsername" placeholder="Username" aria-label="Username" required>
-                <input type="password" id="loginPassword" placeholder="Password" aria-label="Password" required>
-                <button id="loginSubmitBtn" class="form-buttons" aria-label="Submit Login">Login</button>
-            </div>
-            <div id="signupForm" style="display: none;">
-                <input type="text" id="signupUsername" placeholder="Username" aria-label="Username" required>
-                <input type="password" id="signupPassword" placeholder="Password" aria-label="Password" required>
-                <input type="password" id="signupConfirmPassword" placeholder="Confirm Password" aria-label="Confirm Password" required>
-                <button id="signupSubmitBtn" class="form-buttons" aria-label="Submit Signup">Signup</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Trading Modal -->
-    <div id="tradingModal" class="modal" role="dialog" aria-labelledby="tradingTitle">
-        <div id="tradingContent" class="modal-content">
-            <span class="modal-close" id="closeTradingBtn" aria-label="Close Trading" role="button" tabindex="0">❌</span>
-            <div id="tradingTitle">KITE/USDT Futures Trading</div>
-            <div class="trading-header">
-                <div class="trading-balance" id="tradingBalance">Balance: 10,000 USDT | 0 KITE</div>
-                <div class="trading-user">
-                    <span id="tradingUsername"></span>
-                    <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="User Icon" class="user-icon">
-                </div>
-            </div>
-            <div class="trading-controls">
-                <select id="timeframeSelect" aria-label="Select Timeframe">
-                    <option value="1m">1m</option>
-                    <option value="5m">5m</option>
-                    <option value="15m">15m</option>
-                    <option value="1h">1h</option>
-                    <option value="4h">4h</option>
-                    <option value="1d">1d</option>
-                </select>
-                <select id="tokenSelect" aria-label="Select Token Pair">
-                    <option value="KITE/USDT">KITE/USDT</option>
-                    <option value="coming_soon" disabled>Coming Soon</option>
-                </select>
-                <select id="orderTypeSelect" aria-label="Select Order Type">
-                    <option value="market">Market</option>
-                    <option value="limit">Limit</option>
-                </select>
-                <select id="leverageSelect" aria-label="Select Leverage">
-                    <option value="1">1x</option>
-                    <option value="2">2x</option>
-                    <option value="3">3x</option>
-                    <option value="5">5x</option>
-                    <option value="10">10x</option>
-                    <option value="20">20x</option>
-                </select>
-                <select id="marginTypeSelect" aria-label="Select Margin Type">
-                    <option value="isolated">Isolated</option>
-                    <option value="cross">Cross</option>
-                </select>
-            </div>
-            <div class="trading-price">
-                Current Price: <span id="currentPrice">1.0000 USDT</span>
-            </div>
-            <div id="ohlcDisplay" style="text-align: center; padding: 0.5rem; background: #2a3a4a; border-radius: 10px; margin: 0.5rem;"></div>
-            <canvas id="tradingChart"></canvas>
-            <div class="trading-sections">
-                <div id="orderBook"></div>
-                <div id="tradeHistory"></div>
-                <div id="positionInfo"></div>
-                <div class="trade-form">
-                    <h3>Trade</h3>
-                    <input type="number" id="positionSize" placeholder="Position Size (KITE)" aria-label="Position Size" min="0.01" step="0.01">
-                    <input type="number" id="tradePrice" placeholder="Price (USDT)" aria-label="Trade Price" min="0.01" step="0.01">
-                    <button id="buyBtn" aria-label="Buy KITE">Buy/Long</button>
-                    <button id="sellBtn" aria-label="Sell KITE">Sell/Short</button>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -1173,14 +920,13 @@
             <button type="button" id="agentBtn" aria-label="Open Community Agent">🤖 Community Agent</button>
             <button type="button" id="leaderboardBtn" aria-label="Open Leaderboard">📊 Leaderboard</button>
             <button type="button" id="gamesBtn" class="dropbtn" aria-label="Open Games">🎮 Games</button>
-            <button type="button" id="tradingBtn" aria-label="Open Trading">💸 Trading</button>
         </div>
     </form>
 
     <!-- Agent Chat Modal -->
     <div id="agentModal" class="modal" role="dialog" aria-labelledby="agentTitle">
         <div id="agentContent" class="modal-content">
-            <span class="modal-close" id="closeAgentBtn" aria-label="Close Chat" role="button" tabindex="0">❌</span>
+            <img class="modal-close" id="closeAgentBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Chat" aria-label="Close Chat" role="button" tabindex="0">
             <h2 id="agentTitle" style="display: none;">Community Agent</h2>
             <div id="chatMessages" aria-live="polite"></div>
             <div id="preQuestions">
@@ -1201,9 +947,9 @@
     <!-- Footer -->
     <footer>
         <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo">
-        Made for KiteAI · Follow
-        <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank" aria-label="Follow Crypto_King877">@Crypto_King877</a>
-        &
+        Made for KiteAI · Follow 
+        <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank" aria-label="Follow Crypto_King877">@Crypto_King877</a> 
+        & 
         <a href="https://x.com/GoKiteAI?t=fzEmGeci_aCKBgJRAYEwsA&s=09" target="_blank" aria-label="Follow GoKiteAI">@GoKiteAI</a>
     </footer>
 
@@ -1267,12 +1013,12 @@
 
         // Announcement Modal
         const tweets = [
-            'https://x.com/GoKiteAI/status/1951245795216200146',
-            'https://x.com/GoKiteAI/status/1955919782785503588',
-            'https://x.com/GoKiteAI/status/1955792638948597868',
-            'https://x.com/GoKiteAI/status/1955104976801349904',
-            'https://x.com/wallet/status/1954052040939753923',
-            'https://x.com/GoKiteAI/status/1956244265958564185?t=FSvQKtpHlSZubCmNs6VY0w&s=19'
+            "https://x.com/GoKiteAI/status/1951245795216200146",
+            "https://x.com/GoKiteAI/status/1955919782785503588",
+            "https://x.com/GoKiteAI/status/1955792638948597868",
+            "https://x.com/GoKiteAI/status/1955104976801349904",
+            "https://x.com/wallet/status/1954052040939753923",
+            "https://x.com/GoKiteAI/status/1956244265958564185?t=FSvQKtpHlSZubCmNs6VY0w&s=19"
         ];
         let currentTweet = 0;
         function loadTweet(index) {
@@ -1470,7 +1216,7 @@
                 row.innerHTML = `
                     <div class="leaderboard-rank rank-${user.rank}">${user.rank}</div>
                     <div class="leaderboard-profile">
-                        <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="Profile of ${user.name}" loading="lazy">
+                        <img src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Profile of ${user.name}" loading="lazy">
                     </div>
                     <div class="leaderboard-name">
                         <a href="${user.url}" target="_blank" aria-label="Visit ${user.name}'s profile">${user.name}</a>
@@ -1496,7 +1242,7 @@
         const scoreDisplay = document.getElementById('gameScore');
         const winMessage = document.getElementById('winMessage');
 
-        const backsideImage = 'https://i.postimg.cc/mzMZpf0r/logo.jpg';
+        const backsideImage = 'https://i.postimg.cc/6TkVmjdM/close-icon.png';
         const frontImages = [
             'https://i.postimg.cc/FfpWLBgg/image1.png',
             'https://i.postimg.cc/FfpWLBgg/image1.png',
@@ -1842,434 +1588,6 @@
         });
         restartShootingGameBtn.addEventListener('click', () => {
             initShootingGame();
-        });
-
-        // Trading Login Modal
-        const tradingLoginModal = document.getElementById('tradingLoginModal');
-        const tradingBtn = document.getElementById('tradingBtn');
-        const closeTradingLoginBtn = document.getElementById('closeTradingLoginBtn');
-        const guestLoginBtn = document.getElementById('guestLoginBtn');
-        const showLoginFormBtn = document.getElementById('showLoginFormBtn');
-        const showSignupFormBtn = document.getElementById('showSignupFormBtn');
-        const loginForm = document.getElementById('loginForm');
-        const signupForm = document.getElementById('signupForm');
-        const loginSubmitBtn = document.getElementById('loginSubmitBtn');
-        const signupSubmitBtn = document.getElementById('signupSubmitBtn');
-
-        tradingBtn.addEventListener('click', () => {
-            tradingLoginModal.classList.add('show');
-            loginForm.style.display = 'none';
-            signupForm.style.display = 'none';
-        });
-
-        closeTradingLoginBtn.addEventListener('click', () => {
-            tradingLoginModal.classList.remove('show');
-        });
-
-        showLoginFormBtn.addEventListener('click', () => {
-            loginForm.style.display = 'block';
-            signupForm.style.display = 'none';
-        });
-
-        showSignupFormBtn.addEventListener('click', () => {
-            signupForm.style.display = 'block';
-            loginForm.style.display = 'none';
-        });
-
-        // User Management
-        let currentUser = null;
-
-        function generateGuestUsername() {
-            return 'Guest_' + Math.random().toString(36).substr(2, 8);
-        }
-
-        guestLoginBtn.addEventListener('click', () => {
-            currentUser = {
-                username: generateGuestUsername(),
-                balance: 10000,
-                kiteBalance: 0,
-                orderHistory: [],
-                position: null
-            };
-            localStorage.setItem('tradingGuestUser', JSON.stringify(currentUser));
-            tradingLoginModal.classList.remove('show');
-            tradingModal.classList.add('show');
-            initTrading();
-        });
-
-        loginSubmitBtn.addEventListener('click', () => {
-            const username = document.getElementById('loginUsername').value.trim();
-            const password = document.getElementById('loginPassword').value.trim();
-            const storedUser = JSON.parse(localStorage.getItem('tradingUser_' + username));
-            if (storedUser && storedUser.password === password) {
-                currentUser = storedUser;
-                tradingLoginModal.classList.remove('show');
-                tradingModal.classList.add('show');
-                initTrading();
-            } else {
-                showToast('Invalid username or password!', 3000);
-            }
-        });
-
-        signupSubmitBtn.addEventListener('click', () => {
-            const username = document.getElementById('signupUsername').value.trim();
-            const password = document.getElementById('signupPassword').value.trim();
-            const confirmPassword = document.getElementById('signupConfirmPassword').value.trim();
-            if (!username || !password || !confirmPassword) {
-                showToast('Please fill in all fields!', 3000);
-                return;
-            }
-            if (password !== confirmPassword) {
-                showToast('Passwords do not match!', 3000);
-                return;
-            }
-            if (localStorage.getItem('tradingUser_' + username)) {
-                showToast('Username already exists!', 3000);
-                return;
-            }
-            currentUser = {
-                username,
-                password,
-                balance: 10000,
-                kiteBalance: 0,
-                orderHistory: [],
-                position: null
-            };
-            localStorage.setItem('tradingUser_' + username, JSON.stringify(currentUser));
-            tradingLoginModal.classList.remove('show');
-            tradingModal.classList.add('show');
-            initTrading();
-        });
-
-        // Trading Logic
-        const tradingModal = document.getElementById('tradingModal');
-        const closeTradingBtn = document.getElementById('closeTradingBtn');
-        const tradingBalance = document.getElementById('tradingBalance');
-        const tradingUsername = document.getElementById('tradingUsername');
-        const timeframeSelect = document.getElementById('timeframeSelect');
-        const tokenSelect = document.getElementById('tokenSelect');
-        const orderTypeSelect = document.getElementById('orderTypeSelect');
-        const leverageSelect = document.getElementById('leverageSelect');
-        const marginTypeSelect = document.getElementById('marginTypeSelect');
-        const tradingChart = document.getElementById('tradingChart');
-        const buyBtn = document.getElementById('buyBtn');
-        const sellBtn = document.getElementById('sellBtn');
-        const positionSize = document.getElementById('positionSize');
-        const tradePrice = document.getElementById('tradePrice');
-        const orderBook = document.getElementById('orderBook');
-        const tradeHistory = document.getElementById('tradeHistory');
-        const positionInfo = document.getElementById('positionInfo');
-        const currentPriceDisplay = document.getElementById('currentPrice');
-        const ohlcDisplay = document.getElementById('ohlcDisplay');
-
-        let chart = null;
-        let priceData = [];
-        let chartInterval = null;
-        let currentPrice = 1.0; // Base price: 1 KITE = 1 USDT
-        let orderBookData = { bids: [], asks: [] };
-        let tradeHistoryData = [];
-
-        function generateChartData(timeframe) {
-            const dataPoints = timeframe === '1m' ? 60 : timeframe === '5m' ? 48 : timeframe === '15m' ? 36 : timeframe === '1h' ? 24 : timeframe === '4h' ? 12 : 6;
-            const data = [];
-            let lastPrice = currentPrice;
-            const now = new Date();
-            for (let i = dataPoints - 1; i >= 0; i--) {
-                const time = new Date(now - i * (timeframe === '1m' ? 60000 : timeframe === '5m' ? 300000 : timeframe === '15m' ? 900000 : timeframe === '1h' ? 3600000 : timeframe === '4h' ? 14400000 : 86400000));
-                const open = lastPrice;
-                const fluctuation = (Math.random() - 0.5) * 0.05;
-                const close = Math.max(0.1, open + fluctuation);
-                const high = Math.max(open, close) + Math.random() * 0.02;
-                const low = Math.min(open, close) - Math.random() * 0.02;
-                const color = close >= open ? '#22c55e' : '#ef4444';
-                data.push({ x: time, o: open, h: high, l: low, c: close, color });
-                lastPrice = close;
-            }
-            return data;
-        }
-        
-        function updateChart() {
-            if (chart) chart.destroy();
-            chart = new Chart(tradingChart, {
-                type: 'candlestick',
-                data: {
-                    datasets: [{
-                        label: 'KITE/USDT',
-                        data: priceData,
-                        borderColor: priceData.map(d => d.color),
-                        backgroundColor: priceData.map(d => d.color + '80'),
-                        borderWidth: 1,
-                        barPercentage: 0.7,
-                        categoryPercentage: 0.8
-                    }]
-                },
-                options: {
-                    animation: { duration: 500, easing: 'easeInOutQuad' },
-                    plugins: {
-                        legend: { display: false },
-                        zoom: {
-                            zoom: {
-                                wheel: { enabled: true },
-                                pinch: { enabled: true },
-                                mode: 'xy',
-                                speed: 0.1
-                            },
-                            pan: { enabled: true, mode: 'xy', speed: 0.1 }
-                        },
-                        tooltip: {
-                            mode: 'nearest',
-                            intersect: false,
-                            callbacks: {
-                                label: (context) => `${context.dataset.label}: ${context.raw.c.toFixed(4)} USDT`
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            type: 'time',
-                            time: { unit: timeframeSelect.value === '1m' ? 'second' : timeframeSelect.value === '5m' ? 'minute' : timeframeSelect.value === '15m' ? 'minute' : timeframeSelect.value === '1h' ? 'hour' : timeframeSelect.value === '4h' ? 'hour' : 'day' },
-                            ticks: { source: 'auto', maxRotation: 0, minRotation: 0 }
-                        },
-                        y: {
-                            beginAtZero: false,
-                            position: 'left',
-                            title: { display: true, text: 'Price (USDT)', color: '#f0f0f0' },
-                            ticks: { color: '#d1d5db', padding: 5 }
-                        }
-                    },
-                    interaction: {
-                        mode: 'nearest',
-                        intersect: false,
-                        axis: 'x'
-                    },
-                    onHover: (event, chartElement) => {
-                        if (chartElement.length) {
-                            const data = priceData[chartElement[0].index];
-                            ohlcDisplay.textContent = `O: ${data.o.toFixed(4)} H: ${data.h.toFixed(4)} L: ${data.l.toFixed(4)} C: ${data.c.toFixed(4)}`;
-                        } else {
-                            ohlcDisplay.textContent = '';
-                        }
-                    }
-                }
-            });
-            currentPriceDisplay.textContent = `${currentPrice.toFixed(4)} USDT`;
-            chart.options.plugins.annotation = {
-                annotations: {
-                    priceLine: {
-                        type: 'line',
-                        yMin: currentPrice,
-                        yMax: currentPrice,
-                        borderColor: '#3b82f6',
-                        borderWidth: 1,
-                        label: { content: currentPrice.toFixed(4), enabled: true, position: 'end', backgroundColor: 'rgba(59, 130, 246, 0.7)' }
-                    }
-                }
-            };
-            chart.update();
-        }
-
-        function updateOrderBook() {
-            orderBook.innerHTML = '<h3>Order Book</h3><div class="bids"><h4>Bids</h4></div><div class="asks"><h4>Asks</h4></div>';
-            const bidsDiv = orderBook.querySelector('.bids');
-            const asksDiv = orderBook.querySelector('.asks');
-            orderBookData.bids.forEach(bid => {
-                const row = document.createElement('div');
-                row.classList.add('order-row', 'bid');
-                row.innerHTML = `<span>${bid.price.toFixed(4)}</span><span>${bid.amount.toFixed(2)}</span>`;
-                bidsDiv.appendChild(row);
-            });
-            orderBookData.asks.forEach(ask => {
-                const row = document.createElement('div');
-                row.classList.add('order-row', 'ask');
-                row.innerHTML = `<span>${ask.price.toFixed(4)}</span><span>${ask.amount.toFixed(2)}</span>`;
-                asksDiv.appendChild(row);
-            });
-        }
-
-        function updateTradeHistory() {
-            tradeHistory.innerHTML = '<h3>Trade History</h3>';
-            tradeHistoryData.forEach(trade => {
-                const row = document.createElement('div');
-                row.classList.add('order-row');
-                row.innerHTML = `
-                    <span>${trade.type.toUpperCase()}</span>
-                    <span>${trade.amount.toFixed(2)}</span>
-                    <span>${trade.price.toFixed(4)}</span>
-                    <span>${trade.timestamp}</span>
-                `;
-                tradeHistory.appendChild(row);
-            });
-        }
-
-        function updatePrice(amount, isBuy, isFullSell = false) {
-            let impact = 0;
-            if (isFullSell && currentUser.kiteBalance === 0) {
-                impact = -0.5; // Significant dump for full portfolio sell
-            } else if (amount > 100) {
-                impact = isBuy ? 0.05 : -0.05; // Pump/dump for large orders
-            } else {
-                impact = (Math.random() - 0.5) * 0.02; // Random fluctuation
-            }
-            currentPrice = Math.max(0.1, currentPrice + impact);
-            // Update order book with realistic spreads
-            orderBookData.bids = Array.from({ length: 5 }, () => ({
-                price: currentPrice - Math.random() * 0.01,
-                amount: Math.random() * 100 + 50
-            })).sort((a, b) => b.price - a.price);
-            orderBookData.asks = Array.from({ length: 5 }, () => ({
-                price: currentPrice + Math.random() * 0.01,
-                amount: Math.random() * 100 + 50
-            })).sort((a, b) => a.price - b.price);
-            updateOrderBook();
-        }
-
-        function updatePositionInfo() {
-            if (currentUser.position) {
-                const { type, amount, entryPrice, leverage, marginType } = currentUser.position;
-                const pnL = type === 'buy' ? (currentPrice - entryPrice) * amount * leverage : (entryPrice - currentPrice) * amount * leverage;
-                const margin = (amount * entryPrice) / leverage;
-                const liquidationPrice = marginType === 'isolated' ? 
-                    (type === 'buy' ? entryPrice * (1 - 0.5 / leverage) : entryPrice * (1 + 0.5 / leverage)) : 
-                    (type === 'buy' ? entryPrice * 0.9 : entryPrice * 1.1);
-                positionInfo.innerHTML = `
-                    <h3>Position</h3>
-                    <div>Type: ${type.toUpperCase()}</div>
-                    <div>Amount: ${amount.toFixed(2)} KITE</div>
-                    <div>Entry Price: ${entryPrice.toFixed(4)} USDT</div>
-                    <div>PnL: ${pnL.toFixed(2)} USDT</div>
-                    <div>Leverage: ${leverage}x</div>
-                    <div>Margin Type: ${marginType}</div>
-                    <div>Margin: ${margin.toFixed(2)} USDT</div>
-                    <div>Liquidation Price: ${liquidationPrice.toFixed(4)} USDT</div>
-                `;
-            } else {
-                positionInfo.innerHTML = '<h3>Position</h3><div>No open position</div>';
-            }
-        }
-
-        function updateOrderHistory(type, amount, price, leverage, marginType) {
-            const timestamp = new Date().toLocaleString();
-            currentUser.orderHistory.unshift({ type, amount, price, leverage, marginType, timestamp });
-            if (currentUser.orderHistory.length > 10) {
-                currentUser.orderHistory = currentUser.orderHistory.slice(0, 10);
-            }
-            tradeHistoryData.unshift({ type, amount, price, timestamp });
-            if (tradeHistoryData.length > 10) {
-                tradeHistoryData = tradeHistoryData.slice(0, 10);
-            }
-            updateTradeHistory();
-            if (currentUser.username.startsWith('Guest_')) {
-                localStorage.setItem('tradingGuestUser', JSON.stringify(currentUser));
-            } else {
-                localStorage.setItem('tradingUser_' + currentUser.username, JSON.stringify(currentUser));
-            }
-        }
-
-        function initTrading() {
-            tradingUsername.textContent = currentUser.username + ' ' + (Math.random() < 0.5 ? '🪁' : '💸');
-            tradingBalance.textContent = `Balance: ${currentUser.balance.toFixed(2)} USDT | ${currentUser.kiteBalance.toFixed(2)} KITE`;
-            priceData = generateChartData(timeframeSelect.value);
-            updateChart();
-            updateOrderBook();
-            updateTradeHistory();
-            updatePositionInfo();
-            if (chartInterval) clearInterval(chartInterval);
-            chartInterval = setInterval(() => {
-                const newPrice = generateChartData(timeframeSelect.value).slice(-1)[0];
-                priceData.shift();
-                priceData.push(newPrice);
-                currentPrice = newPrice.c;
-                updateChart();
-                updateOrderBook();
-                updatePositionInfo();
-            }, timeframeSelect.value === '1m' ? 1000 : timeframeSelect.value === '5m' ? 5000 : timeframeSelect.value === '15m' ? 10000 : timeframeSelect.value === '1h' ? 20000 : timeframeSelect.value === '4h' ? 40000 : 60000);
-        }
-
-        timeframeSelect.addEventListener('change', () => {
-            priceData = generateChartData(timeframeSelect.value);
-            updateChart();
-        });
-
-        orderTypeSelect.addEventListener('change', () => {
-            tradePrice.disabled = orderTypeSelect.value === 'market';
-            tradePrice.value = orderTypeSelect.value === 'market' ? currentPrice.toFixed(4) : '';
-        });
-
-        buyBtn.addEventListener('click', () => {
-            const amount = parseFloat(positionSize.value) || 0;
-            const price = orderTypeSelect.value === 'market' ? currentPrice : parseFloat(tradePrice.value);
-            const leverage = parseFloat(leverageSelect.value);
-            const marginType = marginTypeSelect.value;
-            if (!amount || amount <= 0 || (orderTypeSelect.value === 'limit' && (!price || price <= 0))) {
-                showToast('Invalid amount or price!', 3000);
-                return;
-            }
-            const margin = (amount * price) / leverage;
-            if (currentUser.balance < margin) {
-                showToast('Insufficient USDT balance!', 3000);
-                return;
-            }
-            currentUser.balance -= margin;
-            currentUser.kiteBalance += amount;
-            currentUser.position = { type: 'buy', amount, entryPrice: price, leverage, marginType };
-            updatePrice(amount, true);
-            updateOrderHistory('buy', amount, price, leverage, marginType);
-            tradingBalance.textContent = `Balance: ${currentUser.balance.toFixed(2)} USDT | ${currentUser.kiteBalance.toFixed(2)} KITE`;
-            showToast(`Buy order executed: ${amount} KITE at ${price.toFixed(4)} USDT (Leverage: ${leverage}x, ${marginType})`, 3000);
-            positionSize.value = '';
-            tradePrice.value = '';
-            priceData = generateChartData(timeframeSelect.value);
-            updateChart();
-            updatePositionInfo();
-            if (currentUser.username.startsWith('Guest_')) {
-                localStorage.setItem('tradingGuestUser', JSON.stringify(currentUser));
-            } else {
-                localStorage.setItem('tradingUser_' + currentUser.username, JSON.stringify(currentUser));
-            }
-        });
-
-        sellBtn.addEventListener('click', () => {
-            const amount = parseFloat(positionSize.value) || 0;
-            const price = orderTypeSelect.value === 'market' ? currentPrice : parseFloat(tradePrice.value);
-            const leverage = parseFloat(leverageSelect.value);
-            const marginType = marginTypeSelect.value;
-            if (!amount || amount <= 0 || (orderTypeSelect.value === 'limit' && (!price || price <= 0))) {
-                showToast('Invalid amount or price!', 3000);
-                return;
-            }
-            if (currentUser.kiteBalance < amount) {
-                showToast('Insufficient KITE balance!', 3000);
-                return;
-            }
-            const margin = (amount * price) / leverage;
-            currentUser.kiteBalance -= amount;
-            currentUser.balance += margin;
-            const isFullSell = amount === currentUser.kiteBalance + (currentUser.position?.amount || 0);
-            currentUser.position = isFullSell ? null : { type: 'sell', amount, entryPrice: price, leverage, marginType };
-            updatePrice(amount, false, isFullSell);
-            updateOrderHistory('sell', amount, price, leverage, marginType);
-            tradingBalance.textContent = `Balance: ${currentUser.balance.toFixed(2)} USDT | ${currentUser.kiteBalance.toFixed(2)} KITE`;
-            showToast(`Sell order executed: ${amount} KITE at ${price.toFixed(4)} USDT (Leverage: ${leverage}x, ${marginType})`, 3000);
-            positionSize.value = '';
-            tradePrice.value = '';
-            priceData = generateChartData(timeframeSelect.value);
-            updateChart();
-            updatePositionInfo();
-            if (currentUser.username.startsWith('Guest_')) {
-                localStorage.setItem('tradingGuestUser', JSON.stringify(currentUser));
-            } else {
-                localStorage.setItem('tradingUser_' + currentUser.username, JSON.stringify(currentUser));
-            }
-        });
-
-        closeTradingBtn.addEventListener('click', () => {
-            tradingModal.classList.remove('show');
-            if (chartInterval) clearInterval(chartInterval);
-        });
-
-        // Add click sound to trading buttons
-        [tradingBtn, closeTradingLoginBtn, guestLoginBtn, showLoginFormBtn, showSignupFormBtn, loginSubmitBtn, signupSubmitBtn, buyBtn, sellBtn].forEach(el => {
-            el.addEventListener('click', playClickSound);
         });
 
         // Form Handling
