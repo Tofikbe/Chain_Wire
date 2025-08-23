@@ -106,7 +106,7 @@
             opacity: 0;
             transition: all 0.3s ease;
         }
-        .dropdown:hover .dropdown-content {
+        .dropdown:hover .dropdown-content, .dropdown:focus-within .dropdown-content {
             display: block;
             opacity: 1;
             transform: translateY(0);
@@ -455,6 +455,18 @@
         footer a { color: #3b82f6; text-decoration: none; }
         footer a:hover { color: #60a5fa; }
 
+        /* Visually Hidden for Accessibility */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
         /* Mobile Styles */
         @media (max-width: 767px) {
             .nav-links { display: none; }
@@ -492,10 +504,10 @@
             <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo">
         </div>
         <div class="nav-links">
-            <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">Testnet</a>
-            <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">NFTs</a>
+            <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank" aria-label="KiteAI Testnet">Testnet</a>
+            <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank" aria-label="KiteAI NFTs">NFTs</a>
             <div class="dropdown">
-                <a href="#" class="dropbtn">Community</a>
+                <a href="#" class="dropbtn" aria-label="Community Menu" tabindex="0">Community</a>
                 <div class="dropdown-content">
                     <a href="https://x.com/ChiZhangData" target="_blank">Co-founder</a>
                     <a href="https://x.com/Kite_Frens_Eco" target="_blank">Community & Ecosystem</a>
@@ -503,7 +515,7 @@
                 </div>
             </div>
             <div class="dropdown">
-                <a href="#" class="dropbtn">Team</a>
+                <a href="#" class="dropbtn" aria-label="Team Menu" tabindex="0">Team</a>
                 <div class="dropdown-content">
                     <a href="https://x.com/buidloor" target="_blank">Vikthebuilder</a>
                     <a href="https://x.com/lei_lei0904" target="_blank">Lei-Lei</a>
@@ -514,14 +526,14 @@
                 </div>
             </div>
             <div class="dropdown">
-                <a href="#" id="navGamesLink" class="dropbtn">Games</a>
+                <a href="#" id="navGamesLink" class="dropbtn" aria-label="Games Menu" tabindex="0">Games</a>
                 <div class="dropdown-content">
-                    <a href="#" id="flippingGameLink">KiteAI Flipping</a>
-                    <a href="#" id="shootingGameLink">KiteAI Shooting</a>
+                    <a href="#" id="flippingGameLink" aria-label="KiteAI Flipping Game">KiteAI Flipping</a>
+                    <a href="#" id="shootingGameLink" aria-label="KiteAI Shooting Game">KiteAI Shooting</a>
                 </div>
             </div>
         </div>
-        <button class="sidebar-btn">☰</button>
+        <button class="sidebar-btn" aria-label="Toggle Menu" tabindex="0">☰</button>
     </nav>
 
     <!-- Sidebar (Mobile) -->
@@ -541,104 +553,104 @@
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <!-- Games Modal -->
-    <div id="gamesModal" class="modal">
+    <div id="gamesModal" class="modal" role="dialog" aria-labelledby="gamesTitle">
         <div class="modal-content">
-            <img class="modal-close" id="closeGamesBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close">
-            <h2>KiteAI Games</h2>
-            <a href="#" class="game-option" id="flippingGameOption">KiteAI Flipping</a>
-            <a href="#" class="game-option" id="shootingGameOption">KiteAI Shooting</a>
+            <img class="modal-close" id="closeGamesBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Games" aria-label="Close Games" role="button" tabindex="0">
+            <h2 id="gamesTitle">KiteAI Games</h2>
+            <a href="#" class="game-option" id="flippingGameOption" aria-label="KiteAI Flipping Game">KiteAI Flipping</a>
+            <a href="#" class="game-option" id="shootingGameOption" aria-label="KiteAI Shooting Game">KiteAI Shooting</a>
         </div>
     </div>
 
     <!-- Announcement Modal -->
-    <div id="announcementModal" class="modal">
+    <div id="announcementModal" class="modal" role="dialog" aria-labelledby="announcementTitle">
         <div class="modal-content">
-            <img class="modal-close" id="closeAnnouncementBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close">
-            <h2 class="visually-hidden">Announcements</h2>
+            <img class="modal-close" id="closeAnnouncementBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Announcements" aria-label="Close Announcements" role="button" tabindex="0">
+            <h2 id="announcementTitle" class="visually-hidden">Announcements</h2>
             <div id="tweetContainer" style="text-align: center;"></div>
             <div class="announcement-controls">
-                <span id="prevBtn">⇚</span>
-                <span id="nextBtn">⇛</span>
+                <span id="prevBtn" aria-label="Previous Tweet" role="button" tabindex="0">⇚</span>
+                <span id="nextBtn" aria-label="Next Tweet" role="button" tabindex="0">⇛</span>
             </div>
         </div>
     </div>
 
     <!-- Flipping Game Modal -->
-    <div id="gameModal" class="modal">
+    <div id="gameModal" class="modal" role="dialog" aria-labelledby="gameTitle">
         <div id="gameContent" class="modal-content">
-            <img class="modal-close" id="closeGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close">
+            <img class="modal-close" id="closeGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Game" aria-label="Close Game" role="button" tabindex="0">
             <div id="gameTitle">KiteAI Flipping Game</div>
             <div class="game-controls">
-                <div id="gameScore">Level: 1 | Best Level: 1 | Moves: 0</div>
-                <button id="restartGameBtn">Restart</button>
-                <button id="nextLevelBtn" style="display: none;">Next Level</button>
+                <div id="gameScore" aria-live="polite">Level: 1 | Best Level: 1 | Moves: 0</div>
+                <button id="restartGameBtn" aria-label="Restart Game">Restart</button>
+                <button id="nextLevelBtn" style="display: none;" aria-label="Next Level">Next Level</button>
             </div>
             <div id="puzzleGrid"></div>
-            <div id="winMessage">Level Completed!</div>
+            <div id="winMessage" aria-live="assertive">Level Completed!</div>
         </div>
     </div>
 
     <!-- Shooting Game Modal -->
-    <div id="shootingGameModal" class="modal">
+    <div id="shootingGameModal" class="modal" role="dialog" aria-labelledby="shootingGameTitle">
         <div id="shootingGameContent" class="modal-content">
-            <img class="modal-close" id="closeShootingGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close">
+            <img class="modal-close" id="closeShootingGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Shooting Game" aria-label="Close Shooting Game" role="button" tabindex="0">
             <div id="shootingGameTitle">KiteAI Shooting Game</div>
             <div class="game-controls-shooting">
-                <div id="shootingGameScore">Level: 1 | Score: 0 | Lives: 3</div>
-                <button id="scopeToggleBtn">Toggle Scope</button>
-                <button id="restartShootingGameBtn">Restart</button>
+                <div id="shootingGameScore" aria-live="polite">Level: 1 | Score: 0 | Lives: 3</div>
+                <button id="scopeToggleBtn" aria-label="Toggle Scope">Toggle Scope</button>
+                <button id="restartShootingGameBtn" aria-label="Restart Shooting Game">Restart</button>
             </div>
             <canvas id="shootingGameCanvas"></canvas>
-            <div id="gameOverMessage">Game Over!</div>
+            <div id="gameOverMessage" aria-live="assertive">Game Over!</div>
         </div>
     </div>
 
     <!-- Feedback Form -->
     <form id="feedbackForm" class="feedback-form" action="https://formspree.io/f/xzzvwrap" method="POST">
         <h2>Community Feedback</h2>
-        <select name="category" required>
+        <select name="category" required aria-label="Select Feedback Category">
             <option value="">Select Category</option>
             <option value="Community Feedback">Community Feedback</option>
             <option value="Error Report">Error / Issue</option>
             <option value="Event or Campaign">Event / Campaign</option>
         </select>
-        <textarea name="message" rows="4" placeholder="Your feedback..." required></textarea>
-        <input type="email" name="email" placeholder="Your Email" required>
-        <button type="submit" id="submitBtn">Send Feedback</button>
+        <textarea name="message" rows="4" placeholder="Your feedback..." required aria-label="Feedback Message"></textarea>
+        <input type="email" name="email" placeholder="Your Email" required aria-label="Your Email">
+        <button type="submit" id="submitBtn" aria-label="Submit Feedback">Send Feedback</button>
         <div class="form-buttons">
-            <button type="button" id="announcementBtn">📢 Announcements</button>
-            <button type="button" id="agentBtn">🤖 Community Agent</button>
-            <button type="button" id="gamesBtn">🎮 Games</button>
+            <button type="button" id="announcementBtn" aria-label="Open Announcements">📢 Announcements</button>
+            <button type="button" id="agentBtn" aria-label="Open Community Agent">🤖 Community Agent</button>
+            <button type="button" id="gamesBtn" aria-label="Open Games">🎮 Games</button>
         </div>
     </form>
 
     <!-- Agent Chat Modal -->
-    <div id="agentModal" class="modal">
+    <div id="agentModal" class="modal" role="dialog" aria-labelledby="agentTitle">
         <div id="agentContent" class="modal-content">
-            <img class="modal-close" id="closeAgentBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close">
-            <h2 class="visually-hidden">Community Agent</h2>
-            <div id="chatMessages"></div>
+            <img class="modal-close" id="closeAgentBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Chat" aria-label="Close Chat" role="button" tabindex="0">
+            <h2 id="agentTitle" class="visually-hidden">Community Agent</h2>
+            <div id="chatMessages" aria-live="polite"></div>
             <div id="preQuestions">
-                <button class="question-btn">How can I use KiteAI?</button>
-                <button class="question-btn">What are KiteAI NFTs?</button>
-                <button class="question-btn">How to join KiteAI community?</button>
-                <button class="question-btn">How to report an issue?</button>
-                <button class="question-btn">Upcoming events in KiteAI?</button>
+                <button class="question-btn" aria-label="How to use KiteAI">How can I use KiteAI?</button>
+                <button class="question-btn" aria-label="What are KiteAI NFTs">What are KiteAI NFTs?</button>
+                <button class="question-btn" aria-label="Join KiteAI community">How to join KiteAI community?</button>
+                <button class="question-btn" aria-label="Report an issue">How to report an issue?</button>
+                <button class="question-btn" aria-label="Upcoming events">Upcoming events in KiteAI?</button>
             </div>
-            <input type="text" id="userInput" placeholder="Ask a question...">
-            <button id="sendBtn">Send</button>
+            <input type="text" id="userInput" placeholder="Ask a question..." aria-label="Type your question">
+            <button id="sendBtn" aria-label="Send Message">Send</button>
         </div>
     </div>
 
     <!-- Toast Notification -->
-    <div id="toast" class="toast"></div>
+    <div id="toast" class="toast" role="alert" aria-live="assertive"></div>
 
     <!-- Footer -->
     <footer>
         <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo">
         Made for KiteAI · Follow
-        <a href="https://x.com/Crypto_King877" target="_blank">@Crypto_King877</a> &
-        <a href="https://x.com/GoKiteAI" target="_blank">@GoKiteAI</a>
+        <a href="https://x.com/Crypto_King877" target="_blank" aria-label="Follow Crypto_King877">@Crypto_King877</a> &
+        <a href="https://x.com/GoKiteAI" target="_blank" aria-label="Follow GoKiteAI">@GoKiteAI</a>
     </footer>
 
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -677,10 +689,15 @@
             setTimeout(() => toast.classList.remove('show'), duration);
         };
 
+        // Modal Handling
+        const openModal = (modal) => {
+            modal.classList.add('show');
+            modal.querySelector('.modal-content').focus();
+        };
+        const closeModal = (modal) => modal.classList.remove('show');
+
         // Games Modal
         const gamesModal = document.getElementById('gamesModal');
-        const openModal = (modal) => modal.classList.add('show');
-        const closeModal = (modal) => modal.classList.remove('show');
         document.getElementById('gamesBtn').addEventListener('click', () => openModal(gamesModal));
         document.getElementById('navGamesLink').addEventListener('click', (e) => {
             e.preventDefault();
@@ -701,8 +718,13 @@
         const loadTweet = (index) => {
             const container = document.getElementById('tweetContainer');
             container.innerHTML = '';
-            twttr.widgets.createTweet(tweets[index].split('/status/')[1].split('?')[0], container, { align: 'center' })
-                .then(() => container.querySelectorAll('a').forEach(link => link.addEventListener('click', () => playSound(clickSound))));
+            try {
+                twttr.widgets.createTweet(tweets[index].split('/status/')[1].split('?')[0], container, { align: 'center' })
+                    .then(() => container.querySelectorAll('a').forEach(link => link.addEventListener('click', () => playSound(clickSound))))
+                    .catch(() => container.innerHTML = '<p>Unable to load tweet. Please try again later.</p>');
+            } catch (e) {
+                container.innerHTML = '<p>Unable to load tweet. Please try again later.</p>';
+            }
         };
         document.getElementById('announcementBtn').addEventListener('click', () => {
             openModal(document.getElementById('announcementModal'));
@@ -808,17 +830,22 @@
             const frontImg = document.createElement('img');
             frontImg.src = imageSrc;
             frontImg.alt = 'Card Image';
+            frontImg.onerror = () => { frontImg.src = 'https://via.placeholder.com/100?text=Card'; };
             front.appendChild(frontImg);
             const back = document.createElement('div');
             back.classList.add('card-back');
             const backImg = document.createElement('img');
             backImg.src = backsideImage;
             backImg.alt = 'Card Back';
+            backImg.onerror = () => { backImg.src = 'https://via.placeholder.com/100?text=Back'; };
             back.appendChild(backImg);
             inner.appendChild(front);
             inner.appendChild(back);
             card.appendChild(inner);
             card.addEventListener('click', handleCardClick);
+            card.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') handleCardClick(e);
+            });
             card.tabIndex = 0;
             return card;
         };
@@ -918,10 +945,13 @@
         let mouseY = null;
         const gunImage = new Image();
         gunImage.src = 'https://i.postimg.cc/LnrJcszr/gun.png';
+        gunImage.onerror = () => { gunImage.src = 'https://via.placeholder.com/100x60?text=Gun'; };
         const scopeImage = new Image();
         scopeImage.src = 'https://i.postimg.cc/yDVMYmX9/scope.png';
+        scopeImage.onerror = () => { scopeImage.src = 'https://via.placeholder.com/100?text=Scope'; };
         const targetImage = new Image();
         targetImage.src = 'https://i.postimg.cc/zyBhrQMg/target.png';
+        targetImage.onerror = () => { targetImage.src = 'https://via.placeholder.com/50?text=Target'; };
 
         const resizeCanvas = () => {
             const parent = shootingGameCanvas.parentElement;
@@ -989,7 +1019,10 @@
 
         const drawGame = () => {
             ctx.clearRect(0, 0, shootingGameCanvas.width, shootingGameCanvas.height);
-            ctx.fillStyle = 'linear-gradient(180deg, #1a2338, #334155)';
+            const gradient = ctx.createLinearGradient(0, 0, 0, shootingGameCanvas.height);
+            gradient.addColorStop(0, '#1a2338');
+            gradient.addColorStop(1, '#334155');
+            ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, shootingGameCanvas.width, shootingGameCanvas.height);
             targets.forEach(t => ctx.drawImage(targetImage, t.x, t.y, t.size, t.size));
             ctx.drawImage(gunImage, mouseX ? mouseX - 50 : shootingGameCanvas.width / 2 - 50, shootingGameCanvas.height - 60, 100, 60);
@@ -1099,6 +1132,24 @@
         document.querySelectorAll('#feedbackForm input, #feedbackForm textarea, #feedbackForm select').forEach(input => {
             input.addEventListener('input', () => {
                 input.style.borderColor = input.value.trim() ? '#3b82f6' : 'rgba(255, 255, 255, 0.2)';
+            });
+        });
+
+        // Focus Trapping for Modals
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('keydown', (e) => {
+                if (e.key === 'Tab' && modal.classList.contains('show')) {
+                    const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                    const first = focusable[0];
+                    const last = focusable[focusable.length - 1];
+                    if (e.shiftKey && document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus();
+                    } else if (!e.shiftKey && document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus();
+                    }
+                }
             });
         });
     </script>
