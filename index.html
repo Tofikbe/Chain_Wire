@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KiteAI Community Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,18 +14,17 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            font-family: 'Poppins', sans-serif;
-            color: #ffffff;
+            background: linear-gradient(180deg, #0a0e17, #1a2338);
+            font-family: 'Orbitron', sans-serif;
+            color: #e0e7ff;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Animated Background */
+        /* Futuristic Background Animation */
         .background-animation {
             position: fixed;
             top: 0;
@@ -35,64 +34,61 @@
             z-index: -1;
             pointer-events: none;
         }
-        .kite {
+        .particle {
             position: absolute;
-            width: 60px;
-            height: 60px;
-            background: url('https://i.postimg.cc/mzMZpf0r/logo.jpg') no-repeat center/cover;
-            animation: floatKite 10s ease-in-out infinite;
-            opacity: 0.3;
+            width: 8px;
+            height: 8px;
+            background: #3b82f6;
+            border-radius: 50%;
+            animation: floatParticle 15s linear infinite;
+            opacity: 0.5;
         }
-        .kite:nth-child(1) { top: 10%; left: 15%; animation-delay: 0s; }
-        .kite:nth-child(2) { top: 30%; left: 70%; animation-delay: 2s; }
-        .kite:nth-child(3) { top: 60%; left: 20%; animation-delay: 4s; }
-        .kite:nth-child(4) { top: 80%; left: 80%; animation-delay: 6s; }
-        @keyframes floatKite {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(20px, -20px) rotate(10deg); }
+        .particle:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+        .particle:nth-child(2) { top: 40%; left: 60%; animation-delay: 3s; }
+        .particle:nth-child(3) { top: 70%; left: 30%; animation-delay: 6s; }
+        .particle:nth-child(4) { top: 90%; left: 80%; animation-delay: 9s; }
+        @keyframes floatParticle {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, -50px) scale(1.5); }
+            100% { transform: translate(0, 0) scale(1); }
         }
 
-        /* Top Navbar */
+        /* Navigation */
         .top-nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(12px);
-            padding: 1rem 1.5rem;
+            background: rgba(10, 14, 23, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
         }
-        .top-nav .logo img {
-            height: 2.8rem;
-            border-radius: 10px;
+        .logo img {
+            height: 2.5rem;
+            border-radius: 8px;
             transition: transform 0.3s ease;
-            loading: lazy;
         }
-        .top-nav .logo img:hover, .top-nav .logo img:focus {
-            transform: scale(1.05);
-        }
+        .logo img:hover { transform: scale(1.1); }
         .nav-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
         }
-        .nav-links a {
-            color: #e2e8f0;
+        .nav-links a, .dropbtn {
+            color: #e0e7ff;
             text-decoration: none;
-            font-size: 1rem;
-            font-weight: 500;
-            padding: 0.6rem 1.2rem;
-            border-radius: 10px;
-            transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
         }
-        .nav-links a:hover, .nav-links a:focus {
-            background: rgba(59, 130, 246, 0.2);
-            color: #3b82f6;
+        .nav-links a:hover, .dropbtn:hover {
+            background: #3b82f6;
+            color: #fff;
             transform: translateY(-2px);
-            outline: none;
         }
         .dropdown {
             position: relative;
@@ -100,80 +96,61 @@
         .dropdown-content {
             display: none;
             position: absolute;
-            top: 2.5rem;
-            background: rgba(15, 23, 42, 0.95);
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            min-width: 200px;
+            top: 2.2rem;
+            background: rgba(10, 14, 23, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            min-width: 180px;
             padding: 0.5rem 0;
-            z-index: 1;
             transform: translateY(-10px);
             opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            transition: all 0.3s ease;
         }
-        .dropdown:hover .dropdown-content, .dropdown:focus-within .dropdown-content {
+        .dropdown:hover .dropdown-content {
             display: block;
             opacity: 1;
             transform: translateY(0);
         }
         .dropdown-content a {
             display: block;
-            padding: 0.75rem 1rem;
-            font-size: 0.95rem;
-            color: #e2e8f0;
-        }
-        .dropdown-content a:hover, .dropdown-content a:focus {
-            background: #3b82f6;
-            color: #fff;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
         }
 
-        /* Sidebar Menu (Mobile) */
+        /* Sidebar (Mobile) */
         .sidebar-btn {
             display: none;
             font-size: 1.5rem;
             background: none;
             border: none;
-            color: #fff;
+            color: #e0e7ff;
             cursor: pointer;
             padding: 0.5rem;
-            border-radius: 10px;
-            transition: background 0.3s ease;
+            border-radius: 8px;
         }
-        .sidebar-btn:hover, .sidebar-btn:focus {
-            background: rgba(255, 255, 255, 0.1);
-            outline: none;
-        }
+        .sidebar-btn:hover { background: rgba(59, 130, 246, 0.2); }
         .sidebar {
             position: fixed;
             top: 0;
-            left: -75%;
-            width: 75%;
+            left: -100%;
+            width: 80%;
             height: 100%;
-            background: rgba(15, 23, 42, 0.98);
-            backdrop-filter: blur(12px);
-            display: flex;
-            flex-direction: column;
+            background: rgba(10, 14, 23, 0.95);
             padding: 2rem 1rem;
             z-index: 999;
-            transition: transform 0.4s ease;
+            transition: left 0.3s ease;
         }
-        .sidebar.show {
-            transform: translateX(100%);
-        }
+        .sidebar.show { left: 0; }
         .sidebar a {
-            color: #e2e8f0;
-            font-size: 1.1rem;
+            color: #e0e7ff;
             text-decoration: none;
-            padding: 0.75rem 1rem;
+            padding: 0.75rem;
             margin: 0.3rem 0;
-            border-radius: 10px;
-            transition: background 0.3s ease, transform 0.3s ease;
+            border-radius: 8px;
+            display: block;
+            transition: all 0.3s ease;
         }
-        .sidebar a:hover, .sidebar a:focus {
-            background: rgba(59, 130, 246, 0.3);
-            transform: translateX(5px);
-            outline: none;
-        }
+        .sidebar a:hover { background: #3b82f6; transform: translateX(5px); }
         .sidebar-overlay {
             position: fixed;
             top: 0;
@@ -181,16 +158,12 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
             z-index: 998;
             display: none;
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.3s ease;
         }
-        .sidebar-overlay.show {
-            display: block;
-            opacity: 1;
-        }
+        .sidebar-overlay.show { display: block; opacity: 1; }
 
         /* Modals */
         .modal {
@@ -200,158 +173,72 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.3s ease;
         }
-        .modal.show {
-            display: flex;
-            opacity: 1;
-        }
+        .modal.show { display: flex; opacity: 1; }
         .modal-content {
-            background: #1e293b;
+            background: #1a2338;
             border-radius: 12px;
             padding: 1.5rem;
             width: 90%;
-            max-width: 550px;
-            max-height: 85vh;
+            max-width: 600px;
+            max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
             transform: scale(0.95);
-            transition: transform 0.4s ease;
+            transition: transform 0.3s ease;
         }
-        .modal.show .modal-content {
-            transform: scale(1);
-        }
+        .modal.show .modal-content { transform: scale(1); }
         .modal-close {
             position: absolute;
             top: 1rem;
             right: 1rem;
             width: 1.5rem;
-            height: 1.5rem;
             cursor: pointer;
             transition: transform 0.3s ease;
-            loading: lazy;
         }
-        .modal-close:hover, .modal-close:focus {
-            transform: scale(1.2);
-            outline: none;
-        }
+        .modal-close:hover { transform: scale(1.2); }
 
         /* Games Modal */
-        #gamesModal .modal-content {
-            text-align: center;
-        }
+        #gamesModal .modal-content { text-align: center; }
         .game-option {
             display: block;
-            padding: 0.75rem 1rem;
+            padding: 0.75rem;
             margin: 0.5rem auto;
-            background: linear-gradient(45deg, #3b82f6, #2563eb);
+            background: linear-gradient(45deg, #3b82f6, #60a5fa);
             color: #fff;
             text-decoration: none;
-            font-size: 1rem;
-            font-weight: 500;
-            border-radius: 10px;
+            border-radius: 8px;
             width: 80%;
-            max-width: 300px;
-            transition: transform 0.3s ease, background 0.3s ease;
+            max-width: 250px;
+            transition: all 0.3s ease;
         }
-        .game-option:hover, .game-option:focus {
-            background: linear-gradient(45deg, #2563eb, #3b82f6);
-            transform: scale(1.05);
-            outline: none;
-        }
+        .game-option:hover { transform: scale(1.05); background: linear-gradient(45deg, #60a5fa, #3b82f6); }
 
         /* Announcement Modal */
-        #announcementModal .modal-content {
-            background: #ffffff;
-            color: #000;
-        }
+        #announcementModal .modal-content { background: #fff; color: #000; }
         .announcement-controls {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
+            gap: 1rem;
             margin-top: 1rem;
         }
         .announcement-controls span {
             font-size: 1.5rem;
             cursor: pointer;
-            transition: color 0.3s ease, transform 0.3s ease;
+            transition: all 0.3s ease;
         }
-        .announcement-controls span:hover, .announcement-controls span:focus {
-            color: #3b82f6;
-            transform: scale(1.2);
-            outline: none;
-        }
+        .announcement-controls span:hover { color: #3b82f6; transform: scale(1.2); }
 
-        /* Leaderboard Modal */
-        #leaderboardTable {
-            width: 100%;
-        }
-        .leaderboard-row {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: background 0.3s ease;
-        }
-        .leaderboard-row:hover, .leaderboard-row:focus-within {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        .leaderboard-rank {
-            flex: 0 0 3rem;
-            font-weight: 600;
-            font-size: 1rem;
-            position: relative;
-        }
-        .leaderboard-rank.rank-1::before { content: '🥇'; position: absolute; left: -1rem; }
-        .leaderboard-rank.rank-2::before { content: '🥈'; position: absolute; left: -1rem; }
-        .leaderboard-rank.rank-3::before { content: '🥉'; position: absolute; left: -1rem; }
-        .leaderboard-profile img {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            border: 2px solid #3b82f6;
-            margin-right: 1rem;
-            transition: transform 0.3s ease;
-            loading: lazy;
-        }
-        .leaderboard-profile img:hover, .leaderboard-profile img:focus {
-            transform: scale(1.1);
-        }
-        .leaderboard-name a {
-            color: #3b82f6;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.3s ease;
-        }
-        .leaderboard-name a:hover, .leaderboard-name a:focus {
-            color: #2563eb;
-            text-decoration: underline;
-            outline: none;
-        }
-
-        /* Flipping Game Modal */
-        #gameContent {
-            max-width: 600px;
-        }
-        #gameTitle {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-        #puzzleGrid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
+        /* Flipping Game */
+        #gameContent { max-width: 700px; }
+        #gameTitle { font-size: 1.5rem; text-align: center; margin-bottom: 1rem; }
+        #puzzleGrid { display: grid; gap: 0.5rem; margin-bottom: 1rem; }
         .card {
             position: relative;
             width: 100%;
@@ -367,155 +254,93 @@
             height: 100%;
             transition: transform 0.5s ease;
             transform-style: preserve-3d;
-            will-change: transform;
         }
-        .card.flipped .card-inner {
-            transform: rotateY(180deg);
-        }
+        .card.flipped .card-inner { transform: rotateY(180deg); }
         .card-front, .card-back {
             position: absolute;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 10px;
+            border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
-        .card-front {
-            transform: rotateY(180deg);
-        }
-        .card-back {
-            background: #334155;
-        }
-        .card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-            loading: lazy;
-        }
+        .card-front { transform: rotateY(180deg); }
+        .card-back { background: #334155; }
+        .card img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
         .game-controls {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             margin-bottom: 1rem;
         }
-        #gameScore {
-            font-size: 1rem;
-            font-weight: 500;
-            background: rgba(15, 23, 42, 0.8);
+        #gameScore { font-size: 1rem; padding: 0.5rem 1rem; background: rgba(10, 14, 23, 0.8); border-radius: 8px; }
+        #restartGameBtn, #nextLevelBtn {
             padding: 0.5rem 1rem;
-            border-radius: 10px;
-        }
-        #restartGameBtn {
-            padding: 0.6rem 1.2rem;
-            background: linear-gradient(45deg, #3b82f6, #2563eb);
+            background: linear-gradient(45deg, #3b82f6, #60a5fa);
             color: #fff;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: 600;
-            transition: transform 0.3s ease, background 0.3s ease;
+            transition: all 0.3s ease;
         }
-        #restartGameBtn:hover, #restartGameBtn:focus {
-            background: linear-gradient(45deg, #2563eb, #3b82f6);
-            transform: scale(1.05);
-            outline: none;
-        }
+        #restartGameBtn:hover, #nextLevelBtn:hover { transform: scale(1.05); }
         #winMessage {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.8);
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(10, 14, 23, 0.9);
             padding: 1rem 2rem;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 1.5rem;
-            font-weight: 600;
             opacity: 0;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transition: all 0.5s ease;
         }
-        #winMessage.show {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-        #puzzleGrid.won .card {
-            filter: blur(4px);
-            transition: filter 0.5s ease;
-        }
+        #winMessage.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 
-        /* Shooting Game Styles */
-        #shootingGameContent {
-            max-width: 800px;
-        }
-        #shootingGameTitle {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
+        /* Shooting Game */
+        #shootingGameContent { max-width: 800px; }
+        #shootingGameTitle { font-size: 1.5rem; text-align: center; margin-bottom: 1rem; }
         #shootingGameCanvas {
             width: 100%;
             max-width: 800px;
             height: 500px;
-            background: linear-gradient(180deg, #1e293b, #334155);
-            border-radius: 10px;
+            background: linear-gradient(180deg, #1a2338, #334155);
+            border-radius: 8px;
             border: 2px solid #3b82f6;
             position: relative;
             cursor: crosshair;
         }
-        .game-controls-shooting {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        #shootingGameScore {
-            font-size: 1rem;
-            font-weight: 500;
-            background: rgba(15, 23, 42, 0.8);
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
-        }
+        .game-controls-shooting { display: flex; justify-content: space-between; margin-bottom: 1rem; }
+        #shootingGameScore { font-size: 1rem; padding: 0.5rem 1rem; background: rgba(10, 14, 23, 0.8); border-radius: 8px; }
         #scopeToggleBtn, #restartShootingGameBtn {
-            padding: 0.6rem 1.2rem;
-            background: linear-gradient(45deg, #3b82f6, #2563eb);
+            padding: 0.5rem 1rem;
+            background: linear-gradient(45deg, #3b82f6, #60a5fa);
             color: #fff;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: 600;
-            transition: transform 0.3s ease, background 0.3s ease;
+            transition: all 0.3s ease;
         }
-        #scopeToggleBtn:hover, #scopeToggleBtn:focus,
-        #restartShootingGameBtn:hover, #restartShootingGameBtn:focus {
-            background: linear-gradient(45deg, #2563eb, #3b82f6);
-            transform: scale(1.05);
-            outline: none;
-        }
+        #scopeToggleBtn:hover, #restartShootingGameBtn:hover { transform: scale(1.05); }
         #gameOverMessage {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.8);
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(10, 14, 23, 0.9);
             padding: 1rem 2rem;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 1.5rem;
-            font-weight: 600;
             opacity: 0;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transition: all 0.5s ease;
         }
-        #gameOverMessage.show {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
+        #gameOverMessage.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         .hit-effect {
             position: absolute;
             width: 20px;
             height: 20px;
             background: radial-gradient(circle, rgba(255, 0, 0, 0.8), transparent);
             border-radius: 50%;
-            pointer-events: none;
             animation: hitFade 0.5s ease-out forwards;
         }
         @keyframes hitFade {
@@ -525,83 +350,52 @@
 
         /* Feedback Form */
         .feedback-form {
-            background: #1e293b;
+            background: #1a2338;
             padding: 1.5rem;
             border-radius: 12px;
             width: 90%;
             max-width: 500px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
             margin: 1rem;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
             transition: transform 0.3s ease;
         }
-        .feedback-form:hover, .feedback-form:focus-within {
-            transform: scale(1.02);
-        }
-        .feedback-form h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
+        .feedback-form:hover { transform: scale(1.02); }
+        .feedback-form h2 { font-size: 1.5rem; margin-bottom: 1rem; }
         select, textarea, input {
             width: 100%;
             padding: 0.75rem;
             margin: 0.5rem 0;
-            border-radius: 10px;
+            border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             background: #334155;
-            color: #fff;
+            color: #e0e7ff;
             font-size: 1rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            transition: border-color 0.3s ease;
         }
         select:focus, textarea:focus, input:focus {
             border-color: #3b82f6;
             box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
             outline: none;
         }
-        select option {
-            background: #334155;
-            color: #fff;
-        }
-        .form-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-        .form-buttons button, .form-buttons .dropbtn {
+        .form-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem; margin-top: 1rem; }
+        .form-buttons button {
             padding: 0.75rem;
-            background: linear-gradient(45deg, #3b82f6, #2563eb);
+            background: linear-gradient(45deg, #3b82f6, #60a5fa);
             color: #fff;
             border: none;
-            border-radius: 10px;
-            font-weight: 500;
+            border-radius: 8px;
             cursor: pointer;
-            transition: transform 0.3s ease, background 0.3s ease;
-            font-size: 1rem;
-            text-align: center;
+            transition: all 0.3s ease;
         }
-        .form-buttons button:hover, .form-buttons button:focus,
-        .form-buttons .dropbtn:hover, .form-buttons .dropbtn:focus {
-            background: linear-gradient(45deg, #2563eb, #3b82f6);
-            transform: scale(1.05);
-            outline: none;
-        }
-        .form-buttons button:disabled {
-            background: #4b5563;
-            cursor: not-allowed;
-            transform: none;
-        }
+        .form-buttons button:hover { transform: scale(1.05); }
+        .form-buttons button:disabled { background: #4b5563; cursor: not-allowed; transform: none; }
 
-        /* Agent Chat Modal */
-        #agentContent {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
+        /* Agent Chat */
+        #agentContent { display: flex; flex-direction: column; gap: 1rem; }
         #chatMessages {
             flex-grow: 1;
             background: #334155;
-            border-radius: 10px;
+            border-radius: 8px;
             padding: 1rem;
             overflow-y: auto;
             max-height: 50vh;
@@ -609,50 +403,22 @@
         .chat-msg {
             margin: 0.5rem;
             padding: 0.75rem;
-            border-radius: 10px;
+            border-radius: 8px;
             max-width: 80%;
         }
-        .chat-agent {
-            background: #3b82f6;
-            color: #fff;
-            align-self: flex-start;
-        }
-        .chat-user {
-            background: #475569;
-            color: #fff;
-            align-self: flex-end;
-        }
-        #preQuestions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
+        .chat-agent { background: #3b82f6; color: #fff; align-self: flex-start; }
+        .chat-user { background: #475569; color: #fff; align-self: flex-end; }
+        #preQuestions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
         .question-btn {
             padding: 0.5rem 1rem;
             background: #3b82f6;
             color: #fff;
             border: none;
-            border-radius: 10px;
-            font-size: 0.9rem;
+            border-radius: 8px;
             cursor: pointer;
-            transition: transform 0.3s ease, background 0.3s ease;
+            transition: all 0.3s ease;
         }
-        .question-btn:hover, .question-btn:focus {
-            background: #2563eb;
-            transform: scale(1.05);
-            outline: none;
-        }
-        #userInput {
-            background: #334155;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        #sendBtn {
-            background: #3b82f6;
-        }
-        #sendBtn:hover, #sendBtn:focus {
-            background: #2563eb;
-        }
+        .question-btn:hover { background: #60a5fa; transform: scale(1.05); }
 
         /* Toast Notification */
         .toast {
@@ -663,16 +429,13 @@
             background: #3b82f6;
             color: #fff;
             padding: 0.75rem 1.5rem;
-            border-radius: 10px;
+            border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             z-index: 1001;
             opacity: 0;
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            transition: all 0.3s ease;
         }
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) scale(1);
-        }
+        .toast.show { opacity: 1; transform: translateX(-50%) scale(1); }
 
         /* Footer */
         footer {
@@ -681,335 +444,249 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            align-items: center;
             gap: 0.5rem;
             font-size: 0.85rem;
-            color: #e2e8f0;
-            background: rgba(15, 23, 42, 0.9);
+            color: #e0e7ff;
+            background: rgba(10, 14, 23, 0.9);
             padding: 0.5rem;
-            border-radius: 10px;
+            border-radius: 8px;
             z-index: 10;
         }
-        footer img {
-            height: 1.2rem;
-            border-radius: 4px;
-            loading: lazy;
-        }
-        footer a {
-            color: #3b82f6;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        footer a:hover, footer a:focus {
-            color: #2563eb;
-            outline: none;
-        }
+        footer a { color: #3b82f6; text-decoration: none; }
+        footer a:hover { color: #60a5fa; }
 
         /* Mobile Styles */
         @media (max-width: 767px) {
-            .top-nav .nav-links {
-                display: none;
-            }
-            .sidebar-btn {
-                display: block;
-            }
-            .feedback-form {
-                padding: 1rem;
-                max-width: 90%;
-            }
-            .form-buttons {
-                grid-template-columns: 1fr;
-            }
-            .modal-content {
-                padding: 1rem;
-            }
-            #puzzleGrid {
-                gap: 0.3rem;
-            }
-            #gameTitle, #shootingGameTitle {
-                font-size: 1.2rem;
-            }
-            #gameScore, #shootingGameScore {
-                font-size: 0.9rem;
-                padding: 0.3rem 0.6rem;
-            }
-            #winMessage, #gameOverMessage {
-                font-size: 1.2rem;
-                padding: 0.75rem 1.5rem;
-            }
-            .leaderboard-profile img {
-                width: 2rem;
-                height: 2rem;
-            }
-            .leaderboard-rank {
-                font-size: 0.9rem;
-                flex: 0 0 2.5rem;
-            }
-            .leaderboard-name a {
-                font-size: 0.9rem;
-            }
-            .kite {
-                width: 40px;
-                height: 40px;
-            }
-            #shootingGameCanvas {
-                height: 300px;
-            }
-            .game-option {
-                width: 90%;
-            }
+            .nav-links { display: none; }
+            .sidebar-btn { display: block; }
+            .feedback-form { padding: 1rem; max-width: 95%; }
+            .form-buttons { grid-template-columns: 1fr; }
+            #puzzleGrid { gap: 0.3rem; }
+            #gameTitle, #shootingGameTitle { font-size: 1.2rem; }
+            #gameScore, #shootingGameScore { font-size: 0.9rem; }
+            #shootingGameCanvas { height: 300px; }
+            .game-option { width: 90%; }
+            .modal-content { padding: 1rem; }
         }
-
         @media (min-width: 768px) {
-            .sidebar-btn, .sidebar, .sidebar-overlay {
-                display: none;
-            }
-            .feedback-form {
-                padding: 2rem;
-            }
-            #gameContent, #shootingGameContent {
-                max-width: 800px;
-            }
+            .sidebar-btn, .sidebar, .sidebar-overlay { display: none; }
         }
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
+    <!-- Background Animation -->
     <div class="background-animation">
-        <div class="kite"></div>
-        <div class="kite"></div>
-        <div class="kite"></div>
-        <div class="kite"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
     </div>
 
-    <!-- Click Sound -->
+    <!-- Audio -->
     <audio id="clickSound" src="https://cdn.pixabay.com/audio/2022/03/10/audio_5b3d3b4213.mp3" preload="auto"></audio>
-    <audio id="shootSound" src="https://cdn.pixabay.com/audio/2022/03/10/audio_5b3d3b4213.mp3" preload="auto"></audio>
+    <audio id="shootSound" src="https://cdn.pixabay.com/audio/2023/02/13/audio_1d7a4e7a53.mp3" preload="auto"></audio>
 
-    <!-- Top Navbar -->
+    <!-- Navigation -->
     <nav class="top-nav">
         <div class="logo">
-            <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo" aria-label="KiteAI Logo">
+            <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo">
         </div>
         <div class="nav-links">
-            <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank" aria-label="KiteAI Testnet">Testnet</a>
-            <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank" aria-label="KiteAI NFTs">NFTs</a>
+            <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">Testnet</a>
+            <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">NFTs</a>
             <div class="dropdown">
-                <a href="#" class="dropbtn" aria-label="Community Menu" tabindex="0">Community</a>
+                <a href="#" class="dropbtn">Community</a>
                 <div class="dropdown-content">
-                    <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder</a>
-                    <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Community & Ecosystem</a>
-                    <a href="https://x.com/KiteAIChinese?t=bR1Bi5KbAeZLdozFOKqtGg&s=09" target="_blank">KiteAI Chinese</a>
+                    <a href="https://x.com/ChiZhangData" target="_blank">Co-founder</a>
+                    <a href="https://x.com/Kite_Frens_Eco" target="_blank">Community & Ecosystem</a>
+                    <a href="https://x.com/KiteAIChinese" target="_blank">KiteAI Chinese</a>
                 </div>
             </div>
             <div class="dropdown">
-                <a href="#" class="dropbtn" aria-label="Team Menu" tabindex="0">Team</a>
+                <a href="#" class="dropbtn">Team</a>
                 <div class="dropdown-content">
-                    <a href="https://x.com/buidloor?t=6nD_KJzIePhdytOA3Ss-2w&s=09" target="_blank">Vikthebuilder</a>
-                    <a href="https://x.com/lei_lei0904?t=yL6KX5W6lCKf0Fnk6VAIBA&s=09" target="_blank">Lei-Lei</a>
-                    <a href="https://x.com/scottshics?t=UMpx5b2XMH1kLa2JgMyXDw&s=09" target="_blank">Scott Shi</a>
-                    <a href="https://x.com/Henryleemr?t=ZZVY_CCK88fGLRM56VkXnQ&s=09" target="_blank">Henry Lee</a>
-                    <a href="https://x.com/superamscom?t=jr23SY_GKnnNEUr5EP-6eA&s=09" target="_blank">Spring</a>
-                    <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing</a>
+                    <a href="https://x.com/buidloor" target="_blank">Vikthebuilder</a>
+                    <a href="https://x.com/lei_lei0904" target="_blank">Lei-Lei</a>
+                    <a href="https://x.com/scottshics" target="_blank">Scott Shi</a>
+                    <a href="https://x.com/Henryleemr" target="_blank">Henry Lee</a>
+                    <a href="https://x.com/superamscom" target="_blank">Spring</a>
+                    <a href="https://x.com/0xLaughing" target="_blank">Laughing</a>
                 </div>
             </div>
             <div class="dropdown">
-                <a href="#" id="navGamesLink" class="dropbtn" aria-label="Games Menu" tabindex="0">Games</a>
+                <a href="#" id="navGamesLink" class="dropbtn">Games</a>
                 <div class="dropdown-content">
-                    <a href="#" id="flippingGameLink" aria-label="KiteAI Flipping Game">KiteAI Flipping</a>
-                    <a href="#" id="shootingGameLink" aria-label="KiteAI Shooting Game">KiteAI Shooting</a>
+                    <a href="#" id="flippingGameLink">KiteAI Flipping</a>
+                    <a href="#" id="shootingGameLink">KiteAI Shooting</a>
                 </div>
             </div>
         </div>
-        <button class="sidebar-btn" aria-label="Toggle Menu" tabindex="0">☰</button>
+        <button class="sidebar-btn">☰</button>
     </nav>
 
-    <!-- Sidebar Menu (Mobile) -->
+    <!-- Sidebar (Mobile) -->
     <div class="sidebar" id="sidebarMenu">
-        <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet 🪁</a>
-        <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">Fly The Kite NFT 🪁</a>
-        <a href="https://x.com/ChiZhangData?t=0jr_4_OmnTPzCep5SHeVhQ&s=09" target="_blank">Co-founder 🪁</a>
-        <a href="https://x.com/Kite_Frens_Eco?t=0Tr2FBp1Jm3VR4FJjKqx2A&s=09" target="_blank">Community & Ecosystem 🪁</a>
-        <a href="https://x.com/KiteAIChinese?t=bR1Bi5KbAeZLdozFOKqtGg&s=09" target="_blank">KiteAI Chinese 🪁</a>
-        <a href="https://x.com/buidloor?t=6nD_KJzIePhdytOA3Ss-2w&s=09" target="_blank">Vikthebuilder 🪁</a>
-        <a href="https://x.com/lei_lei0904?t=yL6KX5W6lCKf0Fnk6VAIBA&s=09" target="_blank">Lei-Lei 🪁</a>
-        <a href="https://x.com/scottshics?t=UMpx5b2XMH1kLa2JgMyXDw&s=09" target="_blank">Scott Shi 🪁</a>
-        <a href="https://x.com/Henryleemr?t=ZZVY_CCK88fGLRM56VkXnQ&s=09" target="_blank">Henry Lee 🪁</a>
-        <a href="https://x.com/superamscom?t=jr23SY_GKnnNEUr5EP-6eA&s=09" target="_blank">Spring 🪁</a>
-        <a href="https://x.com/0xLaughing?t=XsFobnGJY7lYGbjrawLrTg&s=09" target="_blank">Laughing 🪁</a>
+        <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank">KiteAI Testnet</a>
+        <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank">NFTs</a>
+        <a href="https://x.com/ChiZhangData" target="_blank">Co-founder</a>
+        <a href="https://x.com/Kite_Frens_Eco" target="_blank">Community & Ecosystem</a>
+        <a href="https://x.com/KiteAIChinese" target="_blank">KiteAI Chinese</a>
+        <a href="https://x.com/buidloor" target="_blank">Vikthebuilder</a>
+        <a href="https://x.com/lei_lei0904" target="_blank">Lei-Lei</a>
+        <a href="https://x.com/scottshics" target="_blank">Scott Shi</a>
+        <a href="https://x.com/Henryleemr" target="_blank">Henry Lee</a>
+        <a href="https://x.com/superamscom" target="_blank">Spring</a>
+        <a href="https://x.com/0xLaughing" target="_blank">Laughing</a>
     </div>
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <!-- Games Modal -->
-    <div id="gamesModal" class="modal" role="dialog" aria-labelledby="gamesTitle">
+    <div id="gamesModal" class="modal">
         <div class="modal-content">
-            <img class="modal-close" id="closeGamesBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Games" aria-label="Close Games" role="button" tabindex="0">
-            <h2 id="gamesTitle">KiteAI Games</h2>
-            <a href="#" class="game-option" id="flippingGameOption" aria-label="KiteAI Flipping Game">KiteAI Flipping</a>
-            <a href="#" class="game-option" id="shootingGameOption" aria-label="KiteAI Shooting Game">KiteAI Shooting</a>
+            <img class="modal-close" id="closeGamesBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close">
+            <h2>KiteAI Games</h2>
+            <a href="#" class="game-option" id="flippingGameOption">KiteAI Flipping</a>
+            <a href="#" class="game-option" id="shootingGameOption">KiteAI Shooting</a>
         </div>
     </div>
 
     <!-- Announcement Modal -->
-    <div id="announcementModal" class="modal" role="dialog" aria-labelledby="announcementTitle">
+    <div id="announcementModal" class="modal">
         <div class="modal-content">
-            <img class="modal-close" id="closeAnnouncementBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Announcements" aria-label="Close Announcements" role="button" tabindex="0">
-            <h2 id="announcementTitle" style="display: none;">Announcements</h2>
+            <img class="modal-close" id="closeAnnouncementBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close">
+            <h2 class="visually-hidden">Announcements</h2>
             <div id="tweetContainer" style="text-align: center;"></div>
             <div class="announcement-controls">
-                <span id="prevBtn" aria-label="Previous Tweet" role="button" tabindex="0">⇚</span>
-                <span id="nextBtn" aria-label="Next Tweet" role="button" tabindex="0">⇛</span>
+                <span id="prevBtn">⇚</span>
+                <span id="nextBtn">⇛</span>
             </div>
-        </div>
-    </div>
-
-    <!-- Leaderboard Modal -->
-    <div id="leaderboardModal" class="modal" role="dialog" aria-labelledby="leaderboardTitle">
-        <div class="modal-content">
-            <img class="modal-close" id="closeLeaderboardBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Leaderboard" aria-label="Close Leaderboard" role="button" tabindex="0">
-            <h2 id="leaderboardTitle">Leaderboard</h2>
-            <div id="leaderboardTable"></div>
         </div>
     </div>
 
     <!-- Flipping Game Modal -->
-    <div id="gameModal" class="modal" role="dialog" aria-labelledby="gameTitle">
+    <div id="gameModal" class="modal">
         <div id="gameContent" class="modal-content">
-            <img class="modal-close" id="closeGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Game" aria-label="Close Game" role="button" tabindex="0">
+            <img class="modal-close" id="closeGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close">
             <div id="gameTitle">KiteAI Flipping Game</div>
             <div class="game-controls">
-                <div id="gameScore" aria-live="polite">Level: 1 | Best Level: 1 | Time: 0s</div>
-                <button id="restartGameBtn" aria-label="Restart Game">Restart</button>
+                <div id="gameScore">Level: 1 | Best Level: 1 | Moves: 0</div>
+                <button id="restartGameBtn">Restart</button>
+                <button id="nextLevelBtn" style="display: none;">Next Level</button>
             </div>
             <div id="puzzleGrid"></div>
-            <div id="winMessage" aria-live="assertive">You Won!</div>
+            <div id="winMessage">Level Completed!</div>
         </div>
     </div>
 
     <!-- Shooting Game Modal -->
-    <div id="shootingGameModal" class="modal" role="dialog" aria-labelledby="shootingGameTitle">
+    <div id="shootingGameModal" class="modal">
         <div id="shootingGameContent" class="modal-content">
-            <img class="modal-close" id="closeShootingGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Shooting Game" aria-label="Close Shooting Game" role="button" tabindex="0">
+            <img class="modal-close" id="closeShootingGameBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close">
             <div id="shootingGameTitle">KiteAI Shooting Game</div>
             <div class="game-controls-shooting">
-                <div id="shootingGameScore" aria-live="polite">Score: 0 | Best Score: 0 | Time: 0s</div>
-                <button id="scopeToggleBtn" aria-label="Toggle Scope">Toggle Scope</button>
-                <button id="restartShootingGameBtn" aria-label="Restart Shooting Game">Restart</button>
+                <div id="shootingGameScore">Level: 1 | Score: 0 | Lives: 3</div>
+                <button id="scopeToggleBtn">Toggle Scope</button>
+                <button id="restartShootingGameBtn">Restart</button>
             </div>
             <canvas id="shootingGameCanvas"></canvas>
-            <div id="gameOverMessage" aria-live="assertive">Game Over!</div>
+            <div id="gameOverMessage">Game Over!</div>
         </div>
     </div>
 
     <!-- Feedback Form -->
     <form id="feedbackForm" class="feedback-form" action="https://formspree.io/f/xzzvwrap" method="POST">
         <h2>Community Feedback</h2>
-        <select name="category" required aria-label="Select Feedback Category">
+        <select name="category" required>
             <option value="">Select Category</option>
             <option value="Community Feedback">Community Feedback</option>
             <option value="Error Report">Error / Issue</option>
             <option value="Event or Campaign">Event / Campaign</option>
-            <option value="Coming Soon" disabled>Coming Soon</option>
         </select>
-        <textarea name="message" rows="4" placeholder="Describe your feedback or issue..." required aria-label="Feedback Message"></textarea>
-        <input type="email" name="email" placeholder="Your Email (e.g., example@domain.com)" required aria-label="Your Email">
-        <button type="submit" id="submitBtn" aria-label="Submit Feedback">Send Feedback</button>
+        <textarea name="message" rows="4" placeholder="Your feedback..." required></textarea>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <button type="submit" id="submitBtn">Send Feedback</button>
         <div class="form-buttons">
-            <button type="button" id="announcementBtn" aria-label="Open Announcements">📢 Announcements</button>
-            <button type="button" id="agentBtn" aria-label="Open Community Agent">🤖 Community Agent</button>
-            <button type="button" id="leaderboardBtn" aria-label="Open Leaderboard">📊 Leaderboard</button>
-            <button type="button" id="gamesBtn" class="dropbtn" aria-label="Open Games">🎮 Games</button>
+            <button type="button" id="announcementBtn">📢 Announcements</button>
+            <button type="button" id="agentBtn">🤖 Community Agent</button>
+            <button type="button" id="gamesBtn">🎮 Games</button>
         </div>
     </form>
 
     <!-- Agent Chat Modal -->
-    <div id="agentModal" class="modal" role="dialog" aria-labelledby="agentTitle">
+    <div id="agentModal" class="modal">
         <div id="agentContent" class="modal-content">
-            <img class="modal-close" id="closeAgentBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close Chat" aria-label="Close Chat" role="button" tabindex="0">
-            <h2 id="agentTitle" style="display: none;">Community Agent</h2>
-            <div id="chatMessages" aria-live="polite"></div>
+            <img class="modal-close" id="closeAgentBtn" src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Close">
+            <h2 class="visually-hidden">Community Agent</h2>
+            <div id="chatMessages"></div>
             <div id="preQuestions">
-                <button class="question-btn" aria-label="How to use KiteAI">How can I use KiteAI?</button>
-                <button class="question-btn" aria-label="What are KiteAI NFTs">What are KiteAI NFTs?</button>
-                <button class="question-btn" aria-label="Join KiteAI community">How to join KiteAI community?</button>
-                <button class="question-btn" aria-label="Report an issue">How to report an issue?</button>
-                <button class="question-btn" aria-label="Upcoming events">Upcoming events in KiteAI?</button>
+                <button class="question-btn">How can I use KiteAI?</button>
+                <button class="question-btn">What are KiteAI NFTs?</button>
+                <button class="question-btn">How to join KiteAI community?</button>
+                <button class="question-btn">How to report an issue?</button>
+                <button class="question-btn">Upcoming events in KiteAI?</button>
             </div>
-            <input type="text" id="userInput" placeholder="Type your question here..." aria-label="Type your question">
-            <button id="sendBtn" aria-label="Send Message">Send</button>
+            <input type="text" id="userInput" placeholder="Ask a question...">
+            <button id="sendBtn">Send</button>
         </div>
     </div>
 
     <!-- Toast Notification -->
-    <div id="toast" class="toast" role="alert" aria-live="assertive"></div>
+    <div id="toast" class="toast"></div>
 
     <!-- Footer -->
     <footer>
         <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo">
-        Made for KiteAI · Follow 
-        <a href="https://x.com/Crypto_King877?t=LdPj_6MWuiRd0mUVs8rvtw&s=09" target="_blank" aria-label="Follow Crypto_King877">@Crypto_King877</a> 
-        & 
-        <a href="https://x.com/GoKiteAI?t=fzEmGeci_aCKBgJRAYEwsA&s=09" target="_blank" aria-label="Follow GoKiteAI">@GoKiteAI</a>
+        Made for KiteAI · Follow
+        <a href="https://x.com/Crypto_King877" target="_blank">@Crypto_King877</a> &
+        <a href="https://x.com/GoKiteAI" target="_blank">@GoKiteAI</a>
     </footer>
 
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <script>
-        // Click Sound
+        // Audio
         const clickSound = document.getElementById('clickSound');
         const shootSound = document.getElementById('shootSound');
-        function playClickSound() {
-            clickSound.currentTime = 0;
-            clickSound.play().catch(() => {});
-        }
-        function playShootSound() {
-            shootSound.currentTime = 0;
-            shootSound.play().catch(() => {});
-        }
-
-        document.querySelectorAll('button, a, .card, .sidebar-btn, .announcement-controls span, .modal-close, #scopeToggleBtn').forEach(el => {
-            el.addEventListener('click', playClickSound);
+        const playSound = (sound) => {
+            sound.currentTime = 0;
+            sound.play().catch(() => {});
+        };
+        document.querySelectorAll('button, a, .card, .modal-close, .announcement-controls span').forEach(el => {
+            el.addEventListener('click', () => playSound(clickSound));
             el.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') playClickSound();
+                if (e.key === 'Enter' || e.key === ' ') playSound(clickSound);
             });
         });
 
-        // Sidebar Menu
+        // Sidebar
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
         document.querySelector('.sidebar-btn').addEventListener('click', () => {
-            document.getElementById('sidebarMenu').classList.toggle('show');
-            document.getElementById('sidebarOverlay').classList.toggle('show');
+            sidebarMenu.classList.toggle('show');
+            sidebarOverlay.classList.toggle('show');
         });
-        document.getElementById('sidebarOverlay').addEventListener('click', () => {
-            document.getElementById('sidebarMenu').classList.remove('show');
-            document.getElementById('sidebarOverlay').classList.remove('show');
+        sidebarOverlay.addEventListener('click', () => {
+            sidebarMenu.classList.remove('show');
+            sidebarOverlay.classList.remove('show');
         });
 
-        // Toast Notification
-        function showToast(message, duration = 4000) {
+        // Toast
+        const showToast = (msg, duration = 3000) => {
             const toast = document.getElementById('toast');
-            toast.textContent = message;
+            toast.textContent = msg;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), duration);
-        }
+        };
 
         // Games Modal
         const gamesModal = document.getElementById('gamesModal');
-        const gamesBtn = document.getElementById('gamesBtn');
-        const navGamesLink = document.getElementById('navGamesLink');
-        const closeGamesBtn = document.getElementById('closeGamesBtn');
-        const flippingGameOption = document.getElementById('flippingGameOption');
-        const shootingGameOption = document.getElementById('shootingGameOption');
-
-        gamesBtn.addEventListener('click', () => {
-            gamesModal.classList.add('show');
-        });
-        navGamesLink.addEventListener('click', (e) => {
+        const openModal = (modal) => modal.classList.add('show');
+        const closeModal = (modal) => modal.classList.remove('show');
+        document.getElementById('gamesBtn').addEventListener('click', () => openModal(gamesModal));
+        document.getElementById('navGamesLink').addEventListener('click', (e) => {
             e.preventDefault();
-            gamesModal.classList.add('show');
+            openModal(gamesModal);
         });
-        closeGamesBtn.addEventListener('click', () => {
-            gamesModal.classList.remove('show');
-        });
+        document.getElementById('closeGamesBtn').addEventListener('click', () => closeModal(gamesModal));
 
         // Announcement Modal
         const tweets = [
@@ -1018,273 +695,110 @@
             "https://x.com/GoKiteAI/status/1955792638948597868",
             "https://x.com/GoKiteAI/status/1955104976801349904",
             "https://x.com/wallet/status/1954052040939753923",
-            "https://x.com/GoKiteAI/status/1956244265958564185?t=FSvQKtpHlSZubCmNs6VY0w&s=19"
+            "https://x.com/GoKiteAI/status/1956244265958564185"
         ];
         let currentTweet = 0;
-        function loadTweet(index) {
-            const tweetContainer = document.getElementById("tweetContainer");
-            tweetContainer.innerHTML = "";
-            twttr.widgets.createTweet(
-                tweets[index].split("/status/")[1].split("?")[0],
-                tweetContainer,
-                { align: "center" }
-            ).then(() => {
-                tweetContainer.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', playClickSound);
-                });
-            });
-        }
-
-        document.getElementById("announcementBtn").addEventListener("click", () => {
-            document.getElementById("announcementModal").classList.add("show");
+        const loadTweet = (index) => {
+            const container = document.getElementById('tweetContainer');
+            container.innerHTML = '';
+            twttr.widgets.createTweet(tweets[index].split('/status/')[1].split('?')[0], container, { align: 'center' })
+                .then(() => container.querySelectorAll('a').forEach(link => link.addEventListener('click', () => playSound(clickSound))));
+        };
+        document.getElementById('announcementBtn').addEventListener('click', () => {
+            openModal(document.getElementById('announcementModal'));
             loadTweet(currentTweet);
         });
-        document.getElementById("closeAnnouncementBtn").addEventListener("click", () => {
-            document.getElementById("announcementModal").classList.remove("show");
-        });
-        document.getElementById("prevBtn").addEventListener("click", () => {
+        document.getElementById('closeAnnouncementBtn').addEventListener('click', () => closeModal(document.getElementById('announcementModal')));
+        document.getElementById('prevBtn').addEventListener('click', () => {
             currentTweet = (currentTweet - 1 + tweets.length) % tweets.length;
             loadTweet(currentTweet);
         });
-        document.getElementById("nextBtn").addEventListener("click", () => {
+        document.getElementById('nextBtn').addEventListener('click', () => {
             currentTweet = (currentTweet + 1) % tweets.length;
             loadTweet(currentTweet);
         });
 
         // Agent Chat
         const agentModal = document.getElementById('agentModal');
-        const agentBtn = document.getElementById('agentBtn');
         const chatMessages = document.getElementById('chatMessages');
         const userInput = document.getElementById('userInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const closeAgentBtn = document.getElementById('closeAgentBtn');
-
         const answers = {
-            "how can i use kiteai?": "Join the KiteAI Testnet at testnet.gokite.ai and explore community features!",
-            "what are kiteai nfts?": "KiteAI NFTs are digital collectibles on OpenSea, offering exclusive community perks.",
-            "how to join kiteai community?": "Follow @GoKiteAI and @Kite_Frens_Eco on X to join our vibrant community!",
-            "how to report an issue?": "Use the feedback form or DM @GoKiteAI on X for quick support.",
-            "upcoming events in kiteai?": "Stay tuned to @GoKiteAI on X for the latest events and campaigns!"
+            'how can i use kiteai?': 'Join the KiteAI Testnet at testnet.gokite.ai!',
+            'what are kiteai nfts?': 'KiteAI NFTs are collectibles on OpenSea with community perks.',
+            'how to join kiteai community?': 'Follow @GoKiteAI and @Kite_Frens_Eco on X!',
+            'how to report an issue?': 'Use the feedback form or DM @GoKiteAI on X.',
+            'upcoming events in kiteai?': 'Check @GoKiteAI on X for events and campaigns!'
         };
-
-        function addMessage(text, sender) {
+        const addMessage = (text, sender) => {
             const div = document.createElement('div');
-            div.classList.add('chat-msg', sender === 'agent' ? 'chat-agent' : 'chat-user');
+            div.classList.add('chat-msg', `chat-${sender}`);
             div.textContent = text;
             chatMessages.appendChild(div);
             chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        agentBtn.addEventListener('click', () => {
-            agentModal.classList.add('show');
+        };
+        document.getElementById('agentBtn').addEventListener('click', () => {
+            openModal(agentModal);
             userInput.focus();
         });
-        closeAgentBtn.addEventListener('click', () => {
-            agentModal.classList.remove('show');
-        });
+        document.getElementById('closeAgentBtn').addEventListener('click', () => closeModal(agentModal));
         document.querySelectorAll('.question-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const q = btn.textContent;
                 addMessage(q, 'user');
-                addMessage(answers[q.toLowerCase()] || "Thanks! We'll respond soon.", 'agent');
+                addMessage(answers[q.toLowerCase()] || 'Thanks for your question!', 'agent');
             });
         });
-        sendBtn.addEventListener('click', () => {
+        document.getElementById('sendBtn').addEventListener('click', () => {
             const q = userInput.value.trim();
             if (q) {
                 addMessage(q, 'user');
-                addMessage(answers[q.toLowerCase()] || "Thanks! We'll respond soon.", 'agent');
+                addMessage(answers[q.toLowerCase()] || 'Thanks for your question!', 'agent');
                 userInput.value = '';
             } else {
                 showToast('Please enter a question!', 3000);
             }
         });
         userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendBtn.click();
-        });
-
-        // Leaderboard
-        const leaderboardData = [
-            { rank: 1, name: "Crypto_King877", url: "https://x.com/Crypto_King877?t=M_jfPjKPbHKPhMwaEfRGrg&s=09" },
-            { rank: 2, name: "Daniel Wabuisi0", url: "https://x.com/danielnwabuisi0?t=OoTOQXk8VUY6Av2zYOaCmA&s=09" },
-            { rank: 3, name: "Sarcastic_AU", url: "https://x.com/Sarcastic_AU?t=Z-riE0FULUeXEzxzGIPN4w&s=09" },
-            { rank: 4, name: "Kartik Boy45", url: "https://x.com/Kartikboy45?t=QVk_3mX_O9gJC7jGu_daKA&s=09" },
-            { rank: 5, name: "Alfian_Paddaus", url: "https://x.com/alfian_paddaus?t=kq_-SyZEIlLBGLY7tCMtIQ&s=09" },
-            { rank: 6, name: "Givnix", url: "https://x.com/Givnix?t=n2lqQAvGKN8viHtMXkmh6A&s=09" },
-            { rank: 7, name: "ChingZhangData", url: "https://x.com/ChiZhangData?t=VeO099Z1cQctspfpkb-iOw&s=09" },
-            { rank: 8, name: "0xLaughing", url: "https://x.com/0xLaughing?t=FQQDbwwjqhPe43G6vGH6Ag&s=09" },
-            { rank: 9, name: "KingTowdah", url: "https://x.com/KingTowdah?t=H3ipXL6J99FGaI7GvEm2Dw&s=09" },
-            { rank: 10, name: "Spring", url: "https://x.com/superamscom?t=LPSNv40LwZ9Bi5g9fe2baA&s=09" },
-            { rank: 11, name: "Scott Shi", url: "https://x.com/scottshics?t=EUoxo7laWPElaLyriuPL3w&s=09" },
-            { rank: 12, name: "Henry Lee", url: "https://x.com/Henryleemr?t=tA675qNGEAbbnYLouHYJBQ&s=09" },
-            { rank: 13, name: "JiuHuang", url: "https://x.com/JiuHuangKOL?t=lkG1AHNfO43zw4OXW5aS-Q&s=09" },
-            { rank: 14, name: "LiCrazy", url: "https://x.com/0xFeng?t=K-xdgrI6vSObZevIphHuOw&s=09" },
-            { rank: 15, name: "Linsajio", url: "https://x.com/linsajiao?t=MiIEcjUOQBluMWP_Ndx9pQ&s=09" },
-            { rank: 16, name: "Taniya Aggarwal", url: "https://x.com/iamtanya338?t=y2p2tNMePACgnXeBPypI5A&s=09" },
-            { rank: 17, name: "Jmhuolongguo", url: "https://x.com/jmhuolongguo?t=3gGiUyuzflaXKtilN23MDA&s=09" },
-            { rank: 18, name: "Stephen", url: "https://x.com/imastephen_?t=L5X7sAjecvfVy3EOn1W7fA&s=09" },
-            { rank: 19, name: "Baby Yui", url: "https://x.com/Oldoggie88?t=Th7WvT6QILC4LCSEbf8AjA&s=09" },
-            { rank: 20, name: "EarronYu", url: "https://x.com/EarronYu?t=p77FavuKZAkEULP7oZAD6g&s=09" },
-            { rank: 21, name: "CreaMyHaOsCar", url: "https://x.com/CreaMyHaOsCar?t=e9SM3sxOQqfy5jK8U2mqOg&s=09" },
-            { rank: 22, name: "Ssovoovo", url: "https://x.com/ssovoovo?t=8Q363FPjpwM7FGMTnyDP6A&s=09" },
-            { rank: 23, name: "Bingo_Eth", url: "https://x.com/bingo_eth?t=C4CbDkueecokyPEgbTUYtg&s=09" },
-            { rank: 24, name: "0xTykoo", url: "https://x.com/0xTykoo?t=-86anzkrAKTibzF_db1EYQ&s=09" },
-            { rank: 25, name: "0xBolin123", url: "https://x.com/0xBolin123?t=9D-uZtEUJij0AA_flhdzVA&s=09" },
-            { rank: 26, name: "Ariel Choii", url: "https://x.com/ArielChoii?t=n7xyDbiTCJe8YMTicN4RNQ&s=09" },
-            { rank: 27, name: "Crypto Makabaka", url: "https://x.com/CryptoMakabaka?t=c5muLiT3PvVI6ReUNJQeBA&s=09" },
-            { rank: 28, name: "0xYae", url: "https://x.com/0x0xyae?t=24cUn3JuH4gimcuqCnN9Tw&s=09" },
-            { rank: 29, name: "Guomin184935", url: "https://x.com/Guomin184935?t=I-qrURmE2oNW3wjYVDEGbw&s=09" },
-            { rank: 30, name: "Sweet91268", url: "https://x.com/sweet919268?t=_l93-XBFYOu-Tiwh5qEKgg&s=09" },
-            { rank: 31, name: "Vikthebuilder", url: "https://x.com/buidloor?t=8flJ3JS8f9rGsv3LCJ40nQ&s=09" },
-            { rank: 32, name: "0xArk21", url: "https://x.com/0xark21?t=_kMjjfvuT88PLP3hvBNwkg&s=09" },
-            { rank: 33, name: "CindyShi0907", url: "https://x.com/Cindyshi0907?t=nCUXeX1g7OP2PY4PbMHm6A&s=09" },
-            { rank: 34, name: "0xCryptoHowe", url: "https://x.com/0xcryptoHowe?t=LIHUgzvn1Wv65gHDj-sVqw&s=09" },
-            { rank: 35, name: "Jyamidfx", url: "https://x.com/iyamidfx?t=r4RD4G45Vewftrsu9Hpm3Q&s=09" },
-            { rank: 36, name: "Sergej", url: "https://x.com/Sergej549190?t=dRqLJlmK-vZItnq8Z12rFQ&s=09" },
-            { rank: 37, name: "Oleh", url: "https://x.com/OLEH_SYROVATKA?t=q4Zbotl9jegMUVeygtyHzA&s=09" },
-            { rank: 38, name: "Ranaone", url: "https://x.com/ranaone185?t=1EF214uR-8GFiaERuiO1cQ&s=09" },
-            { rank: 39, name: "ErlanggaH", url: "https://x.com/ErlanggaH31985?t=aTxsMdEw3CjuXSDtgGRO6Q&s=09" },
-            { rank: 40, name: "Theefehalo", url: "https://x.com/THEEFEHALO?t=JQnPv_6E246rLUCqbilPPQ&s=09" },
-            { rank: 41, name: "Senna", url: "https://x.com/sennxenna?t=uVqmd1UahL4p1iEyFVQWgw&s=09" },
-            { rank: 42, name: "Apeng", url: "https://x.com/Apeng2006?t=k9fuTSR3YMDlVocF5T5ioQ&s=09" },
-            { rank: 43, name: "StlightLeon", url: "https://x.com/StlightLeon?t=rtX05b7rCsIDsquJ6l5BLA&s=09" },
-            { rank: 44, name: "Kabsne", url: "https://x.com/kabsne4?t=utIZ8I_BswWRd0ZX2f716w&s=09" },
-            { rank: 45, name: "Marurlemo", url: "https://x.com/marurlemo?t=dw2QG3ndU1V91WSQSI71iA&s=09" },
-            { rank: 46, name: "Aminullah", url: "https://x.com/aminullah4life?t=lNAYcXjc8_AgUU2-4sfn7g&s=09" },
-            { rank: 47, name: "KryptoNickDC", url: "https://x.com/KrYpToNiCkDC?t=BBpw8s6uXkgcu92mM-9X0Q&s=09" },
-            { rank: 48, name: "Jyamidfx", url: "https://x.com/iyamidfx?t=xOToxHE1VAjMI5w2ESBNZg&s=09" },
-            { rank: 49, name: "Moki", url: "https://x.com/moki62166?t=zREI0esE_RI5e9HH8YnYQg&s=09" },
-            { rank: 50, name: "Sergey", url: "https://x.com/sergey_sgs?t=WWGv4cGtwQQ9Bmrg1jTeIQ&s=09" },
-            { rank: 51, name: "0xVanss", url: "https://x.com/0xVanssStrong?t=uImXUBA939XG10Y3IPfVIw&s=09" },
-            { rank: 52, name: "Thanhaa", url: "https://x.com/thanhha3071997?t=QM3qzk2A7gY4iDooFtSm1A&s=09" },
-            { rank: 53, name: "LifeanyiDavidAI", url: "https://x.com/IfeanyiDavidAI?t=UseGrADY5iAWqsXcK9zMMQ&s=09" },
-            { rank: 54, name: "LekhCando", url: "https://x.com/lekhcando?t=c2OajrHK-1GohZEa9a-ZRg&s=09" },
-            { rank: 55, name: "FiifibiNeyTS", url: "https://x.com/fiifibiNeyTs?t=lYMxtSXFvy5pAr5BpDQrIw&s=09" },
-            { rank: 56, name: "DinoDied", url: "https://x.com/GameversusW3?t=FzT0md8o3V42-lOkDh1exQ&s=09" },
-            { rank: 57, name: "Web3 Guru", url: "https://x.com/web3gurru?t=GOvFCqOy4XIVB01O9ZlQtQ&s=09" },
-            { rank: 58, name: "Tanmu Dgreat", url: "https://x.com/tanmuDgreat?t=gBgn57BW8W-L-oFbUh5ALw&s=09" },
-            { rank: 59, name: "Junzna", url: "https://x.com/Junzna3L?t=D6Dp6VdcRdIKmubaMqpaXA&s=09" },
-            { rank: 60, name: "Sandy Crypto", url: "https://x.com/SandyMikaila?t=atStiBTaVhGCVDwDbi66KQ&s=09" },
-            { rank: 61, name: "Kaizah Flow", url: "https://x.com/KaizahFlow?t=pa9I8NEuKjR3Pbjo8FySeQ&s=09" },
-            { rank: 62, name: "Gaby", url: "https://x.com/0xgabyy?t=d9ScCda0-097PFpgk4q7cg&s=09" },
-            { rank: 63, name: "Just Do It", url: "https://x.com/mysucesstory?t=uSt6Sf21bGzSk780bM4Hkg&s=09" },
-            { rank: 64, name: "Dorotheaxx", url: "https://x.com/dorotheaxx_?t=evKA41y52JH7y_RB3ZlivA&s=09" },
-            { rank: 65, name: "Fark", url: "https://x.com/AwolusiAyobola?t=OGD08Otv0oLuT-nclSmIkw&s=09" },
-            { rank: 66, name: "Mic", url: "https://x.com/summerftw1119?t=vKal6jjK0xqSr8ER94k7UQ&s=09" },
-            { rank: 67, name: "Boy Trader", url: "https://x.com/boytrader__?t=gp8tu3aajD6v44JOR6KNCg&s=09" },
-            { rank: 68, name: "UgwuezeChijioke", url: "https://x.com/UgwuezeChijioke?t=bhbJBesu75JGSr5dCK4BRA&s=09" },
-            { rank: 69, name: "GabrielN2H", url: "https://x.com/GabrielN2H?t=AXB1aQqma3wh6EvmtR49Kw&s=09" },
-            { rank: 70, name: "Abdullahi", url: "https://x.com/suremethod007?t=dEBI5Ssg1_CuZQAETxa0Bw&s=09" },
-            { rank: 71, name: "Eslam", url: "https://x.com/Eslam57795041?t=qsMOnGLUFg-le4BCjI8ojw&s=09" },
-            { rank: 72, name: "HIB_BTC", url: "https://x.com/HIB_BTC?t=jZvpH-ykugZGVy0L0uTEew&s=09" },
-            { rank: 73, name: "Darcy", url: "https://x.com/BitBull2003?t=JDpEudCB_UWJVTBiQamaYA&s=09" },
-            { rank: 74, name: "HVBlumNews", url: "https://x.com/HVBlumnews?t=C7tyoBrMk01O5dqTc30MbQ&s=09" },
-            { rank: 75, name: "Ufaz", url: "https://x.com/Zee_edge?t=QSwoXCHg4UwnE1l8WoFz0g&s=09" },
-            { rank: 76, name: "GiaKhiêm", url: "https://x.com/Giakhiem_bnb?t=kWvUCTUBI9TGiE9KRFr_ng&s=09" },
-            { rank: 77, name: "Sohan", url: "https://x.com/sohan269?t=HPHSxOhvzD-qC5izgjqOiw&s=09" },
-            { rank: 78, name: "Johnny", url: "https://x.com/Johnnygoldvc?t=qgk1mB8iGNIfRMapr4QYOg&s=09" },
-            { rank: 79, name: "Baris", url: "https://x.com/barcengiz?t=uPICxOStNUi9VutqyzJ8UA&s=09" },
-            { rank: 80, name: "Darth", url: "https://x.com/DrthXyler?t=x0hxEmKOA7Y9o4o4aPB0yA&s=09" },
-            { rank: 81, name: "Meek Of Web3", url: "https://x.com/Meekofweb3?t=euH9YpospYh-ajzBC2ULjA&s=09" },
-            { rank: 82, name: "Bozzx Japan", url: "https://x.com/aidropIdn?t=F4ADcJlnNBp5gnOgy7x_1w&s=09" },
-            { rank: 83, name: "Unaiyang", url: "https://x.com/unaiyang?t=RNcpB8FHZrZ5wCi8Kb6a8A&s=09" },
-            { rank: 84, name: "Kiarh205", url: "https://x.com/kiarh205?t=LKWaV54W6NFlK74nAOoODg&s=09" },
-            { rank: 85, name: "Oli Web3", url: "https://x.com/OliWeb3_?t=rTWzMLR5c-uTc67EMtRAhQ&s=09" },
-            { rank: 86, name: "ElF", url: "https://x.com/elf_dpfvm?t=3RUUj7JySGBBLycePlDHFw&s=09" },
-            { rank: 87, name: "JAEY", url: "https://x.com/Dudeisjaey?t=fsgsx6cb4RrsLbOCQpOzgg&s=09" },
-            { rank: 88, name: "MR ICE", url: "https://x.com/MR_ICE355?t=mDsLTZ8joR-JiilkPaVPfg&s=09" },
-            { rank: 89, name: "Geyzee Of Web3", url: "https://x.com/Geyzee_Francis?t=inFmY2cYd5hlcZucabPHXg&s=09" },
-            { rank: 90, name: "IPadee", url: "https://x.com/ipadeeWeb3?t=RFVHcalYIUQFWWfjXdoRJg&s=09" },
-            { rank: 91, name: "Fre", url: "https://x.com/Nixit333?t=iv8KD7TKHcBaIjirrmP0sQ&s=09" },
-            { rank: 92, name: "Memo ETH", url: "https://x.com/mehmetavc199727?t=Z7v_DpxWDegbr8dPrxg72w&s=09" },
-            { rank: 93, name: "King Sley41", url: "https://x.com/kingsley41w?t=03m35D86oOLJ4eaSSEUi_w&s=09" },
-            { rank: 94, name: "Simi", url: "https://x.com/dara_see_me?t=tS0bAE3eUBLc_5TFmqFnPg&s=09" },
-            { rank: 95, name: "0xCway", url: "https://x.com/0xcway?t=3wbJzAzS55NnrFvoZw8hGA&s=09" },
-            { rank: 96, name: "Erictus", url: "https://x.com/erictus_ai?t=rfS6jPDhTS-ue7SJz9cDUg&s=09" },
-            { rank: 97, name: "Mehmeet", url: "https://x.com/mehmeet43?t=FZYTrPRRB7rGeAJ8ual4jA&s=09" },
-            { rank: 98, name: "GoGori", url: "https://x.com/ABUGOGORI?t=O4SA8KUW8XGLKv7jrlK_-Q&s=09" },
-            { rank: 99, name: "Yos.Eth", url: "https://x.com/0xyos_ril?t=pUN8pf2xDIwlAU8L5s0siA&s=09" },
-            { rank: 100, name: "SadiCool", url: "https://x.com/sadicoool7?t=1g4XwNmxuRlB6DgIKGKO9A&s=09" }
-        ];
-
-        function loadLeaderboard() {
-            const table = document.getElementById('leaderboardTable');
-            table.innerHTML = '';
-            leaderboardData.forEach(user => {
-                const row = document.createElement('div');
-                row.classList.add('leaderboard-row');
-                row.innerHTML = `
-                    <div class="leaderboard-rank rank-${user.rank}">${user.rank}</div>
-                    <div class="leaderboard-profile">
-                        <img src="https://i.postimg.cc/6TkVmjdM/close-icon.png" alt="Profile of ${user.name}" loading="lazy">
-                    </div>
-                    <div class="leaderboard-name">
-                        <a href="${user.url}" target="_blank" aria-label="Visit ${user.name}'s profile">${user.name}</a>
-                    </div>
-                `;
-                table.appendChild(row);
-            });
-        }
-
-        document.getElementById('leaderboardBtn').addEventListener('click', () => {
-            document.getElementById('leaderboardModal').classList.add('show');
-            loadLeaderboard();
-        });
-        document.getElementById('closeLeaderboardBtn').addEventListener('click', () => {
-            document.getElementById('leaderboardModal').classList.remove('show');
+            if (e.key === 'Enter') document.getElementById('sendBtn').click();
         });
 
         // Flipping Game
         const gameModal = document.getElementById('gameModal');
-        const closeGameBtn = document.getElementById('closeGameBtn');
-        const restartGameBtn = document.getElementById('restartGameBtn');
         const puzzleGrid = document.getElementById('puzzleGrid');
-        const scoreDisplay = document.getElementById('gameScore');
+        const gameScore = document.getElementById('gameScore');
         const winMessage = document.getElementById('winMessage');
-
-        const backsideImage = 'https://i.postimg.cc/6TkVmjdM/close-icon.png';
-        const frontImages = [
+        const baseImages = [
             'https://i.postimg.cc/FfpWLBgg/image1.png',
-            'https://i.postimg.cc/FfpWLBgg/image1.png',
-            'https://i.postimg.cc/FfpWLBgg/image1.png',
-            'https://i.postimg.cc/68NY1XMf/image2.png',
-            'https://i.postimg.cc/68NY1XMf/image2.png',
             'https://i.postimg.cc/68NY1XMf/image2.png',
             'https://i.postimg.cc/PNpyXxcM/image3.png',
-            'https://i.postimg.cc/PNpyXxcM/image3.png',
-            'https://i.postimg.cc/PNpyXxcM/image3.png'
+            'https://i.postimg.cc/mzMZpf0r/logo.jpg',
+            'https://i.postimg.cc/zyBhrQMg/target.png'
         ];
-
+        const backsideImage = 'https://i.postimg.cc/6TkVmjdM/close-icon.png';
         let level = 1;
         let bestLevel = localStorage.getItem('puzzleGameBestLevel') || 1;
-        let matchedSets = 0;
+        let moves = 0;
         let flippedCards = [];
-        let timer = 0;
-        let timerInterval = null;
+        let matchedSets = 0;
         let isProcessing = false;
+        const maxLevels = 20;
 
-        function shuffle(array) {
+        const getCardCount = (level) => {
+            if (level <= 5) return 2; // 2x2x2
+            if (level <= 10) return 3; // 3x3x3
+            if (level <= 15) return 4; // 4x4x4
+            return 5; // 5x5x5
+        };
+
+        const shuffle = (array) => {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
             }
             return array;
-        }
+        };
 
-        function startTimer() {
-            timer = 0;
-            if (timerInterval) clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                timer++;
-                scoreDisplay.textContent = `Level: ${level} | Best Level: ${bestLevel} | Time: ${timer}s`;
-            }, 1000);
-        }
-
-        function stopTimer() {
-            if (timerInterval) clearInterval(timerInterval);
-        }
-
-        function createCard(imageSrc) {
+        const createCard = (imageSrc) => {
             const card = document.createElement('div');
             card.classList.add('card');
             const inner = document.createElement('div');
@@ -1293,117 +807,115 @@
             front.classList.add('card-front');
             const frontImg = document.createElement('img');
             frontImg.src = imageSrc;
-            frontImg.loading = 'lazy';
+            frontImg.alt = 'Card Image';
             front.appendChild(frontImg);
             const back = document.createElement('div');
             back.classList.add('card-back');
             const backImg = document.createElement('img');
             backImg.src = backsideImage;
-            backImg.loading = 'lazy';
+            backImg.alt = 'Card Back';
             back.appendChild(backImg);
             inner.appendChild(front);
             inner.appendChild(back);
             card.appendChild(inner);
             card.addEventListener('click', handleCardClick);
-            card.addEventListener('touchstart', handleCardClick, { passive: false });
             card.tabIndex = 0;
-            card.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') handleCardClick(e);
-            });
             return card;
-        }
+        };
 
-        function initPuzzle() {
+        const initPuzzle = () => {
             puzzleGrid.innerHTML = '';
             winMessage.classList.remove('show');
             puzzleGrid.classList.remove('won');
-            const shuffledImages = shuffle([...frontImages]);
-            shuffledImages.forEach(src => {
-                puzzleGrid.appendChild(createCard(src));
-            });
+            const cardCount = getCardCount(level);
+            const selectedImages = baseImages.slice(0, cardCount);
+            const frontImages = [].concat(...selectedImages.map(img => Array(3).fill(img)));
+            const shuffledImages = shuffle(frontImages);
+            puzzleGrid.style.gridTemplateColumns = `repeat(${Math.ceil(Math.sqrt(shuffledImages.length))}, 1fr)`;
+            shuffledImages.forEach(src => puzzleGrid.appendChild(createCard(src)));
             flippedCards = [];
             matchedSets = 0;
+            moves = 0;
             isProcessing = false;
-            startTimer();
-            scoreDisplay.textContent = `Level: ${level} | Best Level: ${bestLevel} | Time: ${timer}s`;
-        }
+            gameScore.textContent = `Level: ${level} | Best Level: ${bestLevel} | Moves: ${moves}`;
+            document.getElementById('nextLevelBtn').style.display = 'none';
+        };
 
-        function handleCardClick(e) {
+        const handleCardClick = (e) => {
             e.preventDefault();
-            if (isProcessing) return;
+            if (isProcessing || puzzleGrid.classList.contains('won')) return;
             const card = e.target.closest('.card');
-            if (!card || card.classList.contains('flipped') || flippedCards.length >= 3 || puzzleGrid.classList.contains('won')) return;
+            if (!card || card.classList.contains('flipped') || flippedCards.length >= 3) return;
             card.classList.add('flipped');
             flippedCards.push(card);
-            playClickSound();
+            moves++;
+            gameScore.textContent = `Level: ${level} | Best Level: ${bestLevel} | Moves: ${moves}`;
+            playSound(clickSound);
             if (flippedCards.length === 3) {
                 isProcessing = true;
                 checkMatch();
             }
-        }
+        };
 
-        function checkMatch() {
+        const checkMatch = () => {
             const fronts = flippedCards.map(card => card.querySelector('.card-front img').src);
             if (fronts[0] === fronts[1] && fronts[1] === fronts[2]) {
                 matchedSets++;
                 flippedCards = [];
                 isProcessing = false;
-                if (matchedSets === 3) {
-                    stopTimer();
+                if (matchedSets === getCardCount(level)) {
                     puzzleGrid.classList.add('won');
+                    winMessage.textContent = level === maxLevels ? 'All Levels Completed!' : `Level ${level} Completed!`;
                     winMessage.classList.add('show');
-                    showToast(`Level ${level} Completed in ${timer}s!`, 4000);
-                    level++;
+                    showToast(level === maxLevels ? 'Congratulations! All Levels Done!' : `Level ${level} Completed!`, 4000);
                     if (level > bestLevel) {
                         bestLevel = level;
                         localStorage.setItem('puzzleGameBestLevel', bestLevel);
                     }
-                    setTimeout(() => initPuzzle(), 2000);
+                    document.getElementById('nextLevelBtn').style.display = level < maxLevels ? 'block' : 'none';
                 }
             } else {
                 setTimeout(() => {
                     flippedCards.forEach(card => card.classList.remove('flipped'));
                     flippedCards = [];
                     isProcessing = false;
-                }, 700 - (level - 1) * 70);
+                }, 1000 - (level - 1) * 40);
             }
-        }
+        };
 
-        flippingGameOption.addEventListener('click', (e) => {
+        document.getElementById('flippingGameOption').addEventListener('click', (e) => {
             e.preventDefault();
-            gamesModal.classList.remove('show');
-            gameModal.classList.add('show');
+            closeModal(gamesModal);
+            openModal(gameModal);
             level = 1;
             initPuzzle();
         });
-        closeGameBtn.addEventListener('click', () => {
-            gameModal.classList.remove('show');
-            stopTimer();
-        });
-        restartGameBtn.addEventListener('click', () => {
+        document.getElementById('closeGameBtn').addEventListener('click', () => closeModal(gameModal));
+        document.getElementById('restartGameBtn').addEventListener('click', () => {
             level = 1;
+            initPuzzle();
+        });
+        document.getElementById('nextLevelBtn').addEventListener('click', () => {
+            level = level < maxLevels ? level + 1 : 1;
             initPuzzle();
         });
 
         // Shooting Game
         const shootingGameModal = document.getElementById('shootingGameModal');
-        const closeShootingGameBtn = document.getElementById('closeShootingGameBtn');
-        const restartShootingGameBtn = document.getElementById('restartShootingGameBtn');
         const shootingGameCanvas = document.getElementById('shootingGameCanvas');
         const shootingGameScore = document.getElementById('shootingGameScore');
         const gameOverMessage = document.getElementById('gameOverMessage');
-        const scopeToggleBtn = document.getElementById('scopeToggleBtn');
         const ctx = shootingGameCanvas.getContext('2d');
-
+        let level = 1;
         let score = 0;
+        let lives = 3;
         let bestScore = localStorage.getItem('shootingGameBestScore') || 0;
-        let shootingTimer = 0;
-        let shootingTimerInterval = null;
         let targets = [];
         let isScopeActive = false;
         let isGameOver = false;
         let gameLoop = null;
-        let gunX = 0;
+        let mouseX = null;
+        let mouseY = null;
         const gunImage = new Image();
         gunImage.src = 'https://i.postimg.cc/LnrJcszr/gun.png';
         const scopeImage = new Image();
@@ -1411,46 +923,23 @@
         const targetImage = new Image();
         targetImage.src = 'https://i.postimg.cc/zyBhrQMg/target.png';
 
-        function resizeCanvas() {
+        const resizeCanvas = () => {
             const parent = shootingGameCanvas.parentElement;
             shootingGameCanvas.width = parent.clientWidth > 800 ? 800 : parent.clientWidth;
             shootingGameCanvas.height = window.innerWidth <= 767 ? 300 : 500;
-            gunX = shootingGameCanvas.width / 2 - 50;
-        }
-
+        };
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        function startShootingTimer() {
-            shootingTimer = 0;
-            if (shootingTimerInterval) clearInterval(shootingTimerInterval);
-            shootingTimerInterval = setInterval(() => {
-                shootingTimer++;
-                shootingGameScore.textContent = `Score: ${score} | Best Score: ${bestScore} | Time: ${shootingTimer}s`;
-                if (shootingTimer >= 60) {
-                    endShootingGame();
-                }
-            }, 1000);
-        }
-
-        function stopShootingTimer() {
-            if (shootingTimerInterval) clearInterval(shootingTimerInterval);
-        }
-
-        function createTarget() {
-            const size = Math.random() * 20 + 30; // 30-50px
+        const createTarget = () => {
+            const size = Math.random() * 20 + 30;
             const x = Math.random() * (shootingGameCanvas.width - size);
-            const y = Math.random() * (shootingGameCanvas.height - size - 60); // Avoid gun area
-            const speed = 1 + score / 200; // Increase difficulty
-            targets.push({
-                x, y, size,
-                vx: (Math.random() - 0.5) * speed,
-                vy: (Math.random() - 0.5) * speed,
-                spawnTime: Date.now()
-            });
-        }
+            const y = Math.random() * (shootingGameCanvas.height - size - 60);
+            const speed = 1 + level * 0.5;
+            targets.push({ x, y, size, vx: (Math.random() - 0.5) * speed, vy: (Math.random() - 0.5) * speed, spawnTime: Date.now() });
+        };
 
-        function hitTarget(x, y) {
+        const hitTarget = (x, y) => {
             let hit = false;
             targets = targets.filter(t => {
                 const dx = x - (t.x + t.size / 2);
@@ -1459,61 +948,58 @@
                 if (distance < t.size / 2) {
                     hit = true;
                     const timeTaken = (Date.now() - t.spawnTime) / 1000;
-                    let points = isScopeActive ? Math.max(20, 150 - Math.floor(timeTaken * 15)) : Math.max(10, 75 - Math.floor(timeTaken * 10));
+                    const points = isScopeActive ? Math.max(20, 100 - Math.floor(timeTaken * 10)) : Math.max(10, 50 - Math.floor(timeTaken * 5));
                     score += points;
                     showToast(`Hit! +${points} points`, 1000);
-                    // Add hit effect
-                    ctx.beginPath();
-                    ctx.arc(x, y, 10, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(255, 0, 0, 0.8)';
-                    ctx.fill();
-                    setTimeout(() => {
-                        ctx.clearRect(x - 15, y - 15, 30, 30);
-                    }, 500);
+                    const hitEffect = document.createElement('div');
+                    hitEffect.classList.add('hit-effect');
+                    hitEffect.style.left = `${x - 10}px`;
+                    hitEffect.style.top = `${y - 10}px`;
+                    shootingGameCanvas.parentElement.appendChild(hitEffect);
+                    setTimeout(() => hitEffect.remove(), 500);
                     return false;
                 }
                 return true;
             });
-            if (hit) playShootSound();
+            if (!hit && lives > 0) {
+                lives--;
+                showToast(`Miss! Lives: ${lives}`, 1000);
+                if (lives === 0) endShootingGame();
+            }
+            if (hit) playSound(shootSound);
+            shootingGameScore.textContent = `Level: ${level} | Score: ${score} | Lives: ${lives}`;
             return hit;
-        }
+        };
 
-        function updateTargets() {
+        const updateTargets = () => {
             const now = Date.now();
-            targets = targets.filter(t => {
-                if (now - t.spawnTime > 4000) return false; // Targets disappear after 4s
+            targets = targets.filter(t => now - t.spawnTime <= 4000 - level * 100);
+            if (targets.length < 3 + level && Math.random() < 0.1) createTarget();
+            targets.forEach(t => {
                 t.x += t.vx;
                 t.y += t.vy;
                 if (t.x < 0 || t.x > shootingGameCanvas.width - t.size) t.vx *= -1;
                 if (t.y < 0 || t.y > shootingGameCanvas.height - t.size - 60) t.vy *= -1;
-                return true;
             });
-            if (targets.length < 4 && Math.random() < 0.1) createTarget();
-        }
+            if (score >= level * 100 && level < maxLevels) {
+                level++;
+                showToast(`Level ${level} Unlocked!`, 2000);
+            }
+        };
 
-        function drawGame() {
+        const drawGame = () => {
             ctx.clearRect(0, 0, shootingGameCanvas.width, shootingGameCanvas.height);
-            // Draw background
-            const gradient = ctx.createLinearGradient(0, 0, 0, shootingGameCanvas.height);
-            gradient.addColorStop(0, '#1e293b');
-            gradient.addColorStop(1, '#334155');
-            ctx.fillStyle = gradient;
+            ctx.fillStyle = 'linear-gradient(180deg, #1a2338, #334155)';
             ctx.fillRect(0, 0, shootingGameCanvas.width, shootingGameCanvas.height);
-            // Draw targets
-            targets.forEach(t => {
-                ctx.drawImage(targetImage, t.x, t.y, t.size, t.size);
-            });
-            // Draw gun
-            ctx.drawImage(gunImage, gunX, shootingGameCanvas.height - 60, 100, 60);
-            // Draw scope
+            targets.forEach(t => ctx.drawImage(targetImage, t.x, t.y, t.size, t.size));
+            ctx.drawImage(gunImage, mouseX ? mouseX - 50 : shootingGameCanvas.width / 2 - 50, shootingGameCanvas.height - 60, 100, 60);
             if (isScopeActive && mouseX !== null && mouseY !== null) {
                 ctx.drawImage(scopeImage, mouseX - 50, mouseY - 50, 100, 100);
             }
-        }
+        };
 
-        function endShootingGame() {
+        const endShootingGame = () => {
             isGameOver = true;
-            stopShootingTimer();
             gameOverMessage.classList.add('show');
             shootingGameCanvas.style.filter = 'blur(4px)';
             if (score > bestScore) {
@@ -1522,109 +1008,88 @@
             }
             showToast(`Game Over! Score: ${score}`, 4000);
             cancelAnimationFrame(gameLoop);
-        }
+        };
 
-        let mouseX = null;
-        let mouseY = null;
-
-        function initShootingGame() {
+        const initShootingGame = () => {
             resizeCanvas();
+            level = 1;
             score = 0;
-            shootingTimer = 0;
+            lives = 3;
             targets = [];
             isGameOver = false;
             isScopeActive = false;
             shootingGameCanvas.style.cursor = 'crosshair';
             shootingGameCanvas.style.filter = 'none';
             gameOverMessage.classList.remove('show');
-            shootingGameScore.textContent = `Score: ${score} | Best Score: ${bestScore} | Time: ${shootingTimer}s`;
-            startShootingTimer();
+            shootingGameScore.textContent = `Level: ${level} | Score: ${score} | Lives: ${lives}`;
             createTarget();
             gameLoop = requestAnimationFrame(gameLoopFunction);
-        }
+        };
 
-        function gameLoopFunction() {
+        const gameLoopFunction = () => {
             if (!isGameOver) {
                 updateTargets();
                 drawGame();
                 gameLoop = requestAnimationFrame(gameLoopFunction);
             }
-        }
+        };
 
         shootingGameCanvas.addEventListener('mousemove', (e) => {
             if (isGameOver) return;
             const rect = shootingGameCanvas.getBoundingClientRect();
-            mouseX = e.clientX - rect.left;
-            mouseY = e.clientY - rect.top;
-            gunX = mouseX - 50;
-            gunX = Math.max(0, Math.min(shootingGameCanvas.width - 100, gunX));
+            mouseX = (e.clientX - rect.left) * (shootingGameCanvas.width / rect.width);
+            mouseY = (e.clientY - rect.top) * (shootingGameCanvas.height / rect.height);
         });
-
         shootingGameCanvas.addEventListener('click', (e) => {
             if (isGameOver) return;
             const rect = shootingGameCanvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            const x = (e.clientX - rect.left) * (shootingGameCanvas.width / rect.width);
+            const y = (e.clientY - rect.top) * (shootingGameCanvas.height / rect.height);
             hitTarget(x, y);
         });
-
-        scopeToggleBtn.addEventListener('click', () => {
+        document.getElementById('scopeToggleBtn').addEventListener('click', () => {
             if (isGameOver) return;
             isScopeActive = !isScopeActive;
             shootingGameCanvas.style.cursor = isScopeActive ? 'none' : 'crosshair';
             showToast(isScopeActive ? 'Scope On' : 'Scope Off', 2000);
         });
-
-        shootingGameOption.addEventListener('click', (e) => {
+        document.getElementById('shootingGameOption').addEventListener('click', (e) => {
             e.preventDefault();
-            gamesModal.classList.remove('show');
-            shootingGameModal.classList.add('show');
+            closeModal(gamesModal);
+            openModal(shootingGameModal);
             initShootingGame();
         });
-        closeShootingGameBtn.addEventListener('click', () => {
-            shootingGameModal.classList.remove('show');
-            stopShootingTimer();
+        document.getElementById('closeShootingGameBtn').addEventListener('click', () => {
+            closeModal(shootingGameModal);
             cancelAnimationFrame(gameLoop);
         });
-        restartShootingGameBtn.addEventListener('click', () => {
-            initShootingGame();
-        });
+        document.getElementById('restartShootingGameBtn').addEventListener('click', initShootingGame);
 
         // Form Handling
-        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+        document.getElementById('feedbackForm').addEventListener('submit', (e) => {
             e.preventDefault();
+            const form = e.target;
             const submitBtn = document.getElementById('submitBtn');
-            const form = this;
             const category = form.category.value;
             const message = form.message.value.trim();
             const email = form.email.value.trim();
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-            if (!category || !message || !email) {
-                showToast('Please fill in all fields!', 3000);
-                return;
-            }
-            if (!emailRegex.test(email)) {
-                showToast('Please enter a valid email address!', 3000);
-                return;
-            }
-
+            const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$/;
+            if (!category || !message || !email) return showToast('Please fill all fields!', 3000);
+            if (!emailRegex.test(email)) return showToast('Invalid email address!', 3000);
             submitBtn.disabled = true;
             submitBtn.textContent = 'Submitting...';
             fetch(form.action, {
                 method: 'POST',
                 body: new FormData(form),
                 headers: { 'Accept': 'application/json' }
-            }).then(response => {
-                if (response.ok) {
-                    showToast('Thank you for your feedback! 🙏', 4000);
+            }).then(res => {
+                if (res.ok) {
+                    showToast('Feedback sent! Thank you!', 4000);
                     form.reset();
                 } else {
-                    showToast('Error submitting feedback. Try again!', 4000);
+                    showToast('Error submitting feedback!', 4000);
                 }
-            }).catch(() => {
-                showToast('Network error. Please try again!', 4000);
-            }).finally(() => {
+            }).catch(() => showToast('Network error!', 4000)).finally(() => {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Send Feedback';
             });
