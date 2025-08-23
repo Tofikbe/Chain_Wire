@@ -36,20 +36,20 @@
         }
         .particle {
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             background: #3b82f6;
             border-radius: 50%;
-            animation: floatParticle 15s linear infinite;
-            opacity: 0.5;
+            animation: floatParticle 12s linear infinite;
+            opacity: 0.4;
         }
-        .particle:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
-        .particle:nth-child(2) { top: 40%; left: 60%; animation-delay: 3s; }
-        .particle:nth-child(3) { top: 70%; left: 30%; animation-delay: 6s; }
-        .particle:nth-child(4) { top: 90%; left: 80%; animation-delay: 9s; }
+        .particle:nth-child(1) { top: 15%; left: 25%; animation-delay: 0s; }
+        .particle:nth-child(2) { top: 45%; left: 65%; animation-delay: 3s; }
+        .particle:nth-child(3) { top: 65%; left: 35%; animation-delay: 6s; }
+        .particle:nth-child(4) { top: 85%; left: 75%; animation-delay: 9s; }
         @keyframes floatParticle {
             0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(50px, -50px) scale(1.5); }
+            50% { transform: translate(40px, -40px) scale(1.4); }
             100% { transform: translate(0, 0) scale(1); }
         }
 
@@ -59,30 +59,30 @@
             top: 0;
             width: 100%;
             background: rgba(10, 14, 23, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 1rem;
+            backdrop-filter: blur(8px);
+            padding: 0.8rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
         }
         .logo img {
-            height: 2.5rem;
-            border-radius: 8px;
+            height: 2rem;
+            border-radius: 6px;
             transition: transform 0.3s ease;
         }
         .logo img:hover { transform: scale(1.1); }
         .nav-links {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
         }
         .nav-links a, .dropbtn {
             color: #e0e7ff;
             text-decoration: none;
-            font-size: 0.9rem;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
+            font-size: 0.85rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
             transition: all 0.3s ease;
         }
         .nav-links a:hover, .dropbtn:hover {
@@ -90,20 +90,18 @@
             color: #fff;
             transform: translateY(-2px);
         }
-        .dropdown {
-            position: relative;
-        }
+        .dropdown { position: relative; }
         .dropdown-content {
             display: none;
             position: absolute;
-            top: 2.2rem;
+            top: 2rem;
             background: rgba(10, 14, 23, 0.95);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            min-width: 180px;
-            padding: 0.5rem 0;
-            transform: translateY(-10px);
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            min-width: 160px;
+            padding: 0.4rem 0;
             opacity: 0;
+            transform: translateY(-10px);
             transition: all 0.3s ease;
         }
         .dropdown:hover .dropdown-content, .dropdown:focus-within .dropdown-content {
@@ -113,30 +111,30 @@
         }
         .dropdown-content a {
             display: block;
-            padding: 0.5rem 1rem;
-            font-size: 0.85rem;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
         }
 
         /* Sidebar (Mobile) */
         .sidebar-btn {
             display: none;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             background: none;
             border: none;
             color: #e0e7ff;
             cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 8px;
+            padding: 0.4rem;
+            border-radius: 6px;
         }
         .sidebar-btn:hover { background: rgba(59, 130, 246, 0.2); }
         .sidebar {
             position: fixed;
             top: 0;
             left: -100%;
-            width: 80%;
+            width: 75%;
             height: 100%;
             background: rgba(10, 14, 23, 0.95);
-            padding: 2rem 1rem;
+            padding: 1.5rem 0.8rem;
             z-index: 999;
             transition: left 0.3s ease;
         }
@@ -144,9 +142,9 @@
         .sidebar a {
             color: #e0e7ff;
             text-decoration: none;
-            padding: 0.75rem;
-            margin: 0.3rem 0;
-            border-radius: 8px;
+            padding: 0.6rem;
+            margin: 0.2rem 0;
+            border-radius: 6px;
             display: block;
             transition: all 0.3s ease;
         }
@@ -183,22 +181,22 @@
         .modal.show { display: flex; opacity: 1; }
         .modal-content {
             background: #1a2338;
-            border-radius: 12px;
-            padding: 1.5rem;
+            border-radius: 10px;
+            padding: 1.2rem;
             width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
+            max-width: 550px;
+            max-height: 85vh;
             overflow-y: auto;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
             transform: scale(0.95);
             transition: transform 0.3s ease;
         }
         .modal.show .modal-content { transform: scale(1); }
         .modal-close {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 1.5rem;
+            top: 0.8rem;
+            right: 0.8rem;
+            width: 1.2rem;
             cursor: pointer;
             transition: transform 0.3s ease;
         }
@@ -208,14 +206,14 @@
         #gamesModal .modal-content { text-align: center; }
         .game-option {
             display: block;
-            padding: 0.75rem;
-            margin: 0.5rem auto;
+            padding: 0.6rem;
+            margin: 0.4rem auto;
             background: linear-gradient(45deg, #3b82f6, #60a5fa);
             color: #fff;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 6px;
             width: 80%;
-            max-width: 250px;
+            max-width: 200px;
             transition: all 0.3s ease;
         }
         .game-option:hover { transform: scale(1.05); background: linear-gradient(45deg, #60a5fa, #3b82f6); }
@@ -225,20 +223,20 @@
         .announcement-controls {
             display: flex;
             justify-content: center;
-            gap: 1rem;
-            margin-top: 1rem;
+            gap: 0.8rem;
+            margin-top: 0.8rem;
         }
         .announcement-controls span {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         .announcement-controls span:hover { color: #3b82f6; transform: scale(1.2); }
 
         /* Flipping Game */
-        #gameContent { max-width: 700px; }
-        #gameTitle { font-size: 1.5rem; text-align: center; margin-bottom: 1rem; }
-        #puzzleGrid { display: grid; gap: 0.5rem; margin-bottom: 1rem; }
+        #gameContent { max-width: 600px; }
+        #gameTitle { font-size: 1.4rem; text-align: center; margin-bottom: 0.8rem; }
+        #puzzleGrid { display: grid; gap: 0.4rem; margin-bottom: 0.8rem; }
         .card {
             position: relative;
             width: 100%;
@@ -261,24 +259,24 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
         .card-front { transform: rotateY(180deg); }
         .card-back { background: #334155; }
-        .card img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+        .card img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
         .game-controls {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
-        #gameScore { font-size: 1rem; padding: 0.5rem 1rem; background: rgba(10, 14, 23, 0.8); border-radius: 8px; }
+        #gameScore { font-size: 0.9rem; padding: 0.4rem 0.8rem; background: rgba(10, 14, 23, 0.8); border-radius: 6px; }
         #restartGameBtn, #nextLevelBtn {
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem;
             background: linear-gradient(45deg, #3b82f6, #60a5fa);
             color: #fff;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -289,35 +287,35 @@
             left: 50%;
             transform: translate(-50%, -50%) scale(0.8);
             background: rgba(10, 14, 23, 0.9);
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1.5rem;
+            padding: 0.8rem 1.6rem;
+            border-radius: 6px;
+            font-size: 1.3rem;
             opacity: 0;
             transition: all 0.5s ease;
         }
         #winMessage.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 
         /* Shooting Game */
-        #shootingGameContent { max-width: 800px; }
-        #shootingGameTitle { font-size: 1.5rem; text-align: center; margin-bottom: 1rem; }
+        #shootingGameContent { max-width: 700px; }
+        #shootingGameTitle { font-size: 1.4rem; text-align: center; margin-bottom: 0.8rem; }
         #shootingGameCanvas {
             width: 100%;
-            max-width: 800px;
-            height: 500px;
+            max-width: 700px;
+            height: 450px;
             background: linear-gradient(180deg, #1a2338, #334155);
-            border-radius: 8px;
+            border-radius: 6px;
             border: 2px solid #3b82f6;
             position: relative;
             cursor: crosshair;
         }
-        .game-controls-shooting { display: flex; justify-content: space-between; margin-bottom: 1rem; }
-        #shootingGameScore { font-size: 1rem; padding: 0.5rem 1rem; background: rgba(10, 14, 23, 0.8); border-radius: 8px; }
+        .game-controls-shooting { display: flex; justify-content: space-between; margin-bottom: 0.8rem; }
+        #shootingGameScore { font-size: 0.9rem; padding: 0.4rem 0.8rem; background: rgba(10, 14, 23, 0.8); border-radius: 6px; }
         #scopeToggleBtn, #restartShootingGameBtn {
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem;
             background: linear-gradient(45deg, #3b82f6, #60a5fa);
             color: #fff;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -328,17 +326,17 @@
             left: 50%;
             transform: translate(-50%, -50%) scale(0.8);
             background: rgba(10, 14, 23, 0.9);
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1.5rem;
+            padding: 0.8rem 1.6rem;
+            border-radius: 6px;
+            font-size: 1.3rem;
             opacity: 0;
             transition: all 0.5s ease;
         }
         #gameOverMessage.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         .hit-effect {
             position: absolute;
-            width: 20px;
-            height: 20px;
+            width: 15px;
+            height: 15px;
             background: radial-gradient(circle, rgba(255, 0, 0, 0.8), transparent);
             border-radius: 50%;
             animation: hitFade 0.5s ease-out forwards;
@@ -351,39 +349,39 @@
         /* Feedback Form */
         .feedback-form {
             background: #1a2338;
-            padding: 1.5rem;
-            border-radius: 12px;
+            padding: 1.2rem;
+            border-radius: 10px;
             width: 90%;
-            max-width: 500px;
+            max-width: 450px;
             margin: 1rem;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
             transition: transform 0.3s ease;
         }
         .feedback-form:hover { transform: scale(1.02); }
-        .feedback-form h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .feedback-form h2 { font-size: 1.4rem; margin-bottom: 0.8rem; }
         select, textarea, input {
             width: 100%;
-            padding: 0.75rem;
-            margin: 0.5rem 0;
-            border-radius: 8px;
+            padding: 0.6rem;
+            margin: 0.4rem 0;
+            border-radius: 6px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             background: #334155;
             color: #e0e7ff;
-            font-size: 1rem;
+            font-size: 0.9rem;
             transition: border-color 0.3s ease;
         }
         select:focus, textarea:focus, input:focus {
             border-color: #3b82f6;
-            box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
             outline: none;
         }
-        .form-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem; margin-top: 1rem; }
+        .form-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.4rem; margin-top: 0.8rem; }
         .form-buttons button {
-            padding: 0.75rem;
+            padding: 0.6rem;
             background: linear-gradient(45deg, #3b82f6, #60a5fa);
             color: #fff;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -391,30 +389,30 @@
         .form-buttons button:disabled { background: #4b5563; cursor: not-allowed; transform: none; }
 
         /* Agent Chat */
-        #agentContent { display: flex; flex-direction: column; gap: 1rem; }
+        #agentContent { display: flex; flex-direction: column; gap: 0.8rem; }
         #chatMessages {
             flex-grow: 1;
             background: #334155;
-            border-radius: 8px;
-            padding: 1rem;
+            border-radius: 6px;
+            padding: 0.8rem;
             overflow-y: auto;
-            max-height: 50vh;
+            max-height: 45vh;
         }
         .chat-msg {
-            margin: 0.5rem;
-            padding: 0.75rem;
-            border-radius: 8px;
+            margin: 0.4rem;
+            padding: 0.6rem;
+            border-radius: 6px;
             max-width: 80%;
         }
         .chat-agent { background: #3b82f6; color: #fff; align-self: flex-start; }
         .chat-user { background: #475569; color: #fff; align-self: flex-end; }
-        #preQuestions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        #preQuestions { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.8rem; }
         .question-btn {
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem;
             background: #3b82f6;
             color: #fff;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -423,14 +421,14 @@
         /* Toast Notification */
         .toast {
             position: fixed;
-            bottom: 1rem;
+            bottom: 0.8rem;
             left: 50%;
             transform: translateX(-50%) scale(0.95);
             background: #3b82f6;
             color: #fff;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             z-index: 1001;
             opacity: 0;
             transition: all 0.3s ease;
@@ -440,22 +438,26 @@
         /* Footer */
         footer {
             position: fixed;
-            bottom: 0.5rem;
+            bottom: 0.4rem;
             width: 100%;
             display: flex;
             justify-content: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
+            gap: 0.4rem;
+            font-size: 0.75rem;
             color: #e0e7ff;
             background: rgba(10, 14, 23, 0.9);
-            padding: 0.5rem;
-            border-radius: 8px;
+            padding: 0.4rem;
+            border-radius: 6px;
             z-index: 10;
+        }
+        footer img {
+            height: 1rem;
+            border-radius: 4px;
         }
         footer a { color: #3b82f6; text-decoration: none; }
         footer a:hover { color: #60a5fa; }
 
-        /* Visually Hidden for Accessibility */
+        /* Visually Hidden */
         .visually-hidden {
             position: absolute;
             width: 1px;
@@ -471,14 +473,14 @@
         @media (max-width: 767px) {
             .nav-links { display: none; }
             .sidebar-btn { display: block; }
-            .feedback-form { padding: 1rem; max-width: 95%; }
+            .feedback-form { padding: 0.8rem; max-width: 95%; }
             .form-buttons { grid-template-columns: 1fr; }
-            #puzzleGrid { gap: 0.3rem; }
-            #gameTitle, #shootingGameTitle { font-size: 1.2rem; }
-            #gameScore, #shootingGameScore { font-size: 0.9rem; }
-            #shootingGameCanvas { height: 300px; }
-            .game-option { width: 90%; }
-            .modal-content { padding: 1rem; }
+            #puzzleGrid { gap: 0.2rem; }
+            #gameTitle, #shootingGameTitle { font-size: 1.1rem; }
+            #gameScore, #shootingGameScore { font-size: 0.8rem; }
+            #shootingGameCanvas { height: 280px; }
+            .game-option { width: 85%; }
+            .modal-content { padding: 0.8rem; }
         }
         @media (min-width: 768px) {
             .sidebar-btn, .sidebar, .sidebar-overlay { display: none; }
@@ -507,7 +509,7 @@
             <a href="https://testnet.gokite.ai?referralCode=XDO80HYV" target="_blank" aria-label="KiteAI Testnet">Testnet</a>
             <a href="https://opensea.io/collection/fly-the-kite-official" target="_blank" aria-label="KiteAI NFTs">NFTs</a>
             <div class="dropdown">
-                <a href="#" class="dropbtn" aria-label="Community Menu" tabindex="0">Community</a>
+                <button class="dropbtn" aria-label="Community Menu" tabindex="0">Community</button>
                 <div class="dropdown-content">
                     <a href="https://x.com/ChiZhangData" target="_blank">Co-founder</a>
                     <a href="https://x.com/Kite_Frens_Eco" target="_blank">Community & Ecosystem</a>
@@ -515,7 +517,7 @@
                 </div>
             </div>
             <div class="dropdown">
-                <a href="#" class="dropbtn" aria-label="Team Menu" tabindex="0">Team</a>
+                <button class="dropbtn" aria-label="Team Menu" tabindex="0">Team</button>
                 <div class="dropdown-content">
                     <a href="https://x.com/buidloor" target="_blank">Vikthebuilder</a>
                     <a href="https://x.com/lei_lei0904" target="_blank">Lei-Lei</a>
@@ -526,7 +528,7 @@
                 </div>
             </div>
             <div class="dropdown">
-                <a href="#" id="navGamesLink" class="dropbtn" aria-label="Games Menu" tabindex="0">Games</a>
+                <button id="navGamesLink" class="dropbtn" aria-label="Games Menu" tabindex="0">Games</button>
                 <div class="dropdown-content">
                     <a href="#" id="flippingGameLink" aria-label="KiteAI Flipping Game">KiteAI Flipping</a>
                     <a href="#" id="shootingGameLink" aria-label="KiteAI Shooting Game">KiteAI Shooting</a>
@@ -648,9 +650,10 @@
     <!-- Footer -->
     <footer>
         <img src="https://i.postimg.cc/mzMZpf0r/logo.jpg" alt="KiteAI Logo">
-        Made for KiteAI · Follow
-        <a href="https://x.com/Crypto_King877" target="_blank" aria-label="Follow Crypto_King877">@Crypto_King877</a> &
-        <a href="https://x.com/GoKiteAI" target="_blank" aria-label="Follow GoKiteAI">@GoKiteAI</a>
+        <span>Made for KiteAI · Follow
+            <a href="https://x.com/Crypto_King877" target="_blank" aria-label="Follow Crypto_King877">@Crypto_King877</a> &
+            <a href="https://x.com/GoKiteAI" target="_blank" aria-label="Follow GoKiteAI">@GoKiteAI</a>
+        </span>
     </footer>
 
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -664,8 +667,12 @@
         };
         document.querySelectorAll('button, a, .card, .modal-close, .announcement-controls span').forEach(el => {
             el.addEventListener('click', () => playSound(clickSound));
-            el.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') playSound(clickSound);
+            el.addEventListener('keypress', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    playSound(clickSound);
+                    el.click();
+                }
             });
         });
 
@@ -692,14 +699,36 @@
         // Modal Handling
         const openModal = (modal) => {
             modal.classList.add('show');
-            modal.querySelector('.modal-content').focus();
+            const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')[0];
+            if (focusable) focusable.focus();
         };
-        const closeModal = (modal) => modal.classList.remove('show');
+        const closeModal = (modal) => {
+            modal.classList.remove('show');
+            document.querySelector('.feedback-form').focus();
+        };
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('keydown', e => {
+                if (e.key === 'Tab' && modal.classList.contains('show')) {
+                    const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                    const first = focusable[0];
+                    const last = focusable[focusable.length - 1];
+                    if (e.shiftKey && document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus();
+                    } else if (!e.shiftKey && document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus();
+                    }
+                } else if (e.key === 'Escape') {
+                    closeModal(modal);
+                }
+            });
+        });
 
         // Games Modal
         const gamesModal = document.getElementById('gamesModal');
         document.getElementById('gamesBtn').addEventListener('click', () => openModal(gamesModal));
-        document.getElementById('navGamesLink').addEventListener('click', (e) => {
+        document.getElementById('navGamesLink').addEventListener('click', e => {
             e.preventDefault();
             openModal(gamesModal);
         });
@@ -715,9 +744,9 @@
             "https://x.com/GoKiteAI/status/1956244265958564185"
         ];
         let currentTweet = 0;
-        const loadTweet = (index) => {
+        const loadTweet = index => {
             const container = document.getElementById('tweetContainer');
-            container.innerHTML = '';
+            container.innerHTML = '<p>Loading tweet...</p>';
             try {
                 twttr.widgets.createTweet(tweets[index].split('/status/')[1].split('?')[0], container, { align: 'center' })
                     .then(() => container.querySelectorAll('a').forEach(link => link.addEventListener('click', () => playSound(clickSound))))
@@ -732,425 +761,812 @@
         });
         document.getElementById('closeAnnouncementBtn').addEventListener('click', () => closeModal(document.getElementById('announcementModal')));
         document.getElementById('prevBtn').addEventListener('click', () => {
-            currentTweet = (currentTweet - 1 + tweets.length) % tweets.length;
-            loadTweet(currentTweet);
+           click', () => {
+            currentTweet = ( currentTweet = (currentTweet - 1 +currentTweet - 1 + tweets.length) % tweets.length tweets.length) % tweets.length;
+            load;
+            loadTweet(currentTweet(currentTweet);
         });
-        document.getElementById('nextBtn').addEventListener('click', () => {
-            currentTweet = (currentTweet + 1) % tweets.length;
+        documentTweet);
+        });
+        document.getElementById('.getElementById('nextBtn').addEventListenernextBtn').addEventListener('click', () => {
+('click', () => {
+            currentTweet =            currentTweet = (currentTweet + (currentTweet + 1) % tweets.length 1) % tweets.length;
+            load;
             loadTweet(currentTweet);
         });
 
-        // Agent Chat
-        const agentModal = document.getElementById('agentModal');
-        const chatMessages = document.getElementById('chatMessages');
-        const userInput = document.getElementById('userInput');
-        const answers = {
-            'how can i use kiteai?': 'Join the KiteAI Testnet at testnet.gokite.ai!',
-            'what are kiteai nfts?': 'KiteAI NFTs are collectibles on OpenSea with community perks.',
-            'how to join kiteai community?': 'Follow @GoKiteAI and @Kite_Frens_Eco on X!',
-            'how to report an issue?': 'Use the feedback form or DM @GoKiteAI on X.',
-            'upcoming events in kiteai?': 'Check @GoKiteAI on X for events and campaigns!'
-        };
-        const addMessage = (text, sender) => {
-            const div = document.createElement('div');
-            div.classList.add('chat-msg', `chat-${sender}`);
-            div.textContent = text;
-            chatMessages.appendChild(div);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        };
-        document.getElementById('agentBtn').addEventListener('click', () => {
-            openModal(agentModal);
-            userInput.focus();
+Tweet(currentTweet);
         });
-        document.getElementById('closeAgentBtn').addEventListener('click', () => closeModal(agentModal));
-        document.querySelectorAll('.question-btn').forEach(btn => {
+
+        // Agent        // Agent Chat
+        const Chat
+        const agentModal = document.getElement agentModal = document.getElementById('agentById('agentModal');
+        const chatModal');
+        const chatMessages = document.getElementByMessages = document.getElementById('chatId('chatMessages');
+        const userMessages');
+        const userInput = document.getElementByInput = document.getElementById('userInput');
+       Id('userInput');
+        const answers = {
+            ' const answers = {
+            'how can i use kitehow can i use kiteai?': 'Joinai?': 'Join the KiteAI Test the KiteAI Testnet at testnet.gnet at testnet.gokite.ai!',
+            'okite.ai!',
+            'what are kiteaiwhat are kiteai nfts?': ' nfts?': 'KiteAI NFTs are collectibles on OpenSea withKiteAI NFTs are collect communityibles on OpenSea with perks.',
+            'how to join kite community perks.',
+            'how to join kiteai community?':ai community?': 'Follow @GoKite 'Follow @GoKiteAI and @KAI and @Kite_Frens_Eco on Xite_Frens_Eco on X!',
+            'how!',
+            'how to report an issue?': to report an issue?': 'Use the feedback form or 'Use DM @ the feedback form orGoKiteAI on X DM @GoKiteAI on X.',
+            'up.',
+            'upcoming events incoming events in kiteai?': ' kiteai?': 'Check @Check @GoKiteAI on XGoKiteAI on X for events and for events and campaigns!'
+        };
+        const campaigns!'
+        };
+        const addMessage = ( addMessage = (text, sendertext, sender) => {
+            const div) => {
+            const div = document.createElement('div =');
+            div.classList.add document.createElement('div');
+            div.classList.add('chat-msg', `('chat-msg', `chat-${sender}`);
+            divchat-${sender}`);
+            div.textContent = text;
+.text            chatMessagesContent = text;
+.appendChild(div            chatMessages.appendChild(div);
+            chatMessages.scroll);
+           Top = chat chatMessages.scrollTop = chatMessages.scrollHeight;
+        };
+Messages.scrollHeight;
+        };
+        document.getElementById        document.getElementById('agent('agentBtn').addEventListener('Btn').addEventListener('click', () => {
+           click', () => {
+            openModal(agent openModal(agentModal);
+            userInput.focusModal);
+            user();
+        });
+        document.getInput.focusElement();ById('
+closeAgent        });
+        document.getElementById('closeAgentBtn').addEventListener('Btn').addEventListener('click', ()click', () => closeModal(agentModal => closeModal(agent));
+        document.queryModal));
+        document.querySelectorAll('.questionSelectorAll('.question-btn').forEach(btn => {
+            btn.addEventListener-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                const q = btn.textContent;
-                addMessage(q, 'user');
-                addMessage(answers[q.toLowerCase()] || 'Thanks for your question!', 'agent');
+('click', () => {
+                const q = btn.text                const q = btn.textContent;
+                addContent;
+                addMessage(q, 'userMessage(q, 'user');
+                add');
+                addMessage(Message(answers[q.toanswers[q.toLowerCase()] || 'LowerCase()] || 'Thanks for your question!', 'Thanks for your question!', 'agent');
             });
         });
-        document.getElementById('sendBtn').addEventListener('click', () => {
-            const q = userInput.value.trim();
+agent');
+            });
+        });
+        document.getElementBy        document.getElementById('sendId('sendBtn').addEventListener('Btn').addEventListener('click', () => {
+           click', () => {
+            const q = userInput.value const q = userInput.value.trim();
+            if (q.trim();
             if (q) {
-                addMessage(q, 'user');
-                addMessage(answers[q.toLowerCase()] || 'Thanks for your question!', 'agent');
+                add) {
+                addMessage(q, 'userMessage(q, 'user');
+                add');
+                addMessage(answersMessage(answers[q.toLowerCase()] || 'Thanks for your question!', 'agent');
+                userInput.value = '';
+            } else {
+                showToast('Please enter a question!',[q.toLowerCase()] || 'Thanks for your question!', 'agent');
                 userInput.value = '';
             } else {
                 showToast('Please enter a question!', 3000);
             }
+        3000);
+            }
         });
-        userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') document.getElementById('sendBtn').click();
+        user });
+        userInput.addEventListener('keypressInput.addEventListener('keypress', e => {
+            if (e', e => {
+            if (e.key === 'Enter') document.key === 'Enter') document.getElementById('send.getElementById('sendBtn').clickBtn').click();
+        });
+
+       ();
         });
 
         // Flipping Game
-        const gameModal = document.getElementById('gameModal');
-        const puzzleGrid = document.getElementById('puzzleGrid');
-        const gameScore = document.getElementById('gameScore');
-        const winMessage = document.getElementById('winMessage');
+        // Flipping Game
+        const gameModal = document.get const gameModal = document.getElementById('gameElementById('gameModal');
+        const puzzleGrid = document.getElementByModal');
+        const puzzleGrid = document.getElementById('pId('puzzleGrid');
+        const gameuzzleGrid');
+        const gameScore = document.getElementByScore = document.getElementById('gameScoreId('gameScore');
+        const win');Message =
+ document       .get const winElementByMessage = document.getElementById('winMessage');
+Id('winMessage');
         const baseImages = [
-            'https://i.postimg.cc/FfpWLBgg/image1.png',
-            'https://i.postimg.cc/68NY1XMf/image2.png',
-            'https://i.postimg.cc/PNpyXxcM/image3.png',
-            'https://i.postimg.cc/mzMZpf0r/logo.jpg',
-            'https://i.postimg.cc/zyBhrQMg/target.png'
+            'https        const baseImages = [
+            'https://i.postimg.cc/F://i.postimg.cc/FfpWLfpWLBgg/image1Bgg/image1.png',
+            'https://.png',
+            'https://i.postimg.cc/68i.postimg.cc/68NY1XMfNY1XMf/image2/image2.png',
+            'https://.png',
+            'https://i.postimg.cc/PNpyXxci.postimg.cc/PNpyXxcM/image3M/image3.png',
+            'https://.png',
+            'https://i.postimg.cc/mi.postimg.cc/mzMZzMZpf0rpf0r/logo.jpg',
+            'https://i.postimg/logo.jpg',
+            'https://i.postimg.cc/zy.cc/zyBhrQMgBhr/targetQMg/target.png'
         ];
-        const backsideImage = 'https://i.postimg.cc/6TkVmjdM/close-icon.png';
+        const.png'
+        ];
+        const backside backsideImage = 'https://iImage = 'https.postimg.cc/6Tk://i.postimg.cc/6TkVmjdM/closeVmjd-icon.png';
         let level = 1;
-        let bestLevel = localStorage.getItem('puzzleGameBestLevel') || 1;
+        letM/close-icon.png';
+        let level bestLevel = local = 1;
+        let bestLevel = localStorage.getItem('pStorage.getItem('puzzleGameBestLevel') || 1;
+uzzleGameBest        let movesLevel') || 1;
         let moves = 0;
-        let flippedCards = [];
+        let = 0;
+        let flipped flippedCards = [];
+        let matchedCards = [];
         let matchedSets = 0;
+        let isSets = 0;
         let isProcessing = false;
+        constProcessing = false;
         const maxLevels = 20;
 
-        const getCardCount = (level) => {
-            if (level <= 5) return 2; // 2x2x2
-            if (level <= 10) return 3; // 3x3x3
-            if (level <= 15) return 4; // 4x4x4
-            return 5; // 5x5x5
+ maxLevels = 20;
+
+        const getCardCount =        const getCardCount = level level => {
+            if (level => {
+            if (level <= 5) return <= 5) return 2;
+            if ( 2;
+            if (level <= 10) returnlevel <= 10) return 3;
+            if ( 3;
+            if (level <= 15) returnlevel <= 15) return 4;
+            return 4;
+            return 5;
         };
 
-        const shuffle = (array) => {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
+ 5;
+        };
+
+        const shuffle = array        const shuffle = array => {
+            for (let => {
+            for (let i = array.length - i = array.length - 1; i > 1; i > 0; i--) {
+                0; i--) {
+                const j = Math.floor const j = Math.floor(Math.random() *(Math.random() * (i + 1));
+ (i + 1));
+                [array                [array[i], array[j]] =[i], array[j]] = [array[j], array[i [array[j], array[i]];
+            }
+            return array]];
             }
             return array;
         };
 
-        const createCard = (imageSrc) => {
-            const card = document.createElement('div');
-            card.classList.add('card');
-            const inner = document.createElement('div');
-            inner.classList.add('card-inner');
-            const front = document.createElement('div');
-            front.classList.add('card-front');
-            const frontImg = document.createElement('img');
-            frontImg.src = imageSrc;
-            frontImg.alt = 'Card Image';
-            frontImg.onerror = () => { frontImg.src = 'https://via.placeholder.com/100?text=Card'; };
+        const create;
+        };
+
+        const createCard = imageCard = imageSrc => {
+            const cardSrc => {
+            const card = document.createElement('div = document.createElement('div');
+            card.classList.add');
+('card');
+            const inner            card.classList.add('card');
+            const inner = document.createElement('div = document.createElement('div');
+            inner.classList.add');
+            inner.classList.add('card-inner('card-inner');
+            const front');
+            const front = document.createElement('div = document.createElement('div');
+            front.class');
+            front.classList.add('cardList.add('card-front');
+            const front-front');
+            const frontImg = document.createElement('Img = document.createElement('img');
+            frontImg.src = imageimg');
+            frontImgSrc;
+           .src frontImg = imageSrc;
+            frontImg.alt =.alt = 'Card Image';
+ 'Card Image';
+            frontImg.onerror = () => front            frontImg.onerrorImg.src = 'https:// = () => frontvia.placeholder.com/100Img.src = 'https://?text=Cardvia.placeholder.com/100?text=Card';
+            front.append';
             front.appendChild(frontImg);
-            const back = document.createElement('div');
+           Child(frontImg);
+            const back = document.createElement const back =('div');
+            back.class document.createElementList.add('card('div');
             back.classList.add('card-back');
-            const backImg = document.createElement('img');
+            const back-back');
+            const backImg = document.createElement('Img = document.createElement('img');
+            backImgimg');
             backImg.src = backsideImage;
-            backImg.alt = 'Card Back';
-            backImg.onerror = () => { backImg.src = 'https://via.placeholder.com/100?text=Back'; };
+            backImg.src = backsideImage;
+            backImg.alt =.alt = 'Card Back';
+ 'Card Back';
+            backImg.onerror            backImg.onerror = () => back = () => backImg.src = 'https://Img.src = 'https://via.placeholder.com/100via.placeholder.com/100?text=Back';
+            back.appendChild(back?text=Back';
             back.appendChild(backImg);
-            inner.appendChild(front);
+            innerImg);
+            inner.appendChild(front.appendChild(front);
+            inner.appendChild(back);
+            card);
             inner.appendChild(back);
             card.appendChild(inner);
-            card.addEventListener('click', handleCardClick);
-            card.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') handleCardClick(e);
+.appendChild(inner);
+            card.addEventListener('            card.addEventListener('click', handleclick', handleCardClick);
+            card.addCardClick);
+            card.addEventListener('keypress', eEventListener('keypress', e => {
+                if (e => {
+                if (e.key === 'Enter' ||.key === 'Enter' || e.key === ' ') handle e.key === ' ') handleCardClick(e);
             });
-            card.tabIndex = 0;
+CardClick(e);
+            });
+            card.tab            card.tabIndex = 0;
+           Index = 0;
             return card;
         };
 
-        const initPuzzle = () => {
-            puzzleGrid.innerHTML = '';
-            winMessage.classList.remove('show');
-            puzzleGrid.classList.remove('won');
-            const cardCount = getCardCount(level);
-            const selectedImages = baseImages.slice(0, cardCount);
-            const frontImages = [].concat(...selectedImages.map(img => Array(3).fill(img)));
-            const shuffledImages = shuffle(frontImages);
-            puzzleGrid.style.gridTemplateColumns = `repeat(${Math.ceil(Math.sqrt(shuffledImages.length))}, 1fr)`;
-            shuffledImages.forEach(src => puzzleGrid.appendChild(createCard(src)));
-            flippedCards = [];
-            matchedSets = 0;
-            moves = 0;
-            isProcessing = false;
-            gameScore.textContent = `Level: ${level} | Best Level: ${bestLevel} | Moves: ${moves}`;
-            document.getElementById('nextLevelBtn').style.display = 'none';
+        return card;
         };
 
-        const handleCardClick = (e) => {
+        const initPuzzle const initPuzzle = () => {
+            puzzle = () => {
+            puzzleGrid.innerHTML = '';
+            winMessage.classListGrid.innerHTML = '';
+            winMessage.classList.remove('show.remove('show');
+            puzzle');
+            puzzleGrid.classList.remove('won');
+            const cardCount =Grid.classList.remove('won');
+            const cardCount = getCardCount(level);
+ getCardCount(level);
+            const selected            const selectedImages = baseImages.slice(Images = baseImages.slice(0, cardCount);
+           0, cardCount);
+            const frontImages = [].concat const frontImages = [].concat(...(...selectedImages.map(img => ArrayselectedImages.map(img => Array(3).fill(img(3).fill(img)));
+            const shuffled)));
+            const shuffledImages = shuffle(Images = shuffle(frontImages);
+            puzzlefrontImages);
+            puzzleGrid.style.gridTemplateColumns =Grid.style.gridTemplateColumns = `repeat `repeat(${Math(${Math.ceil(Math.sqrt.ceil(Math.sqrt(shuffled(shuffledImages.length))},Images.length))}, 1fr) 1fr)`;
+            shuffledImages`;
+            shuffledImages.forEach(src.forEach(src => puzzleGrid.appendChild(createCard => puzzleGrid.appendChild(createCard(src)));
+            flipped(src)));
+            flippedCards = [];
+            matchedCards = [];
+            matchedSets =Sets = 0;
+            moves 0;
+            moves = 0;
+            isProcessing = false;
+            game = 0;
+            isProcessing = false;
+            gameScore.textContent = `Score.textContent = `Level: ${level} |Level: ${level} | Best Level: ${best Best Level: ${bestLevel} | MovesLevel} | Moves: ${moves}`;
+: ${moves}`;
+            document.getElementById            document.getElementById('nextLevelBtn').style('nextLevelBtn').style.display = 'none';
+       .display = 'none';
+        };
+
+        const };
+
+        const handleCardClick = e handleCardClick = e => {
             e.preventDefault();
-            if (isProcessing || puzzleGrid.classList.contains('won')) return;
-            const card = e.target.closest('.card');
-            if (!card || card.classList.contains('flipped') || flippedCards.length >= 3) return;
-            card.classList.add('flipped');
+            if (is => {
+            e.preventDefault();
+            if (isProcessing || puzzleProcessing || puzzleGrid.classList.contains('won')) return;
+            const cardGrid.classList.contains('won')) return;
+            const card = e.target.closest = e.target.closest('.card');
+            if (!('.card');
+            if (!card || card.classList.containscard || card.classList.contains('fl('flipped') || flippedipped') || flippedCards.length >=Cards.length >= 3) return;
+            3) return;
+            card.classList.add('fl card.classList.add('flipped');
+            flippedCards.push(card);
+            movesipped');
             flippedCards.push(card);
             moves++;
-            gameScore.textContent = `Level: ${level} | Best Level: ${bestLevel} | Moves: ${moves}`;
+            game++;
+            gameScore.textContent = `Score.textContent = `Level: ${level}Level: ${level} | Best Level: ${best | Best Level: ${bestLevel} | MovesLevel} | Moves: ${moves: ${moves}`;
+            playSound(click}`;
             playSound(clickSound);
-            if (flippedCards.length === 3) {
+            if (flSound);
+            if (flippedCards.length === 3ippedCards.length === 3) {
+                is) {
                 isProcessing = true;
-                checkMatch();
+                checkProcessingMatch = true;
+                check();
             }
         };
 
-        const checkMatch = () => {
-            const fronts = flippedCards.map(card => card.querySelector('.card-front img').src);
-            if (fronts[0] === fronts[1] && fronts[1] === fronts[2]) {
-                matchedSets++;
-                flippedCards = [];
-                isProcessing = false;
-                if (matchedSets === getCardCount(level)) {
+Match();       
+            const }
+ checkMatch = ()        };
+
+ => {
+            const fronts        const checkMatch = () => {
+            const fronts = flipped = flippedCards.map(cardCards.map(card => card.query => card.querySelector('.card-front img').src);
+            ifSelector('.card-front img').src (fronts[);
+            if0] === fronts (fronts[0[]1] === fronts && fronts[1] && fronts[1] === fronts[2]) {
+                matched[1] === frontsSets++;
+                flipped[2]) {
+                matchedCards = [];
+                isSets++;
+                flippedProcessing = false;
+                ifCards = [];
+                isProcessing = false (matchedSets;
+                if === (matched getCardCountSets ===(level getCardCount(level)) {
+                    puzzle)) {
                     puzzleGrid.classList.add('won');
-                    winMessage.textContent = level === maxLevels ? 'All Levels Completed!' : `Level ${level} Completed!`;
-                    winMessage.classList.add('show');
-                    showToast(level === maxLevels ? 'Congratulations! All Levels Done!' : `Level ${level} Completed!`, 4000);
+                   Grid.classList.add('won winMessage.textContent = level');
+                    winMessage.textContent = level === maxLevels ? 'All === Levels Completed maxLevels!' : ` ? 'All Levels Completed!' : `Level ${level} CompletedLevel ${level!} Completed`;
+                    win!`;
+                    winMessage.classList.addMessage.classList.add('show');
+                    show('show');
+                    showToast(level ===Toast(level === maxLevels ? 'Congratulations maxLevels ? 'Congratulations! All Levels Done! All Levels Done!' : `!' : `Level ${level} Completed!Level ${level} Completed!`, 400`, 4000);
+                    if (level0);
                     if (level > bestLevel) {
+                        > bestLevel) {
                         bestLevel = level;
-                        localStorage.setItem('puzzleGameBestLevel', bestLevel);
+                        localStorage.setItem('p bestLevel = level;
+                       uzzleGame localStorage.setItem('puzzleGameBestLevel', bestLevel);BestLevel', best
                     }
-                    document.getElementById('nextLevelBtn').style.display = level < maxLevels ? 'block' : 'none';
+                    documentLevel);.getElementById('next
+                    }
+                    document.getLevelElementBtnBy').styleId.display('nextLevelBtn').style.display = level = level < maxLevels ? 'block' : 'none';
+                < maxLevels ? 'block }
+            } else {
+               ' : 'none';
                 }
             } else {
                 setTimeout(() => {
-                    flippedCards.forEach(card => card.classList.remove('flipped'));
+                    setTimeout(() => {
+                    flippedCards.forEach(card flippedCards.forEach(card => card.classList.remove => card.classList.remove('fl('flipped'));
+                    flippedipped'));
                     flippedCards = [];
-                    isProcessing = false;
-                }, 1000 - (level - 1) * 40);
+Cards = [];
+                    is                    isProcessing = false;
+Processing = false;
+                },                }, 1000 - (level - 1) * 1000 - (level - 1) * 40);
             }
         };
 
-        document.getElementById('flippingGameOption').addEventListener('click', (e) => {
+ 40);
+            }
+        };
+
+        document.getElementById        document.getElementById('fl('flippingGameOptionipping').addGameOptionEventListener('click').addEventListener('click', e', e => {
+            e.preventDefault => {
             e.preventDefault();
-            closeModal(gamesModal);
-            openModal(gameModal);
+            close();
+            closeModal(gModal(gamesModal);
+amesModal);
+            openModal(game            openModal(gameModal);
+            levelModal);
             level = 1;
+            init = 1;
             initPuzzle();
         });
-        document.getElementById('closeGameBtn').addEventListener('click', () => closeModal(gameModal));
-        document.getElementById('restartGameBtn').addEventListener('click', () => {
+        documentPuzzle();
+        });
+        document.getElementById('closeGameBtn')..getElementById('closeGameBtn').addEventListener('click', () => closeModaladdEventListener('click', () => closeModal(game(gameModal));
+        document.getElementById('restartModal));
+        document.getElementById('restartGameBtn').addEventListenerGameBtn').addEventListener('click', () => {
+('click', () => {
             level = 1;
+                       level = 1 initPuzzle;
+();
+        });
             initPuzzle();
         });
-        document.getElementById('nextLevelBtn').addEventListener('click', () => {
-            level = level < maxLevels ? level + 1 : 1;
+        document.getElementById('next       Level documentBtn').add.getElementByIdEventListener('click', ()('nextLevelBtn').addEventListener('click', () => {
+            level = level => {
+            level = level < maxLevels ? level + 1 : 1 < maxLevels ? level + 1 : 1;
+            init;
             initPuzzle();
+        });
+
+        //Puzzle();
         });
 
         // Shooting Game
-        const shootingGameModal = document.getElementById('shootingGameModal');
-        const shootingGameCanvas = document.getElementById('shootingGameCanvas');
-        const shootingGameScore = document.getElementById('shootingGameScore');
-        const gameOverMessage = document.getElementById('gameOverMessage');
-        const ctx = shootingGameCanvas.getContext('2d');
-        let level = 1;
+        const shooting Shooting Game
+        const shootingGameModalGameModal = document.getElementById = document.getElementById('sh('shootingGameModal');
+       ootingGameModal');
+        const shootingGameCanvas const shootingGameCanvas = document.getElementById = document.getElementById('sh('shootingGameCanvas');
+        constootingGameCanvas');
+        const shootingGameScore shootingGameScore = document.getElementById = document.getElementById('sh('shootingGameScoreootingGameScore');
+        const game');
+        const gameOverMessage = document.getElementOverMessage = document.getElementById('gameById('gameOverMessage');
+        const ctxOverMessage');
+        const ctx = shootingGameCanvas.get = shootingGameCanvas.getContext('2d');
+       Context('2d');
+        let level = let level = 1;
         let score = 0;
-        let lives = 3;
-        let bestScore = localStorage.getItem('shootingGameBestScore') || 0;
+        let lives 1;
+        let score = 0;
+        let lives = 3 = 3;
+        let best;
+        let bestScore = localStorage.getItem('shScore = localStorage.getItem('shootingGameBestScore') || 0;
+ootingGameBest        let targetsScore') || 0;
         let targets = [];
+        let isScope = [];
         let isScopeActive = false;
+        letActive = false;
         let isGameOver = false;
-        let gameLoop = null;
+ isGameOver = false;
+        let gameLoop = null        let gameLoop = null;
+        let mouse;
         let mouseX = null;
+        let mouseY = nullX = null;
         let mouseY = null;
+        const gunImage;
         const gunImage = new Image();
-        gunImage.src = 'https://i.postimg.cc/LnrJcszr/gun.png';
-        gunImage.onerror = () => { gunImage.src = 'https://via.placeholder.com/100x60?text=Gun'; };
-        const scopeImage = new Image();
-        scopeImage.src = 'https://i.postimg.cc/yDVMYmX9/scope.png';
-        scopeImage.onerror = () => { scopeImage.src = 'https://via.placeholder.com/100?text=Scope'; };
+        gun = new Image();
+        gunImage.src = 'https://i.postimg.cc/LImage.src = 'https://i.postimg.cc/LnrJcnrJcszr/gszr/gun.png';
+        gunun.png';
+        gunImage.onerror = ()Image.onerror = () => gunImage.src = => gunImage.src = 'https://via.placeholder.com/ 'https://via100x60.placeholder.com/100x60?text=Gun?text=Gun';
+        const';
+        const scopeImage = new scopeImage = new Image();
+        scopeImage Image();
+        scopeImage.src = 'https://i.src = 'https://i.postimg.cc/yD.postimg.cc/yDVMYmX9/scope.pngVMYmX9';
+/        scopescope.png';Image.onerror = ()
+        scope => scopeImage.onerror = () => scopeImage.src = 'https://Image.src = 'https://via.placeholder.com/100via.placeholder.com/100?text=Scope?text=Scope';
+        const';
         const targetImage = new Image();
-        targetImage.src = 'https://i.postimg.cc/zyBhrQMg/target.png';
-        targetImage.onerror = () => { targetImage.src = 'https://via.placeholder.com/50?text=Target'; };
+        targetImage.src = targetImage = new Image();
+        targetImage.src = 'https://i.postimg 'https://i.postimg.cc/zyBhr.cc/zyBhrQMgQMg/target.png/target.png';
+        target';
+        targetImage.onerror = ()Image.onerror = () => targetImage => targetImage.src = 'https://via.src = 'https://via.placeholder.com/50.placeholder.com/50?text=?Targettext=Target';
 
-        const resizeCanvas = () => {
-            const parent = shootingGameCanvas.parentElement;
-            shootingGameCanvas.width = parent.clientWidth > 800 ? 800 : parent.clientWidth;
-            shootingGameCanvas.height = window.innerWidth <= 767 ? 300 : 500;
+        const';
+
+        const resizeCanvas = () => resizeCanvas = () => {
+            const parent {
+            const parent = shooting = shootingGameCanvas.parentElement;
+            shootingGameCanvas.width = parentGameCanvas.parentElement;
+            shootingGameCanvas.width = parent.clientWidth >.clientWidth > 700 700 ? 700 : parent.client ? 700 : parent.clientWidth;
+            shootingWidth;
+            shootingGameCanvas.height = windowGameCanvas.height = window.innerWidth <=.innerWidth <= 767 ? 280 767 ? 280 : 450;
+        : 450;
         };
-        window.addEventListener('resize', resizeCanvas);
+        window };
+        window.addEventListener('resize',.addEventListener('resize', resizeCanvas);
+        resize resizeCanvas);
         resizeCanvas();
 
+        const createCanvas();
+
         const createTarget = () => {
-            const size = Math.random() * 20 + 30;
-            const x = Math.random() * (shootingGameCanvas.width - size);
-            const y = Math.random() * (shootingGameCanvas.height - size - 60);
-            const speed = 1 + level * 0.5;
-            targets.push({ x, y, size, vx: (Math.random() - 0.5) * speed, vy: (Math.random() - 0.5) * speed, spawnTime: Date.now() });
+           Target = () => {
+            const size = Math.random() const size = Math.random() * 20 + 25 * 20 + 25;
+            const x;
+            const x = Math.random() * ( = Math.random() * (shootingGameCanvas.width -shootingGameCanvas.width - size);
+            const y = size);
+            const y = Math.random() * (sh Math.random() * (shootingGameCanvas.height - sizeootingGameCanvas.height - size - 60);
+            const - 60);
+            const speed = 1 + level speed = 1 + level * 0.4 * 0.4;
+            targets;
+            targets.push({ x, y, size, vx.push({ x, y, size, vx: (Math.random() -: (Math.random() - 0.5) * speed, vy 0.5) * speed, vy: (Math.random() -: (Math.random() - 0.5) * 0.5) * speed, spawnTime: Date speed, spawnTime: Date.now() });
         };
 
-        const hitTarget = (x, y) => {
+       .now() });
+        };
+
+        const hitTarget = (x const hitTarget = (x, y) => {
+           , y) => {
             let hit = false;
-            targets = targets.filter(t => {
-                const dx = x - (t.x + t.size / 2);
-                const dy = y - (t.y + t.size / 2);
-                const distance = Math.sqrt(dx * dx + dy * dy);
+            let hit = false;
+            targets = targets.filter(t => targets = targets.filter(t => {
+                const dx = {
+                const dx = x - (t.x + x - (t.x + t.size / 2);
+ t.size / 2);
+                const dy = y - (t.y +                const dy = y - (t.y + t.size / t.size / 2);
+                const 2);
+                const distance = Math.sqrt(dx * distance = Math.sqrt(dx * dx + dy * dy dx);
+ +                dy if * (distance dy);
                 if (distance < t.size / 2) {
+                    hit < t.size / = true;
+                    const time 2) {
                     hit = true;
-                    const timeTaken = (Date.now() - t.spawnTime) / 1000;
-                    const points = isScopeActive ? Math.max(20, 100 - Math.floor(timeTaken * 10)) : Math.max(10, 50 - Math.floor(timeTaken * 5));
+                    const timeTaken = (DateTaken = (Date.now() - t.spawn.now() - t.spawnTime) /Time) / 1000;
+                    const 1000;
+                    const points = isScopeActive ? Math.max points = isScopeActive ? Math.max(20, 100(20, 100 - Math.floor(time - MathTaken * 10.floor(timeTaken * 10)) : Math.max(10)) : Math.max(10, 50, 50 - Math.floor(time - Math.floor(timeTaken * 5Taken * 5));
+                    score));
                     score += points;
-                    showToast(`Hit! +${points} points`, 1000);
+                    show += points;
+                    showToast(`HitToast(`Hit! +! +${points} points`,${points 100} points`, 1000);
                     const hitEffect = document.createElement('div');
-                    hitEffect.classList.add('hit-effect');
-                    hitEffect.style.left = `${x - 10}px`;
-                    hitEffect.style.top = `${y - 10}px`;
-                    shootingGameCanvas.parentElement.appendChild(hitEffect);
-                    setTimeout(() => hitEffect.remove(), 500);
+                   0);
+                    const hitEffect = document.createElement('div');
+                    hitEffect.classList.add(' hitEffect.classList.add('hit-effect');
+                    hitEffecthit-effect');
+                    hitEffect.style.left = `${x -.style.left = `${x - 7 7.5}px`;
+                    hitEffect.style.top = `${.5}px`;
+                    hitEffect.style.top = `${y -y - 7.5}px`;
+ 7.5}px`;
+                    shootingGameCanvas.parentElement                    shootingGameCanvas.parentElement.appendChild(hitEffect);
+                    set.appendChild(hitEffect);
+                    setTimeout(() => hitEffect.removeTimeout(() => hitEffect.remove(), 500(), 500);
+                    return);
                     return false;
                 }
+                return true false;
+                }
+;
+            });
                 return true;
             });
-            if (!hit && lives > 0) {
+            if (!hit &&            if (! lives >hit && lives > 0) {
+                lives 0) {
                 lives--;
-                showToast(`Miss! Lives: ${lives}`, 1000);
-                if (lives === 0) endShootingGame();
+                showToast(`--;
+                showToast(`Miss! LivesMiss! Lives: ${lives}`,: ${lives}`, 100 1000);
+                if0);
+                if (lives === (lives === 0) end 0) endShootingGameShootingGame();
             }
-            if (hit) playSound(shootSound);
-            shootingGameScore.textContent = `Level: ${level} | Score: ${score} | Lives: ${lives}`;
+            if (();
+            }
+            if (hit) playSound(shhit) playSound(shootSound);
+            shootingGameScore.textContentootSound);
+            shootingGameScore.textContent = `Level: ${level} | = `Level: ${level} | Score: ${score Score: ${score} | Lives:} ${lives}`;
+            | Lives: ${lives}`;
             return hit;
+ return hit;
         };
 
-        const updateTargets = () => {
-            const now = Date.now();
-            targets = targets.filter(t => now - t.spawnTime <= 4000 - level * 100);
-            if (targets.length < 3 + level && Math.random() < 0.1) createTarget();
+               };
+
+        const updateTargets = const updateTargets = () => {
+            const now () => {
+            const now = Date = Date.now();
+            targets = targets.now();
+            targets = targets.filter(t => now.filter(t => now - t.spawnTime - t.spawnTime <= 400 <= 4000 - level0 - level * 100);
+            if * 100);
+            if (targets.length <  (targets.length < 2 + level && Math2 + level && Math.random() < 0..random() < 0.1) create1) createTarget();
+            targetsTarget();
             targets.forEach(t => {
-                t.x += t.vx;
+               .forEach(t => {
+                t.x += t.vx t.x += t.vx;
+                t.y +=;
                 t.y += t.vy;
-                if (t.x < 0 || t.x > shootingGameCanvas.width - t.size) t.vx *= -1;
-                if (t.y < 0 || t.y > shootingGameCanvas.height - t.size - 60) t.vy *= -1;
+                if t.vy;
+                if (t.x (t.x < 0 || t.x > < 0 || t.x > shootingGameCanvas.width - shootingGameCanvas.width - t.size) t.v t.size)x *= t -1;
+.vx *= -1;
+                if (t.y                if (t.y < 0 || t.y > < 0 || t.y > shootingGameCanvas.height - shootingGameCanvas.height - t.size - 60 t.size - 60) t) t.vy *= -.vy *= -1;
             });
-            if (score >= level * 100 && level < maxLevels) {
+1;
+            });
+            if (score >= level            if (score >= level * 100 && * 100 && level < maxLevels) {
+ level < maxLevels) {
                 level++;
-                showToast(`Level ${level} Unlocked!`, 2000);
+                showToast                level++;
+                showToast(`(`Level ${levelLevel ${level} Unlocked!`,} Unlocked!`, 200 2000);
             }
         };
 
-        const drawGame = () => {
-            ctx.clearRect(0, 0, shootingGameCanvas.width, shootingGameCanvas.height);
-            const gradient = ctx.createLinearGradient(0, 0, 0, shootingGameCanvas.height);
-            gradient.addColorStop(0, '#1a2338');
-            gradient.addColorStop(1, '#334155');
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, shootingGameCanvas.width, shootingGameCanvas.height);
-            targets.forEach(t => ctx.drawImage(targetImage, t.x, t.y, t.size, t.size));
-            ctx.drawImage(gunImage, mouseX ? mouseX - 50 : shootingGameCanvas.width / 2 - 50, shootingGameCanvas.height - 60, 100, 60);
-            if (isScopeActive && mouseX !== null && mouseY !== null) {
-                ctx.drawImage(scopeImage, mouseX - 50, mouseY - 50, 100, 100);
+0);
             }
         };
 
-        const endShootingGame = () => {
+        const drawGame =        const drawGame = () => {
+            ctx.clear () => {
+            ctx.clearRect(0,Rect(0, 0, shootingGame 0, shootingGameCanvas.width, shootingCanvas.width, shootingGameCanvas.heightGameCanvas.height);
+            const gradient);
+            const gradient = ctx.createLinearGradient( = ctx.createLinearGradient(0, 0,0, 0, 0, shootingGameCanvas.height 0, shootingGameCanvas.height);
+            gradient.addColor);
+            gradient.addColorStop(0, '#1Stop(0, '#1a2338');
+            gradienta2338');
+            gradient.addColorStop(1.addColorStop(1, '#, '#334155');
+334155');
+            ctx.fillStyle = gradient            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0;
+            ctx.fillRect(0, 0, shooting, shootingGameCanvas.width,GameCanvas.width, shootingGameCanvas.height shootingGameCanvas.height);
+            targets);
+            targets.forEach(t => ctx.draw.forEach(t => ctx.drawImage(targetImage(targetImage, t.x, tImage, t.x, t.y, t.size,.y, t.size, t.size));
+            ctx t.size));
+            ctx.drawImage(g.drawImage(gunImage, mouseunImage, mouseX ? mouseX ? mouseX - 50 : shootingX - 50 : shootingGameCanvas.width / 2 -GameCanvas.width / 2 - 50, shooting 50, shootingGameCanvas.height - 60GameCanvas.height - 60,, 100, 60 100, 60);
+            if (isScope);
+            if (isScopeActive && mouseActive && mouseX !== null && mouseYX !== null && mouseY !== null) {
+                ctx !== null) {
+                ctx.drawImage(scope.drawImage(scopeImage, mouseX -Image, mouseX - 50, mouseY - 50, mouseY - 50, 50, 100, 100, 100);
+            }
+        };
+
+ 100);
+            }
+        };
+
+        const end        const endShootingGame = () =>ShootingGame = () => {
+            isGameOver = {
             isGameOver = true;
-            gameOverMessage.classList.add('show');
-            shootingGameCanvas.style.filter = 'blur(4px)';
+            game true;
+            gameOverMessage.classList.add('OverMessage.classList.add('show');
+            shootingshow');
+            shootingGameCanvas.style.filterGameCanvas.style.filter = 'blur( = 'blur(4px)';
+            if4px)';
             if (score > bestScore) {
+                best (score > bestScore) {
                 bestScore = score;
-                localStorage.setItem('shootingGameBestScore', bestScore);
+                localScore = score;
+                localStorage.setItem('shStorage.setItem('shootingGameBestootingGameBestScore', bestScore', bestScore);
             }
-            showToast(`Game Over! Score: ${score}`, 4000);
-            cancelAnimationFrame(gameLoop);
+            showScore);
+            }
+            showToast(`Toast(`Game Over! ScoreGame Over! Score: ${score}`, 400: ${score}`, 4000);
+            cancel0);
+            cancelAnimationFrame(gameAnimationFrame(gameLoop);
         };
 
-        const initShootingGame = () => {
+       Loop);
+        };
+
+        const init const initShootingGame = () =>ShootingGame = () => {
+            resize {
             resizeCanvas();
+            levelCanvas();
             level = 1;
+            score = 1;
             score = 0;
+            lives = = 3 0;
             lives = 3;
             targets = [];
-            isGameOver = false;
+           ;
+            targets = [];
+            isGame isGameOver = false;
+            isOver = false;
             isScopeActive = false;
-            shootingGameCanvas.style.cursor = 'crosshair';
-            shootingGameCanvas.style.filter = 'none';
-            gameOverMessage.classList.remove('show');
-            shootingGameScore.textContent = `Level: ${level} | Score: ${score} | Lives: ${lives}`;
+           ScopeActive = false;
+            shootingGameCanvas shootingGameCanvas.style.cursor.style.cursor = 'cross = 'crosshair';
+            shootinghair';
+            shootingGameCanvas.style.filterGameCanvas.style.filter = ' = 'none';
+            gameOvernone';
+            gameOverMessage.classMessage.classList.remove('showList.remove('show');
+            shootingGameScore.textContent = `Level: ${level} |');
+            shootingGameScore.textContent = `Level: ${level} | Score: ${score Score: ${score} | Lives} | Lives: ${lives: ${lives}`;
+            create}`;
             createTarget();
-            gameLoop = requestAnimationFrame(gameLoopFunction);
+            gameTarget();
+            gameLoop = requestAnimationFrameLoop = requestAnimationFrame(gameLoopFunction(gameLoopFunction);
         };
 
-        const gameLoopFunction = () => {
-            if (!isGameOver) {
+);
+        };
+
+        const gameLoopFunction =        const gameLoopFunction = () => {
+            if () => {
+            if (!isGameOver) (!isGameOver) {
+                updateTargets();
+                {
                 updateTargets();
                 drawGame();
-                gameLoop = requestAnimationFrame(gameLoopFunction);
+                game drawGame();
+                gameLoop = requestAnimationFrame(gameLoop = requestAnimationFrame(gameLoopFunction);
+            }
+       LoopFunction);
             }
         };
 
-        shootingGameCanvas.addEventListener('mousemove', (e) => {
-            if (isGameOver) return;
-            const rect = shootingGameCanvas.getBoundingClientRect();
-            mouseX = (e.clientX - rect.left) * (shootingGameCanvas.width / rect.width);
-            mouseY = (e.clientY - rect.top) * (shootingGameCanvas.height / rect.height);
+        shooting };
+
+        shootingGameCanvas.addEventGameCanvas.addEventListener('mousemoveListener('mousemove', e', e => {
+            if (is => {
+            if (isGameGameOver) return;
+            constOver) return;
+            const rect = shooting rect = shootingGameCanvas.getBoundingClientRectGameCanvas.getBoundingClientRect();
+            mouse();
+            mouseX = (X = (e.clientX - rect.lefte.clientX - rect.left) * (sh) * (shootingGameCanvas.width / rectootingGameCanvas.width / rect.width);
+            mouse.width);
+            mouseY = (e.clientYY = (e.clientY - rect.top - rect.top) * (sh) * (shootingGameootingGameCanvas.height /Canvas.height / rect.height);
         });
-        shootingGameCanvas.addEventListener('click', (e) => {
-            if (isGameOver) return;
-            const rect = shootingGameCanvas.getBoundingClientRect();
-            const x = (e.clientX - rect.left) * (shootingGameCanvas.width / rect.width);
-            const y = (e.clientY - rect.top) * (shootingGameCanvas.height / rect.height);
-            hitTarget(x, y);
+ rect.height);
         });
-        document.getElementById('scopeToggleBtn').addEventListener('click', () => {
-            if (isGameOver) return;
-            isScopeActive = !isScopeActive;
-            shootingGameCanvas.style.cursor = isScopeActive ? 'none' : 'crosshair';
-            showToast(isScopeActive ? 'Scope On' : 'Scope Off', 2000);
+        shootingGameCanvas.addEventListener('click        shootingGameCanvas.addEventListener('click', e => {
+', e => {
+            if (is            if (isGameOver) return;
+           GameOver) return;
+            const rect = shooting const rect = shootingGameCanvas.getBoundingClientRectGameCanvas.getBoundingClientRect();
+            const x();
+            const x = (e.client = (e.clientX - rect.leftX - rect.left) * (sh) * (shootingGameootingGameCanvas.width /Canvas.width / rect.width);
+            const rect.width);
+            const y = (e.clientY y = (e.clientY - rect.top - rect.top) * (sh) * (shootingGameCanvas.heightootingGameCanvas.height / rect / rect.height);
+            hit.height);
+            hitTarget(x, yTarget(x, y);
         });
-        document.getElementById('shootingGameOption').addEventListener('click', (e) => {
+        document);
+        });
+        document.getElementById('scopeToggleBtn').addEventListener.getElementById('scopeToggleBtn').addEventListener('click', () => {
+('click', () => {
+            if (isGameOver            if (isGameOver) return;
+            is) return;
+            isScopeActive = !isScopeScopeActive = !isScopeActive;
+            shootingActive;
+            shootingGameCanvasGameCanvas.style.cursor = is.style.cursor = isScopeActive ? 'noneScopeActive ? 'none' : 'cross' : 'crosshair';
+            showhair';
+            showToast(isToast(isScopeActive ? 'ScopeScopeActive ? 'Scope On' : 'Scope Off On' : 'Scope Off', 200', 2000);
+        });
+        document0);
+        });
+        document.getElementById('sh.getElementById('shootingGameOption').ootingGameOption').addEventListener('click',addEventListener('click', e => {
+            e.prevent e => {
             e.preventDefault();
-            closeModal(gamesModal);
-            openModal(shootingGameModal);
+            closeDefault();
+            closeModal(gModal(gamesModal);
+amesModal);
+            openModal            openModal(shooting(shootingGameModalGameModal);
+            init);
             initShootingGame();
         });
-        document.getElementById('closeShootingGameBtn').addEventListener('click', () => {
-            closeModal(shootingGameModal);
-            cancelAnimationFrame(gameLoop);
+ShootingGame();
         });
-        document.getElementById('restartShootingGameBtn').addEventListener('click', initShootingGame);
+        document.getElementById        document.get('ElementByIdcloseSh('closeShootingGameBtn').addEventootingGameBtn').addEventListener('click', () =>Listener('click', () => {
+            closeModal(sh {
+            closeModal(shootingGameModalootingGameModal);
+            cancel);
+            cancelAnimationFrameAnimationFrame(gameLoop);
+        });
+(gameLoop);
+        });
+        document.getElement        document.getElementById('restartById('restartShootingGameShootingGameBtn').addEventListener('Btn').addEventListener('click', initclick', initShootingGame);
+
+        //ShootingGame);
 
         // Form Handling
-        document.getElementById('feedbackForm').addEventListener('submit', (e) => {
+        document Form Handling
+        document.getElementById('feedbackForm').add.getElementEventByListener('Id('feedbackForm').addEventListener('submit', e => {
+submit', e => {
             e.preventDefault();
+                       e.preventDefault();
             const form = e.target;
-            const submitBtn = document.getElementById('submitBtn');
-            const category = form.category.value;
-            const message = form.message.value.trim();
-            const email = form.email.value.trim();
-            const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$/;
-            if (!category || !message || !email) return showToast('Please fill all fields!', 3000);
-            if (!emailRegex.test(email)) return showToast('Invalid email address!', 3000);
+ const form = e.target;
+            const submitBtn = document            const submitBtn = document.getElementById('submit.getElementById('submitBtn');
+            const category =Btn');
+            const category = form.category form.category.value;
+            const message.value;
+            const message = form.message.value = form.message.value.trim();
+            const email.trim();
+            const email = form.email.value.trim = form.email.value.trim();
+            const email();
+            const emailRegex = /^[\Regex = /^[\w-\.w-\.]+@([\]+@([\w-]+\.)+w-]+\.)[\w-]{2+[\w-]{2,}$/;
+            if (!,}$/;
+            if (!category || !message ||category || !message || !email) return showToast !email) return showToast('Please fill all('Please fill all fields!', 3000);
+ fields!', 3000);
+            if (!emailRegex.test            if (!emailRegex.test(email)) return show(email)) return showToast('Invalid email addressToast('Invalid email address!', 3000);
+           !', 3000);
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Submitting...';
+ submitBtn.disabled = true;
+            submitBtn.textContent =            submitBtn.textContent = 'Submitting...';
+            fetch 'Submitting...';
             fetch(form.action, {
+(form.action, {
                 method: 'POST',
-                body: new FormData(form),
-                headers: { 'Accept': 'application/json' }
+                method: 'POST',
+                body: new                body: new FormData(form),
+ FormData(form),
+                headers: { '                headers: { 'Accept': 'applicationAccept':/json' 'application }
+            }).then/json' }
             }).then(res => {
+                if ((res => {
                 if (res.ok) {
-                    showToast('Feedback sent! Thank you!', 4000);
+                    showToast('Feedbackres.ok) {
+                    showToast('Feedback sent! Thank you!', sent! Thank you!', 4000);
+ 4000);
                     form.reset();
+                }                    form.reset();
                 } else {
-                    showToast('Error submitting feedback!', 4000);
+                    show else {
+                    showToast('Error submitting feedback!',Toast('Error submitting feedback!', 4000);
                 }
-            }).catch(() => showToast('Network error!', 4000)).finally(() => {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Feedback';
+            }).catch 4000);
+                }
+            }).catch(() => showToast('Network(() => showToast('Network error!', 4000)). error!', 4000)).finally(() => {
+               finally(() => {
+                submitBtn.disabled = submitBtn.disabled = false;
+                submitBtn false.textContent =; '
+Send                Feedback submitBtn.textContent = 'Send Feedback';
             });
         });
 
-        // Real-time Form Validation
-        document.querySelectorAll('#feedbackForm input, #feedbackForm textarea, #feedbackForm select').forEach(input => {
+';
+            });
+        });
+
+        // Real        // Real-time Form Validation
+        document-time Form Validation
+        document.querySelectorAll('#feedbackForm input.querySelectorAll('#,feedbackForm input, #feedbackForm textarea, # #feedbackForm textarea, #feedbackfeedbackForm select').forEach(inputForm select').forEach(input => {
+            input.addEvent => {
             input.addEventListener('input', () => {
-                input.style.borderColor = input.value.trim() ? '#3b82f6' : 'rgba(255, 255, 255, 0.2)';
+                input.styleListener('input', () => {
+                input.style.borderColor.borderColor = input.value.trim = input.value.trim() ? '#() ? '#3b82f6'3b82f6' : 'rgba : 'rgba(255, 255,(255, 255, 255, 0. 255, 0.2)';
             });
         });
-
-        // Focus Trapping for Modals
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('keydown', (e) => {
-                if (e.key === 'Tab' && modal.classList.contains('show')) {
-                    const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-                    const first = focusable[0];
-                    const last = focusable[focusable.length - 1];
-                    if (e.shiftKey && document.activeElement === first) {
-                        e.preventDefault();
-                        last.focus();
-                    } else if (!e.shiftKey && document.activeElement === last) {
-                        e.preventDefault();
-                        first.focus();
-                    }
-                }
+   2)';
             });
+ </script>
+</body>
         });
     </script>
 </body>
