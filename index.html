@@ -3,814 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JioMart Grocery - Responsive E-Commerce UI</title>
+    <title>Orryo Basket</title>
     <style>
-        /* Reset and Base Styles */
-        * {
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            background-color: #f4f4f4;
         }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #fff;
-            color: #333;
-            line-height: 1.4;
-            overflow-x: hidden;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        .dark-mode {
-            background-color: #121212;
-            color: #e0e0e0;
-        }
-        .dark-mode .card { background-color: #1e1e1e; }
-        .dark-mode .header { background-color: #0d47a1; }
-        .dark-mode .search-input { background-color: #333; color: #fff; }
-        .dark-mode .coupon-banner { background-color: #2c2c2c; }
-        .dark-mode .footer-nav { background-color: #1e1e1e; }
-
-        /* Header */
-        .header {
-            background-color: #0d47a1;
+        header {
+            background-color: #1e3a8a; /* Dark blue, about 30-40% darker */
+            padding: 10px;
             color: white;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: background-color 0.3s ease;
         }
-        .logo {
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .toggles {
-            display: flex;
-            gap: 10px;
-        }
-        .toggle-btn {
-            padding: 5px 10px;
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-        .toggle-btn.active {
-            background: white;
-            color: #0d47a1;
-        }
-        .search-container {
-            flex: 1;
-            max-width: 300px;
-            margin: 0 10px;
-            position: relative;
-        }
-        .search-input {
-            width: 100%;
-            padding: 8px 10px;
-            border: none;
-            border-radius: 20px;
-            background: white;
-            color: #333;
-        }
-        .delivery {
-            font-size: 12px;
-            text-align: center;
-            flex: 1;
-        }
-        .icons {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-        .cart-icon {
-            position: relative;
-        }
-        .cart-counter {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: red;
-            color: white;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .profile {
-            width: 30px;
-            height: 30px;
-            background: white;
-            color: #0d47a1;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Category Shortcuts */
-        .categories {
-            display: flex;
-            overflow-x: auto;
-            padding: 10px;
-            gap: 10px;
-            background: #f5f5f5;
-            scrollbar-width: none;
-        }
-        .dark-mode .categories { background: #2c2c2c; }
-        .category-item {
-            flex: 0 0 auto;
-            text-align: center;
-            padding: 10px;
-            background: white;
-            border-radius: 20px;
-            min-width: 80px;
-            cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            transition: background 0.3s;
-        }
-        .dark-mode .category-item { background: #333; }
-        .category-item:hover { background: #e0e0e0; }
-        .dark-mode .category-item:hover { background: #444; }
-        .category-icon {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-
-        /* Sections */
-        .section {
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        .section-title {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #0d47a1;
-        }
-        .card {
-            background: white;
-            border-radius: 10px;
-            padding: 10px;
-            margin-bottom: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            display: flex;
-            gap: 10px;
-            transition: box-shadow 0.3s;
-        }
-        .dark-mode .card { background: #1e1e1e; }
-        .card:hover { box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
-        .product-image {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-        .product-info h3 {
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-        .price {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-        }
-        .original-price {
-            text-decoration: line-through;
-            color: #999;
-            margin-right: 5px;
-        }
-        .discount {
-            color: green;
-            font-weight: bold;
-        }
-        .add-btn, .wishlist-btn {
-            background: #0d47a1;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 5px;
-        }
-        .wishlist-btn {
-            background: transparent;
-            color: red;
-            border: none;
-            font-size: 20px;
-        }
-        .ratings {
-            display: flex;
-            gap: 2px;
-            margin-top: 5px;
-        }
-        .star { color: #ffd700; }
-
-        /* Carousel */
-        .carousel {
-            display: flex;
-            overflow-x: auto;
-            gap: 10px;
-            padding: 10px 0;
-        }
-        .carousel .card { flex: 0 0 150px; }
-
-        /* Banner */
-        .banner {
-            width: 100%;
-            height: 150px;
-            background: linear-gradient(to right, #0d47a1, #1976d2);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 10px 0;
-            border-radius: 10px;
-        }
-        .rotating-banner {
-            position: relative;
-            height: 150px;
-        }
-        .rotating-banner .banner {
-            position: absolute;
-            opacity: 0;
-            transition: opacity 1s;
-        }
-        .rotating-banner .active { opacity: 1; }
-
-        /* Coupons */
-        .coupon-banner {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 10px;
-            padding: 10px;
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
         }
-        .dark-mode .coupon-banner { background: #333; border-color: #555; color: #e0e0e0; }
-        .copy-btn {
-            background: green;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
+        .search-bar {
+            flex: 1;
+            padding: 8px;
+            margin-right: 10px;
         }
-
-        /* Sub-categories */
-        .sub-categories {
+        .user-actions {
             display: flex;
-            overflow-x: auto;
             gap: 10px;
-            padding: 10px 0;
         }
-        .sub-category {
-            flex: 0 0 auto;
-            text-align: center;
-            padding: 10px;
-            background: white;
-            border-radius: 20px;
-            min-width: 60px;
+        .user-actions button {
+            background-color: #1e3a8a; /* Same dark blue as header */
+            color: white;
+            border: 1px solid #ffffff;
+            padding: 8px 12px;
             cursor: pointer;
         }
-        .dark-mode .sub-category { background: #333; }
-
-        /* Recently Viewed */
-        .recently-viewed {
-            margin: 20px 10px;
+        .user-actions button:hover {
+            background-color: #334155;
         }
-        .recently-viewed .card { margin-bottom: 10px; }
-
-        /* Cart Page */
-        .cart {
-            display: none;
-            padding: 10px;
+        main {
+            padding: 20px;
+            text-align: center;
         }
-        .cart.active {
-            display: block;
+        .cart-section {
+            margin: 20px 0;
         }
         .cart-item {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-            padding: 10px;
+            border: 1px solid #ddd;
+            padding: 20px;
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 300px;
+            margin: 0 auto 20px;
         }
-        .dark-mode .cart-item { background: #1e1e1e; }
-        .qty-selector {
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        .cart-item img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
         }
-        .qty-btn {
-            background: #ddd;
-            border: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        .price-breakdown {
+        .coupon-section {
             margin: 20px 0;
+        }
+        .coupon-section input {
             padding: 10px;
-            background: #f9f9f9;
-            border-radius: 10px;
+            width: 200px;
+            margin-right: 10px;
         }
-        .dark-mode .price-breakdown { background: #2c2c2c; }
-        .saved {
-            color: green;
-            font-weight: bold;
-        }
-        .free-delivery {
-            background: #d4edda;
-            color: #155724;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-            text-align: center;
-        }
-        .dark-mode .free-delivery { background: #2d5a3a; color: #c3e6cb; }
-        .checkout-btn {
-            width: 100%;
-            background: green;
+        .coupon-section button {
+            padding: 10px 20px;
+            background-color: #10b981;
             color: white;
             border: none;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 16px;
             cursor: pointer;
         }
-
-        /* Footer Navigation */
-        .footer-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
-            z-index: 100;
-            transition: background 0.3s;
-        }
-        .dark-mode .footer-nav { background: #1e1e1e; }
-        .nav-item {
-            text-align: center;
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 10px;
-            transition: background 0.3s;
-        }
-        .nav-item.active {
-            background: #0d47a1;
-            color: white;
-        }
-        .nav-icon {
-            font-size: 20px;
-            margin-bottom: 2px;
-        }
-
-        /* Main Content */
-        .main-content {
-            padding-bottom: 70px; /* For footer */
-        }
-        .section.hidden {
+        #message {
             display: none;
+            margin: 20px 0;
         }
-
-        /* Dark Mode Toggle */
-        .dark-toggle {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background: #0d47a1;
+        .saved {
+            background-color: #10b981; /* Green */
             color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 200;
+            padding: 15px 30px;
+            font-size: 24px;
+            font-weight: bold;
+            transform: rotate(-5deg);
+            animation: fadeInRotate 0.5s ease-in-out;
+            display: inline-block;
         }
-
-        /* Responsive */
-        @media (min-width: 768px) {
-            .header { padding: 15px 20px; }
-            .categories { justify-content: flex-start; }
-            .footer-nav { display: none; } /* Hide on desktop */
+        @keyframes fadeInRotate {
+            from {
+                opacity: 0;
+                transform: rotate(-5deg) scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: rotate(-5deg) scale(1);
+            }
+        }
+        .basket-title {
+            font-size: 18px;
+            color: #374151;
+            margin-top: 40px;
         }
     </style>
 </head>
 <body>
-    <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
-
-    <!-- Header -->
-    <header class="header">
-        <div class="logo">JioMart</div>
-        <div class="toggles">
-            <button class="toggle-btn active" onclick="toggleMode('quick')">Quick</button>
-            <button class="toggle-btn" onclick="toggleMode('scheduled')">Scheduled</button>
-        </div>
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search in Quick" id="searchInput" oninput="filterProducts()">
-        </div>
-        <div class="delivery">Delivery to: Sadulpur, Shamiya ki Dhani ...</div>
-        <div class="icons">
-            <div class="cart-icon" onclick="showCart()">
-                🛒 <span class="cart-counter" id="cartCounter">4</span>
+    <header>
+        <div class="header-content">
+            <input type="text" class="search-bar" placeholder="Search...">
+            <div class="user-actions">
+                <button>Profile</button>
+                <button>Cart</button>
             </div>
-            <div class="profile">RK</div>
         </div>
     </header>
-
-    <!-- Rotating Banner Carousel -->
-    <div class="rotating-banner" id="bannerCarousel">
-        <div class="banner active">50% Off on Groceries! Use code: HALF50</div>
-        <div class="banner">Buy 1 Get 1 Free on Snacks!</div>
-        <div class="banner">Fresh Vegetables at Low Prices</div>
-    </div>
-
-    <!-- Category Shortcuts -->
-    <div class="categories" id="categories">
-        <div class="category-item" onclick="scrollToSection('vegetables')">
-            <div class="category-icon">💰</div>
-            <div>Low Price Guarantee</div>
-        </div>
-        <div class="category-item" onclick="scrollToSection('groceries')">
-            <div class="category-icon">🛒</div>
-            <div>Groceries</div>
-        </div>
-        <div class="category-item" onclick="scrollToSection('coupons')">
-            <div class="category-icon">🎟️</div>
-            <div>Happy Hour Coupons</div>
-        </div>
-        <div class="category-item" onclick="scrollToSection('99store')">
-            <div class="category-icon">₹</div>
-            <div>99 Store</div>
-        </div>
-        <div class="category-item" onclick="scrollToSection('fragrance')">
-            <div class="category-icon">🧴</div>
-            <div>Fragrance Friday</div>
-        </div>
-        <div class="category-item" onclick="scrollToSection('electronics')">
-            <div class="category-icon">📱</div>
-            <div>Electronics Deals</div>
-        </div>
-        <div class="category-item" onclick="scrollToSection('fashion')">
-            <div class="category-icon">👗</div>
-            <div>Fashion</div>
-        </div>
-        <div class="category-item" onclick="scrollToSection('home')">
-            <div class="category-icon">🏠</div>
-            <div>Home Essentials</div>
-        </div>
-        <div class="category-item" onclick="scrollToSection('baby')">
-            <div class="category-icon">👶</div>
-            <div>Baby Care</div>
-        </div>
-        <div class="category-item" onclick="scrollToSection('beauty')">
-            <div class="category-icon">💄</div>
-            <div>Beauty Products</div>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Top Picks for Vegetables -->
-        <section id="vegetables" class="section">
-            <h2 class="section-title">Top Picks for Vegetables</h2>
-            <div class="product-grid" id="vegetablesProducts">
-                <div class="card">
-                    <img src="https://loremflickr.com/60/60/potato" alt="Potato" class="product-image">
-                    <div class="product-info">
-                        <h3>Potato 1kg</h3>
-                        <div class="price">₹22.00</div>
-                        <div class="ratings"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">☆</span></div>
-                        <button class="add-btn" onclick="addToCart(this)">Add</button>
-                        <button class="wishlist-btn" onclick="toggleWishlist(this)">♥</button>
-                    </div>
-                </div>
-                <!-- Add more vegetable cards as needed -->
+    <main>
+        <div class="cart-section">
+            <div class="cart-item">
+                <img src="https://via.placeholder.com/150x150/FFD700/000000?text=Bikaji+Bhujia" alt="Bikaji Bhujia added to cart">
+                <p>Bikaji Bhujia - Added to Cart</p>
             </div>
-        </section>
-
-        <!-- Happy Hour Coupons -->
-        <section id="coupons" class="section hidden">
-            <h2 class="section-title">Happy Hour Coupons</h2>
-            <div class="coupon-banner">
-                <span>STATIONERY10 - 10% off stationery</span>
-                <button class="copy-btn" onclick="copyCoupon('STATIONERY10')">Copy</button>
+            <div class="coupon-section">
+                <input type="text" id="couponCode" placeholder="Enter coupon code (starting with T)">
+                <button onclick="applyCoupon()">Apply Coupon</button>
             </div>
-            <!-- Add more coupons -->
-        </section>
-
-        <!-- Featured Deals -->
-        <section id="featured" class="section">
-            <h2 class="section-title">Featured Deals</h2>
-            <div class="carousel">
-                <div class="card">
-                    <img src="https://loremflickr.com/150/150/deo" alt="Denver Deo" class="product-image">
-                    <div class="product-info">
-                        <h3>Denver Deo</h3>
-                        <div><span class="original-price">₹150</span> <span class="discount">-20%</span></div>
-                        <div class="price">₹120.00</div>
-                        <div class="ratings"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
-                        <button class="add-btn" onclick="addToCart(this)">Add</button>
-                        <button class="wishlist-btn" onclick="toggleWishlist(this)">♥</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="https://loremflickr.com/150/150/nivea" alt="Nivea Deo" class="product-image">
-                    <div class="product-info">
-                        <h3>Nivea Deo</h3>
-                        <div><span class="original-price">₹200</span> <span class="discount">-15%</span></div>
-                        <div class="price">₹170.00</div>
-                        <div class="ratings"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">☆</span></div>
-                        <button class="add-btn" onclick="addToCart(this)">Add</button>
-                        <button class="wishlist-btn" onclick="toggleWishlist(this)">♥</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="https://loremflickr.com/150/150/body-spray" alt="Layer’r Body Spray" class="product-image">
-                    <div class="product-info">
-                        <h3>Layer’r Body Spray</h3>
-                        <div><span class="original-price">₹180</span> <span class="discount">-25%</span></div>
-                        <div class="price">₹135.00</div>
-                        <div class="ratings"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
-                        <button class="add-btn" onclick="addToCart(this)">Add</button>
-                        <button class="wishlist-btn" onclick="toggleWishlist(this)">♥</button>
-                    </div>
-                </div>
+            <div id="discountMessage">
+                <div class="saved" id="savedMsg">Saved 100!</div>
             </div>
-        </section>
-
-        <!-- Perfumes & Pockets -->
-        <section id="perfumes" class="section hidden">
-            <h2 class="section-title">Perfumes & Pockets</h2>
-            <div class="carousel">
-                <!-- Similar cards for perfumes -->
-                <div class="card">Perfume 1 - ₹500 <button class="add-btn">Add</button></div>
-                <!-- More items -->
-            </div>
-        </section>
-
-        <!-- Groceries Banner -->
-        <section id="groceries" class="section">
-            <div class="banner">Paying Tribute to Our Ancestral Souls</div>
-            <h2 class="section-title">Groceries Categories</h2>
-            <div class="sub-categories">
-                <div class="sub-category">🍦 Ice Cream</div>
-                <div class="sub-category">🥔 Chips</div>
-                <div class="sub-category">🍪 Biscuits</div>
-                <div class="sub-category">🍫 Chocolates</div>
-                <div class="sub-category">🥤 Drinks</div>
-                <div class="sub-category">🧃 Juices</div>
-                <div class="sub-category">🍮 Indian Sweets</div>
-                <div class="sub-category">🥣 Breakfast Cereals</div>
-                <div class="sub-category">🍜 Noodles & Pasta</div>
-            </div>
-        </section>
-
-        <!-- More For Me -->
-        <section id="moreforme" class="section hidden">
-            <h2 class="section-title">More For Me</h2>
-            <div class="product-grid">
-                <div class="card">
-                    <img src="https://loremflickr.com/60/60/rusk" alt="Rusk" class="product-image">
-                    <div class="product-info">
-                        <h3>Rusk</h3>
-                        <div class="price">₹50.00</div>
-                        <button class="add-btn" onclick="addToCart(this)">Add</button>
-                    </div>
-                </div>
-                <!-- Rice, Oil, Snacks cards -->
-            </div>
-        </section>
-
-        <!-- Recently Viewed -->
-        <section class="recently-viewed" id="recentlyViewed">
-            <h2 class="section-title">Recently Viewed</h2>
-            <div id="recentlyViewedItems"></div>
-        </section>
+        </div>
+        <div class="basket-title">Orryo Basket</div>
     </main>
-
-    <!-- Cart Page -->
-    <div id="cartPage" class="cart">
-        <h2>Quick Basket</h2>
-        <div id="cartItems"></div>
-        <div class="price-breakdown">
-            <p>Original: ₹500</p>
-            <p>Discount: -₹100</p>
-            <p class="price">Final: ₹400</p>
-            <p class="saved">You Saved ₹100</p>
-        </div>
-        <div class="free-delivery">Free Delivery in 10–30 mins</div>
-        <button class="checkout-btn" onclick="placeOrder()">Place Order</button>
-    </div>
-
-    <!-- Footer Navigation -->
-    <nav class="footer-nav">
-        <div class="nav-item active" onclick="navigate('home')">
-            <div class="nav-icon">🏠</div>
-            <div>Home</div>
-        </div>
-        <div class="nav-item" onclick="navigate('categories')">
-            <div class="nav-icon">📂</div>
-            <div>Categories</div>
-        </div>
-        <div class="nav-item" onclick="navigate('offers')">
-            <div class="nav-icon">🎁</div>
-            <div>Offers</div>
-        </div>
-        <div class="nav-item" onclick="showCart()">
-            <div class="nav-icon">🛒</div>
-            <div>Cart</div>
-        </div>
-        <div class="nav-item" onclick="navigate('account')">
-            <div class="nav-icon">👤</div>
-            <div>Account</div>
-        </div>
-    </nav>
-
     <script>
-        // Global Variables
-        let cart = [{ name: 'Potato', price: 22, qty: 2 }, { name: 'Denver Deo', price: 120, qty: 1 }, { name: 'Nivea Deo', price: 170, qty: 1 }];
-        let currentMode = 'quick';
-        let recentlyViewed = [];
-        let darkMode = false;
-
-        // Dark Mode Toggle
-        function toggleDarkMode() {
-            darkMode = !darkMode;
-            document.body.classList.toggle('dark-mode');
-            document.querySelector('.dark-toggle').textContent = darkMode ? '☀️' : '🌙';
-        }
-
-        // Toggle Quick/Scheduled
-        function toggleMode(mode) {
-            currentMode = mode;
-            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            document.getElementById('searchInput').placeholder = `Search in ${mode.charAt(0).toUpperCase() + mode.slice(1)}`;
-        }
-
-        // Filter Products
-        function filterProducts() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            // Implement filtering logic on product grids
-            document.querySelectorAll('.card').forEach(card => {
-                const text = card.textContent.toLowerCase();
-                card.style.display = text.includes(query) ? 'flex' : 'none';
-            });
-        }
-
-        // Add to Cart
-        function addToCart(btn) {
-            const card = btn.closest('.card');
-            const name = card.querySelector('h3').textContent;
-            const price = parseFloat(card.querySelector('.price').textContent.replace('₹', ''));
-            const existing = cart.find(item => item.name === name);
-            if (existing) {
-                existing.qty++;
+        function applyCoupon() {
+            const code = document.getElementById('couponCode').value.trim();
+            const message = document.getElementById('discountMessage');
+            const savedMsg = document.getElementById('savedMsg');
+            
+            if (code.startsWith('T')) {
+                message.style.display = 'block';
+                savedMsg.textContent = 'Saved 100!';
+                // Reset after animation
+                setTimeout(() => {
+                    message.style.display = 'none';
+                    document.getElementById('couponCode').value = '';
+                }, 2000);
             } else {
-                cart.push({ name, price, qty: 1 });
-            }
-            updateCartCounter();
-            addToRecentlyViewed(name);
-            alert(`${name} added to cart!`);
-        }
-
-        // Update Cart Counter
-        function updateCartCounter() {
-            const total = cart.reduce((sum, item) => sum + item.qty, 0);
-            document.getElementById('cartCounter').textContent = total;
-        }
-
-        // Copy Coupon
-        function copyCoupon(code) {
-            navigator.clipboard.writeText(code).then(() => alert(`Copied: ${code}`));
-        }
-
-        // Scroll to Section
-        function scrollToSection(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-            // Show/hide sections based on category
-            document.querySelectorAll('.section').forEach(sec => sec.classList.add('hidden'));
-            document.getElementById(id).classList.remove('hidden');
-        }
-
-        // Show Cart
-        function showCart() {
-            document.querySelector('.main-content').style.display = 'none';
-            document.getElementById('cartPage').classList.add('active');
-            renderCart();
-        }
-
-        // Render Cart
-        function renderCart() {
-            const itemsDiv = document.getElementById('cartItems');
-            itemsDiv.innerHTML = cart.map(item => `
-                <div class="cart-item">
-                    <img src="https://loremflickr.com/60/60/${item.name.toLowerCase()}" alt="${item.name}" class="product-image">
-                    <div>
-                        <h3>${item.name}</h3>
-                        <p>${item.price} x ${item.qty}</p>
-                        <div class="qty-selector">
-                            <button class="qty-btn" onclick="changeQty('${item.name}', -1)">-</button>
-                            <span>${item.qty}</span>
-                            <button class="qty-btn" onclick="changeQty('${item.name}', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="price">₹${(item.price * item.qty).toFixed(2)}</div>
-                </div>
-            `).join('');
-        }
-
-        // Change Quantity
-        function changeQty(name, delta) {
-            const item = cart.find(i => i.name === name);
-            if (item) {
-                item.qty += delta;
-                if (item.qty <= 0) cart = cart.filter(i => i.name !== name);
-                updateCartCounter();
-                renderCart();
+                alert('Invalid code. Must start with T.');
             }
         }
-
-        // Place Order
-        function placeOrder() {
-            alert('Order placed successfully!');
-            cart = [];
-            updateCartCounter();
-            hideCart();
-        }
-
-        // Hide Cart
-        function hideCart() {
-            document.querySelector('.main-content').style.display = 'block';
-            document.getElementById('cartPage').classList.remove('active');
-        }
-
-        // Navigation
-        function navigate(tab) {
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            event.target.closest('.nav-item').classList.add('active');
-            // Handle tab switching, e.g., show home section
-            if (tab === 'home') scrollToSection('vegetables');
-            // Add logic for other tabs
-        }
-
-        // Wishlist
-        function toggleWishlist(btn) {
-            btn.style.color = btn.style.color === 'red' ? 'inherit' : 'red';
-            alert('Added to wishlist!');
-        }
-
-        // Recently Viewed
-        function addToRecentlyViewed(name) {
-            if (!recentlyViewed.includes(name)) {
-                recentlyViewed.unshift(name);
-                if (recentlyViewed.length > 5) recentlyViewed.pop();
-                renderRecentlyViewed();
-            }
-        }
-
-        function renderRecentlyViewed() {
-            const div = document.getElementById('recentlyViewedItems');
-            div.innerHTML = recentlyViewed.map(name => `
-                <div class="card">
-                    <img src="https://loremflickr.com/60/60/${name.toLowerCase()}" alt="${name}" class="product-image">
-                    <div class="product-info">
-                        <h3>${name}</h3>
-                        <button class="add-btn" onclick="addToCart(this)">Add</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Rotating Banner
-        let bannerIndex = 0;
-        const banners = document.querySelectorAll('.rotating-banner .banner');
-        setInterval(() => {
-            banners[bannerIndex].classList.remove('active');
-            bannerIndex = (bannerIndex + 1) % banners.length;
-            banners[bannerIndex].classList.add('active');
-        }, 3000);
-
-        // Initial Render
-        updateCartCounter();
-        renderRecentlyViewed();
     </script>
 </body>
 </html>
