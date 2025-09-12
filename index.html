@@ -153,4 +153,20 @@
       saved = 0;
       if (appliedCoupon) {
         if (appliedCoupon.type === "percent") {
-          let discount = (totalPrice * appliedCoupon.value) /
+          let discount = (totalPrice * appliedCoupon.value) / 100;
+          finalPrice -= discount;
+          saved = discount;
+        }
+      }
+      if (finalPrice < 0) finalPrice = 0;
+      document.getElementById("summary-price").textContent = finalPrice.toFixed(2);
+      document.getElementById("summary-saved").textContent = saved.toFixed(2);
+    }
+
+    function checkout() {
+      alert("Order placed successfully! Total: ₹" + document.getElementById("summary-price").textContent);
+    }
+  </script>
+
+</body>
+</html>
