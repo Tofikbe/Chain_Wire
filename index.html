@@ -18,10 +18,17 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: relative;
         }
         .logo {
             font-size: 24px;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 30px;
+            margin-right: 10px;
         }
         .search-bar {
             width: 50%;
@@ -47,10 +54,12 @@
             gap: 20px;
             margin: 0;
             padding: 0;
+            overflow-x: auto;
         }
         nav a {
             text-decoration: none;
             color: #333;
+            white-space: nowrap;
         }
         .banner {
             background-color: #e6f2ff;
@@ -72,7 +81,8 @@
         }
         .product img {
             width: 100%;
-            height: auto;
+            height: 150px;
+            object-fit: cover;
         }
         .cart {
             padding: 20px;
@@ -93,67 +103,186 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        .pincode-section {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+        }
+        .pincode-section.closed {
+            display: none;
+        }
+        .pincode-input {
+            padding: 10px;
+            width: 150px;
+            margin-right: 10px;
+        }
+        .arrow-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
         footer {
             background-color: #333;
             color: white;
             text-align: center;
-            padding: 10px;
+            padding: 20px;
+            position: relative;
+        }
+        .pincode-prompt {
+            background-color: #fff;
+            padding: 20px;
+            margin: 0 20px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .no-products {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">JioMart</div>
-        <input type="text" class="search-bar" placeholder="Search for products...">
+    <div id="pincodePrompt" class="pincode-prompt">
+        <p>अपना एरिया पिन कोड ऐड करो</p>
+        <input type="text" id="pinInput" class="pincode-input" placeholder="Enter PIN Code (e.g., 331023)">
+        <button onclick="submitPincode()" class="apply-btn">Submit</button>
+    </div>
+
+    <header id="mainHeader" style="display: none;">
+        <div class="logo">
+            <img src="https://i.postimg.cc/PJgnjz98/images.png" alt="JioMart Logo">
+            JioMart
+        </div>
+        <input type="text" id="searchBar" class="search-bar" placeholder="Search for products..." onkeyup="searchProducts()">
         <div class="icons">
-            <div class="icon">Cart</div>
+            <div class="icon">Cart (0)</div>
             <div class="icon">Account</div>
         </div>
     </header>
-    <nav>
+
+    <nav id="navMenu" style="display: none;">
         <ul>
-            <li><a href="#">Grocery</a></li>
-            <li><a href="#">Electronics</a></li>
-            <li><a href="#">Fashion</a></li>
-            <li><a href="#">Home & Kitchen</a></li>
-            <li><a href="#">Beauty</a></li>
+            <li><a href="#" onclick="filterCategory('all')">All</a></li>
+            <li><a href="#" onclick="filterCategory('fruits')">Fruits</a></li>
+            <li><a href="#" onclick="filterCategory('vegetables')">Vegetables</a></li>
+            <li><a href="#" onclick="filterCategory('dairy')">Dairy</a></li>
+            <li><a href="#" onclick="filterCategory('grains')">Grains</a></li>
+            <li><a href="#" onclick="filterCategory('electronics')">Electronics</a></li>
+            <li><a href="#" onclick="filterCategory('fashion')">Fashion</a></li>
+            <li><a href="#" onclick="filterCategory('home')">Home & Kitchen</a></li>
+            <li><a href="#" onclick="filterCategory('beauty')">Beauty</a></li>
         </ul>
     </nav>
-    <section class="banner">
+
+    <section class="banner" id="banner" style="display: none;">
         <h1>Welcome to JioMart - Best Deals on Everything!</h1>
         <p>Shop now and save big.</p>
     </section>
-    <section class="products">
-        <div class="product">
-            <img src="https://via.placeholder.com/200?text=Product+1" alt="Product 1">
-            <h3>Item 1</h3>
-            <p>Price: ₹100</p>
-            <p>Discount Code: T123 (Starts with T, will work)</p>
-            <button onclick="addToCart()">Add to Cart</button>
-        </div>
-        <div class="product">
-            <img src="https://via.placeholder.com/200?text=Product+2" alt="Product 2">
-            <h3>Item 2</h3>
-            <p>Price: ₹200</p>
-            <p>Discount Code: A456 (Does not start with T)</p>
-            <button onclick="addToCart()">Add to Cart</button>
-        </div>
-        <!-- Add more products as needed -->
+
+    <section class="products" id="productsSection" style="display: none;">
+        <!-- Products will be populated here -->
     </section>
-    <section class="cart">
+
+    <section class="cart" id="cart" style="display: none;">
         <h2>Your Cart</h2>
-        <p>Total: ₹300</p>
+        <p>Total: ₹<span id="total">0</span></p>
         <input type="text" id="coupon" class="coupon-input" placeholder="Enter Discount Coupon">
         <button class="apply-btn" onclick="applyCoupon()">Apply</button>
         <p id="coupon-message"></p>
     </section>
-    <footer>
+
+    <footer id="footer" style="display: none;">
         <p>&copy; 2025 JioMart Clone - Frontend Only</p>
     </footer>
 
     <script>
-        function addToCart() {
-            alert('Item added to cart!');
+        let allProducts = [
+            { id: 1, name: 'Apple', price: 100, category: 'fruits', image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=200&h=150&fit=crop', coupon: 'TAPPLE' },
+            { id: 2, name: 'Banana', price: 50, category: 'fruits', image: 'https://images.unsplash.com/photo-1510874567808-5113cf473812?w=200&h=150&fit=crop', coupon: 'TBANANA' },
+            { id: 3, name: 'Tomato', price: 30, category: 'vegetables', image: 'https://images.unsplash.com/photo-1546548970-146fdb0116b9?w=200&h=150&fit=crop', coupon: 'TTOMATO' },
+            { id: 4, name: 'Onion', price: 40, category: 'vegetables', image: 'https://images.unsplash.com/photo-1606853737597-48e81e5f4b9e?w=200&h=150&fit=crop', coupon: 'TONION' },
+            { id: 5, name: 'Potato', price: 20, category: 'vegetables', image: 'https://images.unsplash.com/photo-1601001435828-59a8e51e00fd?w=200&h=150&fit=crop', coupon: 'TPOTATO' },
+            { id: 6, name: 'Milk', price: 60, category: 'dairy', image: 'https://images.unsplash.com/photo-1579124222486-2b4e374ff7ab?w=200&h=150&fit=crop', coupon: 'TMILK' },
+            { id: 7, name: 'Bread', price: 35, category: 'grains', image: 'https://images.unsplash.com/photo-1507646227500-4d389b0012be?w=200&h=150&fit=crop', coupon: 'TBREAD' },
+            { id: 8, name: 'Rice', price: 80, category: 'grains', image: 'https://images.unsplash.com/photo-1542838138-cf8f4a49566e?w=200&h=150&fit=crop', coupon: 'TRICE' },
+            { id: 9, name: 'Smartphone', price: 10000, category: 'electronics', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=200&h=150&fit=crop', coupon: 'TPhone' },
+            { id: 10, name: 'T-Shirt', price: 300, category: 'fashion', image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200&h=150&fit=crop', coupon: 'TTSHIRT' },
+            { id: 11, name: 'Cookware Set', price: 500, category: 'home', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cdce?w=200&h=150&fit=crop', coupon: 'TCOOK' },
+            { id: 12, name: 'Lipstick', price: 200, category: 'beauty', image: 'https://images.unsplash.com/photo-1617376837405-3f4b6a59884b?w=200&h=150&fit=crop', coupon: 'TLIP' }
+        ];
+
+        let currentProducts = [...allProducts];
+        let cartItems = [];
+        let pincodeSubmitted = false;
+
+        function submitPincode() {
+            const pinInput = document.getElementById('pinInput').value;
+            if (pinInput.length === 6 && /^\d+$/.test(pinInput)) {
+                document.getElementById('pincodePrompt').style.display = 'none';
+                document.getElementById('mainHeader').style.display = 'flex';
+                document.getElementById('navMenu').style.display = 'block';
+                document.getElementById('banner').style.display = 'block';
+                document.getElementById('productsSection').style.display = 'grid';
+                document.getElementById('cart').style.display = 'block';
+                document.getElementById('footer').style.display = 'block';
+                pincodeSubmitted = true;
+                displayProducts();
+            } else {
+                alert('Please enter a valid 6-digit PIN code.');
+            }
+        }
+
+        function displayProducts(products = currentProducts) {
+            const container = document.getElementById('productsSection');
+            if (products.length === 0) {
+                container.innerHTML = '<div class="no-products">No products found.</div>';
+                return;
+            }
+            container.innerHTML = products.map(product => `
+                <div class="product">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>Price: ₹${product.price}</p>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                </div>
+            `).join('');
+        }
+
+        function searchProducts() {
+            const query = document.getElementById('searchBar').value.toLowerCase();
+            currentProducts = allProducts.filter(p => p.name.toLowerCase().includes(query));
+            displayProducts();
+        }
+
+        function filterCategory(category) {
+            if (category === 'all') {
+                currentProducts = [...allProducts];
+            } else {
+                currentProducts = allProducts.filter(p => p.category === category);
+            }
+            displayProducts();
+            document.getElementById('searchBar').value = '';
+        }
+
+        function addToCart(id) {
+            const product = allProducts.find(p => p.id === id);
+            cartItems.push(product);
+            document.querySelector('.icons .icon').textContent = `Cart (${cartItems.length})`;
+            updateTotal();
+            alert(`${product.name} added to cart!`);
+        }
+
+        function updateTotal() {
+            const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('total').textContent = total;
         }
 
         function applyCoupon() {
@@ -163,7 +292,7 @@
                 message.textContent = 'Coupon applied successfully!';
                 message.style.color = 'green';
             } else {
-                message.textContent = 'Invalid coupon. Must start with T.';
+                message.textContent = 'Invalid coupon.';
                 message.style.color = 'red';
             }
         }
