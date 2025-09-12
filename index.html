@@ -2,151 +2,191 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JioMart Clone</title>
+  <title>JioMart Grocery Clone</title>
   <style>
-    * {margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
-    body {background:#f5f5f5;color:#222;}
-    header {background:#0071ce;color:#fff;padding:10px;display:flex;align-items:center;justify-content:space-between;}
-    header .logo {font-size:20px;font-weight:bold;}
-    header .toggles {display:flex;gap:5px;}
-    .toggle-btn {background:#fff;color:#0071ce;border:none;padding:5px 10px;border-radius:20px;font-size:12px;cursor:pointer;}
-    .search-bar {margin:10px;padding:5px;display:flex;gap:5px;}
-    .search-bar input {flex:1;padding:8px;border:1px solid #ccc;border-radius:20px;}
-    .location {font-size:12px;color:#fff;padding:0 10px;}
-    .icons {display:flex;gap:10px;align-items:center;}
-    .cart {position:relative;cursor:pointer;}
-    .cart span {position:absolute;top:-5px;right:-5px;background:red;color:#fff;font-size:10px;border-radius:50%;padding:2px 5px;}
-    .profile {background:#fff;color:#0071ce;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-weight:bold;cursor:pointer;}.categories {display:flex;overflow-x:auto;gap:10px;background:#fff;padding:10px;}
-.category {flex:0 0 auto;text-align:center;font-size:12px;cursor:pointer;}
-.category img {width:40px;height:40px;object-fit:cover;border-radius:50%;}
-
-section {margin:10px;}
-h2 {font-size:16px;margin-bottom:5px;}
-.products {display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;}
-.card {background:#fff;padding:10px;border-radius:10px;box-shadow:0 2px 4px rgba(0,0,0,0.1);position:relative;}
-.card img {width:100%;height:100px;object-fit:contain;}
-.card .title {font-size:14px;margin:5px 0;}
-.price {color:#000;font-weight:bold;}
-.old-price {text-decoration:line-through;color:grey;font-size:12px;}
-.discount {color:green;font-size:12px;}
-.add-btn {background:#0071ce;color:#fff;border:none;padding:5px 10px;border-radius:20px;cursor:pointer;font-size:12px;}
-.wishlist {position:absolute;top:10px;right:10px;font-size:18px;cursor:pointer;color:#ccc;}
-.wishlist.active {color:red;}
-.stars {color:gold;font-size:12px;}
-
-.coupon {background:#fff;padding:10px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-.coupon button {background:#0071ce;color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;}
-
-.banner-carousel {position:relative;overflow:hidden;height:120px;margin:10px 0;}
-.banner-carousel img {width:100%;height:120px;object-fit:cover;}
-
-.footer {position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:5px 0;border-top:1px solid #ccc;}
-.footer div {text-align:center;font-size:12px;cursor:pointer;}
-.footer .active {color:#0071ce;font-weight:bold;}
-
-.dark {background:#222;color:#eee;}
-.dark header {background:#111;}
-.dark .card {background:#333;color:#fff;}
-
+    :root {
+      --primary: #0078ff;
+      --bg: #ffffff;
+      --text: #222;
+      --discount: #0a9f4d;
+      --offer: #e53935;
+    }
+    body.dark {
+      --bg: #111;
+      --text: #f0f0f0;
+      background: var(--bg);
+      color: var(--text);
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo { font-weight: bold; font-size: 20px; }
+    .search-bar {
+      margin: 10px;
+      display: flex;
+    }
+    .search-bar input {
+      flex: 1;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .categories {
+      display: flex;
+      overflow-x: auto;
+      background: #f7f7f7;
+      padding: 10px;
+    }
+    .category {
+      min-width: 100px;
+      text-align: center;
+      margin-right: 10px;
+    }
+    .section { padding: 15px; }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(150px,1fr));
+      gap: 10px;
+    }
+    .card {
+      background: var(--bg);
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 10px;
+      text-align: center;
+      position: relative;
+    }
+    .card img { width: 100%; border-radius: 10px; }
+    .wishlist {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      cursor: pointer;
+    }
+    .price { font-weight: bold; }
+    .old { text-decoration: line-through; color: grey; }
+    .discount { color: var(--discount); }
+    button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #fff;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+    .footer-btn { text-align: center; font-size: 14px; cursor: pointer; }
+    .banner {
+      width: 100%;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+    .dark-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #333;
+      color: #fff;
+      border-radius: 50%;
+      padding: 8px;
+      cursor: pointer;
+    }
   </style>
 </head>
-<body><header>
-  <div class="logo"><img src="https://i.postimg.cc/QC0SgXkN/unnamed.png" alt="logo" height="30"></div>
-  <div class="toggles">
-    <button class="toggle-btn">Quick</button>
-    <button class="toggle-btn">Scheduled</button>
-  </div>
-  <div class="icons">
-    <div class="cart">🛒<span id="cartCount">4</span></div>
-    <div class="profile">RK</div>
-  </div>
-</header>
-<div class="location">Delivery to: Sadulpur, Shamiya ki Dhani ...</div>
-<div class="search-bar">
-  <input type="text" id="searchInput" placeholder="Search in Quick...">
-</div><div class="categories">
-  <div class="category"><img src="https://cdn-icons-png.flaticon.com/512/3081/3081971.png"><div>Groceries</div></div>
-  <div class="category"><img src="https://cdn-icons-png.flaticon.com/512/3081/3081983.png"><div>99 Store</div></div>
-  <div class="category"><img src="https://cdn-icons-png.flaticon.com/512/3184/3184771.png"><div>Fashion</div></div>
-  <div class="category"><img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png"><div>Beauty</div></div>
-</div><div class="banner-carousel">
-  <img src="https://via.placeholder.com/400x120/0071ce/fff?text=50%25+OFF+Deals">
-</div><section id="vegetables">
-  <h2>Top Picks for Vegetables</h2>
-  <div class="products" id="productList">
-    <div class="card">
-      <div class="wishlist">❤</div>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Potato.jpg">
-      <div class="title">Potato 1kg</div>
-      <div class="price">₹22.00</div>
-      <button class="add-btn">Add</button>
-      <div class="stars">★★★★★</div>
+<body>
+  <header>
+    <div class="logo">JioMart</div>
+    <div>
+      <span id="cart-count">🛒 4</span>
+      <span style="margin-left:10px;">RK</span>
     </div>
-    <div class="card">
-      <div class="wishlist">❤</div>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Tomato.jpg">
-      <div class="title">Tomato 1kg</div>
-      <div class="price">₹30.00</div>
-      <button class="add-btn">Add</button>
-      <div class="stars">★★★★☆</div>
-    </div>
-  </div>
-</section><section>
-  <h2>Happy Hour Coupons</h2>
-  <div class="coupon">STATIONERY10 - 10% off <button onclick="copyCode('STATIONERY10')">Copy</button></div>
-  <div class="coupon">PERSONALCARE10 - 10% off <button onclick="copyCode('PERSONALCARE10')">Copy</button></div>
-</section><section>
-  <h2>Featured Deals</h2>
-  <div class="products">
-    <div class="card">
-      <div class="wishlist">❤</div>
-      <img src="https://m.media-amazon.com/images/I/61QDc3rroLL._SL1500_.jpg">
-      <div class="title">Denver Deo</div>
-      <div class="old-price">₹250</div> <div class="discount">20% off</div>
-      <div class="price">₹200</div>
-      <button class="add-btn">Add</button>
-      <div class="stars">★★★★☆</div>
-    </div>
-  </div>
-</section><div class="footer">
-  <div class="active">Home</div>
-  <div>Categories</div>
-  <div>Offers</div>
-  <div>Cart</div>
-  <div>Account</div>
-</div><button style="position:fixed;bottom:60px;right:10px;" onclick="toggleDark()">🌙</button>
+  </header>  <div class="search-bar">
+    <input type="text" id="search" placeholder="Search in Quick...">
+  </div>  <div class="categories">
+    <div class="category">Groceries</div>
+    <div class="category">Happy Hour</div>
+    <div class="category">99 Store</div>
+    <div class="category">Electronics</div>
+    <div class="category">Fashion</div>
+    <div class="category">Beauty</div>
+  </div>  <div class="section">
+    <h3>Top Picks for Vegetables</h3>
+    <div class="products" id="veg-list"></div>
+  </div>  <div class="section">
+    <h3>Featured Deals</h3>
+    <div class="products" id="deals-list"></div>
+  </div>  <footer>
+    <div class="footer-btn">Home</div>
+    <div class="footer-btn">Categories</div>
+    <div class="footer-btn">Offers</div>
+    <div class="footer-btn">Cart</div>
+    <div class="footer-btn">Account</div>
+  </footer>  <div class="dark-toggle" onclick="toggleDark()">🌙</div>  <script>
+    const vegs = [
+      {name:'Potato 1kg', price:22, img:'https://upload.wikimedia.org/wikipedia/commons/6/64/Potato_Solanum_tuberosum.jpg'},
+      {name:'Onion 1kg', price:30, img:'https://upload.wikimedia.org/wikipedia/commons/2/25/Onion_on_White.JPG'},
+      {name:'Tomato 1kg', price:28, img:'https://upload.wikimedia.org/wikipedia/commons/8/89/Tomato_je.jpg'}
+    ];
+    const deals = [
+      {name:'Denver Deo', price:250, old:350, img:'https://m.media-amazon.com/images/I/61oQh0QY1dL._SL1500_.jpg'},
+      {name:'Nivea Deo', price:180, old:220, img:'https://m.media-amazon.com/images/I/51ivq3VQn8L._SL1500_.jpg'}
+    ];
 
-<script>
-  function copyCode(code){
-    navigator.clipboard.writeText(code);
-    alert(code + " copied!");
-  }
+    function renderProducts(list, target){
+      const box=document.getElementById(target);
+      list.forEach(p=>{
+        let card=document.createElement('div');
+        card.className='card';
+        card.innerHTML=`
+          <img src="${p.img}" alt="${p.name}">
+          <div>${p.name}</div>
+          ${p.old?`<div class='old'>₹${p.old}</div>`:''}
+          <div class='price'>₹${p.price}</div>
+          <button onclick="addToCart('${p.name}')">Add</button>
+          <div class='wishlist'>♡</div>
+        `;
+        box.appendChild(card);
+      });
+    }
+    renderProducts(vegs,'veg-list');
+    renderProducts(deals,'deals-list');
 
-  let count=4;
-  document.querySelectorAll('.add-btn').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      count++;
-      document.getElementById('cartCount').innerText=count;
+    function addToCart(name){
+      let count=document.getElementById('cart-count');
+      let num=parseInt(count.innerText.match(/\d+/));
+      count.innerText='🛒 '+(num+1);
+      alert(name+" added to cart");
+    }
+
+    function toggleDark(){
+      document.body.classList.toggle('dark');
+    }
+
+    document.getElementById('search').addEventListener('input',function(){
+      let val=this.value.toLowerCase();
+      document.querySelectorAll('.card').forEach(c=>{
+        c.style.display=c.innerText.toLowerCase().includes(val)?'block':'none';
+      });
     });
-  });
-
-  document.querySelectorAll('.wishlist').forEach(w=>{
-    w.addEventListener('click',()=>{
-      w.classList.toggle('active');
-    });
-  });
-
-  function toggleDark(){
-    document.body.classList.toggle('dark');
-  }
-
-  // search filter
-  document.getElementById('searchInput').addEventListener('keyup', function(){
-    let filter=this.value.toLowerCase();
-    document.querySelectorAll('#productList .card').forEach(c=>{
-      let text=c.innerText.toLowerCase();
-      c.style.display=text.includes(filter)?'block':'none';
-    });
-  });
-</script></body>
+  </script></body>
 </html>
