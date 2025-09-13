@@ -5,14 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chain Wire - Articles</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" type="image/png">
+  <meta name="description" content="Chain Wire - Your trusted hub for blockchain and crypto news">
 </head>
 <body>
 
   <!-- Header -->
-  <header class="header">
+  <header class="header sticky">
     <div class="author-info">
-      <img src="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" alt="Logo" class="author-logo">
-      <a href="https://x.com/Crypto_King877?t=xE-SEtAtuLnZ7Fbr6mgE5A&s=09" target="_blank" class="author-name">Crypto_King877</a>
+      <img src="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" alt="Logo" class="author-logo" id="author-popup">
+      <a href="https://x.com/Crypto_King877?t=xE-SEtAtuLnZ7Fbr6mgE5A&s=09" target="_blank" class="author-name" id="author-popup-name">Crypto_King877</a>
+    </div>
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search articles...">
     </div>
   </header>
 
@@ -22,11 +27,18 @@
     <p>Your trusted hub for blockchain and crypto news</p>
   </section>
 
+  <!-- Category Filters -->
+  <div class="categories">
+    <button class="category-btn active" data-cat="all">All</button>
+    <button class="category-btn" data-cat="crypto">Crypto</button>
+    <button class="category-btn" data-cat="defi">DeFi</button>
+    <button class="category-btn" data-cat="ai">AI</button>
+  </div>
+
   <!-- Articles List -->
-  <main class="articles-list">
-    <!-- Article Card -->
-    <article class="article-card">
-      <img src="https://i.postimg.cc/RFTP9NZQ/20250911-221537.jpg" alt="GAIB Article" class="card-image">
+  <main class="articles-list" id="articles-list">
+    <article class="article-card" data-category="ai">
+      <img src="https://i.postimg.cc/RFTP9NZQ/20250911-221537.jpg" alt="GAIB Article" class="card-image" loading="lazy">
       <div class="card-content">
         <h2 class="card-title">
           Most people will be thinking: what is @gaib_ai really, and what role does it play inside @GoKiteAI?
@@ -34,15 +46,24 @@
         <p class="card-subtitle">
           By staking AID, users can earn passive yields, yet keep liquidity to use across DeFi.
         </p>
-        <a href="articles/article1.html" class="read-more">Read Full Article →</a>
+        <div class="card-meta">
+          <span>5 min read</span>
+          <span class="share-icons">
+            <a href="#" class="share-btn" data-platform="x">X</a>
+            <a href="#" class="share-btn" data-platform="discord">Discord</a>
+          </span>
+        </div>
+        <a href="articles/article1.html" class="read-more btn-gradient">Read Full Article →</a>
       </div>
     </article>
-    <!-- Next articles will be added here in same format -->
+    <!-- Add more articles in same format -->
   </main>
+
+  <!-- Back to Top -->
+  <button id="back-to-top">↑ Top</button>
 
   <!-- Options Section -->
   <section class="options">
-    <!-- About -->
     <div class="option about">
       <h2>About</h2>
       <p>
@@ -51,7 +72,6 @@
       </p>
     </div>
 
-    <!-- Social Media -->
     <div class="option socials">
       <h2>Follow</h2>
       <div class="social-icons">
@@ -66,7 +86,6 @@
       </div>
     </div>
 
-    <!-- Theme Toggle -->
     <div class="option theme">
       <h2>Theme</h2>
       <button id="theme-toggle">Toggle Dark/Light</button>
@@ -75,7 +94,10 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <p>Chain Wire - Read, Swap, Stay Updated</p>
+    <p>© 2025 Chain Wire - Read, Swap, Stay Updated</p>
+    <div class="footer-links">
+      <a href="#">Privacy</a> | <a href="#">Terms</a> | <a href="#">Contact</a>
+    </div>
   </footer>
 
   <script src="script.js"></script>
