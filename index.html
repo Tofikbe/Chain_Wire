@@ -16,17 +16,28 @@
     </div>
   </header>
 
-  <!-- Article Preview Section -->
-  <main class="article">
-    <h1 class="headline">
-      Most people will be thinking: what is @gaib_ai really, and what role does it play inside @GoKiteAI?
-    </h1>
-    <p class="subtitle">
-      By staking AID, users can earn passive yields, yet keep liquidity to use across DeFi.
-    </p>
-    <div class="read-more">
-      <a href="articles/article1.html">Read Full Article →</a>
-    </div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Chain Wire</h1>
+    <p>Your trusted hub for blockchain and crypto news</p>
+  </section>
+
+  <!-- Articles List -->
+  <main class="articles-list">
+    <!-- Article Card -->
+    <article class="article-card">
+      <img src="https://i.postimg.cc/RFTP9NZQ/20250911-221537.jpg" alt="GAIB Article" class="card-image">
+      <div class="card-content">
+        <h2 class="card-title">
+          Most people will be thinking: what is @gaib_ai really, and what role does it play inside @GoKiteAI?
+        </h2>
+        <p class="card-subtitle">
+          By staking AID, users can earn passive yields, yet keep liquidity to use across DeFi.
+        </p>
+        <a href="articles/article1.html" class="read-more">Read Full Article →</a>
+      </div>
+    </article>
+    <!-- Next articles will be added here in same format -->
   </main>
 
   <!-- Options Section -->
@@ -67,13 +78,6 @@
     <p>Chain Wire - Read, Swap, Stay Updated</p>
   </footer>
 
-  <script>
-    // Theme Toggle
-    const toggleBtn = document.getElementById("theme-toggle");
-    toggleBtn.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
-    });
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
