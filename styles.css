@@ -1,1 +1,107 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: #222;
+  line-height: 1.6;
+}
 
+.dark-mode {
+  background: #121212;
+  color: #f1f1f1;
+}
+
+.header {
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.author-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.author-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.author-name {
+  font-weight: bold;
+  text-decoration: none;
+  color: #0077cc;
+}
+
+.headline {
+  margin: 20px;
+  font-size: 28px;
+}
+
+.subtitle {
+  margin: 0 20px 20px;
+  font-size: 16px;
+  color: #666;
+}
+
+.content {
+  margin: 0 20px 40px;
+  font-size: 18px;
+}
+
+.options {
+  padding: 20px;
+  border-top: 1px solid #ddd;
+}
+
+.option {
+  margin-bottom: 20px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.social-logo {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+#theme-toggle {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  background: #0077cc;
+  color: white;
+}
+
+.footer {
+  text-align: center;
+  padding: 15px;
+  margin-top: 20px;
+  background: #f4f4f4;
+  font-weight: bold;
+}
+
+.dark-mode .footer {
+  background: #1e1e1e;
+}
