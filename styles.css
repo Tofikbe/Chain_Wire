@@ -1,23 +1,20 @@
+/* Base */
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
-  background: #fff;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: #f9f9f9;
   color: #222;
   line-height: 1.6;
+  transition: all 0.3s ease-in-out;
 }
 
-.dark-mode {
-  background: #121212;
-  color: #f1f1f1;
-}
-
+/* Header */
 .header {
-  padding: 20px;
-  border-bottom: 1px solid #ddd;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+  padding: 15px 20px;
+  background: #111;
+  color: #fff;
 }
 
 .author-info {
@@ -27,47 +24,148 @@ body {
 }
 
 .author-logo {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
 }
 
 .author-name {
+  color: #fff;
   font-weight: bold;
   text-decoration: none;
-  color: #0077cc;
-}
-
-.headline {
-  margin: 20px;
-  font-size: 28px;
-}
-
-.subtitle {
-  margin: 0 20px 20px;
   font-size: 16px;
-  color: #666;
 }
 
-.content {
-  margin: 0 20px 40px;
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #0077cc, #00c6ff);
+  color: white;
+}
+
+.hero h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.hero p {
   font-size: 18px;
 }
 
-.options {
+/* Article Cards on Index */
+.articles-list {
+  max-width: 1100px;
+  margin: 30px auto;
   padding: 20px;
-  border-top: 1px solid #ddd;
+  display: grid;
+  gap: 25px;
+}
+
+.article-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.article-card:hover {
+  transform: translateY(-5px);
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.card-subtitle {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.read-more {
+  text-decoration: none;
+  color: #0077cc;
+  font-weight: bold;
+}
+
+/* Article Page */
+.article-page {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.headline {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.article-image img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.content p, .content ul {
+  margin-bottom: 15px;
+  font-size: 17px;
+}
+
+/* Options Section */
+.options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 20px;
 }
 
 .option {
-  margin-bottom: 20px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.option h2 {
+  margin-bottom: 10px;
+  font-size: 20px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 5px;
 }
 
 .social-icons {
   display: flex;
-  gap: 15px;
-  margin-top: 10px;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .social-link {
@@ -75,33 +173,38 @@ body {
   align-items: center;
   gap: 8px;
   text-decoration: none;
-  color: inherit;
+  color: #222;
+  font-weight: bold;
 }
 
 .social-logo {
-  width: 35px;
-  height: 35px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
-#theme-toggle {
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  border-radius: 8px;
-  background: #0077cc;
-  color: white;
-}
-
+/* Footer */
 .footer {
   text-align: center;
-  padding: 15px;
-  margin-top: 20px;
-  background: #f4f4f4;
-  font-weight: bold;
+  padding: 20px;
+  background: #111;
+  color: #fff;
 }
 
-.dark-mode .footer {
-  background: #1e1e1e;
+/* Dark Mode */
+.dark-mode {
+  background: #111;
+  color: #eee;
+}
+
+.dark-mode .article-card,
+.dark-mode .article-page,
+.dark-mode .option {
+  background: #1c1c1c;
+  color: #eee;
+}
+
+.dark-mode .headline {
+  color: #fff;
 }
