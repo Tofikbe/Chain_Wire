@@ -1,104 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chain Wire - Articles</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" type="image/png">
-  <meta name="description" content="Chain Wire - Your trusted hub for blockchain and crypto news">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Chain Wire - Mobile</title>
+  <link rel="icon" href="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" />
+  <meta name="description" content="Chain Wire - mobile blockchain & crypto news" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="mobile-first">
 
-  <!-- Header -->
-  <header class="header sticky">
-    <div class="author-info">
-      <img src="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" alt="Logo" class="author-logo" id="author-popup">
-      <a href="https://x.com/Crypto_King877?t=xE-SEtAtuLnZ7Fbr6mgE5A&s=09" target="_blank" class="author-name" id="author-popup-name">Crypto_King877</a>
+  <!-- Mobile Header (Chain Wire title + small controls) -->
+  <header class="mobile-header">
+    <div class="mobile-left">
+      <button id="menu-toggle" aria-label="open menu">☰</button>
+      <img src="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" alt="logo" class="mobile-logo" />
     </div>
-    <div class="search-bar">
-      <input type="text" id="search-input" placeholder="Search articles...">
+    <div class="mobile-title">Chain Wire</div>
+    <div class="mobile-right">
+      <button id="theme-toggle" aria-label="toggle theme">🌓</button>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>Chain Wire</h1>
-    <p>Your trusted hub for blockchain and crypto news</p>
+  <!-- Hero (uses your provided image) -->
+  <section class="mobile-hero" role="banner">
+    <img src="https://i.postimg.cc/hvF86mxt/1757769456881.png" alt="Chain Wire hero" class="hero-img" loading="lazy">
+    <div class="hero-overlay">
+      <h1>Chain Wire</h1>
+      <p>Your trusted hub for blockchain and crypto news</p>
+    </div>
   </section>
 
-  <!-- Category Filters -->
-  <div class="categories">
-    <button class="category-btn active" data-cat="all">All</button>
-    <button class="category-btn" data-cat="crypto">Crypto</button>
-    <button class="category-btn" data-cat="defi">DeFi</button>
-    <button class="category-btn" data-cat="ai">AI</button>
+  <!-- Mobile Search (positioned clearly under hero) -->
+  <div class="mobile-search-wrap">
+    <input id="search-input" type="search" placeholder="Search articles, tags or authors" aria-label="Search articles" />
   </div>
 
-  <!-- Articles List -->
-  <main class="articles-list" id="articles-list">
+  <!-- Category chips (scrollable horizontally on mobile) -->
+  <div class="mobile-cats" id="cat-wrap" aria-hidden="false">
+    <button class="cat active" data-cat="all">All</button>
+    <button class="cat" data-cat="crypto">Crypto</button>
+    <button class="cat" data-cat="defi">DeFi</button>
+    <button class="cat" data-cat="ai">AI</button>
+  </div>
+
+  <!-- Articles list (mobile card stack) -->
+  <main id="articles-list" class="mobile-articles" role="main">
     <article class="article-card" data-category="ai">
-      <img src="https://i.postimg.cc/RFTP9NZQ/20250911-221537.jpg" alt="GAIB Article" class="card-image" loading="lazy">
-      <div class="card-content">
-        <h2 class="card-title">
-          Most people will be thinking: what is @gaib_ai really, and what role does it play inside @GoKiteAI?
-        </h2>
-        <p class="card-subtitle">
-          By staking AID, users can earn passive yields, yet keep liquidity to use across DeFi.
-        </p>
-        <div class="card-meta">
-          <span>5 min read</span>
-          <span class="share-icons">
-            <a href="#" class="share-btn" data-platform="x">X</a>
-            <a href="#" class="share-btn" data-platform="discord">Discord</a>
-          </span>
+      <img class="card-image" src="https://i.postimg.cc/RFTP9NZQ/20250911-221537.jpg" alt="GAIB Article" loading="lazy">
+      <div class="card-body">
+        <h2 class="card-title">Most people will be thinking: what is @gaib_ai really, and what role does it play inside @GoKiteAI?</h2>
+        <p class="card-sub">By staking AID, users can earn passive yields, yet keep liquidity to use across DeFi.</p>
+        <div class="card-row">
+          <span class="read-time">5 min</span>
+          <div class="card-actions">
+            <a class="share small" href="#" data-platform="x" aria-label="Share on X">X</a>
+            <a class="share small" href="#" data-platform="discord" aria-label="Share on Discord">Disc</a>
+          </div>
         </div>
-        <a href="articles/article1.html" class="read-more btn-gradient">Read Full Article →</a>
+        <a class="btn primary" href="articles/article1.html">Read Full Article →</a>
       </div>
     </article>
-    <!-- Add more articles in same format -->
+
+    <!-- You can paste more article cards here keeping same structure -->
   </main>
 
-  <!-- Back to Top -->
-  <button id="back-to-top">↑ Top</button>
+  <!-- Floating bottom nav (mobile) -->
+  <nav class="mobile-bottom-nav" aria-hidden="false">
+    <a href="#" class="nav-btn">Home</a>
+    <a href="#" class="nav-btn">Categories</a>
+    <a href="#" class="nav-btn">Newsletter</a>
+  </nav>
 
-  <!-- Options Section -->
-  <section class="options">
-    <div class="option about">
-      <h2>About</h2>
-      <p>
-        Chain Wire is a modern platform designed to share verified crypto and blockchain news, 
-        providing trusted updates for the community.
-      </p>
-    </div>
-
-    <div class="option socials">
-      <h2>Follow</h2>
-      <div class="social-icons">
-        <a href="https://discord.com" target="_blank" class="social-link">
-          <img src="https://i.ibb.co/Q38VCK0c/Discord-Emblem.png" alt="Discord" class="social-logo">
-          Discord
-        </a>
-        <a href="https://x.com" target="_blank" class="social-link">
-          <img src="https://i.ibb.co/0R7nCNSP/twitter-x-logo-png-seeklogo-492396.png" alt="X" class="social-logo">
-          X (Twitter)
-        </a>
-      </div>
-    </div>
-
-    <div class="option theme">
-      <h2>Theme</h2>
-      <button id="theme-toggle">Toggle Dark/Light</button>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <p>© 2025 Chain Wire - Read, Swap, Stay Updated</p>
-    <div class="footer-links">
-      <a href="#">Privacy</a> | <a href="#">Terms</a> | <a href="#">Contact</a>
-    </div>
-  </footer>
+  <!-- Back to Top (mobile) -->
+  <button id="back-to-top" aria-label="Back to top">↑</button>
 
   <script src="script.js"></script>
 </body>
