@@ -1,118 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
   <title>GAIB x KiteAI - Chain Wire</title>
-  <link rel="stylesheet" href="../styles.css">
-  <link rel="icon" href="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" type="image/png">
-  <meta name="description" content="GAIB and KiteAI explained in detail by Chain Wire">
+  <link rel="icon" href="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" />
+  <meta name="description" content="GAIB and KiteAI explained" />
+  <link rel="stylesheet" href="../styles.css" />
 </head>
-<body>
+<body class="mobile-first">
 
-  <!-- Header -->
-  <header class="header sticky">
-    <div class="author-info">
-      <img src="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" alt="Logo" class="author-logo" id="author-popup">
-      <a href="https://x.com/Crypto_King877?t=xE-SEtAtuLnZ7Fbr6mgE5A&s=09" target="_blank" class="author-name" id="author-popup-name">Crypto_King877</a>
+  <!-- Header (small, consistent with mobile index) -->
+  <header class="mobile-header">
+    <div class="mobile-left">
+      <a href="../index.html" class="back-btn" aria-label="Back">←</a>
+      <img src="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" alt="logo" class="mobile-logo" />
+    </div>
+    <div class="mobile-title">Chain Wire</div>
+    <div class="mobile-right">
+      <button id="theme-toggle-article" aria-label="toggle theme">🌓</button>
     </div>
   </header>
 
-  <!-- Breadcrumb -->
-  <nav class="breadcrumb">
-    <a href="../index.html">Home</a> &gt; <span>GAIB x KiteAI</span>
-  </nav>
+  <!-- Breadcrumb (mobile friendly) -->
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a> › <span>GAIB x KiteAI</span>
+  </div>
 
-  <!-- Article -->
+  <!-- Article content -->
   <main class="article-page">
     <h1 class="headline">Most people will be thinking: what is @gaib_ai really, and what role does it play inside @GoKiteAI?</h1>
     <p class="subtitle">Exploring GAIB’s role in powering compute and yield inside KiteAI.</p>
 
-    <div class="article-image">
-      <img src="https://i.postimg.cc/RFTP9NZQ/20250911-221537.jpg" alt="GAIB Article Image">
+    <div class="article-meta">
+      <a class="author-link" href="https://x.com/Crypto_King877?t=xE-SEtAtuLnZ7Fbr6mgE5A&s=09" target="_blank">Crypto_King877</a>
+      <span class="dot">·</span>
+      <span class="read-time">5 min read</span>
     </div>
 
+    <figure class="article-image">
+      <img src="https://i.postimg.cc/RFTP9NZQ/20250911-221537.jpg" alt="GAIB Article" loading="lazy">
+    </figure>
+
     <div class="content">
-      <p>
-        @gaib_ai is the economic layer for AI compute. It takes real-world GPU infrastructure and financing deals, then tokenizes them on-chain. 
-      </p>
-      <p>
-        The result is AID (AI Dollar) — a synthetic dollar backed by GPU financing + U.S. T-bills. 
-      </p>
-      <p>
-        <strong>By staking AID, users can earn passive yields, yet keep liquidity to use across DeFi.</strong>
-      </p>
-      <p>
-        Why does this matter for @GoKiteAI? Because every AI agent relies on compute at different stages — training, fine-tuning, inference, reasoning. Without scalable and cost-efficient compute, agents cannot be deployed or optimized at scale.
-      </p>
+      <p>@gaib_ai is the economic layer for AI compute. It takes real-world GPU infrastructure and financing deals, then tokenizes them on-chain.</p>
+
+      <p>The result is AID (AI Dollar) — a synthetic dollar backed by GPU financing + U.S. T-bills.</p>
+
+      <p><strong>By staking AID, users can earn passive yields, yet keep liquidity to use across DeFi.</strong></p>
+
+      <p>Why does this matter for @GoKiteAI? Because every AI agent relies on compute at different stages — training, fine-tuning, inference, reasoning. Without scalable and cost-efficient compute, agents cannot be deployed or optimized at scale.</p>
+
       <ul>
         <li>Making GPU-backed assets investable and yield-generating.</li>
         <li>Providing a global network of cloud service providers across 10+ countries.</li>
         <li>Allowing @GoKiteAI users to access compute while also investing directly in the infrastructure behind it.</li>
       </ul>
-      <p>
-        So the connection is simple:<br>
-        👉 @gaib_ai — supplies the compute + yield layer<br>
-        👉 @GoKiteAI — provides the rails for agents (identity, payments, governance)  
-      </p>
-      <p>
-        Together, they create a circular AI economy where developers, agents, and users can seamlessly move between using compute and earning from compute.
-      </p>
+
+      <p>So the connection is simple:<br />👉 @gaib_ai — supplies the compute + yield layer<br />👉 @GoKiteAI — provides the rails for agents (identity, payments, governance)</p>
     </div>
 
-    <!-- Related Articles -->
-    <section class="related-articles">
+    <!-- Related (Coming Soon) -->
+    <section class="related-coming">
       <h2>Related Articles</h2>
-      <div class="articles-list">
-        <article class="article-card">
-          <img src="https://i.postimg.cc/8k6rYw6c/placeholder.jpg" alt="Related Article" class="card-image">
-          <div class="card-content">
-            <h3 class="card-title">Understanding DeFi Yield Strategies</h3>
-            <a href="article2.html" class="read-more btn-gradient">Read →</a>
-          </div>
-        </article>
+      <div class="coming-card">
+        <img src="https://i.postimg.cc/8k6rYw6c/placeholder.jpg" alt="coming soon" loading="lazy">
+        <div class="coming-body">
+          <h3>More articles coming soon</h3>
+          <p>We're building more content — check back soon.</p>
+          <span class="tag coming">Coming soon</span>
+        </div>
       </div>
     </section>
-
   </main>
-
-  <!-- Options Section -->
-  <section class="options">
-    <div class="option about">
-      <h2>About</h2>
-      <p>
-        Chain Wire is a modern platform designed to share verified crypto and blockchain news, 
-        providing trusted updates for the community.
-      </p>
-    </div>
-
-    <div class="option socials">
-      <h2>Follow</h2>
-      <div class="social-icons">
-        <a href="https://discord.com" target="_blank" class="social-link">
-          <img src="https://i.ibb.co/Q38VCK0c/Discord-Emblem.png" alt="Discord" class="social-logo">
-          Discord
-        </a>
-        <a href="https://x.com" target="_blank" class="social-link">
-          <img src="https://i.ibb.co/0R7nCNSP/twitter-x-logo-png-seeklogo-492396.png" alt="X" class="social-logo">
-          X (Twitter)
-        </a>
-      </div>
-    </div>
-
-    <div class="option theme">
-      <h2>Theme</h2>
-      <button id="theme-toggle">Toggle Dark/Light</button>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <p>© 2025 Chain Wire - Read, Swap, Stay Updated</p>
-    <div class="footer-links">
-      <a href="#">Privacy</a> | <a href="#">Terms</a> | <a href="#">Contact</a>
-    </div>
-  </footer>
 
   <script src="../script.js"></script>
 </body>
