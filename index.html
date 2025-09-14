@@ -1,70 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-  <title>Chain Wire - Mobile</title>
-  <link rel="icon" href="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" />
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chain Wire</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" type="image/png">
 </head>
-<body class="mobile-first">
+<body>
 
   <!-- Mobile Header -->
   <header class="mobile-header">
     <div class="mobile-left">
-      <button id="menu-toggle" aria-label="open menu">☰</button>
-      <img src="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" alt="logo" class="mobile-logo" />
+      <button id="menu-toggle">☰</button>
+      <img src="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" alt="Logo" class="mobile-logo">
     </div>
-    <div class="mobile-title">Chain Wire</div>
-    <div class="mobile-right">
-      <button id="theme-toggle" aria-label="toggle theme">🌓</button>
-    </div>
+    <h1 class="mobile-title">Chain Wire</h1>
   </header>
 
-  <!-- Slide-in menu -->
-  <nav class="slide-menu" id="slide-menu">
+  <!-- Slide-in Menu -->
+  <nav id="slide-menu" class="slide-menu">
     <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Categories</a></li>
-      <li><a href="#">Newsletter</a></li>
-      <li class="disabled">Settings (coming soon)</li>
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><strong>📂 Categories</strong></li>
+      <li><a href="#">AI</a></li>
+      <li><a href="#">DeFi</a></li>
+      <li><a href="#">Blockchain</a></li>
+      <li><a href="#">Solana</a></li>
+      <li><a href="#">KiteAI</a></li>
+      <li><a href="#">ETH</a></li>
+      <li><a href="#">BTC</a></li>
+      <li class="disabled">⚙️ Settings</li>
     </ul>
   </nav>
   <div id="menu-overlay"></div>
 
-  <!-- Slider Section -->
-  <section class="mobile-slider" id="mobile-slider">
+  <!-- Search -->
+  <div class="mobile-search-wrap">
+    <input type="text" id="search-input" placeholder="Search articles...">
+  </div>
+
+  <!-- Image Slider -->
+  <section class="mobile-slider">
     <div class="slider-track">
-      <a href="articles/article1.html" class="slide">
-        <img src="https://i.postimg.cc/RFTP9NZQ/20250911-221537.jpg" alt="GAIB Article">
-      </a>
-      <a href="articles/article2.html" class="slide">
-        <img src="https://i.postimg.cc/jdq69PkZ/file-00000000ff10624698c4e517c265438b.png" alt="GoKiteAI Ozone Phase">
-      </a>
+      <a href="articles/article1.html" class="slide"><img src="https://i.postimg.cc/RFTP9NZQ/20250911-221537.jpg" alt="GAIB x KiteAI"></a>
+      <a href="articles/article2.html" class="slide"><img src="https://i.postimg.cc/jdq69PkZ/file-00000000ff10624698c4e517c265438b.png" alt="GoKite Ozone"></a>
     </div>
     <div class="slider-dots" id="slider-dots"></div>
   </section>
 
-  <!-- Search -->
-  <div class="mobile-search-wrap">
-    <input id="search-input" type="search" placeholder="Search articles, tags or authors" aria-label="Search articles" />
-  </div>
-
-  <!-- Articles list -->
-  <main id="articles-list" class="mobile-articles">
+  <!-- Articles List -->
+  <main class="mobile-articles">
     <article class="article-card">
-      <h2 class="card-title">Most people will be thinking: what is @gaib_ai really, and what role does it play inside @GoKiteAI?</h2>
-      <p class="card-sub">By staking AID, users can earn passive yields, yet keep liquidity to use across DeFi.</p>
-      <a class="btn primary" href="articles/article1.html">Read Full Article →</a>
+      <h3 class="card-title">GAIB x KiteAI</h3>
+      <p class="card-sub">Understanding GAIB’s role in powering compute + yield</p>
+      <a href="articles/article1.html" class="btn-gradient">Read →</a>
     </article>
+
     <article class="article-card">
-      <h2 class="card-title">Right now @GoKiteAI is in the ‘OZONE PHASE’ where Bridge, Swap, Staking, XP Badges and NFT Quests are going live</h2>
-      <p class="card-sub">Next phases will bring multi-chain operations and AI Marketplace.</p>
-      <a class="btn primary" href="articles/article2.html">Read Full Article →</a>
+      <h3 class="card-title">KiteAI Ozone Phase</h3>
+      <p class="card-sub">Bridge, Swap, Staking & more inside Ozone</p>
+      <a href="articles/article2.html" class="btn-gradient">Read →</a>
     </article>
   </main>
 
-  <button id="back-to-top" aria-label="Back to top">↑</button>
+  <button id="back-to-top">↑</button>
 
   <script src="script.js"></script>
 </body>
