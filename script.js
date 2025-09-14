@@ -1,19 +1,22 @@
-// Mobile Slider
+// Slider
 const sliderTrack = document.querySelector('.slider-track');
 const slides = document.querySelectorAll('.slide');
 const dotsContainer = document.getElementById('slider-dots');
 let currentIndex = 0;
+let startX = 0;
+let endX = 0;
 
 // Generate dots
-slides.forEach((_, i) => {
-  const dot = document.createElement('span');
-  dot.classList.add('dot');
-  if (i === 0) dot.classList.add('active');
-  dot.addEventListener('click', () => goToSlide(i));
-  dotsContainer.appendChild(dot);
-});
+if (dotsContainer) {
+  slides.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.classList.add('dot');
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  });
+}
 
-// Go to slide function
 function goToSlide(index) {
   currentIndex = index;
   sliderTrack.style.transform = `translateX(-${index * 100}%)`;
@@ -28,30 +31,49 @@ function updateDots() {
 
 // Auto-slide
 setInterval(() => {
+  if (!sliderTrack) return;
   currentIndex = (currentIndex + 1) % slides.length;
   goToSlide(currentIndex);
 }, 5000);
 
-// Slide-in menu
+// Swipe gesture
+if (sliderTrack) {
+  sliderTrack.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+  });
+
+  sliderTrack.addEventListener('touchend', e => {
+    endX = e.changedTouches[0].clientX;
+    if (startX - endX > 50) {
+      // swipe left
+      currentIndex = (currentIndex + 1) % slides.length;
+      goToSlide(currentIndex);
+    } else if (endX - startX > 50) {
+      // swipe right
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      goToSlide(currentIndex);
+    }
+  });
+}
+
+// Menu
 const menuToggle = document.getElementById('menu-toggle');
 const slideMenu = document.getElementById('slide-menu');
 const overlay = document.getElementById('menu-overlay');
 
-menuToggle.addEventListener('click', () => {
-  slideMenu.style.left = '0';
-  overlay.style.display = 'block';
-});
+if (menuToggle) {
+  menuToggle.addEventListener('click', () => {
+    slideMenu.style.left = '0';
+    overlay.style.display = 'block';
+  });
+}
 
-overlay.addEventListener('click', () => {
-  slideMenu.style.left = '-220px';
-  overlay.style.display = 'none';
-});
-
-// Dark mode toggle
-const themeToggle = document.getElementById('theme-toggle');
-themeToggle.addEventListener('click', () => {
-  document.body.classList.toggle('dark-mode');
-});
+if (overlay) {
+  overlay.addEventListener('click', () => {
+    slideMenu.style.left = '-230px';
+    overlay.style.display = 'none';
+  });
+}
 
 // Back to top
 const backToTop = document.getElementById('back-to-top');
@@ -59,9 +81,11 @@ window.addEventListener('scroll', () => {
   if (window.scrollY > 300) backToTop.style.display = 'block';
   else backToTop.style.display = 'none';
 });
-backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+if (backToTop) {
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
 
-// Search Filter
+// Search filter
 const searchInput = document.getElementById('search-input');
 const articleCards = document.querySelectorAll('.article-card');
 
