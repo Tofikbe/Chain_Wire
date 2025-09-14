@@ -3,68 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chain Wire</title>
+  <title>Chain Wire - Home</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" type="image/png">
 </head>
 <body>
 
-  <!-- Mobile Header -->
-  <header class="mobile-header">
-    <div class="mobile-left">
-      <button id="menu-toggle">☰</button>
-      <img src="https://i.ibb.co/b4kLgxg/20250727-183538.jpg" alt="Logo" class="mobile-logo">
-    </div>
-    <h1 class="mobile-title">Chain Wire</h1>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="site-title">Chain Wire</h1>
+    <button id="menu-toggle" class="menu-btn">☰</button>
   </header>
 
-  <!-- Slide-in Menu -->
-  <nav id="slide-menu" class="slide-menu">
-    <ul>
-      <li><a href="index.html">🏠 Home</a></li>
-      <li><strong>📂 Categories</strong></li>
-      <li><a href="#">AI</a></li>
-      <li><a href="#">DeFi</a></li>
-      <li><a href="#">Blockchain</a></li>
-      <li><a href="#">Solana</a></li>
-      <li><a href="#">KiteAI</a></li>
-      <li><a href="#">ETH</a></li>
-      <li><a href="#">BTC</a></li>
-      <li class="disabled">⚙️ Settings</li>
-    </ul>
-  </nav>
-  <div id="menu-overlay"></div>
-
-  <!-- Search -->
-  <div class="mobile-search-wrap">
-    <input type="text" id="search-input" placeholder="Search articles...">
-  </div>
-
-  <!-- Image Slider -->
-  <section class="mobile-slider">
-    <div class="slider-track">
-      <a href="articles/article1.html" class="slide"><img src="https://i.postimg.cc/RFTP9NZQ/20250911-221537.jpg" alt="GAIB x KiteAI"></a>
-      <a href="articles/article2.html" class="slide"><img src="https://i.postimg.cc/jdq69PkZ/file-00000000ff10624698c4e517c265438b.png" alt="GoKite Ozone"></a>
+  <!-- Sidebar Menu -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h2>Menu</h2>
+      <button id="close-sidebar">×</button>
     </div>
-    <div class="slider-dots" id="slider-dots"></div>
+    <nav class="sidebar-links">
+      <a href="index.html">🏠 Home</a>
+      <h3>Articles</h3>
+      <a href="articles/article1.html">🤖 AI</a>
+      <a href="articles/article2.html">🪁 KiteAI</a>
+      <a href="#">💰 DeFi</a>
+      <a href="#">🔗 Blockchain</a>
+      <a href="#">⚡ Solana</a>
+      <a href="#">Ξ Ethereum</a>
+      <a href="#">₿ Bitcoin</a>
+      <h3>Other</h3>
+      <a href="#">⚙️ Settings</a>
+    </nav>
+  </aside>
+
+  <!-- Hero Slider -->
+  <section class="slider">
+    <div class="slides">
+      <div class="slide active">
+        <a href="articles/article1.html">
+          <img src="https://i.postimg.cc/RFTP9NZQ/20250911-221537.jpg" alt="GAIB x KiteAI">
+        </a>
+      </div>
+      <div class="slide">
+        <a href="articles/article2.html">
+          <img src="https://i.postimg.cc/jdq69PkZ/file-00000000ff10624698c4e517c265438b.png" alt="KiteAI Ozone Phase">
+        </a>
+      </div>
+    </div>
+    <div class="dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+    </div>
   </section>
 
-  <!-- Articles List -->
-  <main class="mobile-articles">
+  <!-- Latest Articles -->
+  <main class="articles-list">
     <article class="article-card">
-      <h3 class="card-title">GAIB x KiteAI</h3>
-      <p class="card-sub">Understanding GAIB’s role in powering compute + yield</p>
-      <a href="articles/article1.html" class="btn-gradient">Read →</a>
+      <img src="https://i.postimg.cc/RFTP9NZQ/20250911-221537.jpg" alt="GAIB x KiteAI" class="card-image">
+      <div class="card-content">
+        <h2 class="card-title">GAIB x KiteAI – Compute + Yield Layer</h2>
+        <p class="card-subtitle">Exploring GAIB’s role in powering compute and yield inside KiteAI.</p>
+        <a href="articles/article1.html" class="read-more">Read Full Article →</a>
+      </div>
     </article>
 
     <article class="article-card">
-      <h3 class="card-title">KiteAI Ozone Phase</h3>
-      <p class="card-sub">Bridge, Swap, Staking & more inside Ozone</p>
-      <a href="articles/article2.html" class="btn-gradient">Read →</a>
+      <img src="https://i.postimg.cc/jdq69PkZ/file-00000000ff10624698c4e517c265438b.png" alt="KiteAI Ozone Phase" class="card-image">
+      <div class="card-content">
+        <h2 class="card-title">KiteAI Roadmap – Ozone to Lunar</h2>
+        <p class="card-subtitle">From Ozone Phase to Lunar Phase: How KiteAI is scaling at lightning pace.</p>
+        <a href="articles/article2.html" class="read-more">Read Full Article →</a>
+      </div>
     </article>
   </main>
 
-  <button id="back-to-top">↑</button>
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="active">Home</a>
+    <a href="articles/article1.html">Articles</a>
+    <a href="#">Settings</a>
+  </nav>
 
   <script src="script.js"></script>
 </body>
